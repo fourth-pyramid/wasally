@@ -8,6 +8,7 @@ import 'package:wassaly/features/auth/presentation/widgets/login_password_field.
 import 'package:wassaly/features/auth/presentation/widgets/social_login_section.dart';
 
 class LoginForm extends StatelessWidget {
+  final GlobalKey<FormState> formKey;
   final TextEditingController emailController;
   final TextEditingController passwordController;
   final ValueChanged<String> onEmailChanged;
@@ -20,6 +21,7 @@ class LoginForm extends StatelessWidget {
 
   const LoginForm({
     super.key,
+    required this.formKey,
     required this.emailController,
     required this.passwordController,
     required this.onEmailChanged,
@@ -36,52 +38,73 @@ class LoginForm extends StatelessWidget {
     final cs = context.theme.colorScheme;
     final tt = context.theme.textTheme;
 
-    return LoginFormContainer(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(
-            'auth.email_or_phone'.tr(),
-            textAlign: TextAlign.start,
-            style: tt.bodyMedium?.copyWith(
-              color: cs.primary,
-              fontWeight: FontWeight.w900,
+    return Form(
+      key: formKey,
+      child: LoginFormContainer(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              'auth.email_or_phone'.tr(),
+              textAlign: TextAlign.start,
+              style: tt.bodyMedium?.copyWith(
+                color: cs.primary,
+                fontWeight: FontWeight.w900,
+              ),
             ),
-          ),
-          SizedBox(height: 12.h),
-          LoginEmailField(
-            controller: emailController,
-            onChanged: onEmailChanged,
-          ),
-          SizedBox(height: 16.h),
-          ForgotPasswordLink(onPressed: onForgotPassword),
-          SizedBox(height: 8.h),
-          LoginPasswordField(
-            controller: passwordController,
-            onChanged: onPasswordChanged,
-            onToggleVisibility: onTogglePasswordVisibility,
-          ),
-          SizedBox(height: 24.h),
-          BlocBuilder<LoginBloc, LoginState>(
-            buildWhen: (previous, current) =>
-                previous.isLoading != current.isLoading,
-            builder: (context, state) {
-              return AppButton(
-                label: 'auth.login_button'.tr(),
-                onPressed: state.isLoading ? null : onLogin,
-                isLoading: state.isLoading,
-                variant: ButtonVariant.primary,
-                isFullWidth: true,
-                height: ButtonSize.medium,
-              );
-            },
-          ),
-          SizedBox(height: 20.h),
-          SocialLoginSection(
-            onLoginWithGoogle: onLoginWithGoogle,
-            onLoginWithFacebook: onLoginWithFacebook,
-          ),
-        ],
+            SizedBox(height: 12.h),
+            LoginEmailField(
+              controller: emailController,
+              onChanged: onEmailChanged,
+              validator: (value) {
+                if (value.isNullOrEmpty) {
+                  return 'auth.email_required'.tr();
+                }
+                if (!value!.isValidEmail && !value.isValidPhoneNumber) {
+                  return 'auth.email_invalid'.tr();
+                }
+                return null;
+              },
+            ),
+            SizedBox(height: 16.h),
+            ForgotPasswordLink(onPressed: onForgotPassword),
+            SizedBox(height: 8.h),
+            LoginPasswordField(
+              controller: passwordController,
+              onChanged: onPasswordChanged,
+              onToggleVisibility: onTogglePasswordVisibility,
+              validator: (value) {
+                if (value.isNullOrEmpty) {
+                  return 'auth.password_required'.tr();
+                }
+                if (value!.length < 6) {
+                  return 'auth.password_too_short'.tr();
+                }
+                return null;
+              },
+            ),
+            SizedBox(height: 24.h),
+            BlocBuilder<LoginBloc, LoginState>(
+              buildWhen: (previous, current) =>
+                  previous.isLoading != current.isLoading,
+              builder: (context, state) {
+                return AppButton(
+                  label: 'auth.login_button'.tr(),
+                  onPressed: state.isLoading ? null : onLogin,
+                  isLoading: state.isLoading,
+                  variant: ButtonVariant.primary,
+                  isFullWidth: true,
+                  height: ButtonSize.medium,
+                );
+              },
+            ),
+            SizedBox(height: 20.h),
+            SocialLoginSection(
+              onLoginWithGoogle: onLoginWithGoogle,
+              onLoginWithFacebook: onLoginWithFacebook,
+            ),
+          ],
+        ),
       ),
     );
   }

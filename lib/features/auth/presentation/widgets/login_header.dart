@@ -16,7 +16,6 @@ class LoginHeader extends StatelessWidget {
           width: 150.w,
           height: 100.h,
         ),
-        SizedBox(height: 20.h),
         Text(
           'auth.log_in'.tr(),
           style: tt.headlineMedium?.copyWith(

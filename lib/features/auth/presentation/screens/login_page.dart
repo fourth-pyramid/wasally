@@ -26,6 +26,7 @@ class _LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<_LoginView> {
+  final _formKey = GlobalKey<FormState>();
   late final TextEditingController _emailController;
   late final TextEditingController _passwordController;
 
@@ -56,7 +57,9 @@ class _LoginViewState extends State<_LoginView> {
   }
 
   void _onLogin() {
-    context.read<LoginBloc>().add(const LoginSubmitted());
+    if (_formKey.currentState?.validate() ?? false) {
+      context.read<LoginBloc>().add(const LoginSubmitted());
+    }
   }
 
   void _onLoginWithGoogle() {
@@ -99,6 +102,7 @@ class _LoginViewState extends State<_LoginView> {
                 const LoginHeader(),
                 SizedBox(height: 25.h),
                 LoginForm(
+                  formKey: _formKey,
                   emailController: _emailController,
                   passwordController: _passwordController,
                   onEmailChanged: _onEmailChanged,

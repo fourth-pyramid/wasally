@@ -6,12 +6,14 @@ class LoginPasswordField extends StatelessWidget {
   final TextEditingController controller;
   final ValueChanged<String> onChanged;
   final ValueChanged<bool> onToggleVisibility;
+  final FormFieldValidator<String>? validator;
 
   const LoginPasswordField({
     super.key,
     required this.controller,
     required this.onChanged,
     required this.onToggleVisibility,
+    this.validator,
   });
 
   @override
@@ -27,6 +29,7 @@ class LoginPasswordField extends StatelessWidget {
           child: AppTextField(
             controller: controller,
             onChanged: onChanged,
+            validator: validator,
             obscureText: !state.isPasswordVisible,
             hint: '••••••••',
             prefixIcon: IconButton(

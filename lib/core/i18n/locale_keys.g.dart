@@ -33,7 +33,7 @@ class CodegenLoader extends AssetLoader{
   },
   "auth": {
     "log_in": "تسجيل الدخول",
-    "log_in_subtitle": "مرحبا بك مجددا في واصلي",
+    "log_in_subtitle": "مرحبا بك مجددا في وصلي",
     "email_or_phone": "البريد الإلكتروني أو رقم الهاتف",
     "email": "البريد الإلكتروني",
     "email_placeholder": "أدخل بياناتك هنا",
