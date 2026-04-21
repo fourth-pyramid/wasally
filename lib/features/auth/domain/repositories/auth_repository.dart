@@ -10,4 +10,26 @@ abstract class AuthRepository {
   FutureEither<UserEntity> loginWithGoogle();
 
   FutureEither<UserEntity> loginWithFacebook();
+
+  FutureEither<UserEntity> signup({
+    required String name,
+    required String phone,
+    required String email,
+    required String password,
+  });
+
+  FutureEither<void> verifyOtp({
+    required String email,
+    required String otp,
+  });
+
+  FutureEither<void> resendOtp({
+    required String email,
+  });
+
+  FutureEither<void> resetPassword({
+    required String email,
+    required String newPassword,
+    required String otp,
+  });
 }

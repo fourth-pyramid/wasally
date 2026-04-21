@@ -45,6 +45,7 @@ class AppButton extends StatelessWidget {
     final cs = context.theme.colorScheme;
     final appColors = context.theme.extension<AppColorsExtension>()!;
     final isDisabled = onPressed == null || isLoading;
+    final isIOS = context.isIOS;
 
     final buttonHeight = switch (height) {
       ButtonSize.small => 36.h,
@@ -92,44 +93,58 @@ class AppButton extends StatelessWidget {
       ButtonVariant.success => (appColors.success, appColors.onSuccess, null),
     };
 
-    final child = AnimatedSwitcher(
-      duration: AppDurations.fast,
-      switchInCurve: AppCurves.decelerate,
-      child: isLoading
-          ? SizedBox(
-              key: const ValueKey('loader'),
-              width: 20,
-              height: 20,
-              child: CircularProgressIndicator(
-                strokeWidth: 2,
-                color: fg,
-              ),
-            )
-          : Row(
-              key: const ValueKey('content'),
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                if (prefixIcon != null) ...[
-                  prefixIcon!,
-                  const SizedBox(width: 8),
-                ],
-                Text(
-                  label,
-                  style: context.theme.textTheme.labelLarge?.copyWith(
-                    fontSize: fontSize,
-                    fontWeight: FontWeight.w600,
-                    color: isDisabled
-                        ? fg.withValues(alpha: 0.5)
-                        : textColor ?? fg,
+    final Widget buttonChild = isLoading
+        ? SizedBox(
+            width: 20,
+            height: 20,
+            child: isIOS
+                ? CupertinoActivityIndicator(color: fg)
+                : CircularProgressIndicator(
+                    strokeWidth: 2.5,
+                    valueColor: AlwaysStoppedAnimation<Color>(fg),
                   ),
-                ),
-                if (suffixIcon != null) ...[
-                  const SizedBox(width: 8),
-                  suffixIcon!,
-                ],
+          )
+        : Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (prefixIcon != null) ...[
+                prefixIcon!,
+                const SizedBox(width: 8),
               ],
-            ),
-    );
+              Text(
+                label,
+                style: context.theme.textTheme.labelLarge?.copyWith(
+                  fontSize: fontSize,
+                  fontWeight: FontWeight.w600,
+                  color:
+                      isDisabled ? fg.withValues(alpha: 0.5) : textColor ?? fg,
+                ),
+              ),
+              if (suffixIcon != null) ...[
+                const SizedBox(width: 8),
+                suffixIcon!,
+              ],
+            ],
+          );
+
+    if (isIOS) {
+      return AnimatedOpacity(
+        duration: AppDurations.fast,
+        opacity: isDisabled ? 0.6 : 1.0,
+        child: SizedBox(
+          width: isFullWidth ? double.infinity : buttonWidth,
+          height: buttonHeight,
+          child: CupertinoButton(
+            onPressed: isDisabled ? null : onPressed,
+            padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+            color: bg,
+            disabledColor: CupertinoColors.quaternarySystemFill,
+            borderRadius: AppBorders.button,
+            child: buttonChild,
+          ),
+        ),
+      );
+    }
 
     return AnimatedOpacity(
       duration: AppDurations.fast,
@@ -150,7 +165,7 @@ class AppButton extends StatelessWidget {
                   )
                 : const RoundedRectangleBorder(borderRadius: AppBorders.button),
           ),
-          child: child,
+          child: buttonChild,
         ),
       ),
     );

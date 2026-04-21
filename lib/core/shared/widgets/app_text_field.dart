@@ -69,6 +69,50 @@ class AppTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     final cs = context.theme.colorScheme;
     final tt = context.theme.textTheme;
+    final isIOS = context.isIOS;
+
+    if (isIOS) {
+      return CupertinoTextField(
+        controller: controller,
+        placeholder: hint,
+        keyboardType: keyboardType,
+        textInputAction: textInputAction,
+        obscureText: obscureText,
+        readOnly: readOnly,
+        enabled: enabled,
+        maxLines: obscureText ? 1 : maxLines,
+        minLines: minLines,
+        autofocus: autofocus,
+        style: tt.bodyLarge?.copyWith(
+          color: cs.onSurface,
+        ),
+        decoration: BoxDecoration(
+          color: fillColor ?? const Color(0xFFF4F3F9),
+          borderRadius: BorderRadius.circular(borderRadius ?? 12.r),
+        ),
+        padding: contentPadding ??
+            EdgeInsets.symmetric(
+              horizontal: 16.w,
+              vertical: 12.h,
+            ),
+        prefix: prefixIcon != null
+            ? Padding(
+                padding: EdgeInsets.only(left: 12.w),
+                child: prefixIcon,
+              )
+            : null,
+        suffix: suffixIcon != null
+            ? Padding(
+                padding: EdgeInsets.only(right: 12.w),
+                child: suffixIcon,
+              )
+            : null,
+        onChanged: onChanged,
+        onSubmitted: onFieldSubmitted,
+        focusNode: focusNode,
+        clearButtonMode: OverlayVisibilityMode.editing,
+      );
+    }
 
     return TextFormField(
       onTapUpOutside: (event) => FocusManager.instance.primaryFocus?.unfocus(),

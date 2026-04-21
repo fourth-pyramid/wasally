@@ -1,10 +1,10 @@
 import 'package:wassaly/core/imports/core_imports.dart';
 import 'package:wassaly/core/imports/packages_imports.dart';
 import 'package:wassaly/core/injection/injection.dart';
-import 'package:wassaly/features/auth/presentation/bloc/login_bloc.dart';
-import 'package:wassaly/features/auth/presentation/widgets/create_account_link.dart';
-import 'package:wassaly/features/auth/presentation/widgets/login_form.dart';
-import 'package:wassaly/features/auth/presentation/widgets/login_header.dart';
+import 'package:wassaly/features/auth/presentation/bloc/login/login_bloc.dart';
+import 'package:wassaly/features/auth/presentation/widgets/login/create_account_link.dart';
+import 'package:wassaly/features/auth/presentation/widgets/login/login_form.dart';
+import 'package:wassaly/features/auth/presentation/widgets/login/login_header.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -95,7 +95,7 @@ class _LoginViewState extends State<_LoginView> {
       child: Scaffold(
         body: SafeArea(
           child: SingleChildScrollView(
-            padding: EdgeInsets.symmetric(horizontal: 24.w),
+            padding: EdgeInsets.symmetric(horizontal: 18.w),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [

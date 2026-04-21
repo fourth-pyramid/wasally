@@ -1,12 +1,11 @@
 import 'package:wassaly/core/imports/core_imports.dart';
-import 'package:wassaly/core/imports/packages_imports.dart';
 
-class CreateAccountLink extends StatelessWidget {
-  final VoidCallback onCreateAccount;
+class LoginLink extends StatelessWidget {
+  final VoidCallback onLogin;
 
-  const CreateAccountLink({
+  const LoginLink({
     super.key,
-    required this.onCreateAccount,
+    required this.onLogin,
   });
 
   @override
@@ -18,15 +17,15 @@ class CreateAccountLink extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          'auth.dont_have_account'.tr(),
+          'auth.already_have_account'.tr(),
           style: tt.bodySmall?.copyWith(
             color: cs.onSurfaceVariant,
           ),
         ),
         TextButton(
-          onPressed: onCreateAccount,
+          onPressed: onLogin,
           child: Text(
-            'auth.sign_up'.tr(),
+            'auth.log_in'.tr(),
             style: tt.bodyMedium?.copyWith(
               color: cs.primary,
               fontWeight: FontWeight.w700,

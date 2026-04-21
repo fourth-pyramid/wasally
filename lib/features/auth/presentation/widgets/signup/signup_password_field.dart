@@ -1,14 +1,14 @@
 import 'package:wassaly/core/imports/core_imports.dart';
 import 'package:wassaly/core/imports/packages_imports.dart';
-import 'package:wassaly/features/auth/presentation/bloc/login_bloc.dart';
+import 'package:wassaly/features/auth/presentation/bloc/signup/signup_bloc.dart';
 
-class LoginPasswordField extends StatelessWidget {
+class SignupPasswordField extends StatelessWidget {
   final TextEditingController controller;
   final ValueChanged<String> onChanged;
   final ValueChanged<bool> onToggleVisibility;
   final FormFieldValidator<String>? validator;
 
-  const LoginPasswordField({
+  const SignupPasswordField({
     super.key,
     required this.controller,
     required this.onChanged,
@@ -20,7 +20,7 @@ class LoginPasswordField extends StatelessWidget {
   Widget build(BuildContext context) {
     final cs = context.theme.colorScheme;
 
-    return BlocBuilder<LoginBloc, LoginState>(
+    return BlocBuilder<SignupBloc, SignupState>(
       buildWhen: (previous, current) =>
           previous.isPasswordVisible != current.isPasswordVisible,
       builder: (context, state) {
@@ -31,6 +31,7 @@ class LoginPasswordField extends StatelessWidget {
             onChanged: onChanged,
             validator: validator,
             obscureText: !state.isPasswordVisible,
+            textInputAction: TextInputAction.done,
             hint: '••••••••',
             prefixIcon: IconButton(
               onPressed: () => onToggleVisibility(state.isPasswordVisible),
