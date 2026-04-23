@@ -1,5 +1,4 @@
 import 'package:wassaly/core/imports/imports.dart';
-import 'package:wassaly/features/auth/domain/entities/user_entity.dart';
 import 'package:wassaly/features/auth/domain/usecases/signup_usecase.dart';
 
 part 'signup_event.dart';
@@ -16,6 +15,8 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
     on<EmailChanged>(_onEmailChanged);
     on<PasswordChanged>(_onPasswordChanged);
     on<PasswordVisibilityChanged>(_onPasswordVisibilityChanged);
+    on<ConfirmPasswordChanged>(_onConfirmPasswordChanged);
+    on<ConfirmPasswordVisibilityChanged>(_onConfirmPasswordVisibilityChanged);
     on<TermsAcceptedChanged>(_onTermsAcceptedChanged);
     on<SignupSubmitted>(_onSignupSubmitted);
     on<SignupWithGoogle>(_onSignupWithGoogle);
@@ -45,6 +46,21 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
     emit(state.copyWith(isPasswordVisible: event.isVisible));
   }
 
+  void _onConfirmPasswordChanged(
+    ConfirmPasswordChanged event,
+    Emitter<SignupState> emit,
+  ) {
+    emit(state.copyWith(
+        confirmPassword: event.confirmPassword, clearError: true));
+  }
+
+  void _onConfirmPasswordVisibilityChanged(
+    ConfirmPasswordVisibilityChanged event,
+    Emitter<SignupState> emit,
+  ) {
+    emit(state.copyWith(isConfirmPasswordVisible: event.isVisible));
+  }
+
   void _onTermsAcceptedChanged(
     TermsAcceptedChanged event,
     Emitter<SignupState> emit,
@@ -71,6 +87,7 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
         phone: state.phone,
         email: state.email,
         password: state.password,
+        confirmPassword: state.confirmPassword,
       ),
     );
 
@@ -81,7 +98,7 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
       )),
       (user) => emit(state.copyWith(
         isLoading: false,
-        user: user,
+        isRegistered: true,
       )),
     );
   }

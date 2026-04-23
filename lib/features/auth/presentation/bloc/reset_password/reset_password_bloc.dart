@@ -10,11 +10,11 @@ class ResetPasswordBloc extends Bloc<ResetPasswordEvent, ResetPasswordState> {
 
   ResetPasswordBloc({
     required String email,
-    required String otp,
+    required String token,
     ResetPasswordUseCase? resetPasswordUseCase,
   })  : _resetPasswordUseCase =
             resetPasswordUseCase ?? sl<ResetPasswordUseCase>(),
-        super(ResetPasswordState(email: email, otp: otp)) {
+        super(ResetPasswordState(email: email, token: token)) {
     on<NewPasswordChanged>(_onNewPasswordChanged);
     on<ConfirmPasswordChanged>(_onConfirmPasswordChanged);
     on<PasswordVisibilityToggled>(_onPasswordVisibilityToggled);
@@ -26,7 +26,7 @@ class ResetPasswordBloc extends Bloc<ResetPasswordEvent, ResetPasswordState> {
     Emitter<ResetPasswordState> emit,
   ) {
     emit(state.copyWith(
-      newPassword: event.password,
+      password: event.password,
       clearError: true,
       status: ResetPasswordStatus.initial,
     ));
@@ -37,7 +37,7 @@ class ResetPasswordBloc extends Bloc<ResetPasswordEvent, ResetPasswordState> {
     Emitter<ResetPasswordState> emit,
   ) {
     emit(state.copyWith(
-      confirmPassword: event.password,
+      passwordConfirmation: event.password,
       clearError: true,
       status: ResetPasswordStatus.initial,
     ));
@@ -85,8 +85,9 @@ class ResetPasswordBloc extends Bloc<ResetPasswordEvent, ResetPasswordState> {
     final result = await _resetPasswordUseCase(
       ResetPasswordParams(
         email: state.email,
-        newPassword: state.newPassword,
-        otp: state.otp,
+        token: state.token,
+        password: state.password,
+        passwordConfirmation: state.passwordConfirmation,
       ),
     );
 
@@ -97,8 +98,8 @@ class ResetPasswordBloc extends Bloc<ResetPasswordEvent, ResetPasswordState> {
       )),
       (_) => emit(state.copyWith(
         status: ResetPasswordStatus.success,
-        newPassword: '',
-        confirmPassword: '',
+        password: '',
+        passwordConfirmation: '',
       )),
     );
   }

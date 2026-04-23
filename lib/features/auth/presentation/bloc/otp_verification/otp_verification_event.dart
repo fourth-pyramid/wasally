@@ -36,3 +36,7 @@ class TimerTicked extends OtpVerificationEvent {
 class TimerCompleted extends OtpVerificationEvent {
   const TimerCompleted();
 }
+
+class TimerStarted extends OtpVerificationEvent {
+  const TimerStarted();
+}

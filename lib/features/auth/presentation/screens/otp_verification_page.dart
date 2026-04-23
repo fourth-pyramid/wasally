@@ -11,15 +11,23 @@ class OtpVerificationPage extends StatelessWidget {
   const OtpVerificationPage({
     super.key,
     required this.email,
+    this.verificationType = VerificationType.register,
   });
 
   final String email;
+  final VerificationType verificationType;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => sl<OtpVerificationBloc>(param1: email),
-      child: _OtpVerificationView(email: email),
+      create: (_) => sl<OtpVerificationBloc>(
+        param1: email,
+        param2: verificationType,
+      ),
+      child: _OtpVerificationView(
+        email: email,
+        verificationType: verificationType,
+      ),
     );
   }
 }
@@ -27,9 +35,11 @@ class OtpVerificationPage extends StatelessWidget {
 class _OtpVerificationView extends StatefulWidget {
   const _OtpVerificationView({
     required this.email,
+    required this.verificationType,
   });
 
   final String email;
+  final VerificationType verificationType;
 
   @override
   State<_OtpVerificationView> createState() => _OtpVerificationViewState();
@@ -71,16 +81,24 @@ class _OtpVerificationViewState extends State<_OtpVerificationView> {
           previous.errorMessage != current.errorMessage ||
           previous.resendStatus != current.resendStatus,
       listener: (context, state) {
-        if (state.verificationStatus == OtpVerificationStatus.verified) {
+        if (state.verificationStatus ==
+            OtpVerificationStatus.verifiedForRegister) {
           context.showSuccessSnackBar('otp.verification_success'.tr());
-          // Navigate to reset password page with email and OTP
-          context.push(
-            AppRoutes.resetPassword,
-            extra: ResetPasswordArgs(
-              email: state.email,
-              otp: state.otp,
-            ),
-          );
+          context.go(AppRoutes.login);
+        }
+
+        if (state.verificationStatus ==
+            OtpVerificationStatus.verifiedForForgotPassword) {
+          context.showSuccessSnackBar('otp.verification_success'.tr());
+          if (state.resetToken != null) {
+            context.push(
+              AppRoutes.resetPassword,
+              extra: ResetPasswordArgs(
+                email: state.email,
+                token: state.resetToken!,
+              ),
+            );
+          }
         }
 
         if (state.verificationStatus == OtpVerificationStatus.error &&

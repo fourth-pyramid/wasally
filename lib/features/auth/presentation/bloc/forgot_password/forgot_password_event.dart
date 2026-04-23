@@ -16,6 +16,6 @@ class EmailChanged extends ForgotPasswordEvent {
   List<Object?> get props => [email];
 }
 
-class ResetPasswordSubmitted extends ForgotPasswordEvent {
-  const ResetPasswordSubmitted();
+class SendOtpSubmitted extends ForgotPasswordEvent {
+  const SendOtpSubmitted();
 }

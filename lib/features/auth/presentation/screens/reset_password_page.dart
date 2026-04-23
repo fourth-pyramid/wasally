@@ -8,11 +8,11 @@ import 'package:wassaly/features/auth/presentation/widgets/reset_password/reset_
 /// Passed via GoRouter's extra parameter.
 class ResetPasswordArgs {
   final String email;
-  final String otp;
+  final String token;
 
   const ResetPasswordArgs({
     required this.email,
-    required this.otp,
+    required this.token,
   });
 }
 
@@ -20,18 +20,18 @@ class ResetPasswordPage extends StatelessWidget {
   const ResetPasswordPage({
     super.key,
     required this.email,
-    required this.otp,
+    required this.token,
   });
 
   final String email;
-  final String otp;
+  final String token;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => sl<ResetPasswordBloc>(
         param1: email,
-        param2: otp,
+        param2: token,
       ),
       child: _ResetPasswordView(email: email),
     );

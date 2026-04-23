@@ -1,15 +1,20 @@
 import 'dart:async';
 
+import 'package:wassaly/core/imports/core_imports.dart';
 import 'package:wassaly/core/imports/packages_imports.dart';
 import 'package:wassaly/core/injection/injection.dart';
+import 'package:wassaly/features/auth/data/models/verify_otp_response_model.dart';
+import 'package:wassaly/features/auth/domain/usecases/forget_verify_otp_usecase.dart';
 import 'package:wassaly/features/auth/domain/usecases/resend_otp_usecase.dart';
 import 'package:wassaly/features/auth/domain/usecases/verify_otp_usecase.dart';
 
 part 'otp_verification_event.dart';
 part 'otp_verification_state.dart';
 
-class OtpVerificationBloc extends Bloc<OtpVerificationEvent, OtpVerificationState> {
+class OtpVerificationBloc
+    extends Bloc<OtpVerificationEvent, OtpVerificationState> {
   final VerifyOtpUseCase _verifyOtpUseCase;
+  final ForgetVerifyOtpUseCase _forgetVerifyOtpUseCase;
   final ResendOtpUseCase _resendOtpUseCase;
   Timer? _timer;
 
@@ -17,16 +22,27 @@ class OtpVerificationBloc extends Bloc<OtpVerificationEvent, OtpVerificationStat
 
   OtpVerificationBloc({
     required String email,
+    required VerificationType verificationType,
     VerifyOtpUseCase? verifyOtpUseCase,
+    ForgetVerifyOtpUseCase? forgetVerifyOtpUseCase,
     ResendOtpUseCase? resendOtpUseCase,
   })  : _verifyOtpUseCase = verifyOtpUseCase ?? sl<VerifyOtpUseCase>(),
+        _forgetVerifyOtpUseCase =
+            forgetVerifyOtpUseCase ?? sl<ForgetVerifyOtpUseCase>(),
         _resendOtpUseCase = resendOtpUseCase ?? sl<ResendOtpUseCase>(),
-        super(OtpVerificationState(email: email)) {
+        super(OtpVerificationState(
+          email: email,
+          verificationType: verificationType,
+        )) {
     on<OtpDigitChanged>(_onOtpDigitChanged);
     on<VerifyOtpSubmitted>(_onVerifyOtpSubmitted);
     on<ResendOtpRequested>(_onResendOtpRequested);
     on<TimerTicked>(_onTimerTicked);
     on<TimerCompleted>(_onTimerCompleted);
+    on<TimerStarted>(_onTimerStarted);
+
+    // Start timer on initialization
+    add(const TimerStarted());
   }
 
   void _onOtpDigitChanged(
@@ -57,22 +73,43 @@ class OtpVerificationBloc extends Bloc<OtpVerificationEvent, OtpVerificationStat
       clearError: true,
     ));
 
-    final result = await _verifyOtpUseCase(
-      VerifyOtpParams(
-        email: state.email,
-        otp: state.otp,
-      ),
-    );
+    if (state.verificationType.isForgotPassword) {
+      final result = await _forgetVerifyOtpUseCase(
+        ForgetVerifyOtpParams(
+          email: state.email,
+          otp: state.otp,
+        ),
+      );
 
-    result.fold(
-      (failure) => emit(state.copyWith(
-        verificationStatus: OtpVerificationStatus.error,
-        errorMessage: failure.message,
-      )),
-      (_) => emit(state.copyWith(
-        verificationStatus: OtpVerificationStatus.verified,
-      )),
-    );
+      result.fold(
+        (failure) => emit(state.copyWith(
+          verificationStatus: OtpVerificationStatus.error,
+          errorMessage: failure.message,
+        )),
+        (response) => emit(state.copyWith(
+          verificationStatus: OtpVerificationStatus.verifiedForForgotPassword,
+          resetToken: response.token,
+        )),
+      );
+    } else {
+      final result = await _verifyOtpUseCase(
+        VerifyOtpParams(
+          email: state.email,
+          otp: state.otp,
+        ),
+      );
+
+      result.fold(
+        (failure) => emit(state.copyWith(
+          verificationStatus: OtpVerificationStatus.error,
+          errorMessage: failure.message,
+        )),
+        (response) => emit(state.copyWith(
+          verificationStatus: OtpVerificationStatus.verifiedForRegister,
+          verifyOtpResponse: response,
+        )),
+      );
+    }
   }
 
   Future<void> _onResendOtpRequested(
@@ -123,6 +160,17 @@ class OtpVerificationBloc extends Bloc<OtpVerificationEvent, OtpVerificationStat
       timerSeconds: 0,
       resendStatus: ResendOtpStatus.initial,
     ));
+  }
+
+  void _onTimerStarted(
+    TimerStarted event,
+    Emitter<OtpVerificationState> emit,
+  ) {
+    emit(state.copyWith(
+      timerSeconds: _timerDuration,
+      isTimerRunning: true,
+    ));
+    _startTimer();
   }
 
   void _startTimer() {

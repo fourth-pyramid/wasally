@@ -9,20 +9,23 @@ class ResetPasswordUseCase {
   FutureEither<void> call(ResetPasswordParams params) {
     return _repository.resetPassword(
       email: params.email,
-      newPassword: params.newPassword,
-      otp: params.otp,
+      token: params.token,
+      password: params.password,
+      passwordConfirmation: params.passwordConfirmation,
     );
   }
 }
 
 class ResetPasswordParams {
   final String email;
-  final String newPassword;
-  final String otp;
+  final String token;
+  final String password;
+  final String passwordConfirmation;
 
   const ResetPasswordParams({
     required this.email,
-    required this.newPassword,
-    required this.otp,
+    required this.token,
+    required this.password,
+    required this.passwordConfirmation,
   });
 }

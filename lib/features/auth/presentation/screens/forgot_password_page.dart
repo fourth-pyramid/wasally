@@ -47,7 +47,7 @@ class _ForgotPasswordViewState extends State<_ForgotPasswordView> {
 
   void _onSubmit() {
     if (_formKey.currentState?.validate() ?? false) {
-      context.read<ForgotPasswordBloc>().add(const ResetPasswordSubmitted());
+      context.read<ForgotPasswordBloc>().add(const SendOtpSubmitted());
     }
   }
 
@@ -64,8 +64,13 @@ class _ForgotPasswordViewState extends State<_ForgotPasswordView> {
       listener: (context, state) {
         if (state.isSuccess) {
           context.showSuccessSnackBar('auth.reset_link_sent'.tr());
-          // Navigate to OTP verification with email
-          context.push(AppRoutes.otpVerification, extra: state.email);
+          context.push(
+            AppRoutes.otpVerification,
+            extra: {
+              'email': state.email,
+              'verificationType': VerificationType.forgotPassword,
+            },
+          );
         }
         if (state.errorMessage != null) {
           context.showErrorSnackBar(state.errorMessage!);

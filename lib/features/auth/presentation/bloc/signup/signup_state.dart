@@ -5,22 +5,26 @@ class SignupState extends Equatable {
   final String phone;
   final String email;
   final String password;
+  final String confirmPassword;
   final bool isPasswordVisible;
+  final bool isConfirmPasswordVisible;
   final bool isTermsAccepted;
   final bool isLoading;
   final String? errorMessage;
-  final UserEntity? user;
+  final bool isRegistered;
 
   const SignupState({
     this.name = '',
     this.phone = '',
     this.email = '',
     this.password = '',
+    this.confirmPassword = '',
     this.isPasswordVisible = false,
+    this.isConfirmPasswordVisible = false,
     this.isTermsAccepted = false,
     this.isLoading = false,
     this.errorMessage,
-    this.user,
+    this.isRegistered = false,
   });
 
   SignupState copyWith({
@@ -28,24 +32,30 @@ class SignupState extends Equatable {
     String? phone,
     String? email,
     String? password,
+    String? confirmPassword,
     bool? isPasswordVisible,
+    bool? isConfirmPasswordVisible,
     bool? isTermsAccepted,
     bool? isLoading,
     String? errorMessage,
-    UserEntity? user,
+    bool? isRegistered,
     bool clearError = false,
-    bool clearUser = false,
+    bool clearRegistered = false,
   }) {
     return SignupState(
       name: name ?? this.name,
       phone: phone ?? this.phone,
       email: email ?? this.email,
       password: password ?? this.password,
+      confirmPassword: confirmPassword ?? this.confirmPassword,
       isPasswordVisible: isPasswordVisible ?? this.isPasswordVisible,
+      isConfirmPasswordVisible:
+          isConfirmPasswordVisible ?? this.isConfirmPasswordVisible,
       isTermsAccepted: isTermsAccepted ?? this.isTermsAccepted,
       isLoading: isLoading ?? this.isLoading,
       errorMessage: clearError ? null : (errorMessage ?? this.errorMessage),
-      user: clearUser ? null : (user ?? this.user),
+      isRegistered:
+          clearRegistered ? false : (isRegistered ?? this.isRegistered),
     );
   }
 
@@ -55,10 +65,12 @@ class SignupState extends Equatable {
         phone,
         email,
         password,
+        confirmPassword,
         isPasswordVisible,
+        isConfirmPasswordVisible,
         isTermsAccepted,
         isLoading,
         errorMessage,
-        user,
+        isRegistered,
       ];
 }

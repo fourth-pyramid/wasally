@@ -52,6 +52,24 @@ class PasswordVisibilityChanged extends SignupEvent {
   List<Object?> get props => [isVisible];
 }
 
+class ConfirmPasswordChanged extends SignupEvent {
+  final String confirmPassword;
+
+  const ConfirmPasswordChanged(this.confirmPassword);
+
+  @override
+  List<Object?> get props => [confirmPassword];
+}
+
+class ConfirmPasswordVisibilityChanged extends SignupEvent {
+  final bool isVisible;
+
+  const ConfirmPasswordVisibilityChanged(this.isVisible);
+
+  @override
+  List<Object?> get props => [isVisible];
+}
+
 class TermsAcceptedChanged extends SignupEvent {
   final bool isAccepted;
 

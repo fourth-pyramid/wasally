@@ -63,7 +63,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
     if (value == null || value.isEmpty) {
       return 'auth.confirm_password_required'.tr();
     }
-    if (value != state.newPassword) {
+    if (value != state.password) {
       return state.confirmPasswordError?.tr();
     }
     return null;
@@ -75,8 +75,8 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
 
     return BlocBuilder<ResetPasswordBloc, ResetPasswordState>(
       buildWhen: (previous, current) =>
-          previous.newPassword != current.newPassword ||
-          previous.confirmPassword != current.confirmPassword ||
+          previous.password != current.password ||
+          previous.passwordConfirmation != current.passwordConfirmation ||
           previous.isNewPasswordVisible != current.isNewPasswordVisible ||
           previous.isConfirmPasswordVisible !=
               current.isConfirmPasswordVisible ||
@@ -131,7 +131,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
               AnimatedSize(
                 duration: const Duration(milliseconds: 300),
                 curve: Curves.easeInOut,
-                child: state.newPassword.isNotEmpty
+                child: state.password.isNotEmpty
                     ? Padding(
                         padding: EdgeInsets.only(top: 12.h),
                         child: PasswordStrengthIndicator(

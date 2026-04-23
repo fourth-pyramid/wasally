@@ -13,6 +13,7 @@ class SignupUseCase {
       phone: params.phone,
       email: params.email,
       password: params.password,
+      confirmPassword: params.confirmPassword,
     );
   }
 }
@@ -22,11 +23,13 @@ class SignupParams {
   final String phone;
   final String email;
   final String password;
+  final String confirmPassword;
 
   const SignupParams({
     required this.name,
     required this.phone,
     required this.email,
     required this.password,
+    required this.confirmPassword,
   });
 }

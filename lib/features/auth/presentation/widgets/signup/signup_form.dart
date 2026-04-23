@@ -15,11 +15,14 @@ class SignupForm extends StatelessWidget {
   final TextEditingController phoneController;
   final TextEditingController emailController;
   final TextEditingController passwordController;
+  final TextEditingController confirmPasswordController;
   final ValueChanged<String> onNameChanged;
   final ValueChanged<String> onPhoneChanged;
   final ValueChanged<String> onEmailChanged;
   final ValueChanged<String> onPasswordChanged;
   final ValueChanged<bool> onTogglePasswordVisibility;
+  final ValueChanged<String> onConfirmPasswordChanged;
+  final ValueChanged<bool> onToggleConfirmPasswordVisibility;
   final VoidCallback onSignup;
   final VoidCallback onSignupWithGoogle;
   final VoidCallback onSignupWithFacebook;
@@ -33,11 +36,14 @@ class SignupForm extends StatelessWidget {
     required this.phoneController,
     required this.emailController,
     required this.passwordController,
+    required this.confirmPasswordController,
     required this.onNameChanged,
     required this.onPhoneChanged,
     required this.onEmailChanged,
     required this.onPasswordChanged,
     required this.onTogglePasswordVisibility,
+    required this.onConfirmPasswordChanged,
+    required this.onToggleConfirmPasswordVisibility,
     required this.onSignup,
     required this.onSignupWithGoogle,
     required this.onSignupWithFacebook,
@@ -141,6 +147,31 @@ class SignupForm extends StatelessWidget {
                 }
                 if (value!.length < 6) {
                   return 'auth.password_too_short'.tr();
+                }
+                return null;
+              },
+            ),
+            SizedBox(height: 16.h),
+            Text(
+              'auth.confirm_password'.tr(),
+              textAlign: TextAlign.start,
+              style: tt.bodyMedium?.copyWith(
+                color: cs.primary,
+                fontWeight: FontWeight.w900,
+              ),
+            ),
+            SizedBox(height: 12.h),
+            SignupPasswordField(
+              controller: confirmPasswordController,
+              onChanged: onConfirmPasswordChanged,
+              onToggleVisibility: onToggleConfirmPasswordVisibility,
+              isConfirmPassword: true,
+              validator: (value) {
+                if (value.isNullOrEmpty) {
+                  return 'auth.confirm_password_required'.tr();
+                }
+                if (value != passwordController.text) {
+                  return 'auth.passwords_do_not_match'.tr();
                 }
                 return null;
               },

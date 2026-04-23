@@ -31,6 +31,7 @@ class _SignupViewState extends State<_SignupView> {
   late final TextEditingController _phoneController;
   late final TextEditingController _emailController;
   late final TextEditingController _passwordController;
+  late final TextEditingController _confirmPasswordController;
 
   @override
   void initState() {
@@ -39,6 +40,7 @@ class _SignupViewState extends State<_SignupView> {
     _phoneController = TextEditingController();
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
+    _confirmPasswordController = TextEditingController();
   }
 
   @override
@@ -47,6 +49,7 @@ class _SignupViewState extends State<_SignupView> {
     _phoneController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+    _confirmPasswordController.dispose();
     super.dispose();
   }
 
@@ -68,6 +71,16 @@ class _SignupViewState extends State<_SignupView> {
 
   void _onTogglePasswordVisibility(bool isVisible) {
     context.read<SignupBloc>().add(PasswordVisibilityChanged(!isVisible));
+  }
+
+  void _onConfirmPasswordChanged(String value) {
+    context.read<SignupBloc>().add(ConfirmPasswordChanged(value));
+  }
+
+  void _onToggleConfirmPasswordVisibility(bool isVisible) {
+    context
+        .read<SignupBloc>()
+        .add(ConfirmPasswordVisibilityChanged(!isVisible));
   }
 
   void _onSignup() {
@@ -100,11 +113,18 @@ class _SignupViewState extends State<_SignupView> {
   Widget build(BuildContext context) {
     return BlocListener<SignupBloc, SignupState>(
       listenWhen: (previous, current) =>
-          previous.user != current.user ||
+          previous.isRegistered != current.isRegistered ||
           previous.errorMessage != current.errorMessage,
       listener: (context, state) {
-        if (state.user != null) {
-          context.go(AppRoutes.home);
+        if (state.isRegistered) {
+          context.showSuccessSnackBar('تم ارسال كود التحقق بنجاح');
+          context.push(
+            AppRoutes.otpVerification,
+            extra: {
+              'email': state.email,
+              'verificationType': VerificationType.register,
+            },
+          );
         }
         if (state.errorMessage != null) {
           context.showErrorSnackBar(state.errorMessage!);
@@ -125,11 +145,15 @@ class _SignupViewState extends State<_SignupView> {
                   phoneController: _phoneController,
                   emailController: _emailController,
                   passwordController: _passwordController,
+                  confirmPasswordController: _confirmPasswordController,
                   onNameChanged: _onNameChanged,
                   onPhoneChanged: _onPhoneChanged,
                   onEmailChanged: _onEmailChanged,
                   onPasswordChanged: _onPasswordChanged,
                   onTogglePasswordVisibility: _onTogglePasswordVisibility,
+                  onConfirmPasswordChanged: _onConfirmPasswordChanged,
+                  onToggleConfirmPasswordVisibility:
+                      _onToggleConfirmPasswordVisibility,
                   onSignup: _onSignup,
                   onSignupWithGoogle: _onSignupWithGoogle,
                   onSignupWithFacebook: _onSignupWithFacebook,

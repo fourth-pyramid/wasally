@@ -1,32 +1,46 @@
 import 'package:wassaly/core/imports/packages_imports.dart';
+import 'package:wassaly/core/injection/injection.dart';
+import 'package:wassaly/features/auth/domain/usecases/forget_send_otp_usecase.dart';
 
 part 'forgot_password_event.dart';
 part 'forgot_password_state.dart';
 
 class ForgotPasswordBloc
     extends Bloc<ForgotPasswordEvent, ForgotPasswordState> {
-  ForgotPasswordBloc() : super(const ForgotPasswordState()) {
+  final ForgetSendOtpUseCase _forgetSendOtpUseCase;
+
+  ForgotPasswordBloc({
+    ForgetSendOtpUseCase? forgetSendOtpUseCase,
+  })  : _forgetSendOtpUseCase =
+            forgetSendOtpUseCase ?? sl<ForgetSendOtpUseCase>(),
+        super(const ForgotPasswordState()) {
     on<EmailChanged>(_onEmailChanged);
-    on<ResetPasswordSubmitted>(_onResetPasswordSubmitted);
+    on<SendOtpSubmitted>(_onSendOtpSubmitted);
   }
 
   void _onEmailChanged(EmailChanged event, Emitter<ForgotPasswordState> emit) {
     emit(state.copyWith(email: event.email, clearError: true));
   }
 
-  Future<void> _onResetPasswordSubmitted(
-    ResetPasswordSubmitted event,
+  Future<void> _onSendOtpSubmitted(
+    SendOtpSubmitted event,
     Emitter<ForgotPasswordState> emit,
   ) async {
     emit(state.copyWith(isLoading: true, clearError: true));
 
-    // TODO: Implement actual password reset API call
-    await Future<void>.delayed(const Duration(seconds: 1));
+    final result = await _forgetSendOtpUseCase(
+      ForgetSendOtpParams(email: state.email),
+    );
 
-    // Simulate success for now
-    emit(state.copyWith(
-      isLoading: false,
-      isSuccess: true,
-    ));
+    result.fold(
+      (failure) => emit(state.copyWith(
+        isLoading: false,
+        errorMessage: failure.message,
+      )),
+      (_) => emit(state.copyWith(
+        isLoading: false,
+        isSuccess: true,
+      )),
+    );
   }
 }

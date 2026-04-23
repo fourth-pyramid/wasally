@@ -18,9 +18,17 @@ class AppConfig {
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
+          'Accept-Language': 'ar',
         },
       ),
     );
+
+    // Bypass SSL certificate validation for development
+    // WARNING: Remove for production
+    configureDioForDevelopment(dio);
+
+    // Add auth token interceptor
+    _addAuthInterceptor();
 
     dio.interceptors.add(
       InterceptorsWrapper(
@@ -41,6 +49,51 @@ class AppConfig {
         },
       ),
     );
+  }
+
+  /// Adds an interceptor that automatically attaches the Authorization header
+  /// with the Bearer token from secure storage.
+  static void _addAuthInterceptor() {
+    dio.interceptors.add(
+      InterceptorsWrapper(
+        onRequest: (options, handler) async {
+          // Skip auth for login and public endpoints
+          if (_isPublicEndpoint(options.path)) {
+            return handler.next(options);
+          }
+
+          // Get token from secure storage
+          final tokenResult =
+              await SecureStorageService.instance.read('auth_token');
+
+          final token = tokenResult.fold(
+            (failure) => null,
+            (token) => token,
+          );
+
+          if (token != null && token.isNotEmpty) {
+            options.headers['Authorization'] = 'Bearer $token';
+          }
+
+          return handler.next(options);
+        },
+      ),
+    );
+  }
+
+  /// Check if the endpoint is public (doesn't require auth)
+  static bool _isPublicEndpoint(String path) {
+    final publicPaths = [
+      '/api/login',
+      '/api/register',
+      '/api/verify-otp',
+      '/api/resend-otp',
+      '/api/forget-send-otp',
+      '/api/forget-verify-otp',
+      '/api/reset-password',
+    ];
+
+    return publicPaths.any((publicPath) => path.contains(publicPath));
   }
 
   static String _getBaseUrl() {
