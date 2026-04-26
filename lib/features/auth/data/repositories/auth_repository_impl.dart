@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:fpdart/fpdart.dart';
+import 'package:wassaly/core/services/deep_link_service.dart';
 import 'package:wassaly/core/utils/failure.dart';
 import 'package:wassaly/core/utils/typedefs.dart';
 import 'package:wassaly/features/auth/data/datasources/auth_local_datasource.dart';
@@ -16,7 +17,7 @@ class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource _remoteDataSource;
   final AuthLocalDataSource _localDataSource;
 
-  const AuthRepositoryImpl(this._remoteDataSource, this._localDataSource);
+  AuthRepositoryImpl(this._remoteDataSource, this._localDataSource);
 
   @override
   FutureEither<UserEntity> login({
@@ -94,6 +95,44 @@ class AuthRepositoryImpl implements AuthRepository {
       return Left(e);
     } catch (e) {
       return Left(UnknownFailure('Unexpected error: $e'));
+    }
+  }
+
+  @override
+  Future<bool> openGoogleLoginUrl() {
+    return DeepLinkService.instance.openGoogleLoginUrl();
+  }
+
+  @override
+  FutureEither<UserEntity> googleLogin({
+    required String token,
+    required String id,
+    required String fullName,
+    required String email,
+    String? avatar,
+  }) async {
+    try {
+      // Save token to secure storage
+      await _localDataSource.saveToken(token);
+
+      // Create user model from Google login data
+      final user = UserModel(
+        id: id,
+        email: email,
+        name: fullName,
+        phone: null,
+        avatarUrl: avatar,
+        token: token,
+      );
+
+      // Cache user locally
+      await _localDataSource.cacheUser(user);
+
+      return Right(user);
+    } on Failure catch (e) {
+      return Left(e);
+    } catch (e) {
+      return Left(UnknownFailure('Unexpected error during Google login: $e'));
     }
   }
 

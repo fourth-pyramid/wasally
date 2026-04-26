@@ -59,6 +59,8 @@ dependencies:
   app_version_update: ^6.2.0
 
   # OAuth
+  url_launcher: ^6.3.0
+  app_links: ^6.3.3
 
   # Localization
   easy_localization: ^3.0.8

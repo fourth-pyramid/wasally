@@ -31,7 +31,15 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
 
-          
+            <!-- Deep Link Intent Filter for Google Login Callback -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="wasly"/>
+                <data android:host="auth"/>
+                <data android:pathPrefix="/callback"/>
+            </intent-filter>
 
         </activity>
         <!-- Don't delete the meta-data below.
@@ -59,6 +67,14 @@
             <action android:name="android.intent.action.GET_CONTENT"/>
             <data android:mimeType="video/*"/>
         </intent>
-       
+        <!-- Required for url_launcher to open HTTPS URLs -->
+        <intent>
+            <action android:name="android.intent.action.VIEW"/>
+            <data android:scheme="https"/>
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW"/>
+            <data android:scheme="http"/>
+        </intent>
     </queries>
 </manifest>

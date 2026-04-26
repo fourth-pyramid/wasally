@@ -12,6 +12,18 @@ abstract class AuthRepository {
     required String password,
   });
 
+  /// Open Google login URL in external browser
+  Future<bool> openGoogleLoginUrl();
+
+  /// Complete Google login with callback data from deep link
+  FutureEither<UserEntity> googleLogin({
+    required String token,
+    required String id,
+    required String fullName,
+    required String email,
+    String? avatar,
+  });
+
   FutureEither<UserEntity> getProfile();
 
   FutureEither<String?> getSavedToken();

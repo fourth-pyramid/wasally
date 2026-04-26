@@ -1,4 +1,5 @@
 export 'copy_service.dart';
+export 'deep_link_service.dart';
 export 'dio_http_client.dart';
 export 'dio_service.dart';
 export 'internet_connection_service.dart';

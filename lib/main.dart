@@ -25,6 +25,9 @@ Future<void> main() async {
   await dotenv.load(fileName: '.env');
   await initDependencies();
 
+  // Initialize DeepLinkService for Google OAuth callbacks
+  await DeepLinkService.instance.initialize();
+
   runApp(
     const LocalizationWrapper(
       child: StateWrapper(

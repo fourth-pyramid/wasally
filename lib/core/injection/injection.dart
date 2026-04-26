@@ -21,6 +21,9 @@ import 'package:wassaly/features/auth/presentation/bloc/reset_password/reset_pas
 import 'package:wassaly/features/auth/presentation/bloc/session/session_bloc.dart';
 import 'package:wassaly/features/auth/presentation/bloc/signup/signup_bloc.dart';
 
+import '../../features/auth/domain/usecases/google_login_usecase.dart';
+import '../../features/auth/presentation/bloc/google_login/google_login_bloc.dart';
+
 final sl = GetIt.instance;
 
 Future<void> initDependencies() async {
@@ -34,6 +37,9 @@ Future<void> initDependencies() async {
   sl.registerFactory(() => LoginBloc(
         loginUseCase: sl(),
         resendOtpUseCase: sl(),
+      ));
+  sl.registerFactory(() => GoogleLoginBloc(
+        googleLoginUseCase: sl(),
       ));
   sl.registerFactory(() => SignupBloc(
         signupUseCase: sl(),
@@ -59,6 +65,7 @@ Future<void> initDependencies() async {
 
   // UseCases
   sl.registerLazySingleton(() => LoginUseCase(sl()));
+  sl.registerLazySingleton(() => GoogleLoginUseCase(sl()));
   sl.registerLazySingleton(() => GetProfileUseCase(sl()));
   sl.registerLazySingleton(() => GetSavedTokenUseCase(sl()));
   sl.registerLazySingleton(() => LogoutUseCase(sl()));
