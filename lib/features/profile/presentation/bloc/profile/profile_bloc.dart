@@ -4,6 +4,7 @@ import 'package:wassaly/features/auth/domain/usecases/get_cached_user_usecase.da
 import 'package:wassaly/features/auth/domain/usecases/get_profile_usecase.dart';
 import 'package:wassaly/features/auth/domain/usecases/logout_usecase.dart'
     as auth;
+import 'package:wassaly/features/auth/presentation/bloc/session/session_bloc.dart';
 import 'package:wassaly/features/profile/domain/entities/address_entity.dart';
 import 'package:wassaly/features/profile/domain/entities/center_entity.dart';
 import 'package:wassaly/features/profile/domain/entities/governorate_entity.dart';
@@ -33,6 +34,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   final GetCentersUseCase _getCentersUseCase;
   final UpdateAddressUseCase _updateAddressUseCase;
   final DeleteAddressUseCase _deleteAddressUseCase;
+  final SessionBloc _sessionBloc;
 
   ProfileBloc({
     required GetCachedUserUseCase getCachedUserUseCase,
@@ -47,6 +49,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     required GetCentersUseCase getCentersUseCase,
     required UpdateAddressUseCase updateAddressUseCase,
     required DeleteAddressUseCase deleteAddressUseCase,
+    required SessionBloc sessionBloc,
   })  : _getCachedUserUseCase = getCachedUserUseCase,
         _getProfileUseCase = getProfileUseCase,
         _updateProfileUseCase = updateProfileUseCase,
@@ -59,6 +62,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         _getCentersUseCase = getCentersUseCase,
         _updateAddressUseCase = updateAddressUseCase,
         _deleteAddressUseCase = deleteAddressUseCase,
+        _sessionBloc = sessionBloc,
         super(const ProfileState()) {
     on<ProfileFetched>(_onProfileFetched);
     on<ProfileRefreshRequested>(_onProfileRefreshRequested);
@@ -193,11 +197,15 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         actionStatus: AppStatus.failure,
         actionError: failure.message,
       )),
-      (_) => emit(state.copyWith(
-        actionStatus: AppStatus.success,
-        user: null,
-        clearActionError: true,
-      )),
+      (_) {
+        emit(state.copyWith(
+          actionStatus: AppStatus.success,
+          user: null,
+          clearActionError: true,
+        ));
+        // Trigger session logout for navigation
+        _sessionBloc.add(const SessionLogoutRequested());
+      },
     );
   }
 

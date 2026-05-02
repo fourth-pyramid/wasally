@@ -177,7 +177,7 @@ class _EditProfileViewState extends State<_EditProfileView> {
                 ),
                 AppSpacing.xl.kH,
                 EditProfileSaveButton(onPressed: _submit),
-                AppSpacing.xl.kH,
+                AppSpacing.md.kH,
                 AppButton(
                   label: 'profile.delete_account'.tr(),
                   onPressed: _showDeleteAccountDialog,

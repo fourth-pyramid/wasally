@@ -1,11 +1,12 @@
 import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/profile/presentation/bloc/profile/profile_bloc.dart';
 import 'package:wassaly/features/profile/presentation/widgets/profile/profile_app_bar.dart';
-import 'package:wassaly/features/profile/presentation/widgets/profile/profile_header.dart';
 import 'package:wassaly/features/profile/presentation/widgets/profile/profile_logout_button.dart';
 import 'package:wassaly/features/profile/presentation/widgets/profile/profile_settings_section.dart';
 import 'package:wassaly/features/profile/presentation/widgets/profile/profile_stats_card.dart';
 import 'package:wassaly/features/profile/presentation/widgets/profile/profile_support_section.dart';
+
+import '../widgets/profile/profile_header.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -55,7 +56,11 @@ class _ProfileView extends StatelessWidget {
                   AppSpacing.md.verticalSpace,
                   const ProfileSupportSection(),
                   AppSpacing.md.verticalSpace,
-                  const ProfileLogoutButton(),
+                  ProfileLogoutButton(
+                    onLogoutAllDevices: () => context
+                        .read<ProfileBloc>()
+                        .add(const ProfileLoggedOutAllDevices()),
+                  ),
                   AppSpacing.md.verticalSpace,
                 ],
               ),

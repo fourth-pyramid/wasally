@@ -180,6 +180,8 @@ class _AddressCard extends StatelessWidget {
                       isDangerous: true,
                     );
 
+                    if (!context.mounted) return;
+
                     if (confirmed ?? false) {
                       context.read<ProfileBloc>().add(
                             AddressDeleted(addressId: address.id),

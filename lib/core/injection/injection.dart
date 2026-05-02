@@ -73,6 +73,7 @@ Future<void> initDependencies() async {
         getCentersUseCase: sl(),
         updateAddressUseCase: sl(),
         deleteAddressUseCase: sl(),
+        sessionBloc: sl(),
       ));
   sl.registerLazySingleton(() => SettingsBloc(
         storage: StorageService.instance,

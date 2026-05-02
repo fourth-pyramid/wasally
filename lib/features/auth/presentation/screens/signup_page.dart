@@ -94,11 +94,11 @@ class _SignupViewState extends State<_SignupView> {
   }
 
   void _onTermsPressed() {
-    // TODO: Navigate to terms of service
+    context.push(AppRoutes.termsOfService);
   }
 
   void _onPrivacyPressed() {
-    // TODO: Navigate to privacy policy
+    context.push(AppRoutes.privacyPolicy);
   }
 
   void _onAvatarSelected(File file) {

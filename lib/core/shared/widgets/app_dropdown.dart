@@ -63,82 +63,73 @@ class AppDropdown<T> extends StatelessWidget {
     final tt = context.theme.textTheme;
     final radius = borderRadius ?? 12.r;
 
-    return GestureDetector(
-        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-        behavior: HitTestBehavior.translucent,
-        child: DropdownButtonFormField<T>(
-          initialValue: value,
-          items: items,
-          onChanged: enabled ? onChanged : null,
-          validator: validator,
-          isExpanded: isExpanded,
-          alignment: alignment,
-          menuMaxHeight: menuMaxHeight,
-          elevation: elevation,
-          dropdownColor: cs.surfaceContainerLowest,
-          icon: suffixIcon ??
-              Icon(
-                Icons.arrow_drop_down,
-                color: enabled
-                    ? cs.onSurface
-                    : cs.onSurfaceVariant.withValues(alpha: 0.5),
-              ),
-          style: tt.bodyLarge?.copyWith(
+    return DropdownButtonFormField<T>(
+      initialValue: value,
+      items: items,
+      onChanged: enabled ? onChanged : null,
+      validator: validator,
+      isExpanded: isExpanded,
+      alignment: alignment,
+      menuMaxHeight: menuMaxHeight,
+      elevation: elevation,
+      dropdownColor: cs.surfaceContainerLowest,
+      icon: suffixIcon ??
+          Icon(
+            Icons.arrow_drop_down,
             color: enabled
                 ? cs.onSurface
                 : cs.onSurfaceVariant.withValues(alpha: 0.5),
           ),
-          decoration: InputDecoration(
-            isDense: true,
-            filled: true,
-            fillColor: fillColor ??
-                (enabled
-                    ? cs.surfaceContainerHighest.withValues(alpha: 0.5)
-                    : cs.surfaceContainerHighest.withValues(alpha: 0.2)),
-            labelText: label,
-            hintText: hint,
-            prefixIcon: prefixIcon != null
-                ? Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 0.w),
-                    child: prefixIcon,
-                  )
-                : null,
-            contentPadding: contentPadding ??
-                EdgeInsets.symmetric(
-                  horizontal: 16.w,
-                  vertical: 12.h,
-                ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(radius),
-              borderSide: BorderSide.none,
+      style: tt.bodyLarge?.copyWith(
+        color:
+            enabled ? cs.onSurface : cs.onSurfaceVariant.withValues(alpha: 0.5),
+      ),
+      decoration: InputDecoration(
+        isDense: true,
+        filled: true,
+        fillColor: fillColor ??
+            (enabled
+                ? cs.surfaceContainerHighest.withValues(alpha: 0.5)
+                : cs.surfaceContainerHighest.withValues(alpha: 0.2)),
+        labelText: label,
+        hintText: hint,
+        prefixIcon: prefixIcon,
+        contentPadding: contentPadding ??
+            EdgeInsets.symmetric(
+              horizontal: 16.w,
+              vertical: 12.h,
             ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(radius),
-              borderSide: BorderSide.none,
-            ),
-            disabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(radius),
-              borderSide: BorderSide.none,
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(radius),
-              borderSide: BorderSide(color: cs.primary, width: 2),
-            ),
-            errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(radius),
-              borderSide: BorderSide(color: cs.error),
-            ),
-            focusedErrorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(radius),
-              borderSide: BorderSide(color: cs.error, width: 2),
-            ),
-            labelStyle: tt.labelMedium?.copyWith(
-              color: cs.onSurfaceVariant.withValues(alpha: 0.7),
-            ),
-            hintStyle: tt.labelMedium?.copyWith(
-              color: cs.onSurfaceVariant.withValues(alpha: 0.5),
-            ),
-          ),
-        ));
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(radius),
+          borderSide: BorderSide.none,
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(radius),
+          borderSide: BorderSide.none,
+        ),
+        disabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(radius),
+          borderSide: BorderSide.none,
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(radius),
+          borderSide: BorderSide(color: cs.primary, width: 2),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(radius),
+          borderSide: BorderSide(color: cs.error),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(radius),
+          borderSide: BorderSide(color: cs.error, width: 2),
+        ),
+        labelStyle: tt.labelMedium?.copyWith(
+          color: cs.onSurfaceVariant.withValues(alpha: 0.7),
+        ),
+        hintStyle: tt.labelMedium?.copyWith(
+          color: cs.onSurfaceVariant.withValues(alpha: 0.5),
+        ),
+      ),
+    );
   }
 }

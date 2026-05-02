@@ -183,6 +183,9 @@ class _AddAddressViewState extends State<_AddAddressView> {
           label: 'profile.governorate'.tr(),
           prefixIcon: const Icon(Icons.map_outlined),
           value: _selectedGovernorateId,
+          menuMaxHeight: 300.h,
+          isExpanded: false,
+          alignment: AlignmentDirectional.centerStart,
           items: state.governorates.map((g) {
             return DropdownMenuItem(
               value: g.id,
@@ -233,6 +236,9 @@ class _AddAddressViewState extends State<_AddAddressView> {
           prefixIcon: const Icon(Icons.location_city_outlined),
           value: _selectedCenterId,
           enabled: !isDisabled && state.centers.isNotEmpty,
+          menuMaxHeight: 300.h,
+          isExpanded: false,
+          alignment: AlignmentDirectional.centerStart,
           items: state.centers.map((c) {
             return DropdownMenuItem(
               value: c.id,

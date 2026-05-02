@@ -19,8 +19,10 @@ import 'package:wassaly/features/profile/presentation/bloc/profile/profile_bloc.
 import 'package:wassaly/features/profile/presentation/screens/add_address_page.dart';
 import 'package:wassaly/features/profile/presentation/screens/addresses_page.dart';
 import 'package:wassaly/features/profile/presentation/screens/edit_profile_page.dart';
-import 'package:wassaly/features/profile/presentation/screens/privacy_policy_page.dart';
 import 'package:wassaly/features/profile/presentation/screens/profile_page.dart';
+
+import '../../features/profile/presentation/screens/privacy_policy_page.dart';
+import '../../features/profile/presentation/screens/terms_of_service_page.dart';
 
 final GoRouter appRouter = GoRouter(
   navigatorKey: rootNavigatorKey,
@@ -151,12 +153,6 @@ final GoRouter appRouter = GoRouter(
                     ),
                   ],
                 ),
-                GoRoute(
-                  path: AppRoutes.privacyPolicy
-                      .replaceFirst('${AppRoutes.profile}/', ''),
-                  name: 'privacyPolicy',
-                  builder: (context, state) => const PrivacyPolicyPage(),
-                ),
               ],
             ),
           ],
@@ -222,6 +218,16 @@ final GoRouter appRouter = GoRouter(
           avatar: queryParams['avatar'],
         );
       },
+    ),
+    GoRoute(
+      path: AppRoutes.privacyPolicy,
+      name: 'privacyPolicy',
+      builder: (context, state) => const PrivacyPolicyPage(),
+    ),
+    GoRoute(
+      path: AppRoutes.termsOfService,
+      name: 'termsOfService',
+      builder: (context, state) => const TermsOfServicePage(),
     ),
   ],
 );
