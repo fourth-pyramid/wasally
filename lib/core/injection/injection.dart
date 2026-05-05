@@ -1,5 +1,5 @@
 import 'package:get_it/get_it.dart';
-import 'package:wassaly/core/imports/core_imports.dart';
+import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/auth/data/datasources/auth_local_datasource.dart';
 import 'package:wassaly/features/auth/data/datasources/auth_remote_datasource.dart';
 import 'package:wassaly/features/auth/data/repositories/auth_repository_impl.dart';
@@ -29,6 +29,11 @@ import 'package:wassaly/features/sub_category/presentation/bloc/sub_category_blo
 import '../../features/auth/domain/usecases/get_cached_user_usecase.dart';
 import '../../features/auth/domain/usecases/google_login_usecase.dart';
 import '../../features/auth/presentation/bloc/google_login/google_login_bloc.dart';
+import '../../features/category/data/datasources/category_remote_datasource.dart';
+import '../../features/category/data/repositories/category_repository_impl.dart';
+import '../../features/category/domain/repositories/category_repository.dart';
+import '../../features/category/domain/usecases/get_category_detail_usecase.dart';
+import '../../features/category/presentation/bloc/category_bloc.dart';
 import '../../features/home/data/datasources/home_remote_datasource.dart';
 import '../../features/home/data/repositories/home_repository_impl.dart';
 import '../../features/home/domain/repositories/home_repository.dart';
@@ -51,6 +56,11 @@ import '../../features/profile/domain/usecases/update_address_usecase.dart';
 import '../../features/profile/domain/usecases/update_profile_usecase.dart';
 import '../../features/profile/presentation/bloc/profile/profile_bloc.dart';
 import '../../features/profile/presentation/bloc/settings/settings_bloc.dart';
+import '../../features/search/data/datasources/search_remote_datasource.dart';
+import '../../features/search/data/repositories/search_repository_impl.dart';
+import '../../features/search/domain/repositories/search_repository.dart';
+import '../../features/search/domain/usecases/search_products_usecase.dart';
+import '../../features/search/presentation/bloc/search_bloc.dart';
 
 final sl = GetIt.instance;
 
@@ -99,6 +109,12 @@ Future<void> initDependencies() async {
       ));
   sl.registerFactory(() => SubCategoryBloc(
         getSubCategoryDetailUseCase: sl(),
+      ));
+  sl.registerFactory(() => CategoryBloc(
+        getCategoryDetailUseCase: sl(),
+      ));
+  sl.registerFactory(() => SearchBloc(
+        searchProductsUseCase: sl(),
       ));
 
   sl.registerFactoryParam<OtpVerificationBloc, String, VerificationType>(
@@ -152,6 +168,12 @@ Future<void> initDependencies() async {
   // UseCases - SubCategory
   sl.registerLazySingleton(() => GetSubCategoryDetailUseCase(sl()));
 
+  // UseCases - Category
+  sl.registerLazySingleton(() => GetCategoryDetailUseCase(sl()));
+
+  // UseCases - Search
+  sl.registerLazySingleton(() => SearchProductsUseCase(sl()));
+
   // Repositories
   sl.registerLazySingleton<AuthRepository>(
       () => AuthRepositoryImpl(sl(), sl()));
@@ -160,6 +182,9 @@ Future<void> initDependencies() async {
   sl.registerLazySingleton<HomeRepository>(() => HomeRepositoryImpl(sl()));
   sl.registerLazySingleton<SubCategoryRepository>(
       () => SubCategoryRepositoryImpl(sl()));
+  sl.registerLazySingleton<CategoryRepository>(
+      () => CategoryRepositoryImpl(sl()));
+  sl.registerLazySingleton<SearchRepository>(() => SearchRepositoryImpl(sl()));
 
   // DataSources
   sl.registerLazySingleton<AuthRemoteDataSource>(
@@ -172,4 +197,8 @@ Future<void> initDependencies() async {
       () => HomeRemoteDataSourceImpl(DioService.instance));
   sl.registerLazySingleton<SubCategoryRemoteDataSource>(
       () => SubCategoryRemoteDataSourceImpl(DioService.instance));
+  sl.registerLazySingleton<CategoryRemoteDataSource>(
+      () => CategoryRemoteDataSourceImpl(DioService.instance));
+  sl.registerLazySingleton<SearchRemoteDataSource>(
+      () => SearchRemoteDataSourceImpl(DioService.instance));
 }

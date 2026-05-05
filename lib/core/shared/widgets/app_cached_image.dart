@@ -1,5 +1,4 @@
-import 'package:wassaly/core/imports/core_imports.dart';
-import 'package:wassaly/core/imports/packages_imports.dart';
+import 'package:wassaly/core/imports/imports.dart';
 
 /// A premium, highly customizable wrapper around [CachedNetworkImage].
 ///
@@ -46,6 +45,9 @@ class AppCachedImage extends StatelessWidget {
   /// Optional key to use for caching.
   final String? cacheKey;
 
+  final int? memCacheHeight;
+  final int? memCacheWidth;
+
   const AppCachedImage({
     super.key,
     required this.imageUrl,
@@ -61,6 +63,8 @@ class AppCachedImage extends StatelessWidget {
     this.alignment = Alignment.center,
     this.useSkeleton = true,
     this.cacheKey,
+    this.memCacheHeight,
+    this.memCacheWidth,
   });
 
   @override
@@ -71,23 +75,13 @@ class AppCachedImage extends StatelessWidget {
         final double? adjustedWidth = width?.w;
         final double? adjustedHeight = height?.h;
 
-        // Use provided dimensions or fall back to constraints
-        final double effectiveWidth = adjustedWidth ?? constraints.maxWidth;
-        final double effectiveHeight = adjustedHeight ?? constraints.maxHeight;
-
         Widget imageContent = CachedNetworkImage(
           imageUrl: imageUrl,
           cacheKey: cacheKey,
           width: adjustedWidth,
           height: adjustedHeight,
-          memCacheWidth:
-              (effectiveWidth.isFinite) ? effectiveWidth.toInt() : null,
-          memCacheHeight:
-              (effectiveHeight.isFinite) ? effectiveHeight.toInt() : null,
-          maxWidthDiskCache:
-              (effectiveWidth.isFinite) ? effectiveWidth.toInt() : null,
-          maxHeightDiskCache:
-              (effectiveHeight.isFinite) ? effectiveHeight.toInt() : null,
+          memCacheHeight: memCacheHeight,
+          memCacheWidth: memCacheWidth,
           fit: fit,
           color: color,
           colorBlendMode: colorBlendMode,

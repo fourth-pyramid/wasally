@@ -1,4 +1,4 @@
-import 'package:wassaly/core/imports/packages_imports.dart';
+import '../../../../core/imports/imports.dart';
 
 abstract class HomeEvent extends Equatable {
   const HomeEvent();
@@ -16,4 +16,3 @@ class GetPopularServicesEvent extends HomeEvent {}
 class GetProductsEvent extends HomeEvent {}
 
 class LoadMoreProductsEvent extends HomeEvent {}
-

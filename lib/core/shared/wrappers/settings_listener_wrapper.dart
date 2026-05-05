@@ -1,5 +1,4 @@
-import 'package:wassaly/core/imports/core_imports.dart';
-import 'package:wassaly/core/imports/packages_imports.dart';
+import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/profile/presentation/bloc/settings/settings_bloc.dart';
 
 /// A wrapper that listens to SettingsBloc and applies theme/language changes globally.

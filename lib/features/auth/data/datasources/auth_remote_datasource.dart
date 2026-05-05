@@ -1,5 +1,4 @@
-import 'package:dio/dio.dart';
-import 'package:wassaly/core/imports/core_imports.dart';
+import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/auth/data/models/forget_send_otp_response_model.dart';
 import 'package:wassaly/features/auth/data/models/forget_verify_otp_response_model.dart';
 import 'package:wassaly/features/auth/data/models/login_response_model.dart';

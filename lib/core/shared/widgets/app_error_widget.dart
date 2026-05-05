@@ -1,5 +1,4 @@
-import 'package:wassaly/core/imports/core_imports.dart';
-import 'package:wassaly/core/imports/packages_imports.dart';
+import 'package:wassaly/core/imports/imports.dart';
 
 /// Displays an error state with an icon, title, optional body, and retry button.
 ///
@@ -31,7 +30,7 @@ class AppErrorWidget extends StatelessWidget {
     final tt = context.theme.textTheme;
 
     return Center(
-      child: Padding(
+      child: SingleChildScrollView(
         padding: const EdgeInsets.all(32),
         child: Column(
           mainAxisSize: MainAxisSize.min,

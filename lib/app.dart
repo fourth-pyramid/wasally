@@ -1,4 +1,4 @@
-import 'package:wassaly/core/imports/core_imports.dart';
+import 'package:wassaly/core/imports/imports.dart';
 
 class App extends StatelessWidget {
   const App({super.key});

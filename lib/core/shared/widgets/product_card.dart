@@ -1,7 +1,108 @@
-import 'package:wassaly/core/imports/core_imports.dart';
-import 'package:wassaly/core/imports/packages_imports.dart';
+import 'package:wassaly/core/imports/imports.dart';
 
 import '../../../features/home/domain/entities/product_entity.dart';
+
+/// Shared notifier that holds the currently active (long-pressed) product id.
+/// When a card long-presses, it sets its id here.
+/// All other cards listen and stop their marquee automatically.
+final activeMarqueeId = ValueNotifier<int?>(null);
+
+/// Auto-scrolling marquee text widget.
+/// Only scrolls when [isActive] is true.
+/// Resets to start instantly when [isActive] becomes false.
+class _MarqueeText extends StatefulWidget {
+  const _MarqueeText({
+    required this.text,
+    required this.style,
+    required this.isActive,
+  });
+
+  final String text;
+  final TextStyle? style;
+  final bool isActive;
+
+  @override
+  State<_MarqueeText> createState() => _MarqueeTextState();
+}
+
+class _MarqueeTextState extends State<_MarqueeText> {
+  late final ScrollController _scrollController;
+  bool _isRunning = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+  }
+
+  @override
+  void didUpdateWidget(_MarqueeText oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (widget.isActive && !oldWidget.isActive) {
+      WidgetsBinding.instance.addPostFrameCallback((_) => _startScroll());
+    } else if (!widget.isActive && oldWidget.isActive) {
+      _stopAndReset();
+    }
+  }
+
+  void _startScroll() {
+    if (!mounted || !_scrollController.hasClients) return;
+    final maxScroll = _scrollController.position.maxScrollExtent;
+    if (maxScroll <= 0) return;
+    if (_isRunning) return;
+
+    _isRunning = true;
+    _runMarquee(maxScroll);
+  }
+
+  void _stopAndReset() {
+    _isRunning = false;
+    if (_scrollController.hasClients) {
+      _scrollController.jumpTo(0);
+    }
+  }
+
+  Future<void> _runMarquee(double maxScroll) async {
+    while (mounted && _isRunning) {
+      await Future<void>.delayed(const Duration(milliseconds: 400));
+      if (!mounted || !_isRunning) break;
+
+      await _scrollController.animateTo(
+        maxScroll,
+        duration: Duration(milliseconds: (maxScroll * 18).toInt()),
+        curve: Curves.linear,
+      );
+      if (!mounted || !_isRunning) break;
+
+      await Future<void>.delayed(const Duration(milliseconds: 800));
+      if (!mounted || !_isRunning) break;
+
+      _scrollController.jumpTo(0);
+    }
+  }
+
+  @override
+  void dispose() {
+    _isRunning = false;
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      controller: _scrollController,
+      scrollDirection: Axis.horizontal,
+      physics: const NeverScrollableScrollPhysics(),
+      child: Text(
+        widget.text,
+        style: widget.style,
+        maxLines: 1,
+      ),
+    );
+  }
+}
 
 /// A reusable product card widget for displaying product information.
 ///
@@ -12,38 +113,85 @@ import '../../../features/home/domain/entities/product_entity.dart';
 /// - Discount badge
 /// - Rating display
 /// - Price with original price strikethrough when discounted
+/// - Auto-scrolling (marquee) on long-press — stays active until another card
+///   is long-pressed, or the same card is long-pressed again to toggle off
 /// - Action callbacks for tap, favorite, and add to cart
-class ProductCard extends StatelessWidget {
+class ProductCard extends StatefulWidget {
   const ProductCard({
     super.key,
     required this.product,
     this.onTap,
     this.onFavoriteTap,
-    this.onAddToCartTap,
+    this.onOpenProductTap,
   });
 
   final ProductEntity product;
   final VoidCallback? onTap;
   final VoidCallback? onFavoriteTap;
-  final VoidCallback? onAddToCartTap;
+  final VoidCallback? onOpenProductTap;
+
+  @override
+  State<ProductCard> createState() => _ProductCardState();
+}
+
+class _ProductCardState extends State<ProductCard> {
+  bool _isActive = false;
+
+  @override
+  void initState() {
+    super.initState();
+    activeMarqueeId.addListener(_onActiveIdChanged);
+  }
+
+  @override
+  void dispose() {
+    activeMarqueeId.removeListener(_onActiveIdChanged);
+    // If this card was the active one, clear the notifier
+    if (activeMarqueeId.value == widget.product.id) {
+      activeMarqueeId.value = null;
+    }
+    super.dispose();
+  }
+
+  void _onActiveIdChanged() {
+    final isNowActive = activeMarqueeId.value == widget.product.id;
+    if (isNowActive != _isActive) {
+      setState(() => _isActive = isNowActive);
+    }
+  }
+
+  void _onLongPress() {
+    // Toggle off if same card is long-pressed again, otherwise activate
+    if (activeMarqueeId.value == widget.product.id) {
+      activeMarqueeId.value = null;
+    } else {
+      activeMarqueeId.value = widget.product.id;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final cs = context.theme.colorScheme;
     final tt = context.theme.textTheme;
 
-    final originalPrice = double.tryParse(product.price) ?? 0;
-    final hasDiscount = product.hasOffer;
-    final discountedPrice = product.discountedPrice;
+    final originalPrice = double.tryParse(widget.product.price) ?? 0;
+    final hasDiscount = widget.product.hasOffer;
+    final discountedPrice = widget.product.discountedPrice;
 
     return GestureDetector(
-      onTap: onTap,
-      child: Container(
+      onTap: widget.onTap,
+      onLongPress: _onLongPress,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
         decoration: BoxDecoration(
           color: cs.surface,
-          borderRadius: AppBorders.md,
+          borderRadius: BorderRadius.circular(12.r),
           border: Border.all(
-            color: cs.outlineVariant.withValues(alpha: 0.5),
+            // Subtle highlight when marquee is active
+            color: _isActive
+                ? cs.primary.withValues(alpha: 0.6)
+                : cs.outlineVariant.withValues(alpha: 0.5),
+            width: _isActive ? 1.5 : 1.0,
           ),
         ),
         clipBehavior: Clip.antiAlias,
@@ -57,66 +205,56 @@ class ProductCard extends StatelessWidget {
             Expanded(
               child: Padding(
                 padding: EdgeInsets.symmetric(
-                  horizontal: AppSpacing.sm,
-                  vertical: AppSpacing.xs,
+                  horizontal: 12.w,
+                  vertical: 6.h,
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Description (small subtitle)
-                    if (product.description.isNotEmpty)
-                      Text(
-                        product.description,
+                    // Description — marquee when active
+                    if (widget.product.description.isNotEmpty)
+                      _MarqueeText(
+                        text: widget.product.description,
+                        isActive: _isActive,
                         style: tt.labelSmall?.copyWith(
                           color: cs.onSurfaceVariant,
                         ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
                       ),
-                    AppSpacing.xxs.verticalSpace,
+                    4.verticalSpace,
 
-                    // Product name
-                    Text(
-                      product.name,
+                    // Product name — marquee when active
+                    _MarqueeText(
+                      text: widget.product.name,
+                      isActive: _isActive,
                       style: tt.titleSmall?.copyWith(
                         fontWeight: FontWeight.bold,
                         color: cs.onSurface,
                       ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
                     ),
-                    AppSpacing.xxs.verticalSpace,
 
-                    // Rating
-                    if (product.reviewCount > 0)
+                    const Spacer(),
+
+                    // Rating row
+                    if (widget.product.reviewCount > 0)
                       Row(
                         children: [
                           Icon(
                             Icons.star_rounded,
-                            size: 16.r,
+                            size: 14.r,
                             color: const Color(0xFFFFC107),
                           ),
-                          AppSpacing.xxs.horizontalSpace,
+                          2.horizontalSpace,
                           Text(
-                            product.averageRating.toStringAsFixed(1),
+                            widget.product.averageRating.toStringAsFixed(1),
                             style: tt.labelSmall?.copyWith(
                               fontWeight: FontWeight.w600,
                               color: cs.onSurface,
-                            ),
-                          ),
-                          AppSpacing.xxs.horizontalSpace,
-                          Text(
-                            '(${product.reviewCount})',
-                            style: tt.labelSmall?.copyWith(
-                              color: cs.onSurfaceVariant,
+                              fontSize: 10.sp,
                             ),
                           ),
                         ],
                       ),
 
-                    const Spacer(),
-
-                    // Price + Cart button row
                     _buildPriceRow(
                       cs,
                       tt,
@@ -142,8 +280,9 @@ class ProductCard extends StatelessWidget {
         children: [
           // Product image
           Positioned.fill(
-            child: AppCachedImage(
-              imageUrl: product.image,
+            child: CommonImage(
+              memCacheHeight: 140 * 3,
+              imageUrl: widget.product.image,
               fit: BoxFit.cover,
               borderRadius: BorderRadius.vertical(
                 top: Radius.circular(9.r),
@@ -155,7 +294,7 @@ class ProductCard extends StatelessWidget {
           Align(
             alignment: Alignment.topLeft,
             child: GestureDetector(
-              onTap: onFavoriteTap,
+              onTap: widget.onFavoriteTap,
               child: Container(
                 margin: EdgeInsetsDirectional.symmetric(
                     horizontal: 6.w, vertical: 6.h),
@@ -172,18 +311,20 @@ class ProductCard extends StatelessWidget {
                   ],
                 ),
                 child: Icon(
-                  product.isFavorite
+                  widget.product.isFavorite
                       ? Icons.favorite_rounded
                       : Icons.favorite_outline_rounded,
                   size: 18.r,
-                  color: product.isFavorite ? cs.error : cs.onSurfaceVariant,
+                  color: widget.product.isFavorite
+                      ? cs.error
+                      : cs.onSurfaceVariant,
                 ),
               ),
             ),
           ),
 
           // Discount badge
-          if (product.hasOffer)
+          if (widget.product.hasOffer)
             Align(
               alignment: Alignment.topRight,
               child: Container(
@@ -195,10 +336,10 @@ class ProductCard extends StatelessWidget {
                 ),
                 decoration: BoxDecoration(
                   color: cs.error,
-                  borderRadius: AppBorders.xs,
+                  borderRadius: BorderRadius.circular(4.r),
                 ),
                 child: Text(
-                  '${product.discountPercentage}%-',
+                  '${widget.product.discountPercentage}%-',
                   style: TextStyle(
                     color: cs.onError,
                     fontSize: 11.sp,
@@ -222,7 +363,6 @@ class ProductCard extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        // Price column
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
@@ -234,7 +374,6 @@ class ProductCard extends StatelessWidget {
                   color: cs.onSurfaceVariant,
                   decoration: TextDecoration.lineThrough,
                   decorationColor: cs.onSurfaceVariant,
-                  fontSize: 10.sp,
                 ),
               ),
             Text(
@@ -246,15 +385,17 @@ class ProductCard extends StatelessWidget {
             ),
           ],
         ),
+
         const Spacer(),
 
+        // Eye button
         GestureDetector(
-          onTap: onAddToCartTap,
+          onTap: widget.onOpenProductTap,
           child: Container(
             padding: EdgeInsets.all(8.r),
             decoration: BoxDecoration(
               color: cs.primary,
-              borderRadius: AppBorders.sm,
+              borderRadius: BorderRadius.circular(8.r),
             ),
             child: Icon(
               Icons.remove_red_eye,

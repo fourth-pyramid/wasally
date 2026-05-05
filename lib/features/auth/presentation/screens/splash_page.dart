@@ -151,7 +151,7 @@ class _SplashViewState extends State<_SplashView>
   @override
   Widget build(BuildContext context) {
     final screenH = MediaQuery.sizeOf(context).height;
-    final logoSize = 180.r;
+    const logoSize = 180;
     final isDark = context.isDarkMode;
 
     return BlocListener<SessionBloc, SessionState>(
@@ -164,32 +164,18 @@ class _SplashViewState extends State<_SplashView>
         animation: _controller,
         // نضع اللوجو هنا كـ child ثابت لمنع إعادة بناء الـ Widget الخاص بالصورة
         child: Container(
-          width: logoSize,
-          height: logoSize,
+          width: logoSize.w,
+          height: logoSize.h,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16.r),
           ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(16.r),
-            child: Image.asset(
-              'assets/images/logo.png',
+            child: const CommonImage(
+              imageUrl: 'assets/images/logo.png',
+              memCacheHeight: logoSize * 2,
+              memCacheWidth: logoSize * 2,
               fit: BoxFit.contain,
-              gaplessPlayback: true,
-              filterQuality: FilterQuality.high,
-              isAntiAlias: true,
-              errorBuilder: (context, error, stackTrace) {
-                return DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: context.colors.primary.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(16.r),
-                  ),
-                  child: Icon(
-                    Icons.local_shipping,
-                    size: 80.r,
-                    color: context.colors.primary,
-                  ),
-                );
-              },
             ),
           ),
         ),

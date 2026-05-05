@@ -1,5 +1,4 @@
-import 'package:wassaly/core/imports/core_imports.dart';
-import 'package:wassaly/core/imports/packages_imports.dart';
+import 'package:wassaly/core/imports/imports.dart';
 
 /// A multi-purpose image widget that handles network images, SVGs, and local assets.
 ///
@@ -14,6 +13,8 @@ class CommonImage extends StatelessWidget {
   final Widget? placeholder;
   final Widget? errorWidget;
   final BorderRadius? borderRadius;
+  final int? memCacheHeight;
+  final int? memCacheWidth;
 
   const CommonImage({
     super.key,
@@ -25,6 +26,8 @@ class CommonImage extends StatelessWidget {
     this.placeholder,
     this.errorWidget,
     this.borderRadius,
+    this.memCacheHeight,
+    this.memCacheWidth,
   });
 
   @override
@@ -39,6 +42,8 @@ class CommonImage extends StatelessWidget {
         imageUrl: imageUrl,
         width: width,
         height: height,
+        memCacheHeight: memCacheHeight,
+        memCacheWidth: memCacheWidth,
         fit: fit,
         color: color,
         placeholder: placeholder,
@@ -56,6 +61,8 @@ class CommonImage extends StatelessWidget {
       );
     } else {
       image = Image.asset(
+        cacheHeight: memCacheHeight,
+        cacheWidth: memCacheWidth,
         imageUrl,
         width: adjustedWidth,
         height: adjustedHeight,

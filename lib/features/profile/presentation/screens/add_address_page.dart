@@ -115,7 +115,7 @@ class _AddAddressViewState extends State<_AddAddressView> {
             }
           },
           child: SingleChildScrollView(
-            padding: EdgeInsets.all(AppSpacing.pagePadding),
+            padding: EdgeInsets.all(16.w),
             child: Form(
               key: _formKey,
               child: Column(
@@ -128,7 +128,7 @@ class _AddAddressViewState extends State<_AddAddressView> {
                     validator: (v) =>
                         v!.isEmpty ? 'profile.title_required'.tr() : null,
                   ),
-                  AppSpacing.md.verticalSpace,
+                  16.verticalSpace,
                   AppTextField(
                     label: 'profile.address_details'.tr(),
                     hint: 'profile.address_details_hint'.tr(),
@@ -138,11 +138,11 @@ class _AddAddressViewState extends State<_AddAddressView> {
                     validator: (v) =>
                         v!.isEmpty ? 'profile.address_required'.tr() : null,
                   ),
-                  AppSpacing.md.verticalSpace,
+                  16.verticalSpace,
                   _buildGovernorateDropdown(context),
-                  AppSpacing.md.verticalSpace,
+                  16.verticalSpace,
                   _buildCenterDropdown(context),
-                  AppSpacing.xl.verticalSpace,
+                  32.verticalSpace,
                   BlocBuilder<ProfileBloc, ProfileState>(
                     buildWhen: (prev, curr) =>
                         prev.addressStatus != curr.addressStatus,

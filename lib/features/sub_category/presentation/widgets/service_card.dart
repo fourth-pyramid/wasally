@@ -1,5 +1,4 @@
-import 'package:wassaly/core/imports/core_imports.dart';
-import 'package:wassaly/core/imports/packages_imports.dart';
+import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/sub_category/domain/entities/service_entity.dart';
 
 class ServiceCard extends StatelessWidget {
@@ -22,7 +21,7 @@ class ServiceCard extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: cs.surface,
-          borderRadius: AppBorders.md,
+          borderRadius: BorderRadius.circular(9.r),
           border: Border.all(
             color: cs.outlineVariant.withValues(alpha: 0.5),
           ),
@@ -59,8 +58,8 @@ class ServiceCard extends StatelessWidget {
             Expanded(
               child: Padding(
                 padding: EdgeInsets.symmetric(
-                  horizontal: AppSpacing.sm,
-                  vertical: AppSpacing.xs,
+                  horizontal: 12.w,
+                  vertical: 8.h,
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -75,7 +74,7 @@ class ServiceCard extends StatelessWidget {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    AppSpacing.xxs.verticalSpace,
+                    8.h.verticalSpace,
 
                     // Description
                     if (service.description.isNotEmpty)

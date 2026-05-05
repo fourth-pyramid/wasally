@@ -1,5 +1,4 @@
-import 'package:wassaly/core/imports/core_imports.dart';
-import 'package:wassaly/core/imports/packages_imports.dart';
+import 'package:wassaly/core/imports/imports.dart';
 
 /// A reusable sliver grid widget for displaying products.
 ///
@@ -19,7 +18,7 @@ class SliverProductGrid<T> extends StatelessWidget {
     this.crossAxisCount = 2,
     this.mainAxisSpacing,
     this.crossAxisSpacing,
-    this.childAspectRatio = 0.59,
+    this.childAspectRatio = 0.61,
     this.animateItems = true,
     this.animationDelayMultiplier = 50,
     this.animationDuration = const Duration(milliseconds: 300),

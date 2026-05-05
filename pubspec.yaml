@@ -67,6 +67,7 @@ dependencies:
   pinput: ^6.0.2
   system_asset_picker: ^0.0.2
   carousel_slider: ^5.1.2
+  marquee: ^2.3.0
 
 
 

@@ -1,6 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:wassaly/core/imports/core_imports.dart';
-import 'package:wassaly/core/imports/packages_imports.dart';
+import 'package:wassaly/core/imports/imports.dart';
 
 import '../../domain/entities/banner_entity.dart';
 import '../bloc/home_bloc.dart';
@@ -23,10 +22,11 @@ class _HomeBannerState extends State<HomeBanner> {
 
     return BlocBuilder<HomeBloc, HomeState>(
       buildWhen: (prev, curr) =>
-          prev.status != curr.status || prev.banners != curr.banners,
+          prev.bannersStatus != curr.bannersStatus ||
+          prev.banners != curr.banners,
       builder: (context, state) {
-        if (state.status == HomeStatus.loading ||
-            state.status == HomeStatus.initial) {
+        if (state.bannersStatus == HomeStatus.loading ||
+            state.bannersStatus == HomeStatus.initial) {
           final dummyBanners = List.generate(
             3,
             (index) => const BannerEntity(
@@ -68,13 +68,6 @@ class _HomeBannerState extends State<HomeBanner> {
                 ),
               ],
             ),
-          );
-        }
-
-        if (state.status == HomeStatus.failure) {
-          return SizedBox(
-            height: 160.h,
-            child: Center(child: AppErrorWidget(message: state.errorMessage)),
           );
         }
 
@@ -135,11 +128,12 @@ class _HomeBannerState extends State<HomeBanner> {
         fit: StackFit.expand,
         children: [
           // Background Image
-          AppCachedImage(
+          CommonImage(
             imageUrl: banner.image,
             fit: BoxFit.cover,
             width: double.infinity,
             height: double.infinity,
+            memCacheHeight: 160 * 2,
           ),
 
           // Gradient Overlay
@@ -180,7 +174,7 @@ class _HomeBannerState extends State<HomeBanner> {
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
-                AppSpacing.sm.verticalSpace,
+                8.verticalSpace,
                 AppButton(
                   label: 'تصفح الآن',
                   onPressed: () {

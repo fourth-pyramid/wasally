@@ -1,5 +1,4 @@
-import 'package:dio/dio.dart';
-import 'package:wassaly/core/imports/core_imports.dart';
+import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/auth/data/models/user_model.dart';
 import 'package:wassaly/features/profile/data/models/address_model.dart';
 import 'package:wassaly/features/profile/data/models/center_model.dart';

@@ -1,5 +1,4 @@
-import 'package:wassaly/core/imports/core_imports.dart';
-import 'package:wassaly/core/imports/packages_imports.dart';
+import 'package:wassaly/core/imports/imports.dart';
 
 class ProfileStatsCard extends StatelessWidget {
   const ProfileStatsCard({super.key});
@@ -9,7 +8,7 @@ class ProfileStatsCard extends StatelessWidget {
     final cs = context.theme.colorScheme;
 
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: AppSpacing.pagePadding),
+      padding: EdgeInsets.symmetric(horizontal: 16.w),
       child: AppCard(
         showShadow: true,
         onTap: () {},
@@ -18,7 +17,7 @@ class ProfileStatsCard extends StatelessWidget {
           height: 48.w,
           decoration: BoxDecoration(
             color: cs.primaryContainer.withValues(alpha: 0.4),
-            borderRadius: AppBorders.md,
+            borderRadius: BorderRadius.circular(8.r),
           ),
           child: Icon(
             Icons.inventory_2_outlined,

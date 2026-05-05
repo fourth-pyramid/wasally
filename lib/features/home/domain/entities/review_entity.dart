@@ -1,4 +1,4 @@
-import 'package:wassaly/core/imports/packages_imports.dart';
+import '../../../../core/imports/imports.dart';
 
 class ReviewEntity extends Equatable {
   final int id;

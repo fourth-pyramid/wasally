@@ -1,5 +1,4 @@
-import 'package:wassaly/core/imports/core_imports.dart';
-import 'package:wassaly/core/imports/packages_imports.dart';
+import 'package:wassaly/core/imports/imports.dart';
 
 import '../../domain/entities/offer_entity.dart';
 import '../../domain/entities/product_entity.dart';
@@ -76,7 +75,7 @@ class ProductsSection extends StatelessWidget {
                     onFavoriteTap: () {
                       // TODO: Toggle favorite
                     },
-                    onAddToCartTap: () {
+                    onOpenProductTap: () {
                       // TODO: Add to cart
                     },
                   ),
@@ -132,7 +131,7 @@ class ProductsSection extends StatelessWidget {
           ),
         ),
         SliverToBoxAdapter(
-          child: AppSpacing.xs.verticalSpace,
+          child: 4.verticalSpace,
         ),
         SliverProductGrid<ProductEntity>(
           items: dummyProducts,

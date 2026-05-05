@@ -1,5 +1,4 @@
-import 'package:wassaly/core/imports/core_imports.dart';
-import 'package:wassaly/core/imports/packages_imports.dart';
+import 'package:wassaly/core/imports/imports.dart';
 
 /// A fully themed button supporting all [ButtonVariant]s and [ButtonSize]s.
 ///
@@ -130,7 +129,7 @@ class AppButton extends StatelessWidget {
 
     if (isIOS) {
       return AnimatedOpacity(
-        duration: AppDurations.fast,
+        duration: const Duration(milliseconds: 200),
         opacity: isDisabled ? 0.6 : 1.0,
         child: SizedBox(
           width: isFullWidth ? double.infinity : buttonWidth,
@@ -140,7 +139,7 @@ class AppButton extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
             color: bg,
             disabledColor: CupertinoColors.quaternarySystemFill,
-            borderRadius: AppBorders.button,
+            borderRadius: BorderRadius.circular(12.r),
             child: buttonChild,
           ),
         ),
@@ -148,7 +147,7 @@ class AppButton extends StatelessWidget {
     }
 
     return AnimatedOpacity(
-      duration: AppDurations.fast,
+      duration: const Duration(milliseconds: 200),
       opacity: isDisabled ? 0.6 : 1.0,
       child: SizedBox(
         width: isFullWidth ? double.infinity : buttonWidth,
@@ -161,10 +160,11 @@ class AppButton extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
             shape: border != null
                 ? RoundedRectangleBorder(
-                    borderRadius: AppBorders.button,
+                    borderRadius: BorderRadius.circular(12.r),
                     side: border,
                   )
-                : const RoundedRectangleBorder(borderRadius: AppBorders.button),
+                : RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12.r)),
           ),
           child: buttonChild,
         ),

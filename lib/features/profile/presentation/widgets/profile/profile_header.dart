@@ -1,5 +1,4 @@
-import 'package:wassaly/core/imports/core_imports.dart';
-import 'package:wassaly/core/imports/packages_imports.dart';
+import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/profile/presentation/bloc/profile/profile_bloc.dart';
 
 class ProfileHeader extends StatelessWidget {
@@ -33,10 +32,11 @@ class ProfileHeader extends StatelessWidget {
                     ),
                     child: ClipOval(
                       child: user?.avatarUrl != null
-                          ? AppCachedImage(
+                          ? CommonImage(
                               imageUrl: user!.avatarUrl!,
                               width: 100,
                               height: 100,
+                              memCacheHeight: 100 * 3,
                               fit: BoxFit.cover,
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(999)),

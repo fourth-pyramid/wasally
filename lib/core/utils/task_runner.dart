@@ -1,6 +1,9 @@
-import 'package:fpdart/fpdart.dart';
+import 'package:wassaly/core/services/internet_connection_service.dart';
 
-import '../imports/core_imports.dart';
+import '../imports/imports.dart';
+
+// Global variable to track last network error toast time
+DateTime? _lastNetworkErrorToastTime;
 
 /// A reusable generic function to handle potential exceptions in async tasks
 /// and map them to the [Either] type matching [FutureEither<T>].
@@ -16,10 +19,21 @@ FutureEither<T> runTask<T>(
 
     if (!hasNetwork) {
       AppLogger.warning('Network unavailable for task');
-      showGlobalToast(
-        message: 'errors.no_internet'.tr(),
-        status: 'warning',
-      );
+
+      // Only show toast if 3 seconds have passed since last network error toast
+      final now = DateTime.now();
+      final shouldShowToast = _lastNetworkErrorToastTime == null ||
+          now.difference(_lastNetworkErrorToastTime!) >
+              const Duration(seconds: 3);
+
+      if (shouldShowToast) {
+        showGlobalToast(
+          message: 'errors.no_internet'.tr(),
+          status: 'warning',
+        );
+        _lastNetworkErrorToastTime = now;
+      }
+
       return left(
         NetworkFailure('errors.no_internet'.tr()),
       );

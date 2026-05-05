@@ -138,7 +138,7 @@ class _AddressCard extends StatelessWidget {
         height: 48.w,
         decoration: BoxDecoration(
           color: iconBgColor,
-          borderRadius: AppBorders.md,
+          borderRadius: BorderRadius.circular(12.r),
         ),
         child: Icon(
           iconData,
@@ -158,7 +158,7 @@ class _AddressCard extends StatelessWidget {
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),
-          AppSpacing.md.verticalSpace,
+          16.verticalSpace,
           Row(
             children: [
               Expanded(
@@ -190,7 +190,7 @@ class _AddressCard extends StatelessWidget {
                   },
                 ),
               ),
-              AppSpacing.ms.horizontalSpace,
+              16.horizontalSpace,
               Expanded(
                 child: AppButton(
                   label: 'shared.edit'.tr(),

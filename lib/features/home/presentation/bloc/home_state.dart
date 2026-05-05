@@ -1,6 +1,5 @@
+import 'package:wassaly/core/imports/imports.dart';
 
-import 'package:wassaly/core/imports/core_imports.dart';
-import 'package:wassaly/core/imports/packages_imports.dart';
 import '../../domain/entities/banner_entity.dart';
 import '../../domain/entities/category_entity.dart';
 import '../../domain/entities/product_entity.dart';
@@ -9,7 +8,7 @@ import '../../domain/entities/sub_category_entity.dart';
 enum HomeStatus { initial, loading, success, failure }
 
 class HomeState extends Equatable {
-  final HomeStatus status;
+  final HomeStatus bannersStatus;
   final List<BannerEntity> banners;
   final HomeStatus categoriesStatus;
   final List<CategoryEntity> categories;
@@ -20,7 +19,7 @@ class HomeState extends Equatable {
   final String errorMessage;
 
   const HomeState({
-    this.status = HomeStatus.initial,
+    this.bannersStatus = HomeStatus.initial,
     this.banners = const [],
     this.categoriesStatus = HomeStatus.initial,
     this.categories = const [],
@@ -32,7 +31,7 @@ class HomeState extends Equatable {
   });
 
   HomeState copyWith({
-    HomeStatus? status,
+    HomeStatus? bannersStatus,
     List<BannerEntity>? banners,
     HomeStatus? categoriesStatus,
     List<CategoryEntity>? categories,
@@ -43,11 +42,12 @@ class HomeState extends Equatable {
     String? errorMessage,
   }) {
     return HomeState(
-      status: status ?? this.status,
+      bannersStatus: bannersStatus ?? this.bannersStatus,
       banners: banners ?? this.banners,
       categoriesStatus: categoriesStatus ?? this.categoriesStatus,
       categories: categories ?? this.categories,
-      popularServicesStatus: popularServicesStatus ?? this.popularServicesStatus,
+      popularServicesStatus:
+          popularServicesStatus ?? this.popularServicesStatus,
       popularServices: popularServices ?? this.popularServices,
       productsStatus: productsStatus ?? this.productsStatus,
       products: products ?? this.products,
@@ -55,10 +55,9 @@ class HomeState extends Equatable {
     );
   }
 
-
   @override
   List<Object?> get props => [
-        status,
+        bannersStatus,
         banners,
         categoriesStatus,
         categories,
@@ -68,4 +67,20 @@ class HomeState extends Equatable {
         products,
         errorMessage,
       ];
+
+  /// Check if all sections failed (likely due to network error)
+  bool get allSectionsFailed {
+    return bannersStatus == HomeStatus.failure &&
+        categoriesStatus == HomeStatus.failure &&
+        popularServicesStatus == HomeStatus.failure &&
+        productsStatus == HomeStatus.failure;
+  }
+
+  /// Check if any section is still loading
+  bool get anySectionLoading {
+    return bannersStatus == HomeStatus.loading ||
+        categoriesStatus == HomeStatus.loading ||
+        popularServicesStatus == HomeStatus.loading ||
+        productsStatus == HomeStatus.loading;
+  }
 }

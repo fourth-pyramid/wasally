@@ -1,4 +1,4 @@
-import 'package:wassaly/core/imports/core_imports.dart';
+import 'package:wassaly/core/imports/imports.dart';
 
 /// A themed horizontal divider using [ColorScheme.outlineVariant].
 ///

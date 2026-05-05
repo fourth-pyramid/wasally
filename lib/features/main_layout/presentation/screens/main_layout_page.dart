@@ -1,5 +1,4 @@
-import 'package:wassaly/core/imports/core_imports.dart';
-import 'package:wassaly/core/imports/packages_imports.dart';
+import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/auth/presentation/bloc/session/session_bloc.dart';
 
 class MainLayoutPage extends StatelessWidget {
@@ -24,7 +23,7 @@ class MainLayoutPage extends StatelessWidget {
 
     return Scaffold(
       body: navigationShell,
-      floatingActionButton: navigationShell.currentIndex == 3
+      floatingActionButton: navigationShell.currentIndex == 2
           ? null
           : FloatingActionButton(
               onPressed: () => context.push(AppRoutes.cart),
@@ -78,7 +77,7 @@ class MainLayoutPage extends StatelessWidget {
               state is SessionAuthenticated ? state.user.avatarUrl : null;
 
           return BottomNavigationBar(
-            currentIndex: navigationShell.currentIndex,
+            currentIndex: navigationShell.currentIndex.clamp(0, 2),
             onTap: _onTap,
             backgroundColor: cs.surface,
             selectedItemColor: cs.primary,
@@ -92,61 +91,29 @@ class MainLayoutPage extends StatelessWidget {
                 label: 'nav.nav_home'.tr(),
               ),
               BottomNavigationBarItem(
-                icon: const Icon(Icons.category_outlined),
-                activeIcon: const Icon(Icons.category_rounded),
-                label: 'nav.nav_category'.tr(),
-              ),
-              BottomNavigationBarItem(
                 icon: const Icon(Icons.favorite_outline),
                 activeIcon: const Icon(Icons.favorite_rounded),
                 label: 'nav.nav_favorite'.tr(),
               ),
               BottomNavigationBarItem(
                 icon: avatarUrl != null && avatarUrl.isNotEmpty
-                    ? SizedBox(
-                        width: 26.w,
-                        height: 22.h,
-                        child: ClipOval(
-                          child: CachedNetworkImage(
-                            imageUrl: avatarUrl,
-                            fit: BoxFit.cover,
-                            placeholder: (_, __) => Container(
-                              color: cs.surface,
-                            ),
-                            errorWidget: (_, __, ___) => Icon(
-                              Icons.person_outline,
-                              size: 20.r,
-                            ),
-                          ),
-                        ),
+                    ? CommonImage(
+                        width: 26,
+                        height: 22,
+                        memCacheHeight: 22 * 3,
+                        imageUrl: avatarUrl,
+                        fit: BoxFit.cover,
+                        borderRadius: BorderRadius.circular(16.r),
                       )
                     : const Icon(Icons.person_outline),
                 activeIcon: avatarUrl != null && avatarUrl.isNotEmpty
-                    ? SizedBox(
-                        width: 26.w,
-                        height: 22.h,
-                        child: DecoratedBox(
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: cs.primary,
-                              width: 2.w,
-                            ),
-                          ),
-                          child: ClipOval(
-                            child: CachedNetworkImage(
-                              imageUrl: avatarUrl,
-                              fit: BoxFit.cover,
-                              placeholder: (_, __) => Container(
-                                color: cs.surface,
-                              ),
-                              errorWidget: (_, __, ___) => Icon(
-                                Icons.person_rounded,
-                                size: 20.w,
-                              ),
-                            ),
-                          ),
-                        ),
+                    ? CommonImage(
+                        width: 26,
+                        height: 22,
+                        memCacheHeight: 22 * 3,
+                        imageUrl: avatarUrl,
+                        fit: BoxFit.cover,
+                        borderRadius: BorderRadius.circular(16.r),
                       )
                     : const Icon(Icons.person_rounded),
                 label: 'nav.nav_profile'.tr(),

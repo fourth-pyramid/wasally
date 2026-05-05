@@ -1,5 +1,4 @@
-import 'package:wassaly/core/imports/core_imports.dart';
-import 'package:wassaly/core/imports/packages_imports.dart';
+import 'package:wassaly/core/imports/imports.dart';
 
 import '../../domain/entities/category_entity.dart';
 import '../../domain/entities/product_entity.dart';
@@ -32,20 +31,23 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   Future<void> _onGetBanners(
       GetBannersEvent event, Emitter<HomeState> emit) async {
-    emit(state.copyWith(status: HomeStatus.loading));
+    emit(state.copyWith(
+      bannersStatus: HomeStatus.loading,
+      errorMessage: '',
+    ));
 
     final result = await getBannersUseCase();
 
     result.fold(
       (failure) {
         emit(state.copyWith(
-          status: HomeStatus.failure,
+          bannersStatus: HomeStatus.failure,
           errorMessage: failure.message,
         ));
       },
       (banners) {
         emit(state.copyWith(
-          status: HomeStatus.success,
+          bannersStatus: HomeStatus.success,
           banners: banners,
         ));
       },
@@ -57,6 +59,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     emit(state.copyWith(
       popularServicesStatus: HomeStatus.loading,
       popularServices: const <SubCategoryEntity>[], // Clear old data to show skeleton
+      errorMessage: '',
     ));
 
     final result = await getPopularServicesUseCase();
@@ -82,6 +85,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     emit(state.copyWith(
       categoriesStatus: HomeStatus.loading,
       categories: const <CategoryEntity>[], // Clear old data to show skeleton
+      errorMessage: '',
     ));
 
     final result = await getCategoriesUseCase();
@@ -108,6 +112,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       productsStatus: HomeStatus.loading,
       products: const PaginatedResponse<ProductEntity>(
           data: []), // Clear old data to show skeleton
+      errorMessage: '',
     ));
 
     final result = await getProductsUseCase(page: 1);

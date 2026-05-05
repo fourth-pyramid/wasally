@@ -1,5 +1,4 @@
-import 'package:wassaly/core/imports/core_imports.dart';
-import 'package:wassaly/core/imports/packages_imports.dart';
+import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/core/injection/injection.dart';
 import 'package:wassaly/features/auth/presentation/bloc/otp_verification/otp_verification_bloc.dart';
 import 'package:wassaly/features/auth/presentation/screens/reset_password_page.dart';

@@ -1,6 +1,6 @@
-import 'package:wassaly/core/imports/core_imports.dart';
-import 'package:wassaly/core/imports/packages_imports.dart';
 import 'package:wassaly/features/auth/presentation/bloc/session/session_bloc.dart';
+
+import '../../../../../core/imports/imports.dart';
 
 class ProfileLogoutButton extends StatelessWidget {
   final VoidCallback onLogoutAllDevices;
@@ -10,7 +10,7 @@ class ProfileLogoutButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: AppSpacing.pagePadding),
+      padding: EdgeInsets.symmetric(horizontal: 16.w),
       child: AppButton(
         label: 'profile.logout'.tr(),
         variant: ButtonVariant.danger,

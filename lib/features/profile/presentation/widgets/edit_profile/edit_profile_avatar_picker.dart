@@ -1,5 +1,4 @@
-import 'package:wassaly/core/imports/core_imports.dart';
-import 'package:wassaly/core/imports/packages_imports.dart';
+import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/profile/presentation/bloc/profile/profile_bloc.dart';
 
 class EditProfileAvatarPicker extends StatefulWidget {
@@ -45,7 +44,7 @@ class _EditProfileAvatarPickerState extends State<EditProfileAvatarPicker> {
         final tt = bottomSheetContext.theme.textTheme;
         return SafeArea(
           child: Padding(
-            padding: EdgeInsets.all(AppSpacing.lg),
+            padding: EdgeInsets.all(16.w),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -58,7 +57,7 @@ class _EditProfileAvatarPickerState extends State<EditProfileAvatarPicker> {
                   ),
                   textAlign: TextAlign.center,
                 ),
-                AppSpacing.lg.kH,
+                16.verticalSpace,
                 ListTile(
                   leading: Icon(Icons.camera_alt, color: cs.primary),
                   title: Text(
@@ -113,10 +112,11 @@ class _EditProfileAvatarPickerState extends State<EditProfileAvatarPicker> {
                       builder: (context, state) {
                         final user = state.user;
                         if (user?.avatarUrl != null) {
-                          return AppCachedImage(
+                          return CommonImage(
                             imageUrl: user!.avatarUrl!,
                             width: 120,
                             height: 120,
+                            memCacheHeight: 120 * 3,
                             fit: BoxFit.cover,
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(999)),

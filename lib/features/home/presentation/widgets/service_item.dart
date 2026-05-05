@@ -1,5 +1,4 @@
-import 'package:wassaly/core/imports/core_imports.dart';
-import 'package:wassaly/core/imports/packages_imports.dart';
+import 'package:wassaly/core/imports/imports.dart';
 
 class ServiceItem extends StatelessWidget {
   const ServiceItem({
@@ -26,18 +25,19 @@ class ServiceItem extends StatelessWidget {
           children: [
             Container(
               width: 64.w,
-              height: 64.w,
+              height: 64.h,
               decoration: BoxDecoration(
                 color: cs.surfaceContainerLow,
                 shape: BoxShape.circle,
               ),
               clipBehavior: Clip.antiAlias,
-              child: AppCachedImage(
+              child: CommonImage(
+                memCacheHeight: 64 * 3,
                 imageUrl: imageUrl,
                 fit: BoxFit.cover,
               ),
             ),
-            AppSpacing.xs.verticalSpace,
+            4.verticalSpace,
             Text(
               name,
               style: tt.bodySmall?.copyWith(

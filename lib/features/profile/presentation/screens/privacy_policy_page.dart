@@ -31,73 +31,73 @@ class PrivacyPolicyPage extends StatelessWidget {
               'privacy_policy.last_updated_date'.tr(),
               isHighlighted: true,
             ),
-            AppSpacing.md.verticalSpace,
+            16.verticalSpace,
             _buildSection(
               context,
               'privacy_policy.introduction.title'.tr(),
               'privacy_policy.introduction.content'.tr(),
             ),
-            AppSpacing.lg.verticalSpace,
+            16.verticalSpace,
             _buildSection(
               context,
               'privacy_policy.data_collection.title'.tr(),
               'privacy_policy.data_collection.content'.tr(),
             ),
-            AppSpacing.lg.verticalSpace,
+            16.verticalSpace,
             _buildSection(
               context,
               'privacy_policy.data_usage.title'.tr(),
               'privacy_policy.data_usage.content'.tr(),
             ),
-            AppSpacing.lg.verticalSpace,
+            16.verticalSpace,
             _buildSection(
               context,
               'privacy_policy.data_sharing.title'.tr(),
               'privacy_policy.data_sharing.content'.tr(),
             ),
-            AppSpacing.lg.verticalSpace,
+            16.verticalSpace,
             _buildSection(
               context,
               'privacy_policy.data_security.title'.tr(),
               'privacy_policy.data_security.content'.tr(),
             ),
-            AppSpacing.lg.verticalSpace,
+            16.verticalSpace,
             _buildSection(
               context,
               'privacy_policy.user_rights.title'.tr(),
               'privacy_policy.user_rights.content'.tr(),
             ),
-            AppSpacing.lg.verticalSpace,
+            16.verticalSpace,
             _buildSection(
               context,
               'privacy_policy.third_party.title'.tr(),
               'privacy_policy.third_party.content'.tr(),
             ),
-            AppSpacing.lg.verticalSpace,
+            16.verticalSpace,
             _buildSection(
               context,
               'privacy_policy.children_privacy.title'.tr(),
               'privacy_policy.children_privacy.content'.tr(),
             ),
-            AppSpacing.lg.verticalSpace,
+            16.verticalSpace,
             _buildSection(
               context,
               'privacy_policy.international_transfers.title'.tr(),
               'privacy_policy.international_transfers.content'.tr(),
             ),
-            AppSpacing.lg.verticalSpace,
+            16.verticalSpace,
             _buildSection(
               context,
               'privacy_policy.changes.title'.tr(),
               'privacy_policy.changes.content'.tr(),
             ),
-            AppSpacing.lg.verticalSpace,
+            16.verticalSpace,
             _buildSection(
               context,
               'privacy_policy.contact.title'.tr(),
               'privacy_policy.contact.content'.tr(),
             ),
-            AppSpacing.xl.verticalSpace,
+            32.verticalSpace,
             _buildFooter(context),
           ],
         ),
@@ -132,7 +132,7 @@ class PrivacyPolicyPage extends StatelessWidget {
               color: isHighlighted ? cs.onPrimaryContainer : cs.onSurface,
             ),
           ),
-          AppSpacing.sm.verticalSpace,
+          8.verticalSpace,
           Text(
             content,
             style: tt.bodyMedium?.copyWith(
@@ -154,7 +154,7 @@ class PrivacyPolicyPage extends StatelessWidget {
     return Column(
       children: [
         Divider(color: cs.outline.withValues(alpha: 0.3)),
-        AppSpacing.md.verticalSpace,
+        16.verticalSpace,
         Text(
           'privacy_policy.footer.note'.tr(),
           style: tt.bodySmall?.copyWith(
@@ -163,7 +163,7 @@ class PrivacyPolicyPage extends StatelessWidget {
           ),
           textAlign: TextAlign.center,
         ),
-        AppSpacing.sm.verticalSpace,
+        8.verticalSpace,
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [

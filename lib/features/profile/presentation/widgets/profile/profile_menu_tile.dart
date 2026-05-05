@@ -1,5 +1,4 @@
-import 'package:wassaly/core/imports/core_imports.dart';
-import 'package:wassaly/core/imports/packages_imports.dart';
+import '../../../../../core/imports/imports.dart';
 
 class ProfileMenuTile extends StatelessWidget {
   const ProfileMenuTile({
@@ -24,10 +23,9 @@ class ProfileMenuTile extends StatelessWidget {
 
     return InkWell(
       onTap: onTap,
-      borderRadius: AppBorders.lg,
+      borderRadius: BorderRadius.circular(12.r),
       child: Padding(
-        padding:
-            EdgeInsets.symmetric(horizontal: AppSpacing.xxs, vertical: 12.h),
+        padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 12.h),
         child: Row(
           children: [
             Container(
@@ -35,7 +33,7 @@ class ProfileMenuTile extends StatelessWidget {
               height: 40.w,
               decoration: BoxDecoration(
                 color: cs.primaryContainer.withValues(alpha: 0.3),
-                borderRadius: AppBorders.md,
+                borderRadius: BorderRadius.circular(8.r),
               ),
               child: Icon(
                 icon,
@@ -43,7 +41,7 @@ class ProfileMenuTile extends StatelessWidget {
                 color: cs.primary,
               ),
             ),
-            AppSpacing.ms.horizontalSpace,
+            12.horizontalSpace,
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,7 +53,7 @@ class ProfileMenuTile extends StatelessWidget {
                     ),
                   ),
                   if (subtitle != null) ...[
-                    AppSpacing.xxs.verticalSpace,
+                    4.verticalSpace,
                     Text(
                       subtitle!,
                       style: tt.bodySmall?.copyWith(

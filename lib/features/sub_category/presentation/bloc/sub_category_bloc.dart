@@ -1,5 +1,5 @@
-import 'package:wassaly/core/imports/packages_imports.dart';
 
+import '../../../../core/imports/imports.dart';
 import '../../domain/usecases/get_sub_category_detail_usecase.dart';
 import 'sub_category_event.dart';
 import 'sub_category_state.dart';

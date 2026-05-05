@@ -1,6 +1,6 @@
-import 'package:go_router/go_router.dart';
-import 'package:wassaly/core/imports/core_imports.dart';
 import 'package:wassaly/features/profile/presentation/widgets/profile/profile_menu_tile.dart';
+
+import '../../../../../core/imports/imports.dart';
 
 class ProfileSupportSection extends StatelessWidget {
   const ProfileSupportSection({super.key});
@@ -11,13 +11,12 @@ class ProfileSupportSection extends StatelessWidget {
     final tt = context.theme.textTheme;
 
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: AppSpacing.pagePadding),
+      padding: EdgeInsets.symmetric(horizontal: 16.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: EdgeInsetsDirectional.only(
-                start: AppSpacing.sm, bottom: AppSpacing.ms),
+            padding: EdgeInsetsDirectional.only(start: 8.w, bottom: 8.h),
             child: Text(
               'profile.support_and_privacy'.tr(),
               style: tt.titleMedium?.copyWith(

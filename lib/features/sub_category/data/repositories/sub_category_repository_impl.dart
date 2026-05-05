@@ -1,5 +1,4 @@
-import 'package:wassaly/core/imports/core_imports.dart';
-import 'package:wassaly/core/imports/packages_imports.dart';
+import 'package:wassaly/core/imports/imports.dart';
 
 import '../../domain/entities/sub_category_detail_entity.dart';
 import '../../domain/repositories/sub_category_repository.dart';

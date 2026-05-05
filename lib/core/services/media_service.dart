@@ -1,5 +1,4 @@
-import '../imports/core_imports.dart';
-import '../imports/packages_imports.dart';
+import '../imports/imports.dart';
 
 /// A service to handle media selection (images, videos, files).
 /// Uses system_asset_picker which leverages Android's native Photo Picker

@@ -1,6 +1,4 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
-import 'package:wassaly/core/imports/core_imports.dart';
+import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/core/injection/injection.dart';
 import 'package:wassaly/features/auth/presentation/screens/auth_callback_page.dart';
 import 'package:wassaly/features/auth/presentation/screens/forgot_password_page.dart';
@@ -10,7 +8,6 @@ import 'package:wassaly/features/auth/presentation/screens/reset_password_page.d
 import 'package:wassaly/features/auth/presentation/screens/signup_page.dart';
 import 'package:wassaly/features/auth/presentation/screens/splash_page.dart';
 import 'package:wassaly/features/cart/presentation/screens/cart_page.dart';
-import 'package:wassaly/features/category/presentation/screens/category_page.dart';
 import 'package:wassaly/features/favorite/presentation/screens/favorite_page.dart';
 import 'package:wassaly/features/home/presentation/screens/home_page.dart';
 import 'package:wassaly/features/main_layout/presentation/screens/main_layout_page.dart';
@@ -23,7 +20,9 @@ import 'package:wassaly/features/profile/presentation/screens/profile_page.dart'
 import 'package:wassaly/features/profile/presentation/screens/terms_of_service_page.dart';
 import 'package:wassaly/features/sub_category/presentation/screens/sub_category_page.dart';
 
+import '../../features/category/presentation/screens/category_page.dart';
 import '../../features/profile/presentation/screens/privacy_policy_page.dart';
+import '../../features/search/presentation/screens/search_page.dart';
 
 final GoRouter appRouter = GoRouter(
   navigatorKey: rootNavigatorKey,
@@ -93,15 +92,6 @@ final GoRouter appRouter = GoRouter(
         StatefulShellBranch(
           routes: [
             GoRoute(
-              path: AppRoutes.category,
-              name: 'category',
-              builder: (context, state) => const CategoryPage(),
-            ),
-          ],
-        ),
-        StatefulShellBranch(
-          routes: [
-            GoRoute(
               path: AppRoutes.favorite,
               name: 'favorite',
               builder: (context, state) => const FavoritePage(),
@@ -154,6 +144,20 @@ final GoRouter appRouter = GoRouter(
           ],
         ),
       ],
+    ),
+    GoRoute(
+      path: AppRoutes.category,
+      name: 'category',
+      builder: (context, state) {
+        final extra = state.extra as Map<String, dynamic>?;
+        final category = extra?['category'];
+        if (category == null) {
+          return const Scaffold(
+            body: Center(child: Text('Invalid category')),
+          );
+        }
+        return CategoryPage(category: category);
+      },
     ),
     GoRoute(
       path: AppRoutes.cart,
@@ -238,6 +242,27 @@ final GoRouter appRouter = GoRouter(
         }
         return SubCategoryPage(subCategory: subCategory);
       },
+    ),
+    GoRoute(
+      path: AppRoutes.search,
+      name: 'search',
+      pageBuilder: (context, state) => CustomTransitionPage(
+        key: state.pageKey,
+        child: const SearchPage(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          const begin = Offset(0, 1);
+          const end = Offset.zero;
+          const curve = Curves.easeOutCubic;
+          final tween = Tween(begin: begin, end: end).chain(
+            CurveTween(curve: curve),
+          );
+          final offsetAnimation = animation.drive(tween);
+          return SlideTransition(
+            position: offsetAnimation,
+            child: child,
+          );
+        },
+      ),
     ),
   ],
 );

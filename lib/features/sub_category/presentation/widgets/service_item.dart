@@ -1,5 +1,4 @@
-import 'package:wassaly/core/imports/core_imports.dart';
-import 'package:wassaly/core/imports/packages_imports.dart';
+import 'package:wassaly/core/imports/imports.dart';
 
 class ServiceItem extends StatelessWidget {
   final String name;
@@ -33,7 +32,7 @@ class ServiceItem extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
-          AppSpacing.xs.verticalSpace,
+          4.verticalSpace,
           Text(
             name,
             style: tt.bodySmall?.copyWith(

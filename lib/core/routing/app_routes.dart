@@ -30,4 +30,7 @@ abstract final class AppRoutes {
 
   // SubCategory
   static const String subCategory = '/sub-category';
+
+  // Search
+  static const String search = '/search';
 }

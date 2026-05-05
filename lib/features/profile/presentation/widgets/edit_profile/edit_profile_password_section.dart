@@ -1,4 +1,4 @@
-import 'package:wassaly/core/imports/core_imports.dart';
+import '../../../../../core/imports/imports.dart';
 
 class EditProfilePasswordSection extends StatefulWidget {
   final TextEditingController currentPasswordController;
@@ -40,7 +40,7 @@ class _EditProfilePasswordSectionState
           'profile.change_password'.tr(),
           style: tt.titleMedium?.copyWith(fontWeight: FontWeight.w600),
         ),
-        AppSpacing.md.kH,
+        16.verticalSpace,
         AppTextField(
           label: 'profile.current_password'.tr(),
           controller: widget.currentPasswordController,
@@ -57,7 +57,7 @@ class _EditProfilePasswordSectionState
             ),
           ),
         ),
-        AppSpacing.md.kH,
+        16.verticalSpace,
         AppTextField(
           label: 'auth.password'.tr(),
           controller: widget.passwordController,
@@ -74,7 +74,7 @@ class _EditProfilePasswordSectionState
             ),
           ),
         ),
-        AppSpacing.md.kH,
+        16.verticalSpace,
         AppTextField(
           label: 'auth.confirm_password'.tr(),
           controller: widget.passwordConfirmationController,

@@ -1,5 +1,4 @@
-import 'package:wassaly/core/imports/core_imports.dart';
-import 'package:wassaly/core/imports/packages_imports.dart';
+import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/profile/presentation/bloc/settings/settings_bloc.dart';
 
 class LanguageBottomSheet extends StatelessWidget {
@@ -32,7 +31,7 @@ class LanguageBottomSheet extends StatelessWidget {
               ),
             ),
 
-            AppSpacing.lg.verticalSpace,
+            16.verticalSpace,
 
             // Language options
             Padding(
@@ -52,7 +51,7 @@ class LanguageBottomSheet extends StatelessWidget {
                       context.pop();
                     },
                   ),
-                  AppSpacing.md.verticalSpace,
+                  16.verticalSpace,
                   _LanguageOption(
                     title: 'profile.english'.tr(),
                     subtitle: 'en',
@@ -70,7 +69,7 @@ class LanguageBottomSheet extends StatelessWidget {
               ),
             ),
 
-            AppSpacing.xl.verticalSpace,
+            32.verticalSpace,
           ],
         );
       },
@@ -116,7 +115,7 @@ class _LanguageOption extends StatelessWidget {
               color: isSelected ? cs.primary : cs.onSurfaceVariant,
               size: 24.r,
             ),
-            AppSpacing.sm.horizontalSpace,
+            12.horizontalSpace,
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -128,7 +127,7 @@ class _LanguageOption extends StatelessWidget {
                       color: isSelected ? cs.primary : cs.onSurface,
                     ),
                   ),
-                  AppSpacing.xs.verticalSpace,
+                  4.verticalSpace,
                   Text(
                     subtitle,
                     style: tt.bodySmall?.copyWith(

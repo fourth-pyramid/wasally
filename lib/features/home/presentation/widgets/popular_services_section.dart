@@ -1,5 +1,4 @@
-import 'package:wassaly/core/imports/core_imports.dart';
-import 'package:wassaly/core/imports/packages_imports.dart';
+import 'package:wassaly/core/imports/imports.dart';
 
 import '../../domain/entities/sub_category_entity.dart';
 import '../bloc/home_bloc.dart';
@@ -46,7 +45,7 @@ class PopularServicesSection extends StatelessWidget {
                       ),
                     ),
                   ),
-                  AppSpacing.sm.verticalSpace,
+                  12.verticalSpace,
                   SizedBox(
                     height: 100.h,
                     child: ListView.builder(
@@ -93,7 +92,7 @@ class PopularServicesSection extends StatelessWidget {
                   ),
                 ),
               ),
-              AppSpacing.sm.verticalSpace,
+              12.verticalSpace,
               SizedBox(
                 height: 100.h,
                 child: ListView.builder(

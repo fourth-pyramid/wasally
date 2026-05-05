@@ -47,21 +47,21 @@ class _ProfileView extends StatelessWidget {
               child: Column(
                 children: [
                   const ProfileAppBar(),
-                  AppSpacing.md.verticalSpace,
+                  16.verticalSpace,
                   const ProfileHeader(),
-                  AppSpacing.md.verticalSpace,
+                  16.verticalSpace,
                   const ProfileStatsCard(),
-                  AppSpacing.md.verticalSpace,
+                  16.verticalSpace,
                   const ProfileSettingsSection(),
-                  AppSpacing.md.verticalSpace,
+                  16.verticalSpace,
                   const ProfileSupportSection(),
-                  AppSpacing.md.verticalSpace,
+                  16.verticalSpace,
                   ProfileLogoutButton(
                     onLogoutAllDevices: () => context
                         .read<ProfileBloc>()
                         .add(const ProfileLoggedOutAllDevices()),
                   ),
-                  AppSpacing.md.verticalSpace,
+                  16.verticalSpace,
                 ],
               ),
             ),

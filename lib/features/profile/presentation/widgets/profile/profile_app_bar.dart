@@ -1,5 +1,4 @@
-import 'package:wassaly/core/imports/core_imports.dart';
-import 'package:wassaly/core/imports/packages_imports.dart';
+import '../../../../../core/imports/imports.dart';
 
 class ProfileAppBar extends StatelessWidget {
   const ProfileAppBar({super.key});
@@ -11,9 +10,9 @@ class ProfileAppBar extends StatelessWidget {
 
     return Padding(
       padding: EdgeInsets.only(
-        top: MediaQuery.paddingOf(context).top + AppSpacing.md,
-        left: AppSpacing.pagePadding,
-        right: AppSpacing.pagePadding,
+        top: MediaQuery.paddingOf(context).top + 16.h,
+        left: 16.w,
+        right: 16.w,
       ),
       child: Row(
         children: [
@@ -22,7 +21,8 @@ class ProfileAppBar extends StatelessWidget {
             icon: Icon(Icons.edit_outlined, color: cs.primary),
             style: IconButton.styleFrom(
               backgroundColor: cs.primaryContainer.withValues(alpha: 0.3),
-              shape: const RoundedRectangleBorder(borderRadius: AppBorders.md),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.r)),
             ),
           ),
           Expanded(

@@ -1,5 +1,4 @@
-import 'package:wassaly/core/imports/core_imports.dart';
-import 'package:wassaly/core/imports/packages_imports.dart';
+import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/core/injection/injection.dart';
 import 'package:wassaly/features/auth/presentation/bloc/forgot_password/forgot_password_bloc.dart';
 import 'package:wassaly/features/auth/presentation/widgets/forgot_password/back_to_login_link.dart';

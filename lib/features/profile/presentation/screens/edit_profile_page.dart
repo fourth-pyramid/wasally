@@ -100,7 +100,7 @@ class _EditProfileViewState extends State<_EditProfileView> {
         final tt = bottomSheetContext.theme.textTheme;
         return SafeArea(
           child: Padding(
-            padding: EdgeInsets.all(AppSpacing.lg),
+            padding: EdgeInsets.all(16.w),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -110,7 +110,7 @@ class _EditProfileViewState extends State<_EditProfileView> {
                   color: cs.error,
                   size: 48.sp,
                 ),
-                AppSpacing.md.kH,
+                16.verticalSpace,
                 Text(
                   'profile.delete_account_title'.tr(),
                   style: tt.headlineSmall?.copyWith(
@@ -119,7 +119,7 @@ class _EditProfileViewState extends State<_EditProfileView> {
                   ),
                   textAlign: TextAlign.center,
                 ),
-                AppSpacing.sm.kH,
+                8.verticalSpace,
                 Text(
                   'profile.delete_account_message'.tr(),
                   style: tt.bodyMedium?.copyWith(
@@ -127,7 +127,7 @@ class _EditProfileViewState extends State<_EditProfileView> {
                   ),
                   textAlign: TextAlign.center,
                 ),
-                AppSpacing.xl.kH,
+                16.verticalSpace,
                 AppButton(
                   label: 'profile.delete_account_confirm'.tr(),
                   onPressed: () {
@@ -192,8 +192,8 @@ class _EditProfileViewState extends State<_EditProfileView> {
           _previousActionStatus = state.actionStatus;
         },
         child: SingleChildScrollView(
-          padding: EdgeInsets.all(AppSpacing.pagePadding).copyWith(
-            bottom: AppSpacing.xl,
+          padding: EdgeInsets.all(16.w).copyWith(
+            bottom: 16.h,
           ),
           child: Form(
             key: _formKey,
@@ -203,20 +203,20 @@ class _EditProfileViewState extends State<_EditProfileView> {
                   avatarFile: _avatarFile,
                   onAvatarPicked: _onAvatarPicked,
                 ),
-                AppSpacing.lg.kH,
+                8.verticalSpace,
                 EditProfileNameField(controller: _nameController),
-                AppSpacing.md.kH,
+                8.verticalSpace,
                 EditProfilePhoneField(controller: _phoneController),
-                AppSpacing.xl.kH,
+                16.verticalSpace,
                 EditProfilePasswordSection(
                   currentPasswordController: _currentPasswordController,
                   passwordController: _passwordController,
                   passwordConfirmationController:
                       _passwordConfirmationController,
                 ),
-                AppSpacing.xl.kH,
+                16.verticalSpace,
                 EditProfileSaveButton(onPressed: _submit),
-                AppSpacing.md.kH,
+                8.verticalSpace,
                 AppButton(
                   label: 'profile.delete_account'.tr(),
                   onPressed: _showDeleteAccountBottomSheet,

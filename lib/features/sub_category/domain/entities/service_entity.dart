@@ -1,4 +1,5 @@
-import 'package:wassaly/core/imports/packages_imports.dart';
+
+import '../../../../core/imports/imports.dart';
 
 class ServiceEntity extends Equatable {
   final int id;

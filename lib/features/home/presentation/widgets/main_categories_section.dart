@@ -1,5 +1,4 @@
-import 'package:wassaly/core/imports/core_imports.dart';
-import 'package:wassaly/core/imports/packages_imports.dart';
+import 'package:wassaly/core/imports/imports.dart';
 
 import '../../domain/entities/category_entity.dart';
 import '../bloc/home_bloc.dart';
@@ -68,31 +67,34 @@ class MainCategoriesSection extends StatelessWidget {
               color: cs.primary,
             ),
           ),
-          AppSpacing.md.verticalSpace,
+          16.verticalSpace,
 
           // Build alternating layout: 1 item, then 2 items, then 1 item...
-          ..._buildAlternatingGrid(categories),
+          ..._buildAlternatingGrid(context, categories),
         ],
       ),
     );
   }
 
-  List<Widget> _buildAlternatingGrid(List<CategoryEntity> categories) {
+  List<Widget> _buildAlternatingGrid(
+      BuildContext context, List<CategoryEntity> categories) {
     final List<Widget> items = [];
     int i = 0;
 
     while (i < categories.length) {
+      final firstIndex = i;
       // Full Width Item
       items.add(
         Row(
           children: [
             Expanded(
               child: CategoryCard(
-                title: categories[i].name,
-                imageUrl: categories[i].image,
-                onTap: () {
-                  // TODO: Navigate
-                },
+                title: categories[firstIndex].name,
+                imageUrl: categories[firstIndex].image,
+                onTap: () => context.push(
+                  AppRoutes.category,
+                  extra: {'category': categories[firstIndex]},
+                ),
               ),
             ),
           ],
@@ -101,7 +103,11 @@ class MainCategoriesSection extends StatelessWidget {
       i++;
 
       if (i >= categories.length) break;
-      items.add(AppSpacing.md.verticalSpace);
+      items.add(16.verticalSpace);
+
+      final leftIndex = i;
+      final rightIndex = i + 1;
+      final hasRight = rightIndex < categories.length;
 
       // Two side-by-side items
       items.add(
@@ -109,22 +115,24 @@ class MainCategoriesSection extends StatelessWidget {
           children: [
             Expanded(
               child: CategoryCard(
-                title: categories[i].name,
-                imageUrl: categories[i].image,
-                onTap: () {
-                  // TODO: Navigate
-                },
+                title: categories[leftIndex].name,
+                imageUrl: categories[leftIndex].image,
+                onTap: () => context.push(
+                  AppRoutes.category,
+                  extra: {'category': categories[leftIndex]},
+                ),
               ),
             ),
             12.horizontalSpace,
-            if (i + 1 < categories.length)
+            if (hasRight)
               Expanded(
                 child: CategoryCard(
-                  title: categories[i + 1].name,
-                  imageUrl: categories[i + 1].image,
-                  onTap: () {
-                    // TODO: Navigate
-                  },
+                  title: categories[rightIndex].name,
+                  imageUrl: categories[rightIndex].image,
+                  onTap: () => context.push(
+                    AppRoutes.category,
+                    extra: {'category': categories[rightIndex]},
+                  ),
                 ),
               )
             else
@@ -135,7 +143,7 @@ class MainCategoriesSection extends StatelessWidget {
       i += 2;
 
       if (i < categories.length) {
-        items.add(AppSpacing.md.verticalSpace);
+        items.add(16.verticalSpace);
       }
     }
 

@@ -1,5 +1,4 @@
-import 'package:wassaly/core/imports/core_imports.dart';
-import 'package:wassaly/core/imports/packages_imports.dart';
+import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/sub_category/domain/entities/service_entity.dart';
 
 import 'service_card.dart';
@@ -45,7 +44,7 @@ class ServicesSection extends StatelessWidget {
           },
         ),
         SliverToBoxAdapter(
-          child: AppSpacing.md.verticalSpace,
+          child: 16.verticalSpace,
         ),
       ],
     );

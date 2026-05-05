@@ -1,5 +1,4 @@
-import 'package:wassaly/core/imports/core_imports.dart';
-import 'package:wassaly/core/imports/packages_imports.dart';
+import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/core/injection/injection.dart';
 
 import '../bloc/home_bloc.dart';
@@ -32,88 +31,113 @@ class _HomeView extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: cs.surface,
-      body: RefreshIndicator(
-        onRefresh: () async {
-          final bloc = context.read<HomeBloc>();
-          final startTime = DateTime.now();
-
-          bloc.add(GetBannersEvent());
-          bloc.add(GetCategoriesEvent());
-          bloc.add(GetPopularServicesEvent());
-          bloc.add(GetProductsEvent());
-
-          // Wait for all sections to finish loading
-          await bloc.stream.firstWhere((state) =>
-              state.status != HomeStatus.loading &&
-              state.categoriesStatus != HomeStatus.loading &&
-              state.popularServicesStatus != HomeStatus.loading &&
-              state.productsStatus != HomeStatus.loading);
-
-          // Ensure visibility
-          final elapsed = DateTime.now().difference(startTime);
-          if (elapsed < const Duration(seconds: 1)) {
-            await Future<void>.delayed(const Duration(seconds: 1) - elapsed);
-          }
-        },
-        color: cs.primary,
-        backgroundColor: cs.surface,
-        child: CustomScrollView(
-          slivers: [
-            // Sliver AppBar
-            SliverAppBar(
-              floating: true,
-              snap: true,
-              backgroundColor: cs.surface,
-              elevation: 0,
-              centerTitle: true,
-              title: CommonImage(
-                imageUrl: 'assets/images/logo.png',
-                width: 80.w,
-                height: 50.h,
-              ),
-              actions: [
-                IconButton(
-                  icon: Icon(Icons.search, color: cs.primary),
-                  onPressed: () {
-                    // TODO: Navigate to search
-                  },
+      body: BlocBuilder<HomeBloc, HomeState>(
+        builder: (context, state) {
+          return RefreshIndicator(
+            onRefresh: () => _refreshAllSections(context),
+            color: cs.primary,
+            backgroundColor: cs.surface,
+            child: CustomScrollView(
+              slivers: [
+                // Sliver AppBar
+                SliverAppBar(
+                  floating: true,
+                  snap: true,
+                  backgroundColor: cs.surface,
+                  elevation: 0,
+                  centerTitle: true,
+                  title: Image.asset(
+                    'assets/images/logo.png',
+                    height: 60.h,
+                    cacheHeight: (60.h * 2).toInt(),
+                    filterQuality: FilterQuality.high,
+                  ),
+                  actions: [
+                    IconButton(
+                      icon: Icon(Icons.search, color: cs.primary),
+                      onPressed: () {
+                        context.push(AppRoutes.search);
+                      },
+                    ),
+                  ],
                 ),
+
+                // Show global error state when all sections failed
+                if (state.allSectionsFailed && !state.anySectionLoading) ...[
+                  SliverPadding(
+                    padding: EdgeInsets.only(top: 100.h),
+                    sliver: SliverFillRemaining(
+                      child: AppErrorWidget(
+                        title: 'errors.no_internet'.tr(),
+                        message: state.errorMessage.isNotEmpty
+                            ? state.errorMessage
+                            : 'Please check your internet connection and try again.',
+                        onRetry: () => _refreshAllSections(context),
+                        icon: Icons.wifi_off_rounded,
+                      ),
+                    ),
+                  ),
+                ] else ...[
+                  // Banner
+                  const SliverToBoxAdapter(
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 8),
+                      child: HomeBanner(),
+                    ),
+                  ),
+                  // Spacing
+                  SliverToBoxAdapter(
+                    child: 16.verticalSpace,
+                  ),
+                  // Popular Services
+                  const PopularServicesSection(),
+
+                  // Main Categories
+                  const SliverToBoxAdapter(
+                    child: MainCategoriesSection(),
+                  ),
+
+                  // Spacing
+                  SliverToBoxAdapter(
+                    child: 12.verticalSpace,
+                  ),
+
+                  // Products
+                  const ProductsSection(),
+
+                  // Bottom spacing
+                  SliverToBoxAdapter(
+                    child: 24.verticalSpace,
+                  ),
+                ],
               ],
             ),
-            // Banner
-            const SliverToBoxAdapter(
-              child: Padding(
-                padding: EdgeInsets.only(top: 8),
-                child: HomeBanner(),
-              ),
-            ),
-            // Spacing
-            SliverToBoxAdapter(
-              child: AppSpacing.md.verticalSpace,
-            ),
-            // Popular Services
-            const PopularServicesSection(),
-
-            // Main Categories
-            const SliverToBoxAdapter(
-              child: MainCategoriesSection(),
-            ),
-
-            // Spacing
-            SliverToBoxAdapter(
-              child: AppSpacing.sm.verticalSpace,
-            ),
-
-            // Products
-            const ProductsSection(),
-
-            // Bottom spacing
-            SliverToBoxAdapter(
-              child: AppSpacing.xl.verticalSpace,
-            ),
-          ],
-        ),
+          );
+        },
       ),
     );
+  }
+
+  Future<void> _refreshAllSections(BuildContext context) async {
+    final bloc = context.read<HomeBloc>();
+    final startTime = DateTime.now();
+
+    bloc.add(GetBannersEvent());
+    bloc.add(GetCategoriesEvent());
+    bloc.add(GetPopularServicesEvent());
+    bloc.add(GetProductsEvent());
+
+    // Wait for all sections to finish loading
+    await bloc.stream.firstWhere((state) =>
+        state.bannersStatus != HomeStatus.loading &&
+        state.categoriesStatus != HomeStatus.loading &&
+        state.popularServicesStatus != HomeStatus.loading &&
+        state.productsStatus != HomeStatus.loading);
+
+    // Ensure visibility
+    final elapsed = DateTime.now().difference(startTime);
+    if (elapsed < const Duration(seconds: 1)) {
+      await Future<void>.delayed(const Duration(seconds: 1) - elapsed);
+    }
   }
 }

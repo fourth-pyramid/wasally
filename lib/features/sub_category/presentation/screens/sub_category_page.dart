@@ -1,5 +1,4 @@
-import 'package:wassaly/core/imports/core_imports.dart';
-import 'package:wassaly/core/imports/packages_imports.dart';
+import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/core/injection/injection.dart';
 import 'package:wassaly/features/home/domain/entities/sub_category_entity.dart';
 
@@ -60,53 +59,73 @@ class _SubCategoryView extends StatelessWidget {
           final isLoading = state.status == SubCategoryStatus.loading ||
               state.status == SubCategoryStatus.initial;
 
-          return CustomScrollView(
-            slivers: [
-              // SliverAppBar
-              SliverAppBar(
-                backgroundColor: cs.surface,
-                elevation: 0,
-                centerTitle: true,
-                floating: true,
-                foregroundColor: cs.primary,
-                title: Text(
-                  subCategory.name,
-                  style: tt.titleLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: cs.primary,
+          return RefreshIndicator(
+            onRefresh: () async {
+              final bloc = context.read<SubCategoryBloc>();
+              final startTime = DateTime.now();
+
+              bloc.add(FetchSubCategoryDetailEvent(subCategory.id));
+
+              await bloc.stream.firstWhere(
+                (state) => state.status != SubCategoryStatus.loading,
+              );
+
+              final elapsed = DateTime.now().difference(startTime);
+              if (elapsed < const Duration(seconds: 1)) {
+                await Future<void>.delayed(
+                    const Duration(seconds: 1) - elapsed);
+              }
+            },
+            color: cs.primary,
+            backgroundColor: cs.surface,
+            child: CustomScrollView(
+              slivers: [
+                // SliverAppBar
+                SliverAppBar(
+                  backgroundColor: cs.surface,
+                  elevation: 0,
+                  centerTitle: true,
+                  floating: true,
+                  foregroundColor: cs.primary,
+                  title: Text(
+                    subCategory.name,
+                    style: tt.titleLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: cs.primary,
+                    ),
                   ),
                 ),
-              ),
 
-              // Services Section
-              if (!isLoading && detail != null && detail.services.isNotEmpty)
-                ServicesSection(services: detail.services),
+                // Services Section
+                if (!isLoading && detail != null && detail.services.isNotEmpty)
+                  ServicesSection(services: detail.services),
 
-              // Products Section
-              if (!isLoading && state.products.data.isNotEmpty)
-                ProductsSection(
-                  products: state.products.data,
-                  hasMore: state.hasMoreProducts,
-                  isLoadingMore: state.isLoadingMore,
-                  subCategoryId: subCategory.id,
-                ),
-
-              // Products Skeleton
-              if (isLoading) const ProductsSkeleton(),
-
-              // Empty state if no data
-              if (!isLoading &&
-                  detail != null &&
-                  detail.services.isEmpty &&
-                  state.products.data.isEmpty)
-                const SliverFillRemaining(
-                  hasScrollBody: false,
-                  child: AppEmptyState(
-                    title: 'لا توجد خدمات أو منتجات',
-                    icon: Icons.folder_open_outlined,
+                // Products Section
+                if (!isLoading && state.products.data.isNotEmpty)
+                  ProductsSection(
+                    products: state.products.data,
+                    hasMore: state.hasMoreProducts,
+                    isLoadingMore: state.isLoadingMore,
+                    subCategoryId: subCategory.id,
                   ),
-                ),
-            ],
+
+                // Products Skeleton
+                if (isLoading) const ProductsSkeleton(),
+
+                // Empty state if no data
+                if (!isLoading &&
+                    detail != null &&
+                    detail.services.isEmpty &&
+                    state.products.data.isEmpty)
+                  const SliverFillRemaining(
+                    hasScrollBody: false,
+                    child: AppEmptyState(
+                      title: 'لا توجد خدمات أو منتجات',
+                      icon: Icons.folder_open_outlined,
+                    ),
+                  ),
+              ],
+            ),
           );
         },
       ),

@@ -1,9 +1,10 @@
 import 'dart:ui';
+
 import '../../imports/imports.dart';
 
 /// Shows a highly customizable bottom sheet with premium features like backdrop blur.
 ///
-/// This helper uses the [rootNavigatorKey] to display the sheet 
+/// This helper uses the [rootNavigatorKey] to display the sheet
 /// without needing a local [BuildContext].
 Future<T?> showAppSheet<T>({
   required Widget child,
@@ -24,7 +25,7 @@ Future<T?> showAppSheet<T>({
     useSafeArea: useSafeArea,
     enableDrag: enableDrag,
     shape: const RoundedRectangleBorder(
-      borderRadius: AppBorders.bottomSheet,
+      borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
     ),
     builder: (context) => GestureDetector(
       behavior: HitTestBehavior.opaque,
