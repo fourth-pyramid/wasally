@@ -23,9 +23,8 @@ class ProfileLogoutButton extends StatelessWidget {
   }
 
   void _showLogoutDialog(BuildContext context) async {
-    final result = await showDialog<String>(
-      context: context,
-      builder: (context) => _LogoutChoiceDialog(),
+    final result = await showAppDialog<String>(
+      child: _LogoutChoiceDialog(),
     );
 
     if (!context.mounted) return;

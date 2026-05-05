@@ -47,7 +47,7 @@ class ProductsSection extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'منتجات مختارة'.tr(),
+                      'home.selected_products'.tr(),
                       style: tt.titleMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                         color: cs.primary,

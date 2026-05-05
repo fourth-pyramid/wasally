@@ -31,6 +31,10 @@ class _HomeView extends StatelessWidget {
     return Scaffold(
       backgroundColor: cs.surface,
       body: BlocBuilder<HomeBloc, HomeState>(
+        buildWhen: (previous, current) =>
+            previous.allSectionsFailed != current.allSectionsFailed ||
+            previous.anySectionLoading != current.anySectionLoading ||
+            previous.errorMessage != current.errorMessage,
         builder: (context, state) {
           return RefreshIndicator(
             onRefresh: () => _refreshAllSections(context),
@@ -78,10 +82,10 @@ class _HomeView extends StatelessWidget {
                   ),
                 ] else ...[
                   // Banner
-                  const SliverToBoxAdapter(
+                  SliverToBoxAdapter(
                     child: Padding(
-                      padding: EdgeInsets.only(top: 8),
-                      child: HomeBanner(),
+                      padding: EdgeInsets.only(top: 8.h),
+                      child: const HomeBanner(),
                     ),
                   ),
                   // Spacing

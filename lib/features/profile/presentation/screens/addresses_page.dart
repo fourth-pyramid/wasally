@@ -171,13 +171,8 @@ class _AddressCard extends StatelessWidget {
                   prefixIcon:
                       Icon(Icons.delete_outline, color: cs.error, size: 18.r),
                   onPressed: () async {
-                    final confirmed = await context.showConfirmationDialog(
-                      title: 'profile.delete_address_title'.tr(),
-                      message: 'profile.delete_address_message'
-                          .tr(namedArgs: {'address': address.title}),
-                      confirmText: 'shared.delete'.tr(),
-                      cancelText: 'shared.cancel'.tr(),
-                      isDangerous: true,
+                    final confirmed = await showAppDialog<bool>(
+                      child: _DeleteAddressDialog(addressTitle: address.title),
                     );
 
                     if (!context.mounted) return;
@@ -230,6 +225,75 @@ class _AddressSkeleton extends StatelessWidget {
           child: _AddressCard(address: _MockAddress()),
         );
       },
+    );
+  }
+}
+
+class _DeleteAddressDialog extends StatelessWidget {
+  final String addressTitle;
+
+  const _DeleteAddressDialog({required this.addressTitle});
+
+  @override
+  Widget build(BuildContext context) {
+    final cs = context.theme.colorScheme;
+    final tt = context.theme.textTheme;
+
+    return Dialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
+      child: Padding(
+        padding: EdgeInsets.all(24.w),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              Icons.delete_outline,
+              size: 48.r,
+              color: cs.error,
+            ),
+            16.verticalSpace,
+            Text(
+              'profile.delete_address_title'.tr(),
+              style: tt.headlineSmall?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: cs.onSurface,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            8.verticalSpace,
+            Text(
+              'profile.delete_address_message'
+                  .tr(namedArgs: {'address': addressTitle}),
+              style: tt.bodyMedium?.copyWith(
+                color: cs.onSurfaceVariant,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            24.verticalSpace,
+            Row(
+              children: [
+                Expanded(
+                  child: AppButton(
+                    label: 'shared.cancel'.tr(),
+                    variant: ButtonVariant.ghost,
+                    isFullWidth: false,
+                    onPressed: () => Navigator.of(context).pop(false),
+                  ),
+                ),
+                12.horizontalSpace,
+                Expanded(
+                  child: AppButton(
+                    isFullWidth: true,
+                    label: 'shared.delete'.tr(),
+                    variant: ButtonVariant.danger,
+                    onPressed: () => Navigator.of(context).pop(true),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

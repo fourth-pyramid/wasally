@@ -13,7 +13,13 @@ class HomeBanner extends StatefulWidget {
 }
 
 class _HomeBannerState extends State<HomeBanner> {
-  int _currentIndex = 0;
+  final _currentIndexNotifier = ValueNotifier<int>(0);
+
+  @override
+  void dispose() {
+    _currentIndexNotifier.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,9 +94,7 @@ class _HomeBannerState extends State<HomeBanner> {
                 autoPlay: true,
                 autoPlayInterval: const Duration(seconds: 4),
                 onPageChanged: (index, reason) {
-                  setState(() {
-                    _currentIndex = index;
-                  });
+                  _currentIndexNotifier.value = index;
                 },
               ),
               itemBuilder: (context, index, realIndex) {
@@ -98,15 +102,18 @@ class _HomeBannerState extends State<HomeBanner> {
               },
             ),
             12.verticalSpace,
-            AnimatedSmoothIndicator(
-              activeIndex: _currentIndex,
-              count: banners.length,
-              effect: ExpandingDotsEffect(
-                dotHeight: 6.h,
-                dotWidth: 6.w,
-                activeDotColor: cs.primary,
-                dotColor: cs.outlineVariant,
-                expansionFactor: 3,
+            ValueListenableBuilder<int>(
+              valueListenable: _currentIndexNotifier,
+              builder: (context, currentIndex, _) => AnimatedSmoothIndicator(
+                activeIndex: currentIndex,
+                count: banners.length,
+                effect: ExpandingDotsEffect(
+                  dotHeight: 6.h,
+                  dotWidth: 6.w,
+                  activeDotColor: cs.primary,
+                  dotColor: cs.outlineVariant,
+                  expansionFactor: 3,
+                ),
               ),
             ),
           ],

@@ -10,6 +10,7 @@ class LanguageBottomSheet extends StatelessWidget {
     final tt = context.theme.textTheme;
 
     return BlocBuilder<SettingsBloc, SettingsState>(
+      buildWhen: (prev, curr) => prev.language != curr.language,
       builder: (context, state) {
         return Column(
           mainAxisSize: MainAxisSize.min,
@@ -42,11 +43,15 @@ class LanguageBottomSheet extends StatelessWidget {
                     title: 'profile.arabic'.tr(),
                     subtitle: 'ar',
                     isSelected: state.language == 'ar',
-                    onTap: () {
+                    onTap: () async {
                       if (state.language != 'ar') {
-                        context
-                            .read<SettingsBloc>()
-                            .add(const LanguageToggled());
+                        final confirmed =
+                            await _showLanguageChangeDialog(context);
+                        if (confirmed ?? false) {
+                          context
+                              .read<SettingsBloc>()
+                              .add(const LanguageToggled());
+                        }
                       }
                       context.pop();
                     },
@@ -56,11 +61,15 @@ class LanguageBottomSheet extends StatelessWidget {
                     title: 'profile.english'.tr(),
                     subtitle: 'en',
                     isSelected: state.language == 'en',
-                    onTap: () {
+                    onTap: () async {
                       if (state.language != 'en') {
-                        context
-                            .read<SettingsBloc>()
-                            .add(const LanguageToggled());
+                        final confirmed =
+                            await _showLanguageChangeDialog(context);
+                        if (confirmed ?? false) {
+                          context
+                              .read<SettingsBloc>()
+                              .add(const LanguageToggled());
+                        }
                       }
                       context.pop();
                     },
@@ -73,6 +82,43 @@ class LanguageBottomSheet extends StatelessWidget {
           ],
         );
       },
+    );
+  }
+
+  Future<bool?> _showLanguageChangeDialog(BuildContext context) async {
+    final cs = context.theme.colorScheme;
+    final tt = context.theme.textTheme;
+
+    return await showAppDialog<bool>(
+      child: AlertDialog(
+        title: Text(
+          'profile.language_change_title'.tr(),
+          style: tt.titleLarge?.copyWith(
+            fontWeight: FontWeight.bold,
+            color: cs.onSurface,
+          ),
+        ),
+        content: Text(
+          'profile.language_change_message'.tr(),
+          style: tt.bodyMedium?.copyWith(
+            color: cs.onSurface,
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => context.pop(false),
+            child: Text(
+              'profile.language_change_cancel'.tr(),
+              style: TextStyle(
+                color: cs.onSurface,
+              ),
+            ),
+          ),
+          AppButton(
+              label: 'profile.language_change_confirm'.tr(),
+              onPressed: () => context.pop(true)),
+        ],
+      ),
     );
   }
 }

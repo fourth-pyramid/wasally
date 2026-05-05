@@ -7,13 +7,16 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenUtilWrapper(
       builder: (context) => SettingsListenerWrapper(
-        builder: (context, themeMode) => _buildMaterialApp(context, themeMode),
+        builder: (context, themeMode, language) =>
+            _buildMaterialApp(context, themeMode, language),
       ),
     );
   }
 
-  Widget _buildMaterialApp(BuildContext context, ThemeMode themeMode) {
+  Widget _buildMaterialApp(
+      BuildContext context, ThemeMode themeMode, String language) {
     return MaterialApp.router(
+      key: ValueKey(language),
       title: 'app.title'.tr(),
       debugShowCheckedModeBanner: false,
       theme: buildLightTheme(primaryColorHex: '#093773'),

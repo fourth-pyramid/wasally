@@ -3,7 +3,8 @@ import 'package:wassaly/features/profile/presentation/bloc/settings/settings_blo
 
 /// A wrapper that listens to SettingsBloc and applies theme/language changes globally.
 class SettingsListenerWrapper extends StatelessWidget {
-  final Widget Function(BuildContext context, ThemeMode themeMode) builder;
+  final Widget Function(
+      BuildContext context, ThemeMode themeMode, String language) builder;
 
   const SettingsListenerWrapper({
     super.key,
@@ -20,6 +21,10 @@ class SettingsListenerWrapper extends StatelessWidget {
         if (context.locale != newLocale) {
           context.setLocale(newLocale);
         }
+        // Navigate to splash to re-initialize the entire app with new language
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          appRouter.go(AppRoutes.splash);
+        });
       },
       child: BlocBuilder<SettingsBloc, SettingsState>(
         buildWhen: (prev, curr) =>
@@ -27,7 +32,7 @@ class SettingsListenerWrapper extends StatelessWidget {
             prev.language != curr.language,
         builder: (context, state) {
           final themeMode = state.isDarkMode ? ThemeMode.dark : ThemeMode.light;
-          return builder(context, themeMode);
+          return builder(context, themeMode, state.language);
         },
       ),
     );
