@@ -205,8 +205,8 @@ class _ProductCardState extends State<ProductCard> {
             Expanded(
               child: Padding(
                 padding: EdgeInsets.symmetric(
-                  horizontal: 12.w,
-                  vertical: 6.h,
+                  horizontal: 6.w,
+                  vertical: 4.h,
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

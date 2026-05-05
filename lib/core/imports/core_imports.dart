@@ -1,4 +1,3 @@
-
 // Dart SDK
 export 'dart:io';
 
@@ -11,6 +10,7 @@ export 'package:flutter/material.dart';
 export 'package:flutter/services.dart';
 
 export '../config/app_config.dart';
+export '../injection/injection.dart';
 export '../routing/app_router.dart';
 export '../routing/app_routes.dart';
 export '../routing/global_navigator.dart';

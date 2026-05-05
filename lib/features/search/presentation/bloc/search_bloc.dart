@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/search/domain/usecases/search_products_usecase.dart';
 
@@ -6,6 +8,7 @@ import 'search_state.dart';
 
 class SearchBloc extends Bloc<SearchEvent, SearchState> {
   final SearchProductsUseCase _searchProductsUseCase;
+  Timer? _debounceTimer;
 
   SearchBloc({
     required SearchProductsUseCase searchProductsUseCase,
@@ -18,13 +21,32 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   }
 
   void _onQueryChanged(SearchQueryChanged event, Emitter<SearchState> emit) {
+    _debounceTimer?.cancel();
+
+    if (event.query.trim().isEmpty) {
+      emit(state.copyWith(
+        query: event.query,
+        status: SearchStatus.initial,
+        products: const PaginatedResponse(data: []),
+        hasSearched: false,
+        errorMessage: '',
+      ));
+      return;
+    }
+
     emit(state.copyWith(query: event.query));
+
+    _debounceTimer = Timer(const Duration(milliseconds: 500), () {
+      add(const SearchSubmitted());
+    });
   }
 
   Future<void> _onSearchSubmitted(
     SearchSubmitted event,
     Emitter<SearchState> emit,
   ) async {
+    _debounceTimer?.cancel();
+
     if (state.query.trim().isEmpty) {
       emit(state.copyWith(
         status: SearchStatus.initial,
@@ -91,6 +113,13 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   }
 
   void _onSearchCleared(SearchCleared event, Emitter<SearchState> emit) {
+    _debounceTimer?.cancel();
     emit(const SearchState());
+  }
+
+  @override
+  Future<void> close() {
+    _debounceTimer?.cancel();
+    return super.close();
   }
 }

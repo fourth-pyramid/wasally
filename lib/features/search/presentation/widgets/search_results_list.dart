@@ -24,7 +24,7 @@ class SearchResultsList extends StatelessWidget {
               onLoadMore: () {
                 context.read<SearchBloc>().add(const SearchLoadMore());
               },
-              padding: EdgeInsets.only(top: 8.h),
+              padding: EdgeInsets.symmetric(horizontal: 4.w),
               itemBuilder: (context, product, index, wrapAnimation) {
                 return wrapAnimation(
                   ProductCard(
