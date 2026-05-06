@@ -37,9 +37,6 @@ class ProductsSection extends StatelessWidget {
                 onTap: () {
                   // TODO: Navigate to product detail
                 },
-                onFavoriteTap: () {
-                  // TODO: Toggle favorite
-                },
                 onOpenProductTap: () {},
               ),
             );

@@ -1,5 +1,8 @@
 import 'package:wassaly/core/imports/imports.dart';
 
+import '../../../features/favorite/presentation/bloc/favorite_bloc.dart';
+import '../../../features/favorite/presentation/bloc/favorite_event.dart';
+import '../../../features/favorite/presentation/bloc/favorite_state.dart';
 import '../../../features/home/domain/entities/product_entity.dart';
 
 /// Shared notifier that holds the currently active (long-pressed) product id.
@@ -156,7 +159,11 @@ class _ProductCardState extends State<ProductCard> {
   void _onActiveIdChanged() {
     final isNowActive = activeMarqueeId.value == widget.product.id;
     if (isNowActive != _isActive) {
-      setState(() => _isActive = isNowActive);
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          setState(() => _isActive = isNowActive);
+        }
+      });
     }
   }
 
@@ -289,36 +296,55 @@ class _ProductCardState extends State<ProductCard> {
             ),
           ),
 
-          // Favorite button
+          // Favorite button — uses BlocSelector for granular rebuilds
           Align(
             alignment: Alignment.topLeft,
-            child: GestureDetector(
-              onTap: widget.onFavoriteTap,
-              child: Container(
-                margin: EdgeInsetsDirectional.symmetric(
-                    horizontal: 6.w, vertical: 6.h),
-                padding: const EdgeInsets.all(6),
-                decoration: BoxDecoration(
-                  color: cs.surface.withValues(alpha: 0.9),
-                  shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                      color: cs.shadow.withValues(alpha: 0.1),
-                      blurRadius: 4,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
-                ),
-                child: Icon(
-                  widget.product.isFavorite
-                      ? Icons.favorite_rounded
-                      : Icons.favorite_outline_rounded,
-                  size: 18.r,
-                  color: widget.product.isFavorite
-                      ? cs.error
-                      : cs.onSurfaceVariant,
-                ),
+            child: BlocSelector<FavoriteBloc, FavoriteState, (bool, bool)>(
+              selector: (state) => (
+                state.favoriteIds.contains(widget.product.id) ||
+                    (!state.hasLoaded && widget.product.isFavorite),
+                state.togglingIds.contains(widget.product.id),
               ),
+              builder: (context, status) {
+                final isFavorite = status.$1;
+                final isToggling = status.$2;
+                return GestureDetector(
+                  onTap: isToggling
+                      ? null
+                      : widget.onFavoriteTap ??
+                          () {
+                            context.read<FavoriteBloc>().add(
+                                  ToggleFavoriteEvent(
+                                    widget.product.id,
+                                    expectedIsFavorite: isFavorite,
+                                  ),
+                                );
+                          },
+                  child: Container(
+                    margin: EdgeInsetsDirectional.symmetric(
+                        horizontal: 6.w, vertical: 6.h),
+                    padding: const EdgeInsets.all(6),
+                    decoration: BoxDecoration(
+                      color: cs.surface.withValues(alpha: 0.9),
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: cs.shadow.withValues(alpha: 0.1),
+                          blurRadius: 4,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: Icon(
+                      isFavorite
+                          ? Icons.favorite_rounded
+                          : Icons.favorite_outline_rounded,
+                      size: 18.r,
+                      color: isFavorite ? cs.error : cs.onSurfaceVariant,
+                    ),
+                  ),
+                );
+              },
             ),
           ),
 

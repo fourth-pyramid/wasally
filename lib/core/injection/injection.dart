@@ -20,6 +20,12 @@ import 'package:wassaly/features/auth/presentation/bloc/otp_verification/otp_ver
 import 'package:wassaly/features/auth/presentation/bloc/reset_password/reset_password_bloc.dart';
 import 'package:wassaly/features/auth/presentation/bloc/session/session_bloc.dart';
 import 'package:wassaly/features/auth/presentation/bloc/signup/signup_bloc.dart';
+import 'package:wassaly/features/favorite/data/datasources/favorite_remote_datasource.dart';
+import 'package:wassaly/features/favorite/data/repositories/favorite_repository_impl.dart';
+import 'package:wassaly/features/favorite/domain/repositories/favorite_repository.dart';
+import 'package:wassaly/features/favorite/domain/usecases/get_favorites_usecase.dart';
+import 'package:wassaly/features/favorite/domain/usecases/toggle_favorite_usecase.dart';
+import 'package:wassaly/features/favorite/presentation/bloc/favorite_bloc.dart';
 import 'package:wassaly/features/sub_category/data/datasources/sub_category_remote_datasource.dart';
 import 'package:wassaly/features/sub_category/data/repositories/sub_category_repository_impl.dart';
 import 'package:wassaly/features/sub_category/domain/repositories/sub_category_repository.dart';
@@ -117,6 +123,10 @@ Future<void> initDependencies() async {
   sl.registerFactory(() => SearchBloc(
         searchProductsUseCase: sl(),
       ));
+  sl.registerFactory(() => FavoriteBloc(
+        sl(),
+        sl(),
+      ));
 
   sl.registerFactoryParam<OtpVerificationBloc, String, VerificationType>(
     (email, verificationType) => OtpVerificationBloc(
@@ -175,6 +185,10 @@ Future<void> initDependencies() async {
   // UseCases - Search
   sl.registerLazySingleton(() => SearchProductsUseCase(sl()));
 
+  // UseCases - Favorite
+  sl.registerLazySingleton(() => GetFavoritesUseCase(sl()));
+  sl.registerLazySingleton(() => ToggleFavoriteUseCase(sl()));
+
   // Repositories
   sl.registerLazySingleton<AuthRepository>(
       () => AuthRepositoryImpl(sl(), sl()));
@@ -186,6 +200,8 @@ Future<void> initDependencies() async {
   sl.registerLazySingleton<CategoryRepository>(
       () => CategoryRepositoryImpl(sl()));
   sl.registerLazySingleton<SearchRepository>(() => SearchRepositoryImpl(sl()));
+  sl.registerLazySingleton<FavoriteRepository>(
+      () => FavoriteRepositoryImpl(sl()));
 
   // DataSources
   sl.registerLazySingleton<AuthRemoteDataSource>(
@@ -202,4 +218,6 @@ Future<void> initDependencies() async {
       () => CategoryRemoteDataSourceImpl(DioService.instance));
   sl.registerLazySingleton<SearchRemoteDataSource>(
       () => SearchRemoteDataSourceImpl(DioService.instance));
+  sl.registerLazySingleton<FavoriteRemoteDataSource>(
+      () => FavoriteRemoteDataSourceImpl(DioService.instance));
 }

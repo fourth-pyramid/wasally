@@ -51,7 +51,9 @@
   },
   "favorite": {
     "favorite_title": "Favorites",
-    "favorite_subtitle": "Your favorite items will appear here"
+    "favorite_subtitle": "Your favorite items will appear here",
+    "no_favorites": "No favorites yet",
+    "no_favorites_subtitle": "Add your favorite products here"
   },
   "profile": {
     "my_account": "My Account",
@@ -147,10 +149,10 @@
     "login_button": "Login",
     "dont_have_account": "Don't have an account?",
     "sign_up": "Sign up",
-    "sign_up_google": "Google",
-    "sign_up_facebook": "Facebook",
+    "sign_up_google": "Continue with google",
+    "sign_up_facebook": "Continue with facebook",
     "or_login_with": "Or login with",
-    "login_with_google": "Google",
+    "login_with_google": "Continue with google",
     "create_account": "Create Account",
     "create_account_subtitle": "Start your journey with us",
     "name": "Full Name",

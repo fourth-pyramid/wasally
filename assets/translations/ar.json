@@ -51,7 +51,9 @@
   },
   "favorite": {
     "favorite_title": "المفضلة",
-    "favorite_subtitle": "ستظهر عناصرك المفضلة هنا"
+    "favorite_subtitle": "ستظهر عناصرك المفضلة هنا",
+    "no_favorites": "لا توجد عناصر مفضلة",
+    "no_favorites_subtitle": "اضف منتجاتك المفضلة هنا"
   },
   "profile": {
     "my_account": "حسابي",
@@ -147,10 +149,10 @@
     "login_button": "تسجيل الدخول",
     "dont_have_account": "ليس لديك حساب؟",
     "sign_up": "إنشاء حساب",
-    "sign_up_google": "جوجل",
-    "sign_up_facebook": "فيسبوك",
+    "sign_up_google": "متابعة بواسطة جوجل",
+    "sign_up_facebook": "متابعة بواسطة فيسبوك",
     "or_login_with": "أو سجل عبر",
-    "login_with_google": "جوجل",
+    "login_with_google": "متابعة بواسطة جوجل",
     "create_account": "إنشاء حساب",
     "create_account_subtitle": "ابدأ رحلتك معنا",
     "name": "الاسم الكامل",

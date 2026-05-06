@@ -1,4 +1,6 @@
 import 'package:wassaly/core/imports/imports.dart';
+import 'package:wassaly/features/favorite/presentation/bloc/favorite_bloc.dart';
+import 'package:wassaly/features/favorite/presentation/bloc/favorite_state.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -27,7 +29,18 @@ class App extends StatelessWidget {
       supportedLocales: context.supportedLocales,
       locale: context.locale,
       builder: (context, child) {
-        return SessionListenerWrapper(child: child!);
+        return BlocListener<FavoriteBloc, FavoriteState>(
+          listenWhen: (previous, current) =>
+              previous.errorMessage != current.errorMessage &&
+              current.errorMessage != null,
+          listener: (context, state) {
+            context.showTypedSnackBar(
+              state.errorMessage!,
+              type: SnackBarType.error,
+            );
+          },
+          child: SessionListenerWrapper(child: child!),
+        );
       },
     );
   }

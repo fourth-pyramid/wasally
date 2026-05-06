@@ -32,9 +32,6 @@ class SearchResultsList extends StatelessWidget {
                     onTap: () {
                       // TODO: Navigate to product details
                     },
-                    onFavoriteTap: () {
-                      // TODO: Toggle favorite
-                    },
                     onOpenProductTap: () {
                       // TODO: Open product
                     },

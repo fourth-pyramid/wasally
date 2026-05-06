@@ -41,7 +41,7 @@ class SearchAppBar extends StatelessWidget implements PreferredSizeWidget {
                     onFieldSubmitted: (_) {
                       context.read<SearchBloc>().add(const SearchSubmitted());
                     },
-                    hint: 'search_products'.tr(),
+                    hint: 'search.search_hint'.tr(),
                   );
                 },
               ),

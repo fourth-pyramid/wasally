@@ -47,6 +47,8 @@ abstract class  LocaleKeys {
   static const cart = 'cart';
   static const favorite_favorite_title = 'favorite.favorite_title';
   static const favorite_favorite_subtitle = 'favorite.favorite_subtitle';
+  static const favorite_no_favorites = 'favorite.no_favorites';
+  static const favorite_no_favorites_subtitle = 'favorite.no_favorites_subtitle';
   static const favorite = 'favorite';
   static const profile_my_account = 'profile.my_account';
   static const profile_my_orders = 'profile.my_orders';
@@ -67,6 +69,10 @@ abstract class  LocaleKeys {
   static const profile_light = 'profile.light';
   static const profile_arabic = 'profile.arabic';
   static const profile_english = 'profile.english';
+  static const profile_language_change_title = 'profile.language_change_title';
+  static const profile_language_change_message = 'profile.language_change_message';
+  static const profile_language_change_confirm = 'profile.language_change_confirm';
+  static const profile_language_change_cancel = 'profile.language_change_cancel';
   static const profile_logout = 'profile.logout';
   static const profile_logout_all_devices = 'profile.logout_all_devices';
   static const profile_delete_account = 'profile.delete_account';
