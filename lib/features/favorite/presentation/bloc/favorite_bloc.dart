@@ -1,9 +1,9 @@
 import 'package:wassaly/core/imports/imports.dart';
-import 'package:wassaly/features/favorite/domain/entities/favorite_entity.dart';
 import 'package:wassaly/features/favorite/domain/usecases/get_favorites_usecase.dart';
 import 'package:wassaly/features/favorite/domain/usecases/toggle_favorite_usecase.dart';
 import 'package:wassaly/features/favorite/presentation/bloc/favorite_event.dart';
 import 'package:wassaly/features/favorite/presentation/bloc/favorite_state.dart';
+import 'package:wassaly/features/home/domain/entities/product_entity.dart';
 
 class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
   final GetFavoritesUseCase getFavoritesUseCase;
@@ -21,13 +21,13 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
     GetFavoritesEvent event,
     Emitter<FavoriteState> emit,
   ) async {
-    // Only show loading skeleton on the very first load; background
-    // refreshes (e.g. after a toggle) keep the current status so the
-    // Favorites page doesn't flash a skeleton every time.
+    // Show loading skeleton on the very first load; subsequent refreshes
+    // use the 'refreshing' status so the UI keeps the current list visible
+    // while the RefreshIndicator can detect fetch completion.
     emit(state.copyWith(
       status: state.status == FavoriteStatus.initial
           ? FavoriteStatus.loading
-          : state.status,
+          : FavoriteStatus.refreshing,
       errorMessage: null,
     ));
 
@@ -65,7 +65,7 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
 
     // Save the entity in case we need to rollback a removal on the
     // Favorites page (where the product is already in favorites.data).
-    FavoriteEntity? removedEntity;
+    ProductEntity? removedEntity;
     if (isCurrentlyFavorite) {
       for (final f in state.favorites.data) {
         if (f.id == event.productId) {
@@ -150,7 +150,7 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
           '[FavoriteBloc] Toggle SUCCESS for ${event.productId}',
         );
 
-        // Success: just clear the toggling flag.
+        // Success: clear the toggling flag.
         final updatedToggling = Set<int>.from(state.togglingIds)
           ..remove(event.productId);
 
@@ -164,9 +164,12 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
           'favorites.count=${state.favorites.data.length}, togglingIds: ${state.togglingIds}',
         );
 
-        // Refresh the paginated favorites list so products added from
-        // other screens appear in the Favorites page.
-        add(const GetFavoritesEvent());
+        // Re-fetch only when ADDING a favorite so the new product
+        // appears in the Favorites page list. Skip on removal —
+        // the optimistic update already handled it without flicker.
+        if (!isCurrentlyFavorite) {
+          add(const GetFavoritesEvent());
+        }
       },
     );
   }

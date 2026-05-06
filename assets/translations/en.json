@@ -53,7 +53,8 @@
     "favorite_title": "Favorites",
     "favorite_subtitle": "Your favorite items will appear here",
     "no_favorites": "No favorites yet",
-    "no_favorites_subtitle": "Add your favorite products here"
+    "no_favorites_subtitle": "Add your favorite products here",
+    "removed_from_favorites": "Removed from favorites"
   },
   "profile": {
     "my_account": "My Account",

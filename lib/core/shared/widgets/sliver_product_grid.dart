@@ -12,6 +12,7 @@ class SliverProductGrid<T> extends StatelessWidget {
     super.key,
     required this.items,
     required this.itemBuilder,
+    this.itemKey,
     this.hasMore = false,
     this.onLoadMore,
     this.padding,
@@ -31,6 +32,11 @@ class SliverProductGrid<T> extends StatelessWidget {
   /// Provides the item, index, and optional animation wrapper
   final Widget Function(BuildContext context, T item, int index,
       Widget Function(Widget child) wrapAnimation) itemBuilder;
+
+  /// Optional callback to extract a unique key per item.
+  /// When provided, Flutter can efficiently diff the list on removals
+  /// instead of rebuilding (and re-animating) every child.
+  final Key Function(T item)? itemKey;
 
   /// Whether there are more items to load (pagination)
   final bool hasMore;
@@ -91,9 +97,26 @@ class SliverProductGrid<T> extends StatelessWidget {
                   );
             }
 
-            return itemBuilder(context, item, index, wrapAnimation);
+            final child = itemBuilder(context, item, index, wrapAnimation);
+
+            // Wrap with a keyed widget so Flutter preserves state across
+            // list mutations (e.g. favorite removal) instead of rebuilding.
+            final key = itemKey?.call(item);
+            return key != null
+                ? KeyedSubtree(key: key, child: child)
+                : child;
           },
           childCount: items.length,
+          findChildIndexCallback: itemKey != null
+              ? (Key key) {
+                  if (key is ValueKey) {
+                    for (int i = 0; i < items.length; i++) {
+                      if (itemKey!(items[i]) == key) return i;
+                    }
+                  }
+                  return null;
+                }
+              : null,
         ),
       ),
     );

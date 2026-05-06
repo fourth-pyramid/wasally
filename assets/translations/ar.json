@@ -53,7 +53,8 @@
     "favorite_title": "المفضلة",
     "favorite_subtitle": "ستظهر عناصرك المفضلة هنا",
     "no_favorites": "لا توجد عناصر مفضلة",
-    "no_favorites_subtitle": "اضف منتجاتك المفضلة هنا"
+    "no_favorites_subtitle": "اضف منتجاتك المفضلة هنا",
+    "removed_from_favorites": "تمت إزالة العنصر من المفضلة"
   },
   "profile": {
     "my_account": "حسابي",

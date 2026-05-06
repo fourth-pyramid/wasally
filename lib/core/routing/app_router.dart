@@ -91,6 +91,15 @@ final GoRouter appRouter = GoRouter(
         StatefulShellBranch(
           routes: [
             GoRoute(
+              path: AppRoutes.cart,
+              name: 'cart',
+              builder: (context, state) => const CartPage(),
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
               path: AppRoutes.favorite,
               name: 'favorite',
               builder: (context, state) => const FavoritePage(),
@@ -157,11 +166,6 @@ final GoRouter appRouter = GoRouter(
         }
         return CategoryPage(category: category);
       },
-    ),
-    GoRoute(
-      path: AppRoutes.cart,
-      name: 'cart',
-      builder: (context, state) => const CartPage(),
     ),
     GoRoute(
       path: AppRoutes.login,

@@ -1,7 +1,7 @@
 import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/favorite/data/datasources/favorite_remote_datasource.dart';
-import 'package:wassaly/features/favorite/domain/entities/favorite_entity.dart';
 import 'package:wassaly/features/favorite/domain/repositories/favorite_repository.dart';
+import 'package:wassaly/features/home/domain/entities/product_entity.dart';
 
 class FavoriteRepositoryImpl implements FavoriteRepository {
   final FavoriteRemoteDataSource remoteDataSource;
@@ -9,11 +9,11 @@ class FavoriteRepositoryImpl implements FavoriteRepository {
   const FavoriteRepositoryImpl(this.remoteDataSource);
 
   @override
-  Future<Either<Failure, PaginatedResponse<FavoriteEntity>>>
+  Future<Either<Failure, PaginatedResponse<ProductEntity>>>
       getFavorites() async {
     try {
       final response = await remoteDataSource.getFavorites();
-      return Right(response.map((model) => model.toEntity()));
+      return Right(response);
     } on ServerFailure catch (failure) {
       return Left(failure);
     } on NetworkFailure catch (failure) {

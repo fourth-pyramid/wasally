@@ -49,6 +49,7 @@ abstract class  LocaleKeys {
   static const favorite_favorite_subtitle = 'favorite.favorite_subtitle';
   static const favorite_no_favorites = 'favorite.no_favorites';
   static const favorite_no_favorites_subtitle = 'favorite.no_favorites_subtitle';
+  static const favorite_removed_from_favorites = 'favorite.removed_from_favorites';
   static const favorite = 'favorite';
   static const profile_my_account = 'profile.my_account';
   static const profile_my_orders = 'profile.my_orders';

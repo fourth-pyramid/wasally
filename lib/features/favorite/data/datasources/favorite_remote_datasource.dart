@@ -1,8 +1,9 @@
 import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/favorite/data/models/favorite_model.dart';
+import 'package:wassaly/features/home/domain/entities/product_entity.dart';
 
 abstract class FavoriteRemoteDataSource {
-  Future<PaginatedResponse<FavoriteModel>> getFavorites();
+  Future<PaginatedResponse<ProductEntity>> getFavorites();
   Future<void> addToFavorites(int productId);
   Future<void> removeFromFavorites(int productId);
 }
@@ -13,7 +14,7 @@ class FavoriteRemoteDataSourceImpl implements FavoriteRemoteDataSource {
   const FavoriteRemoteDataSourceImpl(this._dioService);
 
   @override
-  Future<PaginatedResponse<FavoriteModel>> getFavorites() async {
+  Future<PaginatedResponse<ProductEntity>> getFavorites() async {
     final response = await _dioService.get('/api/favorites');
 
     return response.fold(
@@ -31,10 +32,11 @@ class FavoriteRemoteDataSourceImpl implements FavoriteRemoteDataSource {
         final pagination = responseData['pagination'] as Map<String, dynamic>?;
 
         final favorites = data
-            .map((item) => FavoriteModel.fromJson(item as Map<String, dynamic>))
+            .map((item) =>
+                FavoriteModel.fromJson(item as Map<String, dynamic>).toEntity())
             .toList();
 
-        return PaginatedResponse<FavoriteModel>(
+        return PaginatedResponse<ProductEntity>(
           data: favorites,
           currentPage: pagination?['current_page'] as int? ?? 1,
           lastPage: pagination?['last_page'] as int? ?? 1,

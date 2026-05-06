@@ -23,44 +23,6 @@ class MainLayoutPage extends StatelessWidget {
 
     return Scaffold(
       body: navigationShell,
-      floatingActionButton: navigationShell.currentIndex == 2
-          ? null
-          : FloatingActionButton(
-              onPressed: () => context.push(AppRoutes.cart),
-              backgroundColor: context.appColors.success,
-              foregroundColor: context.appColors.onSuccess,
-              shape: const CircleBorder(),
-              child: Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  const Icon(Icons.shopping_cart_outlined),
-                  Positioned(
-                    top: -18.h,
-                    right: -13.w,
-                    child: Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.h),
-                      decoration: BoxDecoration(
-                        color: context.colors.error,
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: Colors.white,
-                          width: 1.5.w,
-                        ),
-                      ),
-                      child: Text(
-                        '2',
-                        style: tt.bodySmall?.copyWith(
-                          color: context.colors.onError,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
       bottomNavigationBar: BlocBuilder<SessionBloc, SessionState>(
         buildWhen: (prev, curr) {
           // Rebuild when state type changes (e.g., SessionLoading -> SessionAuthenticated)
@@ -77,7 +39,7 @@ class MainLayoutPage extends StatelessWidget {
               state is SessionAuthenticated ? state.user.avatarUrl : null;
 
           return BottomNavigationBar(
-            currentIndex: navigationShell.currentIndex.clamp(0, 2),
+            currentIndex: navigationShell.currentIndex.clamp(0, 3),
             onTap: _onTap,
             backgroundColor: cs.surface,
             selectedItemColor: cs.primary,
@@ -89,6 +51,29 @@ class MainLayoutPage extends StatelessWidget {
                 icon: const Icon(Icons.home_outlined),
                 activeIcon: const Icon(Icons.home_rounded),
                 label: 'nav.nav_home'.tr(),
+              ),
+              BottomNavigationBarItem(
+                icon: Badge(
+                  label: Text(
+                    '2',
+                    style: tt.labelSmall?.copyWith(
+                      color: context.colors.onError,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  child: const Icon(Icons.shopping_cart_outlined),
+                ),
+                activeIcon: Badge(
+                  label: Text(
+                    '2',
+                    style: tt.labelSmall?.copyWith(
+                      color: context.colors.onError,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  child: const Icon(Icons.shopping_cart_rounded),
+                ),
+                label: 'nav.nav_cart'.tr(),
               ),
               BottomNavigationBarItem(
                 icon: const Icon(Icons.favorite_outline),
