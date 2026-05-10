@@ -1,4 +1,5 @@
-import 'package:wassaly/core/imports/packages_imports.dart';
+
+import '../../../../core/imports/imports.dart';
 
 /// Model for OTP verification request body
 class VerifyOtpRequestModel extends Equatable {

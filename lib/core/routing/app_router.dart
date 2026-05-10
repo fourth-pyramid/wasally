@@ -1,5 +1,4 @@
-import 'package:go_router/go_router.dart';
-import 'package:wassaly/core/imports/core_imports.dart';
+import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/auth/presentation/screens/auth_callback_page.dart';
 import 'package:wassaly/features/auth/presentation/screens/forgot_password_page.dart';
 import 'package:wassaly/features/auth/presentation/screens/login_page.dart';
@@ -7,7 +6,23 @@ import 'package:wassaly/features/auth/presentation/screens/otp_verification_page
 import 'package:wassaly/features/auth/presentation/screens/reset_password_page.dart';
 import 'package:wassaly/features/auth/presentation/screens/signup_page.dart';
 import 'package:wassaly/features/auth/presentation/screens/splash_page.dart';
+import 'package:wassaly/features/cart/presentation/screens/cart_page.dart';
+import 'package:wassaly/features/favorite/presentation/screens/favorite_page.dart';
 import 'package:wassaly/features/home/presentation/screens/home_page.dart';
+import 'package:wassaly/features/main_layout/presentation/screens/main_layout_page.dart';
+import 'package:wassaly/features/profile/domain/entities/address_entity.dart';
+import 'package:wassaly/features/profile/presentation/bloc/profile/profile_bloc.dart';
+import 'package:wassaly/features/profile/presentation/screens/add_address_page.dart';
+import 'package:wassaly/features/profile/presentation/screens/addresses_page.dart';
+import 'package:wassaly/features/profile/presentation/screens/edit_profile_page.dart';
+import 'package:wassaly/features/profile/presentation/screens/profile_page.dart';
+import 'package:wassaly/features/profile/presentation/screens/terms_of_service_page.dart';
+import 'package:wassaly/features/product_details/presentation/screens/product_details_page.dart';
+import 'package:wassaly/features/sub_category/presentation/screens/sub_category_page.dart';
+
+import '../../features/category/presentation/screens/category_page.dart';
+import '../../features/profile/presentation/screens/privacy_policy_page.dart';
+import '../../features/search/presentation/screens/search_page.dart';
 
 final GoRouter appRouter = GoRouter(
   navigatorKey: rootNavigatorKey,
@@ -60,15 +75,98 @@ final GoRouter appRouter = GoRouter(
       name: 'splash',
       builder: (context, state) => const SplashPage(),
     ),
-    GoRoute(
-      path: AppRoutes.onboarding,
-      name: 'onboarding',
-      builder: (context, state) => const OnboardingPage(),
+    StatefulShellRoute.indexedStack(
+      builder: (context, state, navigationShell) => MainLayoutPage(
+        navigationShell: navigationShell,
+      ),
+      branches: [
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: AppRoutes.home,
+              name: 'home',
+              builder: (context, state) => const HomePage(),
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: AppRoutes.cart,
+              name: 'cart',
+              builder: (context, state) => const CartPage(),
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: AppRoutes.favorite,
+              name: 'favorite',
+              builder: (context, state) => const FavoritePage(),
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: AppRoutes.profile,
+              name: 'profile',
+              builder: (context, state) => BlocProvider.value(
+                value: sl<ProfileBloc>()..add(const ProfileFetched()),
+                child: const ProfilePage(),
+              ),
+              routes: [
+                GoRoute(
+                  path: AppRoutes.editProfile
+                      .replaceFirst('${AppRoutes.profile}/', ''),
+                  name: 'editProfile',
+                  builder: (context, state) => BlocProvider.value(
+                    value: sl<ProfileBloc>(),
+                    child: const EditProfilePage(),
+                  ),
+                ),
+                GoRoute(
+                  path: AppRoutes.addresses
+                      .replaceFirst('${AppRoutes.profile}/', ''),
+                  name: 'addresses',
+                  builder: (context, state) => BlocProvider.value(
+                    value: sl<ProfileBloc>(),
+                    child: const AddressesPage(),
+                  ),
+                  routes: [
+                    GoRoute(
+                      path: AppRoutes.addAddress
+                          .replaceFirst('${AppRoutes.addresses}/', ''),
+                      name: 'addAddress',
+                      builder: (context, state) => BlocProvider.value(
+                        value: sl<ProfileBloc>(),
+                        child: AddAddressPage(
+                          address: state.extra as AddressEntity?,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
     ),
     GoRoute(
-      path: AppRoutes.home,
-      name: 'home',
-      builder: (context, state) => const HomePage(),
+      path: AppRoutes.category,
+      name: 'category',
+      builder: (context, state) {
+        final extra = state.extra as Map<String, dynamic>?;
+        final category = extra?['category'];
+        if (category == null) {
+          return Scaffold(
+            body: Center(child: Text('errors.invalid_category'.tr())),
+          );
+        }
+        return CategoryPage(category: category);
+      },
     ),
     GoRoute(
       path: AppRoutes.login,
@@ -123,6 +221,67 @@ final GoRouter appRouter = GoRouter(
           email: queryParams['email'],
           avatar: queryParams['avatar'],
         );
+      },
+    ),
+    GoRoute(
+      path: AppRoutes.privacyPolicy,
+      name: 'privacyPolicy',
+      builder: (context, state) => const PrivacyPolicyPage(),
+    ),
+    GoRoute(
+      path: AppRoutes.termsOfService,
+      name: 'termsOfService',
+      builder: (context, state) => const TermsOfServicePage(),
+    ),
+    GoRoute(
+      path: AppRoutes.subCategory,
+      name: 'subCategory',
+      builder: (context, state) {
+        final extra = state.extra as Map<String, dynamic>?;
+        final subCategory = extra?['subCategory'];
+        if (subCategory == null) {
+          return Scaffold(
+            body: Center(child: Text('errors.invalid_sub_category'.tr())),
+          );
+        }
+        return SubCategoryPage(subCategory: subCategory);
+      },
+    ),
+    GoRoute(
+      path: AppRoutes.search,
+      name: 'search',
+      pageBuilder: (context, state) => CustomTransitionPage(
+        key: state.pageKey,
+        child: const SearchPage(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          const begin = Offset(0, 1);
+          const end = Offset.zero;
+          const curve = Curves.easeOutCubic;
+          final tween = Tween(begin: begin, end: end).chain(
+            CurveTween(curve: curve),
+          );
+          final offsetAnimation = animation.drive(tween);
+          return SlideTransition(
+            position: offsetAnimation,
+            child: child,
+          );
+        },
+      ),
+    ),
+    GoRoute(
+      path: AppRoutes.productDetails,
+      name: 'productDetails',
+      builder: (context, state) {
+        final extra = state.extra as Map<String, dynamic>?;
+        final productId = extra?['productId'] as int? ?? 0;
+        if (productId <= 0) {
+          return Scaffold(
+            body: Center(
+              child: Text('errors.something_went_wrong'.tr()),
+            ),
+          );
+        }
+        return ProductDetailsPage(productId: productId);
       },
     ),
   ],

@@ -1,5 +1,4 @@
-import 'package:wassaly/core/imports/core_imports.dart';
-import 'package:wassaly/core/imports/packages_imports.dart';
+import 'package:wassaly/core/imports/imports.dart';
 
 class LoginFormContainer extends StatelessWidget {
   final Widget child;
@@ -16,7 +15,7 @@ class LoginFormContainer extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(20.w),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: cs.surfaceContainerLowest,
         borderRadius: BorderRadius.circular(24.r),
         boxShadow: [
           BoxShadow(

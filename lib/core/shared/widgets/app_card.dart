@@ -1,4 +1,4 @@
-import '../../imports/imports.dart';
+import 'package:wassaly/core/imports/imports.dart';
 
 /// A themed card widget with consistent padding, radius, and optional header.
 ///
@@ -57,10 +57,9 @@ class AppCard extends StatelessWidget {
         if (title != null || leading != null || trailing != null)
           Padding(
             padding: EdgeInsets.only(
-              left: AppSpacing.md,
-              right: AppSpacing.md,
-              top: AppSpacing.md,
-              bottom: AppSpacing.sm,
+              left: 12.w,
+              right: 12.w,
+              top: 12.h,
             ),
             child: Row(
               children: [
@@ -93,33 +92,53 @@ class AppCard extends StatelessWidget {
         Padding(
           padding: padding ??
               EdgeInsets.fromLTRB(
-                AppSpacing.md,
-                title == null ? AppSpacing.md : 0,
-                AppSpacing.md,
-                AppSpacing.md,
+                12.w,
+                title == null ? 12.h : 0,
+                12.w,
+                12.h,
               ),
           child: child,
         ),
       ],
     );
 
-    return Container(
+    final isIOS = context.isIOS;
+
+    final cardWidget = Container(
       margin: margin,
       decoration: BoxDecoration(
         color: cardColor,
-        borderRadius: AppBorders.card,
+        borderRadius: BorderRadius.circular(12.r),
         border:
             showShadow ? null : Border.all(color: cs.outlineVariant, width: 1),
-        boxShadow: showShadow ? AppShadows.card : AppShadows.none,
+        boxShadow: showShadow
+            ? []
+            : [
+                BoxShadow(
+                  color: cs.shadow.withValues(alpha: 0.05),
+                  blurRadius: 4.r,
+                  offset: const Offset(0, 2),
+                ),
+              ],
       ),
       clipBehavior: Clip.antiAlias,
-      child: onTap != null
-          ? InkWell(
-              onTap: onTap,
-              borderRadius: AppBorders.card,
-              child: content,
-            )
-          : content,
+      child: content,
+    );
+
+    if (onTap == null) return cardWidget;
+
+    if (isIOS) {
+      return GestureDetector(
+        onTap: onTap,
+        behavior: HitTestBehavior.translucent,
+        child: cardWidget,
+      );
+    }
+
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(12.r),
+      child: cardWidget,
     );
   }
 }

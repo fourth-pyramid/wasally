@@ -1,4 +1,4 @@
-import '../../../imports/imports.dart';
+import 'package:wassaly/core/imports/imports.dart';
 
 /// ToastCard widget to display decent and rich looking toast.
 class ToastCard extends StatelessWidget {
@@ -54,4 +54,3 @@ class ToastCard extends StatelessWidget {
     );
   }
 }
-

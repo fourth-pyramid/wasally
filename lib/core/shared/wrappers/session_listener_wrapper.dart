@@ -1,5 +1,4 @@
-import 'package:wassaly/core/imports/core_imports.dart';
-import 'package:wassaly/core/imports/packages_imports.dart';
+import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/auth/presentation/bloc/session/session_bloc.dart';
 
 class SessionListenerWrapper extends StatelessWidget {

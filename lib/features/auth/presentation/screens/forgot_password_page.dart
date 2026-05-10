@@ -1,6 +1,4 @@
-import 'package:wassaly/core/imports/core_imports.dart';
-import 'package:wassaly/core/imports/packages_imports.dart';
-import 'package:wassaly/core/injection/injection.dart';
+import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/auth/presentation/bloc/forgot_password/forgot_password_bloc.dart';
 import 'package:wassaly/features/auth/presentation/widgets/forgot_password/back_to_login_link.dart';
 import 'package:wassaly/features/auth/presentation/widgets/forgot_password/forgot_password_form.dart';
@@ -63,7 +61,8 @@ class _ForgotPasswordViewState extends State<_ForgotPasswordView> {
           previous.errorMessage != current.errorMessage,
       listener: (context, state) {
         if (state.isSuccess) {
-          context.showSuccessSnackBar('auth.reset_link_sent'.tr());
+          context.showTypedSnackBar('auth.reset_link_sent'.tr(),
+              type: SnackBarType.success);
           context.push(
             AppRoutes.otpVerification,
             extra: {
@@ -73,7 +72,8 @@ class _ForgotPasswordViewState extends State<_ForgotPasswordView> {
           );
         }
         if (state.errorMessage != null) {
-          context.showErrorSnackBar(state.errorMessage!);
+          context.showTypedSnackBar(state.errorMessage!,
+              type: SnackBarType.error);
         }
       },
       child: Scaffold(

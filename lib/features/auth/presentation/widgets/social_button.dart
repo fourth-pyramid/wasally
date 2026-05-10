@@ -1,5 +1,4 @@
-import 'package:wassaly/core/imports/core_imports.dart';
-import 'package:wassaly/core/imports/packages_imports.dart';
+import 'package:wassaly/core/imports/imports.dart';
 
 class SocialButton extends StatelessWidget {
   final String label;
@@ -46,9 +45,8 @@ class SocialButton extends StatelessWidget {
           else ...[
             Text(
               label,
-              style: TextStyle(
+              style: context.theme.textTheme.bodyMedium?.copyWith(
                 color: foregroundColor,
-                fontSize: 14.sp,
                 fontWeight: FontWeight.w600,
               ),
             ),

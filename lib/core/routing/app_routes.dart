@@ -6,7 +6,6 @@ abstract final class AppRoutes {
   AppRoutes._();
 
   static const String splash = '/splash';
-  static const String home = '/';
   static const String onboarding = '/onboarding';
   static const String login = '/login';
   static const String signup = '/signup';
@@ -14,4 +13,30 @@ abstract final class AppRoutes {
   static const String otpVerification = '/otp-verification';
   static const String resetPassword = '/reset-password';
   static const String authCallback = '/auth/callback';
+
+  // Main layout shell
+  static const String home = '/';
+  static const String category = '/category';
+  static const String cart = '/cart';
+  static const String favorite = '/favorite';
+  static const String profile = '/profile';
+
+  // Profile sub-routes
+  static const String editProfile = '/profile/edit';
+  static const String addresses = '/profile/addresses';
+  static const String addAddress = '/profile/addresses/add';
+  static const String privacyPolicy = '/privacy-policy';
+  static const String termsOfService = '/terms-of-service';
+
+  // SubCategory
+  static const String subCategory = '/sub-category';
+
+  // Search
+  static const String search = '/search';
+
+  // Product details
+  static const String productDetails = '/product-details';
+
+  // Checkout
+  static const String checkout = '/checkout';
 }

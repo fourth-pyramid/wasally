@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:wassaly/core/imports/core_imports.dart';
+import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/auth/data/models/user_model.dart';
 
 abstract class AuthLocalDataSource {

@@ -1,42 +1,195 @@
 {
-  "shared": {
-    "get_started": "Get Started"
+  "app": {
+    "title": "وصّلي"
   },
-  "onboarding": {
-    "onboarding_title_1": "Your Journey,\nPerfectly Planned",
-    "onboarding_subtitle_1": "Effortlessly create and organize your\ndream trips. Start exploring now!",
-    "onboarding_title_2": "Discover\nFriends Nearby",
-    "onboarding_subtitle_2": "See where your friends are traveling and\nexplore the world together.",
-    "onboarding_title_3": "Stay Updated\nwith Top Places",
-    "onboarding_subtitle_3": "Find trending destinations and must-see attractions,\nall tailored to enhance your travel plans."
+  "shared": {
+    "get_started": "ابدأ الآن",
+    "cancel": "إلغاء",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "done": "تم",
+    "currency_egp": "ج.م"
+  },
+  "errors": {
+    "no_internet": "لا يوجد اتصال بالإنترنت. يرجى التحقق من اتصالك والمحاولة مرة أخرى.",
+    "try_again": "حاول مرة أخرى",
+    "something_went_wrong": "حدث خطأ ما",
+    "invalid_category": "قسم غير صالح",
+    "invalid_sub_category": "قسم فرعي غير صالح"
   },
   "home": {
-    "home_title": "Home",
-    "welcome_home": "Welcome Home!",
-    "home_subtitle": "You have successfully completed the onboarding process."
+    "home_title": "الرئيسية",
+    "welcome_home": "مرحباً بك!",
+    "home_subtitle": "مرحباً بك في تطبيق وصّلي",
+    "popular_services": "خدمات شائعة",
+    "selected_products": "منتجات مختارة",
+    "main_categories": "الأقسام الرئيسية",
+    "services": "الخدمات",
+    "browse_now": "تصفح الآن",
+    "no_services_products": "لا توجد خدمات أو منتجات",
+    "no_sub_categories": "لا توجد أقسام فرعية"
+  },
+  "nav": {
+    "nav_home": "الرئيسية",
+    "nav_category": "الأقسام",
+    "nav_cart": "السلة",
+    "nav_favorite": "المفضلة",
+    "nav_profile": "حسابي"
+  },
+  "search": {
+    "search_hint": "ابحث عن منتجات وخدمات",
+    "no_results_found": "لم يتم العثور على نتائج",
+    "try_different_search": "جرب البحث بكلمات مختلفة"
+  },
+  "category": {
+    "category_title": "الأقسام",
+    "category_subtitle": "استكشف أقسام منتجاتنا"
+  },
+  "cart": {
+    "cart_title": "السلة",
+    "cart_subtitle": "سلة التسوق فارغة",
+    "empty_title": "السلة فارغة",
+    "empty_subtitle": "أضف بعض المنتجات إلى سلتك",
+    "continue_shopping": "متابعة التسوق",
+    "delete": "حذف",
+    "remove_item_title": "حذف المنتج",
+    "remove_item_message": "هل أنت متأكد من حذف هذا المنتج من السلة؟",
+    "error_loading_cart": "فشل في تحميل السلة",
+    "total_price": "الإجمالي",
+    "subtotal": "المجموع الفرعي",
+    "delivery": "رسوم التوصيل",
+    "total": "الإجمالي",
+    "checkout": "إتمام الطلب",
+    "items": "قطع"
+  },
+  "favorite": {
+    "favorite_title": "المفضلة",
+    "favorite_subtitle": "ستظهر عناصرك المفضلة هنا",
+    "no_favorites": "لا توجد عناصر مفضلة",
+    "no_favorites_subtitle": "اضف منتجاتك المفضلة هنا",
+    "removed_from_favorites": "تمت إزالة العنصر من المفضلة"
+  },
+  "product_details": {
+    "title": "تفاصيل المنتج",
+    "description": "الوصف",
+    "reviews": "آراء العملاء",
+    "brand": "العلامة التجارية",
+    "sub_category": "التصنيف",
+    "offer": "خصم",
+    "discount": "خصم",
+    "related_products": "منتجات مشابهة",
+    "no_related_products": "لا توجد منتجات مشابهة",
+    "show_more": "\u0639\u0631\u0636 \u0627\u0644\u0645\u0632\u064a\u062f",
+    "all_reviews": "\u0643\u0644 \u0627\u0644\u062a\u0642\u064a\u064a\u0645\u0627\u062a",
+    "add_review": "\u0625\u0636\u0627\u0641\u0629 \u062a\u0642\u064a\u064a\u0645",
+    "edit_review": "\u062a\u0639\u062f\u064a\u0644 \u0627\u0644\u062a\u0642\u064a\u064a\u0645",
+    "review_comment_hint": "\u0627\u0643\u062a\u0628 \u0631\u0623\u064a\u0643",
+    "review_comment_required": "\u0645\u0646 \u0641\u0636\u0644\u0643 \u0627\u0643\u062a\u0628 \u062a\u0639\u0644\u064a\u0642\u0643",
+    "review_created": "\u062a\u0645\u062a \u0625\u0636\u0627\u0641\u0629 \u0627\u0644\u062a\u0642\u064a\u064a\u0645 \u0628\u0646\u062c\u0627\u062d",
+    "review_updated": "\u062a\u0645 \u062a\u0639\u062f\u064a\u0644 \u0627\u0644\u062a\u0642\u064a\u064a\u0645 \u0628\u0646\u062c\u0627\u062d",
+    "review_options": "\u062e\u064a\u0627\u0631\u0627\u062a \u0627\u0644\u062a\u0642\u064a\u064a\u0645",
+    "edit_time_expired": "\u0627\u0646\u062a\u0647\u062a \u0645\u062f\u0629 \u0627\u0644\u062a\u0639\u062f\u064a\u0644"
+  },
+  "profile": {
+    "my_account": "حسابي",
+    "my_orders": "طلباتي",
+    "payment_methods": "طرق الدفع",
+    "notifications": "الإشعارات",
+    "privacy_policy": "سياسة الخصوصية",
+    "help_center": "مركز المساعدة",
+    "personal_info": "المعلومات الشخصية",
+    "saved_addresses": "العناوين المحفوظة",
+    "add_new_address": "إضافة عنوان جديد",
+    "orders_count": {
+      "zero": "لا توجد طلبات",
+      "one": "طلب واحد",
+      "two": "طلبان",
+      "few": "{} طلبات",
+      "many": "{} طلب",
+      "other": "{} طلب"
+    },
+    "manage": "إدارة",
+    "settings": "الإعدادات",
+    "security": "الأمان",
+    "language": "اللغة",
+    "theme": "السمة",
+    "dark": "داكن",
+    "light": "فاتح",
+    "arabic": "العربية",
+    "english": "الإنجليزية",
+    "language_change_title": "تغيير اللغة",
+    "language_change_message": "سيتم إعادة تشغيل التطبيق بالكامل لتطبيق تغيير اللغة. هل تريد المتابعة؟",
+    "language_change_confirm": "نعم، تغيير اللغة",
+    "language_change_cancel": "إلغاء",
+    "logout": "تسجيل الخروج",
+    "logout_all_devices": "تسجيل الخروج من جميع الأجهزة",
+    "delete_account": "حذف الحساب",
+    "edit_profile": "تعديل الملف الشخصي",
+    "change_password": "تغيير كلمة المرور",
+    "current_password": "كلمة المرور الحالية",
+    "save_changes": "حفظ التغييرات",
+    "action_success": "تمت العملية بنجاح",
+    "logout_title": "تسجيل الخروج",
+    "logout_message": "هل أنت متأكد أنك تريد تسجيل الخروج؟",
+    "logout_choice_message": "اختر كيف تريد تسجيل الخروج:",
+    "logout_this_device": "تسجيل الخروج من هذا الجهاز",
+    "logout_all_title": "تسجيل الخروج من جميع الأجهزة",
+    "logout_all_message": "سيتم تسجيل خروجك من جميع الأجهزة. هل أنت متأكد؟",
+    "delete_account_title": "حذف الحساب",
+    "delete_account_message": "لا يمكن التراجع عن هذا الإجراء. سيتم حذف جميع بياناتك نهائيًا. هل أنت متأكد؟",
+    "delete_account_confirm": "حذف الحساب",
+    "delete_address_title": "حذف العنوان",
+    "delete_address_message": "هل أنت متأكد أنك تريد حذف عنوان {address}؟",
+    "add_address": "إضافة عنوان",
+    "save_address": "حفظ العنوان",
+    "address_added": "تمت إضافة العنوان بنجاح",
+    "address_updated": "تم تعديل العنوان بنجاح",
+    "edit_address": "تعديل العنوان",
+    "address_title": "عنوان العنوان",
+    "address_title_hint": "المنزل، العمل، إلخ",
+    "address_details": "تفاصيل العنوان",
+    "address_details_hint": "الشارع، المبنى، الطابق",
+    "governorate": "المحافظة",
+    "center": "المدينة/المركز",
+    "select_governorate": "يرجى اختيار المحافظة",
+    "select_center": "يرجى اختيار المدينة",
+    "title_required": "العنوان مطلوب",
+    "address_required": "تفاصيل العنوان مطلوبة",
+    "current_password_required": "كلمة المرور الحالية مطلوبة لتغيير كلمة المرور",
+    "no_addresses": "لا توجد عناوين بعد",
+    "add_address_hint": "أضف عنوانك الأول للبدء",
+    "addresses_error": "فشل في تحميل العناوين",
+    "select_language": "اختيار اللغة",
+    "general_settings": "الإعدادات العامة",
+    "support_and_privacy": "الدعم والخصوصية",
+    "active": "مفعل",
+    "choose_image_source": "اختر مصدر الصورة",
+    "camera": "الكاميرا",
+    "gallery": "المعرض",
+    "update_success": "تم تحديث البيانات بنجاح"
   },
   "auth": {
     "log_in": "تسجيل الدخول",
-    "log_in_subtitle": "مرحبا بك مجددا في وصّلي",
+    "log_in_subtitle": "مرحباً بعودتك إلى وصّلي",
     "email_or_phone": "البريد الإلكتروني أو رقم الهاتف",
     "email": "البريد الإلكتروني",
-    "email_placeholder": "أدخل بياناتك هنا",
+    "email_placeholder": "أدخل بياناتك",
     "email_required": "البريد الإلكتروني مطلوب",
-    "email_invalid": "أدخل بريد إلكتروني صالح",
+    "email_invalid": "أدخل بريدًا إلكترونيًا صالحًا",
     "password": "كلمة المرور",
     "password_required": "كلمة المرور مطلوبة",
     "password_too_short": "يجب أن تكون كلمة المرور 6 أحرف على الأقل",
-    "forgot_password": "نسيت كلمة المرور؟",
+    "forgot_password": "هل نسيت كلمة المرور؟",
     "remember_me": "تذكرني",
     "login_button": "تسجيل الدخول",
     "dont_have_account": "ليس لديك حساب؟",
-    "sign_up": "إنشاء حساب جديد",
-    "sign_up_google": "جوجل",
-    "sign_up_facebook": "فيسبوك",
-    "or_login_with": "أو سجل دخول عبر",
-    "login_with_google": "تسجيل الدخول بجوجل",
-    "create_account": "إنشاء حساب جديد",
-    "create_account_subtitle": "ابدأ رحلتك معنا واستمتع بخدماتنا المتميزة",
+    "sign_up": "إنشاء حساب",
+    "sign_up_google": "متابعة بواسطة جوجل",
+    "sign_up_facebook": "متابعة بواسطة فيسبوك",
+    "or_login_with": "أو سجل عبر",
+    "login_with_google": "متابعة بواسطة جوجل",
+    "create_account": "إنشاء حساب",
+    "create_account_subtitle": "ابدأ رحلتك معنا",
     "name": "الاسم الكامل",
     "name_placeholder": "أدخل اسمك الكامل",
     "name_required": "الاسم الكامل مطلوب",
@@ -48,20 +201,20 @@
     "sign_in": "تسجيل الدخول",
     "phone": "رقم الهاتف",
     "phone_required": "رقم الهاتف مطلوب",
-    "phone_invalid": "أدخل رقم هاتف صالح",
-    "agree_to": "أوافق على ",
+    "phone_invalid": "أدخل رقم هاتف صحيح",
+    "agree_to": "أوافق على",
     "terms_of_service": "شروط الخدمة",
     "and": "و",
     "privacy_policy": "سياسة الخصوصية",
-    "or_continue_with": "أو سجل عبر",
+    "or_continue_with": "أو المتابعة عبر",
     "forgot_password_title": "نسيت كلمة المرور؟",
-    "forgot_password_subtitle": "لا تقلق، أدخل بريدك الإلكتروني أو رقم هاتفك وسنرسل لك رمزاً لإعادة تعيين كلمة المرور الخاصة بك.",
+    "forgot_password_subtitle": "أدخل بريدك الإلكتروني أو رقم هاتفك وسنرسل لك رمز إعادة التعيين",
     "send_code": "إرسال الرمز",
     "back_to_login": "العودة لتسجيل الدخول",
-    "reset_link_sent": "تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني.",
-    "otp_verification_title": "تأكيد رمز التحقق",
-    "otp_verification_subtitle": "أدخل رمز التحقق المرسل إلى بريدك الإلكتروني",
-    "add_avatar": "إضافة صورة شخصية",
+    "reset_link_sent": "تم إرسال رابط إعادة التعيين إلى بريدك الإلكتروني",
+    "otp_verification_title": "تأكيد الرمز",
+    "otp_verification_subtitle": "أدخل الرمز المرسل إلى بريدك الإلكتروني",
+    "add_avatar": "إضافة صورة",
     "change_avatar": "تغيير الصورة",
     "select_image_source": "اختر مصدر الصورة",
     "camera": "الكاميرا",
@@ -69,32 +222,64 @@
     "complete_in_browser": "يرجى إكمال تسجيل الدخول في المتصفح",
     "logging_in": "جاري تسجيل الدخول...",
     "login_success": "تم تسجيل الدخول بنجاح",
-    "login_failed": "فشل تسجيل الدخول"
+    "login_failed": "فشل تسجيل الدخول",
+    "terms_required": "يجب أن توافق على الشروط والأحكام للمتابعة",
+    "splash_subtitle": "توصيل سريع وموثوق",
+    "otp_sent_success": "تم ارسال كود التحقق بنجاح",
+    "account_not_active": "غير مفعل"
   },
-  "otp": {
-    "verify_now": "تحقق الآن",
-    "resend_code": "إعادة إرسال الرمز",
-    "didnt_receive_code": "لم يصلك الرمز؟",
-    "retry_after": "يمكنك المحاولة بعد {timer}",
-    "verification_success": "تم التحقق بنجاح",
-    "resend_success": "تم إرسال رمز جديد إلى بريدك الإلكتروني",
-    "invalid_otp": "يرجى إدخال رمز تحقق صحيح مكون من 6 أرقام",
-    "otp_sent_to": "يرجى إدخال الرمز المكون من 6 أرقام المرسل إلى"
-  },
-  "reset_password": {
-    "title": "إعادة تعيين كلمة المرور",
-    "subtitle": "أنشئ كلمة مرور جديدة وآمنة لحسابك",
-    "new_password_hint": "أدخل كلمة المرور الجديدة (8 أحرف على الأقل)",
-    "confirm_password_hint": "أكد كلمة المرور الجديدة",
-    "reset_button": "إعادة تعيين كلمة المرور",
-    "success_message": "تم إعادة تعيين كلمة المرور بنجاح! يرجى تسجيل الدخول باستخدام كلمة المرور الجديدة.",
-    "requirements_title": "متطلبات كلمة المرور:",
-    "req_min_length": "8 أحرف على الأقل",
-    "req_match": "يجب أن تتطابق كلمات المرور",
-    "strength_very_weak": "ضعيفة جداً",
-    "strength_weak": "ضعيفة",
-    "strength_fair": "مقبولة",
-    "strength_good": "جيدة",
-    "strength_strong": "قوية"
+  "privacy_policy": {
+    "title": "سياسة الخصوصية",
+    "last_updated": "اخر تحديث",
+    "last_updated_date": "30 ديسمبر 2024",
+    "introduction": {
+      "title": "مقدمة",
+      "content": "تعتبر Wassaly ('نحن'، 'لنا'، أو 'نا') ملتزمه بحماية خصوصيتك. توضح سياسة الخصوصية هذه كيف نجمع، نستخدم، نكشف، ونحمي معلوماتك عند استخدامك لتطبيقنا المحمول والخدمات ذات الصلة."
+    },
+    "data_collection": {
+      "title": "المعلومات التي نجمعها",
+      "content": "نجمع المعلومات التي تقدمها مباشرة لنا، مثل عند إنشاء حساب، تحديث ملفك الشخصي، استخدام خدماتنا، أو الاتصال بنا للحصول على الدعم. تشمل هذه المعلومات: الاسم، عنوان البريد الإلكتروني، رقم الهاتف، معلومات الملف الشخصي، معلومات الدفع، بيانات الموقع، واستخدام البيانات."
+    },
+    "data_usage": {
+      "title": "كيف نستخدم معلوماتك",
+      "content": "نستخدم المعلومات التي نجمعها لتقديم خدماتنا، معالجة المعاملات وإرسال المعلومات ذات الصلة، إرسال الإشعارات الفنية ورسائل الدعم، التواصل معك حول المنتجات والخدمات والعروض الترويجية، ورصد وتحليل الاتجاهات والاستخدام."
+    },
+    "data_sharing": {
+      "title": "مشاركة المعلومات",
+      "content": "لا نبيع، لا نتبادل، ولا ننقل معلوماتك الشخصية إلى أطراف ثالثة دون موافقتك، باستثناء ما هو موضح في هذه السياسة. قد نشارك المعلومات مع: مقدمي الخدمات الذين يساعدون في تشغيل تطبيقنا، معالجات الدفع، وعندما يطلب القانون أو لحماية حقوقنا."
+    },
+    "data_security": {
+      "title": "أمان البيانات",
+      "content": "ننفذ الإجراءات الفنية والتنظيمية المناسبة لحماية معلوماتك الشخصية من الوصول غير المصرح به، التعديل، الإفصاح، أو التدمير. ومع ذلك، لا يوجد طريقة لنقل البيانات عبر الإنترنت تكون آمنة بنسبة 100%."
+    },
+    "user_rights": {
+      "title": "حقوقك",
+      "content": "لديك الحق في: الوصول إلى معلوماتك الشخصية وتحديثها، طلب حذف حسابك وبياناتك، إلغاء الاشتراك في الاتصالات التسويقية، وطلب نسخة من بياناتك. للقيام بهذه الحقوق، اتصل بنا باستخدام المعلومات أدناه."
+    },
+    "third_party": {
+      "title": "خدمات الطرف الثالث",
+      "content": "قد يحتوي تطبيقنا على روابط لمواقع وخدمات الطرف الثالث. نحن لا نتحمل مسؤولية ممارسات الخصوصية لهذه الأطراف الثالثة. نشجعك على مراجعة سياسات الخصوصية الخاصة بهم."
+    },
+    "children_privacy": {
+      "title": "خصوصية الأطفال",
+      "content": "خدماتنا ليست مخصصة للأطفال دون سن 13. نحن لا نجمع معلومات شخصية من الأطفال دون سن 13. إذا كنت تعتقد أننا قد جمعنا مثل هذه المعلومات، يرجى الاتصال بنا على الفور."
+    },
+    "international_transfers": {
+      "title": "نقل البيانات الدولية",
+      "content": "قد يتم نقل معلوماتك إلى الدول الأخرى ومعالجتها. نحن نضمن اتخاذ الإجراءات المناسبة لحماية بياناتك وفقًا لقوانين حماية البيانات المعمول بها."
+    },
+    "changes": {
+      "title": "التغييرات على هذه السياسة",
+      "content": "قد نحدث هذه سياسة الخصوصية من وقت لآخر. سنخبرك بأي تغييرات من خلال نشر السياسة الجديدة في التطبيق وتحديث تاريخ 'اخر تحديث'. استمرار استخدامك للتطبيق بعد مثل هذه التغييرات يشكل قبولًا."
+    },
+    "contact": {
+      "title": "اتصل بنا",
+      "content": "إذا كان لديك أي أسئلة حول سياسة الخصوصية هذه، يرجى الاتصال بنا على: privacy@wassaly.com أو من خلال مركز الدعم داخل التطبيق."
+    },
+    "footer": {
+      "note": "باستخدام Wassaly، أنت تقر بأنك قد قرأت وفهمت سياسة الخصوصية هذه."
+    },
+    "google_privacy": "سياسة الخصوصية لجوجل",
+    "google_terms": "شروط الخدمة لجوجل"
   }
 }

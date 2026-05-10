@@ -1,7 +1,8 @@
-import 'package:wassaly/core/imports/core_imports.dart';
-import 'package:wassaly/core/imports/packages_imports.dart';
-import 'package:wassaly/core/injection/injection.dart';
+import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/auth/presentation/bloc/session/session_bloc.dart';
+import 'package:wassaly/features/cart/presentation/bloc/cart_bloc.dart';
+import 'package:wassaly/features/favorite/presentation/bloc/favorite_bloc.dart';
+import 'package:wassaly/features/profile/presentation/bloc/settings/settings_bloc.dart';
 
 /// A wrapper to initialize the chosen State Management library.
 class StateWrapper extends StatelessWidget {
@@ -17,6 +18,15 @@ class StateWrapper extends StatelessWidget {
     final providers = <BlocProvider>[
       BlocProvider<SessionBloc>(
         create: (_) => sl<SessionBloc>(),
+      ),
+      BlocProvider<SettingsBloc>(
+        create: (_) => sl<SettingsBloc>()..add(const SettingsInitialized()),
+      ),
+      BlocProvider<FavoriteBloc>(
+        create: (_) => sl<FavoriteBloc>(),
+      ),
+      BlocProvider<CartBloc>(
+        create: (_) => sl<CartBloc>(),
       ),
     ];
 

@@ -1,9 +1,7 @@
 import 'dart:async';
 
 import 'app.dart';
-import 'core/imports/core_imports.dart';
-import 'core/imports/packages_imports.dart';
-import 'core/injection/injection.dart';
+import 'core/imports/imports.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,8 +22,8 @@ Future<void> main() async {
   await EasyLocalization.ensureInitialized();
   await dotenv.load(fileName: '.env');
   await initDependencies();
+  await StorageService.instance.init();
 
-  // Initialize DeepLinkService for Google OAuth callbacks
   await DeepLinkService.instance.initialize();
 
   runApp(

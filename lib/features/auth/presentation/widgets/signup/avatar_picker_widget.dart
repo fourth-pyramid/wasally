@@ -1,5 +1,4 @@
-import 'package:wassaly/core/imports/core_imports.dart';
-import 'package:wassaly/core/imports/packages_imports.dart';
+import 'package:wassaly/core/imports/imports.dart';
 
 class AvatarPickerWidget extends StatelessWidget {
   final File? avatarFile;
@@ -18,7 +17,7 @@ class AvatarPickerWidget extends StatelessWidget {
 
     result.fold(
       (failure) {
-        context.showErrorSnackBar(failure.message);
+        context.showTypedSnackBar(failure.message, type: SnackBarType.error);
       },
       (file) {
         if (file != null) {

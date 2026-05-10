@@ -103,7 +103,7 @@ ThemeData _buildTheme(
     ],
 
     // --- Basic Elements ---
-    scaffoldBackgroundColor: const Color(0xFFFAF9FF),
+    scaffoldBackgroundColor: colorScheme.surface,
     dividerTheme: DividerThemeData(
       color: colorScheme.outlineVariant,
       thickness: 1,

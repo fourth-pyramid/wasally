@@ -1,5 +1,4 @@
-import 'package:wassaly/core/imports/core_imports.dart';
-import 'package:wassaly/core/imports/packages_imports.dart';
+import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/auth/presentation/bloc/forgot_password/forgot_password_bloc.dart';
 import 'package:wassaly/features/auth/presentation/widgets/forgot_password/forgot_password_email_field.dart';
 

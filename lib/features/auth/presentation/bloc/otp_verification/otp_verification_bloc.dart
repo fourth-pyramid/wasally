@@ -1,8 +1,6 @@
 import 'dart:async';
 
-import 'package:wassaly/core/imports/core_imports.dart';
-import 'package:wassaly/core/imports/packages_imports.dart';
-import 'package:wassaly/core/injection/injection.dart';
+import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/auth/data/models/verify_otp_response_model.dart';
 import 'package:wassaly/features/auth/domain/usecases/forget_verify_otp_usecase.dart';
 import 'package:wassaly/features/auth/domain/usecases/resend_otp_usecase.dart';

@@ -1,16 +1,17 @@
-import 'package:wassaly/core/imports/core_imports.dart';
-import 'package:wassaly/core/imports/packages_imports.dart';
+import 'package:wassaly/core/imports/imports.dart';
 
 class ForgotPasswordEmailField extends StatelessWidget {
   final TextEditingController controller;
   final ValueChanged<String> onChanged;
   final FormFieldValidator<String>? validator;
+  final FocusNode? focusNode;
 
   const ForgotPasswordEmailField({
     super.key,
     required this.controller,
     required this.onChanged,
     this.validator,
+    this.focusNode,
   });
 
   @override
@@ -33,6 +34,7 @@ class ForgotPasswordEmailField extends StatelessWidget {
           borderRadius: BorderRadius.circular(12.r),
           child: AppTextField(
             controller: controller,
+            focusNode: focusNode,
             hint: 'example@wasally.com',
             onChanged: onChanged,
             validator: validator,

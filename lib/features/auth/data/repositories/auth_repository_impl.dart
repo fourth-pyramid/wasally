@@ -74,6 +74,18 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
+  FutureEither<UserEntity?> getCachedUser() async {
+    try {
+      final user = await _localDataSource.getCachedUser();
+      return Right(user);
+    } on Failure catch (e) {
+      return Left(e);
+    } catch (e) {
+      return Left(UnknownFailure('Unexpected error: $e'));
+    }
+  }
+
+  @override
   FutureEither<String?> getSavedToken() async {
     try {
       final token = await _localDataSource.getToken();

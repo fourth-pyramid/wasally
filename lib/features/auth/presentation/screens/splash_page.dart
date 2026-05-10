@@ -151,7 +151,8 @@ class _SplashViewState extends State<_SplashView>
   @override
   Widget build(BuildContext context) {
     final screenH = MediaQuery.sizeOf(context).height;
-    final logoSize = 180.r;
+    const logoSize = 180;
+    final isDark = context.isDarkMode;
 
     return BlocListener<SessionBloc, SessionState>(
       listener: (context, state) {
@@ -162,20 +163,34 @@ class _SplashViewState extends State<_SplashView>
       child: AnimatedBuilder(
         animation: _controller,
         // نضع اللوجو هنا كـ child ثابت لمنع إعادة بناء الـ Widget الخاص بالصورة
-        child: Image.asset(
-          'assets/images/logo.png',
-          fit: BoxFit.contain,
-          gaplessPlayback: true,
-          filterQuality: FilterQuality.high,
-          isAntiAlias: true,
+        child: Container(
+          width: logoSize.w,
+          height: logoSize.h,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16.r),
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(16.r),
+            child: const CommonImage(
+              imageUrl: 'assets/images/logo.png',
+              memCacheHeight: logoSize * 2,
+              memCacheWidth: logoSize * 2,
+              fit: BoxFit.contain,
+            ),
+          ),
         ),
-        builder: (context, logoImage) {
+        builder: (context, logoWidget) {
           final centerY = (screenH - logoSize) / 2;
           final logoY = centerY + _logoSlide.value;
 
+          // Theme-aware background colors
+          final startColor =
+              isDark ? context.colors.surface : context.colors.surface;
+          final endColor = context.colors.primary;
+
           final bgColor = Color.lerp(
-            Colors.white,
-            context.colors.primary,
+            startColor,
+            endColor,
             _bgFade.value,
           );
 
@@ -189,11 +204,7 @@ class _SplashViewState extends State<_SplashView>
                   left: 0,
                   right: 0,
                   child: Center(
-                    child: SizedBox(
-                      width: logoSize,
-                      height: logoSize,
-                      child: logoImage, // استخدام النسخة الثابتة المحملة مسبقاً
-                    ),
+                    child: logoWidget, // استخدام النسخة الثابتة المحملة مسبقاً
                   ),
                 ),
 
@@ -207,11 +218,12 @@ class _SplashViewState extends State<_SplashView>
                     child: Transform.translate(
                       offset: Offset(0, _contentSlide.value),
                       child: Text(
-                        'توصيل سريع وموثوق',
+                        'auth.splash_subtitle'.tr(),
                         textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          color: Colors.white.withValues(alpha: 0.7),
+                        style: context.theme.textTheme.bodyMedium?.copyWith(
+                          color:
+                              context.colors.onPrimary.withValues(alpha: 0.9),
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
                     ),
@@ -225,7 +237,7 @@ class _SplashViewState extends State<_SplashView>
                   right: 0,
                   child: Opacity(
                     opacity: _contentFade.value,
-                    child: const _PulsingDots(),
+                    child: _PulsingDots(isDark: isDark),
                   ),
                 ),
               ],
@@ -242,7 +254,9 @@ class _SplashViewState extends State<_SplashView>
 // ─────────────────────────────────────────────────────────────────────────────
 
 class _PulsingDots extends StatefulWidget {
-  const _PulsingDots();
+  const _PulsingDots({required this.isDark});
+
+  final bool isDark;
 
   @override
   State<_PulsingDots> createState() => _PulsingDotsState();
@@ -301,7 +315,8 @@ class _PulsingDotsState extends State<_PulsingDots>
               height: 8.r,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Colors.white.withValues(alpha: _animations[i].value),
+                color: context.colors.onPrimary
+                    .withValues(alpha: _animations[i].value),
               ),
             );
           },

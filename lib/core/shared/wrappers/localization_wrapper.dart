@@ -1,4 +1,4 @@
-import '../../imports/core_imports.dart';
+import '../../imports/imports.dart';
 
 /// A wrapper to initialize [EasyLocalization] with supported locales.
 class LocalizationWrapper extends StatelessWidget {

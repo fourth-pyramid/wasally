@@ -1,5 +1,4 @@
-import 'package:wassaly/core/imports/core_imports.dart';
-import 'package:wassaly/core/imports/packages_imports.dart';
+import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/auth/presentation/bloc/signup/signup_bloc.dart';
 
 class SignupPasswordField extends StatelessWidget {
@@ -8,6 +7,7 @@ class SignupPasswordField extends StatelessWidget {
   final ValueChanged<bool> onToggleVisibility;
   final FormFieldValidator<String>? validator;
   final bool isConfirmPassword;
+  final FocusNode? focusNode;
 
   const SignupPasswordField({
     super.key,
@@ -16,6 +16,7 @@ class SignupPasswordField extends StatelessWidget {
     required this.onToggleVisibility,
     this.validator,
     this.isConfirmPassword = false,
+    this.focusNode,
   });
 
   @override
@@ -35,6 +36,7 @@ class SignupPasswordField extends StatelessWidget {
           borderRadius: BorderRadius.circular(12.r),
           child: AppTextField(
             controller: controller,
+            focusNode: focusNode,
             onChanged: onChanged,
             validator: validator,
             obscureText: !isVisible,

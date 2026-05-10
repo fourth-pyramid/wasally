@@ -1,5 +1,4 @@
-import '../../imports/core_imports.dart';
-import '../../imports/packages_imports.dart';
+import 'package:wassaly/core/imports/imports.dart';
 
 class AppTopBar extends StatelessWidget implements PreferredSizeWidget {
   const AppTopBar({
@@ -22,8 +21,8 @@ class AppTopBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme;
-    
-    // Check if we can pop
+    final isIOS = context.isIOS;
+
     final bool canPop = context.canPop();
 
     void handleBack() {
@@ -36,6 +35,36 @@ class AppTopBar extends StatelessWidget implements PreferredSizeWidget {
       }
     }
 
+    if (isIOS) {
+      return CupertinoNavigationBar(
+        middle: titleWidget ??
+            Text(
+              title,
+              style: theme.textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+        backgroundColor: isTransparent ? Colors.transparent : null,
+        border: isTransparent ? null : const Border(),
+        leading: canPop
+            ? CupertinoButton(
+                padding: EdgeInsets.zero,
+                onPressed: handleBack,
+                child: Icon(
+                  CupertinoIcons.back,
+                  color: theme.colorScheme.primary,
+                ),
+              )
+            : null,
+        trailing: actions != null && actions!.isNotEmpty
+            ? Row(
+                mainAxisSize: MainAxisSize.min,
+                children: actions!,
+              )
+            : null,
+      );
+    }
+
     return AppBar(
       centerTitle: centerTitle,
       elevation: 0,
@@ -45,21 +74,22 @@ class AppTopBar extends StatelessWidget implements PreferredSizeWidget {
           Text(
             title,
             style: theme.appBarTheme.titleTextStyle?.copyWith(
-              fontWeight: FontWeight.w600,
-            ) ?? theme.textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.w600,
-            ),
+                  fontWeight: FontWeight.w600,
+                ) ??
+                theme.textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
           ),
       leadingWidth: 40.w,
       leading: GestureDetector(
         onTap: handleBack,
         child: ColoredBox(
           color: Colors.transparent,
-          child:               Icon(
-                Icons.arrow_back,
-                color: theme.appBarTheme.iconTheme?.color ?? theme.colorScheme.onSurface,
-              )
-            ,
+          child: Icon(
+            Icons.arrow_back,
+            color: theme.appBarTheme.iconTheme?.color ??
+                theme.colorScheme.onSurface,
+          ),
         ),
       ),
       iconTheme: theme.appBarTheme.iconTheme,
@@ -68,5 +98,6 @@ class AppTopBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+  Size get preferredSize =>
+      Size.fromHeight(PlatformInfo.isIOS ? 44 : kToolbarHeight);
 }

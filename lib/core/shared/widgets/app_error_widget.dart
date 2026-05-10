@@ -1,4 +1,4 @@
-import '../../imports/imports.dart';
+import 'package:wassaly/core/imports/imports.dart';
 
 /// Displays an error state with an icon, title, optional body, and retry button.
 ///
@@ -11,13 +11,13 @@ import '../../imports/imports.dart';
 /// )
 /// ```
 class AppErrorWidget extends StatelessWidget {
-  const AppErrorWidget({
+  AppErrorWidget({
     super.key,
-    this.title = 'Something went wrong',
+    String? title,
     this.message,
     this.onRetry,
     this.icon = Icons.error_outline_rounded,
-  });
+  }) : title = title ?? 'errors.something_went_wrong'.tr();
 
   final String title;
   final String? message;
@@ -30,7 +30,7 @@ class AppErrorWidget extends StatelessWidget {
     final tt = context.theme.textTheme;
 
     return Center(
-      child: Padding(
+      child: SingleChildScrollView(
         padding: const EdgeInsets.all(32),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -56,7 +56,7 @@ class AppErrorWidget extends StatelessWidget {
             if (onRetry != null) ...[
               24.verticalSpace,
               AppButton(
-                label: 'Try Again',
+                label: 'errors.try_again'.tr(),
                 onPressed: onRetry,
                 variant: ButtonVariant.outline,
               ),

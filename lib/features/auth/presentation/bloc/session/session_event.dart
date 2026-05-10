@@ -27,3 +27,12 @@ class SessionCheckRequested extends SessionEvent {
 class SessionLogoutRequested extends SessionEvent {
   const SessionLogoutRequested();
 }
+
+class SessionUserUpdated extends SessionEvent {
+  final UserEntity user;
+
+  const SessionUserUpdated(this.user);
+
+  @override
+  List<Object?> get props => [user];
+}

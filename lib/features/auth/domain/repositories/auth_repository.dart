@@ -26,6 +26,8 @@ abstract class AuthRepository {
 
   FutureEither<UserEntity> getProfile();
 
+  FutureEither<UserEntity?> getCachedUser();
+
   FutureEither<String?> getSavedToken();
 
   FutureEither<void> logout();

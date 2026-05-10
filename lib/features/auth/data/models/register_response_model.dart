@@ -1,4 +1,4 @@
-import 'package:wassaly/core/imports/packages_imports.dart';
+import '../../../../core/imports/imports.dart';
 
 /// Model for parsing the registration API response
 class RegisterResponseModel extends Equatable {

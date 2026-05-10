@@ -54,7 +54,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     result.fold(
       (failure) async {
         // Check if the error indicates account is not verified
-        if (failure.message.contains('غير مفعل')) {
+        if (failure.message.contains('auth.account_not_active'.tr())) {
           emit(state.copyWith(
             isLoading: false,
             verificationEmail: state.email,

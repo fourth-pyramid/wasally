@@ -82,7 +82,11 @@ class DeepLinkService {
     if (uri.scheme == 'wasly' && uri.host == 'auth') {
       AppLogger.info('✅ Auth callback detected');
       if (uri.path == '/callback') {
-        final callbackData = _parseAuthCallback(uri);
+        // Fix HTML encoding in query parameters (&amp; -> &)
+        final String fixedQuery = uri.query.replaceAll('&amp;', '&');
+        final fixedUri =
+            Uri.parse('${uri.scheme}://${uri.host}${uri.path}?$fixedQuery');
+        final callbackData = _parseAuthCallback(fixedUri);
         _callbackController.add(callbackData);
       }
     } else {

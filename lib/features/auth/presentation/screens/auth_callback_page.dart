@@ -1,8 +1,7 @@
-import 'package:wassaly/core/imports/core_imports.dart';
-import 'package:wassaly/core/imports/packages_imports.dart';
-import 'package:wassaly/core/injection/injection.dart';
+import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/auth/data/datasources/auth_local_datasource.dart';
 import 'package:wassaly/features/auth/data/models/user_model.dart';
+import 'package:wassaly/features/auth/presentation/bloc/session/session_bloc.dart';
 
 class AuthCallbackPage extends StatefulWidget {
   final String? token;
@@ -43,7 +42,8 @@ class _AuthCallbackPageState extends State<AuthCallbackPage> {
 
     if (token == null || token.isEmpty || id == null || email == null) {
       if (mounted) {
-        context.showErrorSnackBar('auth.login_failed'.tr());
+        context.showTypedSnackBar('auth.login_failed'.tr(),
+            type: SnackBarType.error);
         context.go(AppRoutes.login);
       }
       return;
@@ -65,12 +65,17 @@ class _AuthCallbackPageState extends State<AuthCallbackPage> {
       await _localDataSource.cacheUser(user);
 
       if (mounted) {
-        context.showSuccessSnackBar('auth.login_success'.tr());
+        // Notify SessionBloc about the logged-in user so avatar appears immediately
+        sl<SessionBloc>().add(SessionUserUpdated(user));
+
+        context.showTypedSnackBar('auth.login_success'.tr(),
+            type: SnackBarType.info);
         context.go(AppRoutes.home);
       }
     } catch (e) {
       if (mounted) {
-        context.showErrorSnackBar('auth.login_failed'.tr());
+        context.showTypedSnackBar('auth.login_failed'.tr(),
+            type: SnackBarType.error);
         context.go(AppRoutes.login);
       }
     }

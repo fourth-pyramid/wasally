@@ -1,5 +1,4 @@
-import 'package:wassaly/core/imports/core_imports.dart';
-import 'package:wassaly/core/imports/packages_imports.dart';
+import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/auth/presentation/bloc/login/login_bloc.dart';
 
 class LoginPasswordField extends StatelessWidget {
@@ -7,6 +6,7 @@ class LoginPasswordField extends StatelessWidget {
   final ValueChanged<String> onChanged;
   final ValueChanged<bool> onToggleVisibility;
   final FormFieldValidator<String>? validator;
+  final FocusNode? focusNode;
 
   const LoginPasswordField({
     super.key,
@@ -14,6 +14,7 @@ class LoginPasswordField extends StatelessWidget {
     required this.onChanged,
     required this.onToggleVisibility,
     this.validator,
+    this.focusNode,
   });
 
   @override
@@ -28,6 +29,7 @@ class LoginPasswordField extends StatelessWidget {
           borderRadius: BorderRadius.circular(12.r),
           child: AppTextField(
             controller: controller,
+            focusNode: focusNode,
             onChanged: onChanged,
             validator: validator,
             obscureText: !state.isPasswordVisible,

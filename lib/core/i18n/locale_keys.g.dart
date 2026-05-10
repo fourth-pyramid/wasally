@@ -1,218 +1,258 @@
 // DO NOT EDIT. This is code generated via package:easy_localization/generate.dart
 
-// ignore_for_file: prefer_single_quotes, avoid_renaming_method_parameters, constant_identifier_names
+// ignore_for_file: constant_identifier_names
 
-import 'dart:ui';
+abstract class  LocaleKeys {
+  static const app_title = 'app.title';
+  static const app = 'app';
+  static const shared_get_started = 'shared.get_started';
+  static const shared_cancel = 'shared.cancel';
+  static const shared_delete = 'shared.delete';
+  static const shared_edit = 'shared.edit';
+  static const shared_done = 'shared.done';
+  static const shared_currency_egp = 'shared.currency_egp';
+  static const shared = 'shared';
+  static const errors_no_internet = 'errors.no_internet';
+  static const errors_try_again = 'errors.try_again';
+  static const errors_something_went_wrong = 'errors.something_went_wrong';
+  static const errors_invalid_category = 'errors.invalid_category';
+  static const errors_invalid_sub_category = 'errors.invalid_sub_category';
+  static const errors = 'errors';
+  static const home_home_title = 'home.home_title';
+  static const home_welcome_home = 'home.welcome_home';
+  static const home_home_subtitle = 'home.home_subtitle';
+  static const home_popular_services = 'home.popular_services';
+  static const home_selected_products = 'home.selected_products';
+  static const home_main_categories = 'home.main_categories';
+  static const home_services = 'home.services';
+  static const home_browse_now = 'home.browse_now';
+  static const home_no_services_products = 'home.no_services_products';
+  static const home_no_sub_categories = 'home.no_sub_categories';
+  static const home = 'home';
+  static const nav_nav_home = 'nav.nav_home';
+  static const nav_nav_category = 'nav.nav_category';
+  static const nav_nav_cart = 'nav.nav_cart';
+  static const nav_nav_favorite = 'nav.nav_favorite';
+  static const nav_nav_profile = 'nav.nav_profile';
+  static const nav = 'nav';
+  static const search_search_hint = 'search.search_hint';
+  static const search_no_results_found = 'search.no_results_found';
+  static const search_try_different_search = 'search.try_different_search';
+  static const search = 'search';
+  static const category_category_title = 'category.category_title';
+  static const category_category_subtitle = 'category.category_subtitle';
+  static const category = 'category';
+  static const cart_cart_title = 'cart.cart_title';
+  static const cart_cart_subtitle = 'cart.cart_subtitle';
+  static const cart_empty_title = 'cart.empty_title';
+  static const cart_empty_subtitle = 'cart.empty_subtitle';
+  static const cart_continue_shopping = 'cart.continue_shopping';
+  static const cart_delete = 'cart.delete';
+  static const cart_remove_item_title = 'cart.remove_item_title';
+  static const cart_remove_item_message = 'cart.remove_item_message';
+  static const cart_error_loading_cart = 'cart.error_loading_cart';
+  static const cart_total_price = 'cart.total_price';
+  static const cart_subtotal = 'cart.subtotal';
+  static const cart_delivery = 'cart.delivery';
+  static const cart_total = 'cart.total';
+  static const cart_checkout = 'cart.checkout';
+  static const cart_items = 'cart.items';
+  static const cart = 'cart';
+  static const favorite_favorite_title = 'favorite.favorite_title';
+  static const favorite_favorite_subtitle = 'favorite.favorite_subtitle';
+  static const favorite_no_favorites = 'favorite.no_favorites';
+  static const favorite_no_favorites_subtitle = 'favorite.no_favorites_subtitle';
+  static const favorite_removed_from_favorites = 'favorite.removed_from_favorites';
+  static const favorite = 'favorite';
+  static const product_details_title = 'product_details.title';
+  static const product_details_description = 'product_details.description';
+  static const product_details_reviews = 'product_details.reviews';
+  static const product_details_brand = 'product_details.brand';
+  static const product_details_sub_category = 'product_details.sub_category';
+  static const product_details_offer = 'product_details.offer';
+  static const product_details_discount = 'product_details.discount';
+  static const product_details_related_products = 'product_details.related_products';
+  static const product_details_no_related_products = 'product_details.no_related_products';
+  static const product_details_show_more = 'product_details.show_more';
+  static const product_details_all_reviews = 'product_details.all_reviews';
+  static const product_details_add_review = 'product_details.add_review';
+  static const product_details_edit_review = 'product_details.edit_review';
+  static const product_details_review_comment_hint = 'product_details.review_comment_hint';
+  static const product_details_review_comment_required = 'product_details.review_comment_required';
+  static const product_details_review_created = 'product_details.review_created';
+  static const product_details_review_updated = 'product_details.review_updated';
+  static const product_details_review_options = 'product_details.review_options';
+  static const product_details_edit_time_expired = 'product_details.edit_time_expired';
+  static const product_details = 'product_details';
+  static const profile_my_account = 'profile.my_account';
+  static const profile_my_orders = 'profile.my_orders';
+  static const profile_payment_methods = 'profile.payment_methods';
+  static const profile_notifications = 'profile.notifications';
+  static const profile_privacy_policy = 'profile.privacy_policy';
+  static const profile_help_center = 'profile.help_center';
+  static const profile_personal_info = 'profile.personal_info';
+  static const profile_saved_addresses = 'profile.saved_addresses';
+  static const profile_add_new_address = 'profile.add_new_address';
+  static const profile_orders_count = 'profile.orders_count';
+  static const profile_manage = 'profile.manage';
+  static const profile_settings = 'profile.settings';
+  static const profile_security = 'profile.security';
+  static const profile_language = 'profile.language';
+  static const profile_theme = 'profile.theme';
+  static const profile_dark = 'profile.dark';
+  static const profile_light = 'profile.light';
+  static const profile_arabic = 'profile.arabic';
+  static const profile_english = 'profile.english';
+  static const profile_language_change_title = 'profile.language_change_title';
+  static const profile_language_change_message = 'profile.language_change_message';
+  static const profile_language_change_confirm = 'profile.language_change_confirm';
+  static const profile_language_change_cancel = 'profile.language_change_cancel';
+  static const profile_logout = 'profile.logout';
+  static const profile_logout_all_devices = 'profile.logout_all_devices';
+  static const profile_delete_account = 'profile.delete_account';
+  static const profile_edit_profile = 'profile.edit_profile';
+  static const profile_change_password = 'profile.change_password';
+  static const profile_current_password = 'profile.current_password';
+  static const profile_save_changes = 'profile.save_changes';
+  static const profile_action_success = 'profile.action_success';
+  static const profile_logout_title = 'profile.logout_title';
+  static const profile_logout_message = 'profile.logout_message';
+  static const profile_logout_choice_message = 'profile.logout_choice_message';
+  static const profile_logout_this_device = 'profile.logout_this_device';
+  static const profile_logout_all_title = 'profile.logout_all_title';
+  static const profile_logout_all_message = 'profile.logout_all_message';
+  static const profile_delete_account_title = 'profile.delete_account_title';
+  static const profile_delete_account_message = 'profile.delete_account_message';
+  static const profile_delete_account_confirm = 'profile.delete_account_confirm';
+  static const profile_delete_address_title = 'profile.delete_address_title';
+  static const profile_delete_address_message = 'profile.delete_address_message';
+  static const profile_add_address = 'profile.add_address';
+  static const profile_save_address = 'profile.save_address';
+  static const profile_address_added = 'profile.address_added';
+  static const profile_address_updated = 'profile.address_updated';
+  static const profile_edit_address = 'profile.edit_address';
+  static const profile_address_title = 'profile.address_title';
+  static const profile_address_title_hint = 'profile.address_title_hint';
+  static const profile_address_details = 'profile.address_details';
+  static const profile_address_details_hint = 'profile.address_details_hint';
+  static const profile_governorate = 'profile.governorate';
+  static const profile_center = 'profile.center';
+  static const profile_select_governorate = 'profile.select_governorate';
+  static const profile_select_center = 'profile.select_center';
+  static const profile_title_required = 'profile.title_required';
+  static const profile_address_required = 'profile.address_required';
+  static const profile_current_password_required = 'profile.current_password_required';
+  static const profile_no_addresses = 'profile.no_addresses';
+  static const profile_add_address_hint = 'profile.add_address_hint';
+  static const profile_addresses_error = 'profile.addresses_error';
+  static const profile_select_language = 'profile.select_language';
+  static const profile_general_settings = 'profile.general_settings';
+  static const profile_support_and_privacy = 'profile.support_and_privacy';
+  static const profile_active = 'profile.active';
+  static const profile_choose_image_source = 'profile.choose_image_source';
+  static const profile_camera = 'profile.camera';
+  static const profile_gallery = 'profile.gallery';
+  static const profile_update_success = 'profile.update_success';
+  static const profile = 'profile';
+  static const auth_log_in = 'auth.log_in';
+  static const auth_log_in_subtitle = 'auth.log_in_subtitle';
+  static const auth_email_or_phone = 'auth.email_or_phone';
+  static const auth_email = 'auth.email';
+  static const auth_email_placeholder = 'auth.email_placeholder';
+  static const auth_email_required = 'auth.email_required';
+  static const auth_email_invalid = 'auth.email_invalid';
+  static const auth_password = 'auth.password';
+  static const auth_password_required = 'auth.password_required';
+  static const auth_password_too_short = 'auth.password_too_short';
+  static const auth_forgot_password = 'auth.forgot_password';
+  static const auth_remember_me = 'auth.remember_me';
+  static const auth_login_button = 'auth.login_button';
+  static const auth_dont_have_account = 'auth.dont_have_account';
+  static const auth_sign_up = 'auth.sign_up';
+  static const auth_sign_up_google = 'auth.sign_up_google';
+  static const auth_sign_up_facebook = 'auth.sign_up_facebook';
+  static const auth_or_login_with = 'auth.or_login_with';
+  static const auth_login_with_google = 'auth.login_with_google';
+  static const auth_create_account = 'auth.create_account';
+  static const auth_create_account_subtitle = 'auth.create_account_subtitle';
+  static const auth_name = 'auth.name';
+  static const auth_name_placeholder = 'auth.name_placeholder';
+  static const auth_name_required = 'auth.name_required';
+  static const auth_confirm_password = 'auth.confirm_password';
+  static const auth_confirm_password_required = 'auth.confirm_password_required';
+  static const auth_passwords_do_not_match = 'auth.passwords_do_not_match';
+  static const auth_create_account_button = 'auth.create_account_button';
+  static const auth_already_have_account = 'auth.already_have_account';
+  static const auth_sign_in = 'auth.sign_in';
+  static const auth_phone = 'auth.phone';
+  static const auth_phone_required = 'auth.phone_required';
+  static const auth_phone_invalid = 'auth.phone_invalid';
+  static const auth_agree_to = 'auth.agree_to';
+  static const auth_terms_of_service = 'auth.terms_of_service';
+  static const auth_and = 'auth.and';
+  static const auth_privacy_policy = 'auth.privacy_policy';
+  static const auth_or_continue_with = 'auth.or_continue_with';
+  static const auth_forgot_password_title = 'auth.forgot_password_title';
+  static const auth_forgot_password_subtitle = 'auth.forgot_password_subtitle';
+  static const auth_send_code = 'auth.send_code';
+  static const auth_back_to_login = 'auth.back_to_login';
+  static const auth_reset_link_sent = 'auth.reset_link_sent';
+  static const auth_otp_verification_title = 'auth.otp_verification_title';
+  static const auth_otp_verification_subtitle = 'auth.otp_verification_subtitle';
+  static const auth_add_avatar = 'auth.add_avatar';
+  static const auth_change_avatar = 'auth.change_avatar';
+  static const auth_select_image_source = 'auth.select_image_source';
+  static const auth_camera = 'auth.camera';
+  static const auth_gallery = 'auth.gallery';
+  static const auth_complete_in_browser = 'auth.complete_in_browser';
+  static const auth_logging_in = 'auth.logging_in';
+  static const auth_login_success = 'auth.login_success';
+  static const auth_login_failed = 'auth.login_failed';
+  static const auth_terms_required = 'auth.terms_required';
+  static const auth_splash_subtitle = 'auth.splash_subtitle';
+  static const auth_otp_sent_success = 'auth.otp_sent_success';
+  static const auth_account_not_active = 'auth.account_not_active';
+  static const auth = 'auth';
+  static const privacy_policy_title = 'privacy_policy.title';
+  static const privacy_policy_last_updated = 'privacy_policy.last_updated';
+  static const privacy_policy_last_updated_date = 'privacy_policy.last_updated_date';
+  static const privacy_policy_introduction_title = 'privacy_policy.introduction.title';
+  static const privacy_policy_introduction_content = 'privacy_policy.introduction.content';
+  static const privacy_policy_introduction = 'privacy_policy.introduction';
+  static const privacy_policy_data_collection_title = 'privacy_policy.data_collection.title';
+  static const privacy_policy_data_collection_content = 'privacy_policy.data_collection.content';
+  static const privacy_policy_data_collection = 'privacy_policy.data_collection';
+  static const privacy_policy_data_usage_title = 'privacy_policy.data_usage.title';
+  static const privacy_policy_data_usage_content = 'privacy_policy.data_usage.content';
+  static const privacy_policy_data_usage = 'privacy_policy.data_usage';
+  static const privacy_policy_data_sharing_title = 'privacy_policy.data_sharing.title';
+  static const privacy_policy_data_sharing_content = 'privacy_policy.data_sharing.content';
+  static const privacy_policy_data_sharing = 'privacy_policy.data_sharing';
+  static const privacy_policy_data_security_title = 'privacy_policy.data_security.title';
+  static const privacy_policy_data_security_content = 'privacy_policy.data_security.content';
+  static const privacy_policy_data_security = 'privacy_policy.data_security';
+  static const privacy_policy_user_rights_title = 'privacy_policy.user_rights.title';
+  static const privacy_policy_user_rights_content = 'privacy_policy.user_rights.content';
+  static const privacy_policy_user_rights = 'privacy_policy.user_rights';
+  static const privacy_policy_third_party_title = 'privacy_policy.third_party.title';
+  static const privacy_policy_third_party_content = 'privacy_policy.third_party.content';
+  static const privacy_policy_third_party = 'privacy_policy.third_party';
+  static const privacy_policy_children_privacy_title = 'privacy_policy.children_privacy.title';
+  static const privacy_policy_children_privacy_content = 'privacy_policy.children_privacy.content';
+  static const privacy_policy_children_privacy = 'privacy_policy.children_privacy';
+  static const privacy_policy_international_transfers_title = 'privacy_policy.international_transfers.title';
+  static const privacy_policy_international_transfers_content = 'privacy_policy.international_transfers.content';
+  static const privacy_policy_international_transfers = 'privacy_policy.international_transfers';
+  static const privacy_policy_changes_title = 'privacy_policy.changes.title';
+  static const privacy_policy_changes_content = 'privacy_policy.changes.content';
+  static const privacy_policy_changes = 'privacy_policy.changes';
+  static const privacy_policy_contact_title = 'privacy_policy.contact.title';
+  static const privacy_policy_contact_content = 'privacy_policy.contact.content';
+  static const privacy_policy_contact = 'privacy_policy.contact';
+  static const privacy_policy_footer_note = 'privacy_policy.footer.note';
+  static const privacy_policy_footer = 'privacy_policy.footer';
+  static const privacy_policy_google_privacy = 'privacy_policy.google_privacy';
+  static const privacy_policy_google_terms = 'privacy_policy.google_terms';
+  static const privacy_policy = 'privacy_policy';
 
-import 'package:easy_localization/easy_localization.dart' show AssetLoader;
-
-class CodegenLoader extends AssetLoader{
-  const CodegenLoader();
-
-  @override
-  Future<Map<String, dynamic>?> load(String path, Locale locale) {
-    return Future.value(mapLocales[locale.toString()]);
-  }
-
-  static const Map<String,dynamic> _ar = {
-  "shared": {
-    "get_started": "Get Started"
-  },
-  "onboarding": {
-    "onboarding_title_1": "Your Journey,\nPerfectly Planned",
-    "onboarding_subtitle_1": "Effortlessly create and organize your\ndream trips. Start exploring now!",
-    "onboarding_title_2": "Discover\nFriends Nearby",
-    "onboarding_subtitle_2": "See where your friends are traveling and\nexplore the world together.",
-    "onboarding_title_3": "Stay Updated\nwith Top Places",
-    "onboarding_subtitle_3": "Find trending destinations and must-see attractions,\nall tailored to enhance your travel plans."
-  },
-  "home": {
-    "home_title": "Home",
-    "welcome_home": "Welcome Home!",
-    "home_subtitle": "You have successfully completed the onboarding process."
-  },
-  "auth": {
-    "log_in": "تسجيل الدخول",
-    "log_in_subtitle": "مرحبا بك مجددا في وصّلي",
-    "email_or_phone": "البريد الإلكتروني أو رقم الهاتف",
-    "email": "البريد الإلكتروني",
-    "email_placeholder": "أدخل بياناتك هنا",
-    "email_required": "البريد الإلكتروني مطلوب",
-    "email_invalid": "أدخل بريد إلكتروني صالح",
-    "password": "كلمة المرور",
-    "password_required": "كلمة المرور مطلوبة",
-    "password_too_short": "يجب أن تكون كلمة المرور 6 أحرف على الأقل",
-    "forgot_password": "نسيت كلمة المرور؟",
-    "remember_me": "تذكرني",
-    "login_button": "تسجيل الدخول",
-    "dont_have_account": "ليس لديك حساب؟",
-    "sign_up": "إنشاء حساب جديد",
-    "sign_up_google": "جوجل",
-    "sign_up_facebook": "فيسبوك",
-    "or_login_with": "أو سجل دخول عبر",
-    "login_with_google": "تسجيل الدخول بجوجل",
-    "create_account": "إنشاء حساب جديد",
-    "create_account_subtitle": "ابدأ رحلتك معنا واستمتع بخدماتنا المتميزة",
-    "name": "الاسم الكامل",
-    "name_placeholder": "أدخل اسمك الكامل",
-    "name_required": "الاسم الكامل مطلوب",
-    "confirm_password": "تأكيد كلمة المرور",
-    "confirm_password_required": "تأكيد كلمة المرور مطلوب",
-    "passwords_do_not_match": "كلمات المرور غير متطابقة",
-    "create_account_button": "إنشاء الحساب",
-    "already_have_account": "لديك حساب بالفعل؟",
-    "sign_in": "تسجيل الدخول",
-    "phone": "رقم الهاتف",
-    "phone_required": "رقم الهاتف مطلوب",
-    "phone_invalid": "أدخل رقم هاتف صالح",
-    "agree_to": "أوافق على ",
-    "terms_of_service": "شروط الخدمة",
-    "and": "و",
-    "privacy_policy": "سياسة الخصوصية",
-    "or_continue_with": "أو سجل عبر",
-    "forgot_password_title": "نسيت كلمة المرور؟",
-    "forgot_password_subtitle": "لا تقلق، أدخل بريدك الإلكتروني أو رقم هاتفك وسنرسل لك رمزاً لإعادة تعيين كلمة المرور الخاصة بك.",
-    "send_code": "إرسال الرمز",
-    "back_to_login": "العودة لتسجيل الدخول",
-    "reset_link_sent": "تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني.",
-    "otp_verification_title": "تأكيد رمز التحقق",
-    "otp_verification_subtitle": "أدخل رمز التحقق المرسل إلى بريدك الإلكتروني",
-    "add_avatar": "إضافة صورة شخصية",
-    "change_avatar": "تغيير الصورة",
-    "select_image_source": "اختر مصدر الصورة",
-    "camera": "الكاميرا",
-    "gallery": "المعرض",
-    "complete_in_browser": "يرجى إكمال تسجيل الدخول في المتصفح",
-    "logging_in": "جاري تسجيل الدخول...",
-    "login_success": "تم تسجيل الدخول بنجاح",
-    "login_failed": "فشل تسجيل الدخول"
-  },
-  "otp": {
-    "verify_now": "تحقق الآن",
-    "resend_code": "إعادة إرسال الرمز",
-    "didnt_receive_code": "لم يصلك الرمز؟",
-    "retry_after": "يمكنك المحاولة بعد {timer}",
-    "verification_success": "تم التحقق بنجاح",
-    "resend_success": "تم إرسال رمز جديد إلى بريدك الإلكتروني",
-    "invalid_otp": "يرجى إدخال رمز تحقق صحيح مكون من 6 أرقام",
-    "otp_sent_to": "يرجى إدخال الرمز المكون من 6 أرقام المرسل إلى"
-  },
-  "reset_password": {
-    "title": "إعادة تعيين كلمة المرور",
-    "subtitle": "أنشئ كلمة مرور جديدة وآمنة لحسابك",
-    "new_password_hint": "أدخل كلمة المرور الجديدة (8 أحرف على الأقل)",
-    "confirm_password_hint": "أكد كلمة المرور الجديدة",
-    "reset_button": "إعادة تعيين كلمة المرور",
-    "success_message": "تم إعادة تعيين كلمة المرور بنجاح! يرجى تسجيل الدخول باستخدام كلمة المرور الجديدة.",
-    "requirements_title": "متطلبات كلمة المرور:",
-    "req_min_length": "8 أحرف على الأقل",
-    "req_match": "يجب أن تتطابق كلمات المرور",
-    "strength_very_weak": "ضعيفة جداً",
-    "strength_weak": "ضعيفة",
-    "strength_fair": "مقبولة",
-    "strength_good": "جيدة",
-    "strength_strong": "قوية"
-  }
-};
-static const Map<String,dynamic> _en = {
-  "shared": {
-    "get_started": "Get Started"
-  },
-  "onboarding": {
-    "onboarding_title_1": "Your Journey,\nPerfectly Planned",
-    "onboarding_subtitle_1": "Effortlessly create and organize your\ndream trips. Start exploring now!",
-    "onboarding_title_2": "Discover\nFriends Nearby",
-    "onboarding_subtitle_2": "See where your friends are traveling and\nexplore the world together.",
-    "onboarding_title_3": "Stay Updated\nwith Top Places",
-    "onboarding_subtitle_3": "Find trending destinations and must-see attractions,\nall tailored to enhance your travel plans."
-  },
-  "home": {
-    "home_title": "Home",
-    "welcome_home": "Welcome Home!",
-    "home_subtitle": "You have successfully completed the onboarding process."
-  },
-  "auth": {
-    "log_in": "Log in",
-    "log_in_subtitle": "Welcome back to Wasally",
-    "email_or_phone": "Email or phone number",
-    "email": "Email",
-    "email_placeholder": "Enter your data here",
-    "email_required": "Email is required",
-    "email_invalid": "Enter a valid email",
-    "password": "Password",
-    "password_required": "Password is required",
-    "password_too_short": "Password must be at least 6 characters",
-    "remember_me": "Remember me",
-    "forgot_password": "Forgot password?",
-    "login_button": "Log in",
-    "dont_have_account": "Don't have an account? ",
-    "sign_up": "Create new account",
-    "sign_up_google": "Google",
-    "sign_up_facebook": "Facebook",
-    "or_login_with": "Or login with",
-    "login_with_google": "Login with Google",
-    "create_account": "Create Account",
-    "create_account_subtitle": "Create a new account to get started.",
-    "name": "Name",
-    "name_placeholder": "Enter your full name",
-    "name_required": "Name is required",
-    "confirm_password": "Confirm Password",
-    "confirm_password_required": "Confirm password is required",
-    "passwords_do_not_match": "Passwords do not match",
-    "create_account_button": "Create Account",
-    "already_have_account": "Already have an account? ",
-    "sign_in": "Sign In",
-    "phone": "Phone Number",
-    "phone_required": "Phone number is required",
-    "phone_invalid": "Enter a valid phone number",
-    "agree_to": "I agree to the ",
-    "terms_of_service": "Terms of Service",
-    "and": "and",
-    "privacy_policy": "Privacy Policy",
-    "or_continue_with": "Or Continue With Account",
-    "forgot_password_title": "Forgot Password?",
-    "forgot_password_subtitle": "Don't worry, enter your email or phone number and we will send you a code to reset your password.",
-    "send_code": "Send Code",
-    "back_to_login": "Back to Login",
-    "reset_link_sent": "Password reset link sent to your email.",
-    "otp_verification_title": "OTP Verification",
-    "otp_verification_subtitle": "Enter the verification code sent to your email",
-    "add_avatar": "Add Profile Photo",
-    "change_avatar": "Change Photo",
-    "select_image_source": "Select Image Source",
-    "camera": "Camera",
-    "gallery": "Gallery",
-    "complete_in_browser": "Please complete sign-in in browser",
-    "logging_in": "Logging in...",
-    "login_success": "Login successful",
-    "login_failed": "Login failed"
-  },
-  "otp": {
-    "verify_now": "Verify Now",
-    "resend_code": "Resend Code",
-    "didnt_receive_code": "Didn't receive the code?",
-    "retry_after": "Retry after {timer}",
-    "verification_success": "OTP verified successfully",
-    "resend_success": "New OTP sent to your email",
-    "invalid_otp": "Please enter a valid 6-digit OTP",
-    "otp_sent_to": "Enter the 6-digit code sent to"
-  },
-  "reset_password": {
-    "title": "Reset Password",
-    "subtitle": "Create a new secure password for your account",
-    "new_password_hint": "Enter new password (min 8 chars)",
-    "confirm_password_hint": "Confirm your password",
-    "reset_button": "Reset Password",
-    "success_message": "Password reset successfully! Please log in with your new password.",
-    "requirements_title": "Password Requirements:",
-    "req_min_length": "At least 8 characters",
-    "req_match": "Passwords must match",
-    "strength_very_weak": "Very Weak",
-    "strength_weak": "Weak",
-    "strength_fair": "Fair",
-    "strength_good": "Good",
-    "strength_strong": "Strong"
-  }
-};
-static const Map<String, Map<String,dynamic>> mapLocales = {"ar": _ar, "en": _en};
 }

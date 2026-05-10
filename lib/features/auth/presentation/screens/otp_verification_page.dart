@@ -1,6 +1,4 @@
-import 'package:wassaly/core/imports/core_imports.dart';
-import 'package:wassaly/core/imports/packages_imports.dart';
-import 'package:wassaly/core/injection/injection.dart';
+import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/auth/presentation/bloc/otp_verification/otp_verification_bloc.dart';
 import 'package:wassaly/features/auth/presentation/screens/reset_password_page.dart';
 import 'package:wassaly/features/auth/presentation/widgets/otp_verification/otp_input_field.dart';
@@ -83,13 +81,15 @@ class _OtpVerificationViewState extends State<_OtpVerificationView> {
       listener: (context, state) {
         if (state.verificationStatus ==
             OtpVerificationStatus.verifiedForRegister) {
-          context.showSuccessSnackBar('otp.verification_success'.tr());
+          context.showTypedSnackBar('otp.verification_success'.tr(),
+              type: SnackBarType.success);
           context.go(AppRoutes.login);
         }
 
         if (state.verificationStatus ==
             OtpVerificationStatus.verifiedForForgotPassword) {
-          context.showSuccessSnackBar('otp.verification_success'.tr());
+          context.showTypedSnackBar('otp.verification_success'.tr(),
+              type: SnackBarType.success);
           if (state.resetToken != null) {
             context.push(
               AppRoutes.resetPassword,
@@ -103,22 +103,26 @@ class _OtpVerificationViewState extends State<_OtpVerificationView> {
 
         if (state.verificationStatus ==
             OtpVerificationStatus.verifiedForLogin) {
-          context.showSuccessSnackBar('otp.verification_success'.tr());
+          context.showTypedSnackBar('otp.verification_success'.tr(),
+              type: SnackBarType.success);
           context.go(AppRoutes.login);
         }
 
         if (state.verificationStatus == OtpVerificationStatus.error &&
             state.errorMessage != null) {
-          context.showErrorSnackBar(state.errorMessage!.tr());
+          context.showTypedSnackBar(state.errorMessage!.tr(),
+              type: SnackBarType.error);
         }
 
         if (state.resendStatus == ResendOtpStatus.success) {
-          context.showSuccessSnackBar('otp.resend_success'.tr());
+          context.showTypedSnackBar('otp.resend_success'.tr(),
+              type: SnackBarType.success);
         }
 
         if (state.resendStatus == ResendOtpStatus.error &&
             state.errorMessage != null) {
-          context.showErrorSnackBar(state.errorMessage!.tr());
+          context.showTypedSnackBar(state.errorMessage!.tr(),
+              type: SnackBarType.error);
         }
       },
       child: Scaffold(

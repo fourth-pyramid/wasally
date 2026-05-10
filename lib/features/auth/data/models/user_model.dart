@@ -29,7 +29,7 @@ class UserModel extends UserEntity {
       'email': email,
       'name': name,
       'phone': phone,
-      'avatar_url': avatarUrl,
+      'avatar': avatarUrl,
       'token': token,
     };
   }

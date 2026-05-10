@@ -1,9 +1,7 @@
-import '../../imports/core_imports.dart';
-import '../../imports/packages_imports.dart';
-
+import 'package:wassaly/core/imports/imports.dart';
 
 /// A premium, highly customizable wrapper around [CachedNetworkImage].
-/// 
+///
 /// This widget provides smooth transitions, specialized error handling,
 /// and integrates with the project's design system.
 class AppCachedImage extends StatelessWidget {
@@ -47,6 +45,9 @@ class AppCachedImage extends StatelessWidget {
   /// Optional key to use for caching.
   final String? cacheKey;
 
+  final int? memCacheHeight;
+  final int? memCacheWidth;
+
   const AppCachedImage({
     super.key,
     required this.imageUrl,
@@ -62,41 +63,52 @@ class AppCachedImage extends StatelessWidget {
     this.alignment = Alignment.center,
     this.useSkeleton = true,
     this.cacheKey,
+    this.memCacheHeight,
+    this.memCacheWidth,
   });
 
   @override
   Widget build(BuildContext context) {
-    // Adjust sizing for screenutil if enabled
-    final double? adjustedWidth = width?.w;
-    final double? adjustedHeight = height?.h;
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        // Adjust sizing for screenutil if enabled
+        final double? adjustedWidth = width?.w;
+        final double? adjustedHeight = height?.h;
 
-    Widget imageContent = CachedNetworkImage(
-      imageUrl: imageUrl,
-      cacheKey: cacheKey,
-      width: adjustedWidth,
-      height: adjustedHeight,
-      fit: fit,
-      color: color,
-      colorBlendMode: colorBlendMode,
-      alignment: alignment,
-      fadeInDuration: fadeInDuration ?? const Duration(milliseconds: 500),
-      placeholder: (context, url) => placeholder ?? _buildDefaultPlaceholder(context),
-      errorWidget: (context, url, error) => errorWidget ?? _buildDefaultErrorWidget(context),
+        Widget imageContent = CachedNetworkImage(
+          imageUrl: imageUrl,
+          cacheKey: cacheKey,
+          width: adjustedWidth,
+          height: adjustedHeight,
+          memCacheHeight: memCacheHeight,
+          memCacheWidth: memCacheWidth,
+          fit: fit,
+          color: color,
+          colorBlendMode: colorBlendMode,
+          alignment: alignment,
+          fadeInDuration: fadeInDuration ?? const Duration(milliseconds: 500),
+          placeholder: (context, url) =>
+              placeholder ?? _buildDefaultPlaceholder(context),
+          errorWidget: (context, url, error) =>
+              errorWidget ?? _buildDefaultErrorWidget(context),
+        );
+
+        if (borderRadius != null) {
+          imageContent = ClipRRect(
+            borderRadius: borderRadius!,
+            child: imageContent,
+          );
+        }
+
+        return imageContent;
+      },
     );
-
-    if (borderRadius != null) {
-      imageContent = ClipRRect(
-        borderRadius: borderRadius!,
-        child: imageContent,
-      );
-    }
-
-    return imageContent;
   }
 
   Widget _buildDefaultPlaceholder(BuildContext context) {
     if (useSkeleton) {
       return Skeletonizer(
+        ignoreContainers: true,
         enabled: true,
         child: Container(
           width: width,
@@ -112,27 +124,31 @@ class AppCachedImage extends StatelessWidget {
   }
 
   Widget _buildLoadingIndicator(BuildContext context) {
+    final cs = context.theme.colorScheme;
+    final isIOS = context.isIOS;
     return Container(
       width: width,
       height: height,
-      color: context.theme.colorScheme.surfaceContainerHighest .withValues(alpha: 0.9),
-      child: const Center(
-        child: CircularProgressIndicator(strokeWidth: 2),
+      color: cs.surfaceContainerHighest.withValues(alpha: 0.9),
+      child: Center(
+        child: isIOS
+            ? CupertinoActivityIndicator(color: cs.primary)
+            : CircularProgressIndicator(strokeWidth: 2, color: cs.primary),
       ),
     );
   }
 
   Widget _buildDefaultErrorWidget(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: width,
       height: height,
-      color: context.theme.colorScheme.errorContainer .withValues(alpha: 0.9),
-      child: Center(
-        child:           Icon(
-            Icons.broken_image_outlined,
-            color: context.theme.colorScheme.error,
-          )
-        ,
+      child: const Center(
+        child: ImageIcon(
+          AssetImage(
+            'assets/images/logo.png',
+          ),
+          size: 80,
+        ),
       ),
     );
   }
