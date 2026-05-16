@@ -1,10 +1,8 @@
 import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/favorite/presentation/bloc/favorite_bloc.dart';
-import 'package:wassaly/features/favorite/presentation/bloc/favorite_event.dart';
-import 'package:wassaly/features/favorite/presentation/bloc/favorite_state.dart';
-import 'package:wassaly/features/home/domain/entities/product_entity.dart';
-import 'package:wassaly/features/sub_category/domain/entities/service_entity.dart';
-import 'package:wassaly/features/sub_category/presentation/widgets/service_card.dart';
+
+import '../bloc/favorite_event.dart';
+import '../bloc/favorite_state.dart';
 
 class FavoritePage extends StatelessWidget {
   const FavoritePage({super.key});
@@ -44,16 +42,8 @@ class _FavoriteViewState extends State<_FavoriteView> {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: cs.surface,
-          elevation: 0,
-          centerTitle: true,
-          title: Text(
-            context.l10n.favorite_favorite_title,
-            style: context.typography.titleLarge?.copyWith(
-              color: cs.primary,
-            ),
-          ),
+        appBar: AppTopBar(
+          title: context.l10n.favorite_favorite_title,
           bottom: TabBar(
             labelColor: cs.primary,
             unselectedLabelColor: cs.onSurfaceVariant,
@@ -105,28 +95,9 @@ class _ProductFavoritesTab extends StatelessWidget {
             physics: const AlwaysScrollableScrollPhysics(),
             slivers: [
               if (state.isLoading && state.favorites.data.isEmpty)
-                Skeletonizer.sliver(
-                  enabled: true,
-                  ignoreContainers: true,
-                  child: SliverProductGrid<ProductEntity>(
-                    items: List.generate(
-                      4,
-                      (index) => const ProductEntity(
-                        id: 0,
-                        name: 'Skeleton Loading',
-                        image: '',
-                        price: '0',
-                        description: 'Skeleton',
-                        offers: [],
-                        reviews: [],
-                        isFavorite: true,
-                      ),
-                    ),
-                    padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 10.h),
-                    itemBuilder: (context, product, index, wrapAnimation) {
-                      return wrapAnimation(ProductCard(product: product));
-                    },
-                  ),
+                const AppProductsSkeleton(
+                  padding: EdgeInsets.symmetric(horizontal: 6, vertical: 10),
+                  mainAxisExtent: 220,
                 )
               else if (state.isError && state.favorites.data.isEmpty)
                 SliverFillRemaining(
@@ -152,14 +123,11 @@ class _ProductFavoritesTab extends StatelessWidget {
                   ),
                 )
               else
-                SliverProductGrid<ProductEntity>(
-                  items: state.favorites.data,
-                  itemKey: (product) => ValueKey('prod_${product.id}'),
-                  animateItems: false,
-                  padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 10.h),
-                  itemBuilder: (context, product, index, wrapAnimation) {
-                    return wrapAnimation(ProductCard(product: product));
-                  },
+                AppProductsSection(
+                  products: state.favorites.data,
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 6.w, vertical: 10.h),
+                  mainAxisExtent: 230.h,
                 ),
             ],
           ),
@@ -198,26 +166,10 @@ class _ServiceFavoritesTab extends StatelessWidget {
             physics: const AlwaysScrollableScrollPhysics(),
             slivers: [
               if (state.isLoading && state.serviceFavorites.data.isEmpty)
-                Skeletonizer.sliver(
-                  enabled: true,
-                  ignoreContainers: true,
-                  child: SliverProductGrid<ServiceEntity>(
-                    items: List.generate(
-                      4,
-                      (index) => const ServiceEntity(
-                        id: 0,
-                        title: 'Skeleton Loading',
-                        image: '',
-                        price: 0,
-                        description: 'Skeleton',
-                        isFavorite: true,
-                      ),
-                    ),
-                    padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 10.h),
-                    itemBuilder: (context, service, index, wrapAnimation) {
-                      return wrapAnimation(ServiceCard(service: service));
-                    },
-                  ),
+                AppServicesSkeleton(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 6, vertical: 10),
+                  mainAxisExtent: 190.h,
                 )
               else if (state.isError && state.serviceFavorites.data.isEmpty)
                 SliverFillRemaining(
@@ -243,14 +195,11 @@ class _ServiceFavoritesTab extends StatelessWidget {
                   ),
                 )
               else
-                SliverProductGrid<ServiceEntity>(
-                  items: state.serviceFavorites.data,
-                  itemKey: (service) => ValueKey('serv_${service.id}'),
-                  animateItems: false,
-                  padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 10.h),
-                  itemBuilder: (context, service, index, wrapAnimation) {
-                    return wrapAnimation(ServiceCard(service: service));
-                  },
+                AppServicesSection(
+                  services: state.serviceFavorites.data,
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 6.w, vertical: 10.h),
+                  mainAxisExtent: 190.h,
                 ),
             ],
           ),

@@ -18,3 +18,7 @@ class GetServiceBookingsEvent extends OrdersEvent {
 class LoadMoreOrdersEvent extends OrdersEvent {
   const LoadMoreOrdersEvent();
 }
+
+class ResetOrdersEvent extends OrdersEvent {
+  const ResetOrdersEvent();
+}

@@ -54,23 +54,42 @@ class MainCategoriesSection extends StatelessWidget {
       List<CategoryEntity> categories) {
     if (categories.isEmpty) return const SizedBox.shrink();
 
+    // Show only the first 3 categories
+    final displayedCategories = categories.take(3).toList();
+
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 12.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Header
-          Text(
-            context.l10n.home_main_categories,
-            style: tt.titleMedium?.copyWith(
-              fontWeight: FontWeight.bold,
-              color: cs.primary,
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                context.l10n.home_main_categories,
+                style: tt.titleMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: cs.primary,
+                ),
+              ),
+              if (categories.length > 3)
+                TextButton(
+                  onPressed: () => context.push(AppRoutes.allCategories),
+                  child: Text(
+                    context.l10n.shared_show_more,
+                    style: tt.labelLarge?.copyWith(
+                      color: cs.secondary,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+            ],
           ),
           16.verticalSpace,
 
           // Build alternating layout: 1 item, then 2 items, then 1 item...
-          ..._buildAlternatingGrid(context, categories),
+          ..._buildAlternatingGrid(context, displayedCategories),
         ],
       ),
     );

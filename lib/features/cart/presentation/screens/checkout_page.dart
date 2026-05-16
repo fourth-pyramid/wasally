@@ -14,19 +14,11 @@ class CheckoutPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cs = context.theme.colorScheme;
-    final tt = context.theme.textTheme;
 
     return Scaffold(
       backgroundColor: cs.surface,
-      appBar: AppBar(
-        foregroundColor: cs.primary,
-        title: Text(
-          context.l10n.checkout_title,
-          style: tt.titleLarge?.copyWith(color: cs.primary),
-        ),
-        centerTitle: true,
-        elevation: 0,
-        backgroundColor: cs.surface,
+      appBar: AppTopBar(
+        title: context.l10n.checkout_title,
       ),
       body: BlocConsumer<CheckoutBloc, CheckoutState>(
         listenWhen: (prev, curr) =>

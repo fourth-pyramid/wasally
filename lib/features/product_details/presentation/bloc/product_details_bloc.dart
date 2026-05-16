@@ -7,7 +7,8 @@ import '../../domain/usecases/update_product_review_usecase.dart';
 import 'product_details_event.dart';
 import 'product_details_state.dart';
 
-class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> {
+class ProductDetailsBloc
+    extends Bloc<ProductDetailsEvent, ProductDetailsState> {
   final GetProductDetailsUseCase _getProductDetailsUseCase;
   final GetSubCategoryDetailUseCase _getSubCategoryDetailUseCase;
   final CreateProductReviewUseCase _createProductReviewUseCase;

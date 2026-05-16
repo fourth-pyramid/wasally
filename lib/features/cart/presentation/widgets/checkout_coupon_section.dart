@@ -59,8 +59,10 @@ class _CheckoutCouponSectionState extends State<CheckoutCouponSection> {
               children: [
                 Expanded(
                   child: AppTextField(
-                    label: '${context.l10n.checkout_coupon_code} (${context.l10n.shared_optional})',
-                    hint: '${context.l10n.checkout_coupon_code} (${context.l10n.shared_optional})',
+                    label:
+                        '${context.l10n.checkout_coupon_code} (${context.l10n.shared_optional})',
+                    hint:
+                        '${context.l10n.checkout_coupon_code} (${context.l10n.shared_optional})',
                     controller: _couponController,
                     enabled: !isSubmitting && !hasCoupon,
                     keyboardType: TextInputType.text,

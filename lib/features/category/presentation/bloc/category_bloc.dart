@@ -49,7 +49,6 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   }
 
   Future<void> _onLoadMoreSubCategories(
-
     LoadMoreSubCategoriesEvent event,
     Emitter<CategoryState> emit,
   ) async {

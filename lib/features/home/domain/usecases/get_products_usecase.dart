@@ -13,4 +13,3 @@ class GetProductsUseCase {
     return await _repository.getProducts(page: page);
   }
 }
-

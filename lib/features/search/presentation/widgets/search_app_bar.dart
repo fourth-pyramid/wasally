@@ -11,42 +11,23 @@ class SearchAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cs = context.theme.colorScheme;
-
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
-      decoration: BoxDecoration(
-        color: cs.surface,
-      ),
-      child: SafeArea(
-        child: Row(
-          children: [
-            IconButton(
-              onPressed: () => context.pop(),
-              icon: const Icon(Icons.arrow_back),
-              color: cs.onSurface,
-            ),
-            SizedBox(width: 6.w),
-            Expanded(
-              child: BlocBuilder<SearchBloc, SearchState>(
-                buildWhen: (previous, current) =>
-                    previous.query != current.query,
-                builder: (context, state) {
-                  return AppTextField(
-                    suffixIcon: const Icon(Icons.search),
-                    autofocus: true,
-                    onChanged: (value) {
-                      context.read<SearchBloc>().add(SearchQueryChanged(value));
-                    },
-                    onFieldSubmitted: (_) {
-                      context.read<SearchBloc>().add(const SearchSubmitted());
-                    },
-                    hint: context.l10n.search_search_hint,
-                  );
-                },
-              ),
-            ),
-          ],
+    return AppTopBar(
+      titleWidget: Expanded(
+        child: BlocBuilder<SearchBloc, SearchState>(
+          buildWhen: (previous, current) => previous.query != current.query,
+          builder: (context, state) {
+            return AppTextField(
+              suffixIcon: const Icon(Icons.search),
+              autofocus: true,
+              onChanged: (value) {
+                context.read<SearchBloc>().add(SearchQueryChanged(value));
+              },
+              onFieldSubmitted: (_) {
+                context.read<SearchBloc>().add(const SearchSubmitted());
+              },
+              hint: context.l10n.search_search_hint,
+            );
+          },
         ),
       ),
     );

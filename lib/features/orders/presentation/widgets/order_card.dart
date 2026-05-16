@@ -85,7 +85,10 @@ class OrderCard extends StatelessWidget {
           ),
           4.verticalSpace,
           Text(
-            order.paymentMethod,
+            order.paymentMethod.toLowerCase().contains('cash') ||
+                    order.paymentMethod.contains('كاش')
+                ? context.l10n.order_payment_cash
+                : order.paymentMethod,
             style: tt.bodyMedium,
           ),
         ],
@@ -111,22 +114,35 @@ class _StatusBadge extends StatelessWidget {
           _StatusConfig(Colors.orange, context.l10n.order_status_pending),
       'قيد الانتظار':
           _StatusConfig(Colors.orange, context.l10n.order_status_pending),
+      'accepted':
+          _StatusConfig(Colors.blue, context.l10n.order_status_accepted),
+      'تم القبول':
+          _StatusConfig(Colors.blue, context.l10n.order_status_accepted),
+      'confirmed':
+          _StatusConfig(Colors.indigo, context.l10n.order_status_confirmed),
+      'processing':
+          _StatusConfig(Colors.cyan, context.l10n.order_status_processing),
+      'جاري التجهيز':
+          _StatusConfig(Colors.cyan, context.l10n.order_status_processing),
+      'shipped': _StatusConfig(Colors.teal, context.l10n.order_status_shipped),
+      'تم الشحن': _StatusConfig(Colors.teal, context.l10n.order_status_shipped),
+      'delivered':
+          _StatusConfig(Colors.green, context.l10n.order_status_delivered),
+      'تم التوصيل':
+          _StatusConfig(Colors.green, context.l10n.order_status_delivered),
       'completed':
           _StatusConfig(Colors.green, context.l10n.order_status_completed),
-      'confirmed':
-          _StatusConfig(Colors.green, context.l10n.order_status_completed),
-      'delivered':
+      'مكتمل':
           _StatusConfig(Colors.green, context.l10n.order_status_completed),
       'success':
           _StatusConfig(Colors.green, context.l10n.order_status_completed),
-      'مكتمل': _StatusConfig(Colors.green, context.l10n.order_status_completed),
-      'تم': _StatusConfig(Colors.green, context.l10n.order_status_completed),
       'cancelled':
+          _StatusConfig(Colors.red, context.l10n.order_status_cancelled),
+      'ملغي':
           _StatusConfig(Colors.red, context.l10n.order_status_cancelled),
       'rejected':
           _StatusConfig(Colors.red, context.l10n.order_status_cancelled),
       'failed': _StatusConfig(Colors.red, context.l10n.order_status_cancelled),
-      'ملغي': _StatusConfig(Colors.red, context.l10n.order_status_cancelled),
     };
 
     final config =

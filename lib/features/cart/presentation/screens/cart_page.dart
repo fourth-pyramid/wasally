@@ -39,17 +39,8 @@ class _CartPageState extends State<CartPage> {
             physics: const AlwaysScrollableScrollPhysics(),
             slivers: [
               // ─── AppBar ────────────────────────────────────────────────────────────
-              SliverAppBar(
-                title: Text(
-                  context.l10n.cart_cart_title,
-                  style: context.typography.titleLarge?.copyWith(
-                    color: cs.primary,
-                  ),
-                ),
-                centerTitle: true,
-                elevation: 0,
-                backgroundColor: cs.surface,
-                floating: true,
+              AppSliverTopBar(
+                title: context.l10n.cart_cart_title,
               ),
 
               // ─── Content ───────────────────────────────────────────────────────────
@@ -274,7 +265,8 @@ class _CartPageState extends State<CartPage> {
           12.verticalSpace,
           _SummaryRow(
             label: context.l10n.cart_total,
-            value: '${total.toStringAsFixed(0)} ${context.l10n.shared_currency_egp}',
+            value:
+                '${total.toStringAsFixed(0)} ${context.l10n.shared_currency_egp}',
             isBold: true,
             valueColor: cs.primary,
           ),

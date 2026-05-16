@@ -157,6 +157,18 @@ abstract class S {
   /// **'Save'**
   String get shared_save;
 
+  /// No description provided for @shared_show_more.
+  ///
+  /// In en, this message translates to:
+  /// **'Show more'**
+  String get shared_show_more;
+
+  /// No description provided for @shared_show_less.
+  ///
+  /// In en, this message translates to:
+  /// **'Show less'**
+  String get shared_show_less;
+
   /// No description provided for @common_currency.
   ///
   /// In en, this message translates to:
@@ -2017,6 +2029,18 @@ abstract class S {
   /// **'Payment Method'**
   String get order_payment_method;
 
+  /// No description provided for @order_payment_cash.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash'**
+  String get order_payment_cash;
+
+  /// No description provided for @order_payment_online.
+  ///
+  /// In en, this message translates to:
+  /// **'Online'**
+  String get order_payment_online;
+
   /// No description provided for @order_no_orders_msg.
   ///
   /// In en, this message translates to:
@@ -2052,6 +2076,36 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Pending'**
   String get order_status_pending;
+
+  /// No description provided for @order_status_accepted.
+  ///
+  /// In en, this message translates to:
+  /// **'Accepted'**
+  String get order_status_accepted;
+
+  /// No description provided for @order_status_confirmed.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmed'**
+  String get order_status_confirmed;
+
+  /// No description provided for @order_status_processing.
+  ///
+  /// In en, this message translates to:
+  /// **'Processing'**
+  String get order_status_processing;
+
+  /// No description provided for @order_status_shipped.
+  ///
+  /// In en, this message translates to:
+  /// **'Shipped'**
+  String get order_status_shipped;
+
+  /// No description provided for @order_status_delivered.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivered'**
+  String get order_status_delivered;
 
   /// No description provided for @order_status_completed.
   ///
@@ -2406,6 +2460,30 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Offered Services'**
   String get provider_details_services;
+
+  /// No description provided for @brands.
+  ///
+  /// In en, this message translates to:
+  /// **'Brands'**
+  String get brands;
+
+  /// No description provided for @no_brands.
+  ///
+  /// In en, this message translates to:
+  /// **'No brands added yet'**
+  String get no_brands;
+
+  /// No description provided for @brand_products.
+  ///
+  /// In en, this message translates to:
+  /// **'Brand Products'**
+  String get brand_products;
+
+  /// No description provided for @no_brand_products.
+  ///
+  /// In en, this message translates to:
+  /// **'No products in this brand yet'**
+  String get no_brand_products;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

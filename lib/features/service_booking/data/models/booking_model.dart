@@ -49,7 +49,8 @@ class BookingModel extends BookingEntity {
     required super.problemDescription,
     required super.service,
     required super.provider,
-    required super.day,
+    required super.dayAr,
+    required super.dayEn,
     required super.time,
     required super.createdAt,
     required super.customerName,
@@ -61,12 +62,15 @@ class BookingModel extends BookingEntity {
 
   factory BookingModel.fromJson(Map<String, dynamic> json) {
     // Handle available_day object
-    String dayStr = '';
+    String dayAr = '';
+    String dayEn = '';
     if (json['available_day'] is Map) {
       final dayMap = json['available_day'] as Map<String, dynamic>;
-      dayStr = (dayMap['name_ar'] ?? dayMap['name_en'] ?? '') as String;
+      dayAr = (dayMap['name_ar'] ?? '') as String;
+      dayEn = (dayMap['name_en'] ?? '') as String;
     } else if (json['day'] is String) {
-      dayStr = json['day'] as String;
+      dayAr = json['day'] as String;
+      dayEn = json['day'] as String;
     }
 
     // Handle available_time object
@@ -82,17 +86,19 @@ class BookingModel extends BookingEntity {
       id: json['id'] as int,
       status: (json['status'] ?? 'pending') as String,
       problemDescription: json['problem_description'] as String? ?? '',
-      service: BookingServiceModel.fromJson(
-          json['service'] as Map<String, dynamic>),
+      service:
+          BookingServiceModel.fromJson(json['service'] as Map<String, dynamic>),
       provider: BookingProviderModel.fromJson(
           json['provider'] as Map<String, dynamic>),
-      day: dayStr,
+      dayAr: dayAr,
+      dayEn: dayEn,
       time: timeStr,
       createdAt: (json['created_at'] ?? '') as String,
       customerName: (json['customer_name'] ?? '') as String,
       customerPhone: (json['customer_phone'] ?? '') as String,
       customerEmail: json['customer_email'] as String?,
-      governorate: json['governorate'] != null ? json['governorate']['name'] : null,
+      governorate:
+          json['governorate'] != null ? json['governorate']['name'] : null,
       center: json['center'] != null ? json['center']['name'] : null,
     );
   }

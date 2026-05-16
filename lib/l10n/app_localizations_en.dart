@@ -39,6 +39,12 @@ class SEn extends S {
   String get shared_save => 'Save';
 
   @override
+  String get shared_show_more => 'Show more';
+
+  @override
+  String get shared_show_less => 'Show less';
+
+  @override
   String get common_currency => 'EGP';
 
   @override
@@ -1027,6 +1033,12 @@ class SEn extends S {
   String get order_payment_method => 'Payment Method';
 
   @override
+  String get order_payment_cash => 'Cash';
+
+  @override
+  String get order_payment_online => 'Online';
+
+  @override
   String get order_no_orders_msg => 'You don\'t have any orders yet';
 
   @override
@@ -1043,6 +1055,21 @@ class SEn extends S {
 
   @override
   String get order_status_pending => 'Pending';
+
+  @override
+  String get order_status_accepted => 'Accepted';
+
+  @override
+  String get order_status_confirmed => 'Confirmed';
+
+  @override
+  String get order_status_processing => 'Processing';
+
+  @override
+  String get order_status_shipped => 'Shipped';
+
+  @override
+  String get order_status_delivered => 'Delivered';
 
   @override
   String get order_status_completed => 'Completed';
@@ -1226,4 +1253,16 @@ class SEn extends S {
 
   @override
   String get provider_details_services => 'Offered Services';
+
+  @override
+  String get brands => 'Brands';
+
+  @override
+  String get no_brands => 'No brands added yet';
+
+  @override
+  String get brand_products => 'Brand Products';
+
+  @override
+  String get no_brand_products => 'No products in this brand yet';
 }

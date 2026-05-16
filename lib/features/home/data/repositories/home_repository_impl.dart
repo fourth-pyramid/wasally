@@ -55,7 +55,8 @@ class HomeRepositoryImpl implements HomeRepository {
       final remoteProductsResponse =
           await _remoteDataSource.getProducts(page: page);
 
-      return Right(remoteProductsResponse.map((model) => model as ProductEntity));
+      return Right(
+          remoteProductsResponse.map((model) => model as ProductEntity));
     } on Failure catch (failure) {
       return Left(failure);
     } catch (e) {

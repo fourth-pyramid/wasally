@@ -23,7 +23,7 @@ class ServiceDetailsPage extends StatelessWidget {
 
           if (state.status == ServiceDetailsStatus.failure) {
             return Scaffold(
-              appBar: AppBar(title: Text(context.l10n.service_details_title)),
+              appBar: AppTopBar(title: context.l10n.service_details_title),
               body: AppErrorWidget(
                 message: state.errorMessage ??
                     context.l10n.errors_something_went_wrong,

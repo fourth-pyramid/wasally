@@ -1,4 +1,6 @@
 import 'package:wassaly/core/imports/imports.dart';
+import 'package:wassaly/features/orders/presentation/bloc/orders_bloc.dart';
+import 'package:wassaly/features/orders/presentation/bloc/orders_event.dart';
 
 import '../../../../features/cart/domain/usecases/get_user_addresses_usecase.dart';
 import '../../../../features/cart/domain/usecases/get_user_data_usecase.dart';
@@ -14,12 +16,15 @@ import '../../domain/usecases/create_booking_usecase.dart';
 part 'service_booking_event.dart';
 part 'service_booking_state.dart';
 
-class ServiceBookingBloc extends Bloc<ServiceBookingEvent, ServiceBookingState> {
+class ServiceBookingBloc
+    extends Bloc<ServiceBookingEvent, ServiceBookingState> {
   final CreateBookingUseCase _createBookingUseCase;
   final GetGovernoratesUseCase _getGovernoratesUseCase;
   final GetCentersUseCase _getCentersUseCase;
   final GetUserDataUseCase _getUserDataUseCase;
   final GetUserAddressesUseCase _getUserAddressesUseCase;
+
+  final OrdersBloc _ordersBloc;
 
   ServiceBookingBloc({
     required CreateBookingUseCase createBookingUseCase,
@@ -27,11 +32,13 @@ class ServiceBookingBloc extends Bloc<ServiceBookingEvent, ServiceBookingState> 
     required GetCentersUseCase getCentersUseCase,
     required GetUserDataUseCase getUserDataUseCase,
     required GetUserAddressesUseCase getUserAddressesUseCase,
+    required OrdersBloc ordersBloc,
   })  : _createBookingUseCase = createBookingUseCase,
         _getGovernoratesUseCase = getGovernoratesUseCase,
         _getCentersUseCase = getCentersUseCase,
         _getUserDataUseCase = getUserDataUseCase,
         _getUserAddressesUseCase = getUserAddressesUseCase,
+        _ordersBloc = ordersBloc,
         super(const ServiceBookingState()) {
     on<ServiceBookingInitialized>(_onInitialized);
     on<ServiceBookingDaySelected>(_onDaySelected);
@@ -137,7 +144,8 @@ class ServiceBookingBloc extends Bloc<ServiceBookingEvent, ServiceBookingState> 
       clearGovernorateError: true,
     ));
 
-    final result = await _getCentersUseCase(GetCentersParams(event.governorateId));
+    final result =
+        await _getCentersUseCase(GetCentersParams(event.governorateId));
 
     result.fold(
       (failure) => emit(state.copyWith(
@@ -267,10 +275,13 @@ class ServiceBookingBloc extends Bloc<ServiceBookingEvent, ServiceBookingState> 
         status: ServiceBookingStatus.error,
         errorMessage: failure.message,
       )),
-      (booking) => emit(state.copyWith(
-        status: ServiceBookingStatus.success,
-        booking: booking,
-      )),
+      (booking) {
+        _ordersBloc.add(const GetServiceBookingsEvent());
+        emit(state.copyWith(
+          status: ServiceBookingStatus.success,
+          booking: booking,
+        ));
+      },
     );
   }
 }

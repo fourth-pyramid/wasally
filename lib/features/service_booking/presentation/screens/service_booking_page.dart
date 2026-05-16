@@ -22,7 +22,6 @@ class ServiceBookingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cs = context.theme.colorScheme;
-    final tt = context.theme.textTheme;
 
     return BlocProvider(
       create: (context) => sl<ServiceBookingBloc>()
@@ -46,15 +45,8 @@ class ServiceBookingPage extends StatelessWidget {
         },
         child: Scaffold(
           backgroundColor: cs.surface,
-          appBar: AppBar(
-            foregroundColor: cs.primary,
-            title: Text(
-              context.l10n.service_booking_title,
-              style: tt.titleLarge?.copyWith(color: cs.primary),
-            ),
-            centerTitle: true,
-            elevation: 0,
-            backgroundColor: cs.surface,
+          appBar: AppTopBar(
+            title: context.l10n.service_booking_title,
           ),
           body: BlocBuilder<ServiceBookingBloc, ServiceBookingState>(
             builder: (context, state) {

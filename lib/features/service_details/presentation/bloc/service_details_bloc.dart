@@ -6,7 +6,8 @@ import '../../domain/usecases/toggle_service_favorite_usecase.dart';
 part 'service_details_event.dart';
 part 'service_details_state.dart';
 
-class ServiceDetailsBloc extends Bloc<ServiceDetailsEvent, ServiceDetailsState> {
+class ServiceDetailsBloc
+    extends Bloc<ServiceDetailsEvent, ServiceDetailsState> {
   final GetServiceDetailsUseCase _getServiceDetailsUseCase;
   final ToggleServiceFavoriteUseCase _toggleServiceFavoriteUseCase;
 

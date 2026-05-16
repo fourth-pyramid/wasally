@@ -16,7 +16,8 @@ abstract class ProductDetailsRemoteDataSource {
   });
 }
 
-class ProductDetailsRemoteDataSourceImpl implements ProductDetailsRemoteDataSource {
+class ProductDetailsRemoteDataSourceImpl
+    implements ProductDetailsRemoteDataSource {
   final DioService _dioService;
 
   const ProductDetailsRemoteDataSourceImpl(this._dioService);

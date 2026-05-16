@@ -77,8 +77,9 @@ class DeepLinkService {
 
     final String? internalRoute = getRouteForDeepLink(uri);
     if (internalRoute != null) {
-      AppLogger.info('✅ Valid deep link detected, internal route: $internalRoute');
-      
+      AppLogger.info(
+          '✅ Valid deep link detected, internal route: $internalRoute');
+
       // Parse data for any listeners (like GoogleLoginBloc)
       final callbackData = _parseAuthCallback(uri);
       if (callbackData != null) {
@@ -93,21 +94,22 @@ class DeepLinkService {
   /// Used by GoRouter's redirect logic.
   String? getRouteForDeepLink(Uri uri) {
     // Check for auth callback (wasly://auth/callback or https://wasly.bynona.store/auth/callback)
-    if ((uri.scheme == 'wasly' && uri.host == 'auth' && uri.path == '/callback') ||
+    if ((uri.scheme == 'wasly' &&
+            uri.host == 'auth' &&
+            uri.path == '/callback') ||
         (uri.host == 'wasly.bynona.store' && uri.path == '/auth/callback')) {
-      
       // Fix potential encoding issues in query parameters
       final queryParams = _getFixedQueryParams(uri);
-      
+
       // Build internal route with query parameters
       final internalUri = Uri(
         path: '/auth/callback', // AppRoutes.authCallback
         queryParameters: queryParams.isNotEmpty ? queryParams : null,
       );
-      
+
       return internalUri.toString();
     }
-    
+
     return null;
   }
 
@@ -117,18 +119,20 @@ class DeepLinkService {
     final String fixedQuery = uri.query.replaceAll('&amp;', '&');
     final tempUri = Uri.parse('http://temp.com/?$fixedQuery');
     final rawParams = tempUri.queryParameters;
-    
+
     final params = <String, String>{};
-    
+
     // Normalize parameter names (backend sends 'user_id', we might want 'id')
     if (rawParams['token'] != null) params['token'] = rawParams['token']!;
     if (rawParams['user_id'] != null) params['id'] = rawParams['user_id']!;
     if (rawParams['id'] != null) params['id'] = rawParams['id']!;
-    if (rawParams['full_name'] != null) params['full_name'] = rawParams['full_name']!;
+    if (rawParams['full_name'] != null) {
+      params['full_name'] = rawParams['full_name']!;
+    }
     if (rawParams['email'] != null) params['email'] = rawParams['email']!;
     if (rawParams['avatar'] != null) params['avatar'] = rawParams['avatar']!;
     if (rawParams['status'] != null) params['status'] = rawParams['status']!;
-    
+
     return params;
   }
 

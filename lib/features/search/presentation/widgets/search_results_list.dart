@@ -18,7 +18,7 @@ class SearchResultsList extends StatelessWidget {
 
         return CustomScrollView(
           slivers: [
-            SliverProductGrid<ProductEntity>(
+            AppSliverGrid<ProductEntity>(
               items: products,
               hasMore: state.products.hasMore,
               onLoadMore: () {

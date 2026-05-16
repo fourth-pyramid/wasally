@@ -111,7 +111,8 @@ class ServiceBookingState extends Equatable {
       status: status ?? this.status,
       service: service ?? this.service,
       selectedDay: clearSelectedDay ? null : selectedDay ?? this.selectedDay,
-      selectedTime: clearSelectedTime ? null : selectedTime ?? this.selectedTime,
+      selectedTime:
+          clearSelectedTime ? null : selectedTime ?? this.selectedTime,
       customerName: customerName ?? this.customerName,
       customerPhone: customerPhone ?? this.customerPhone,
       customerEmail: customerEmail ?? this.customerEmail,
@@ -119,10 +120,16 @@ class ServiceBookingState extends Equatable {
       governorates: governorates ?? this.governorates,
       centers: centers ?? this.centers,
       addresses: addresses ?? this.addresses,
-      selectedAddress: clearSelectedAddress ? null : selectedAddress ?? this.selectedAddress,
-      selectedGovernorateId: clearSelectedGovernorateId ? null : selectedGovernorateId ?? this.selectedGovernorateId,
-      selectedCenterId: clearSelectedCenterId ? null : selectedCenterId ?? this.selectedCenterId,
-      isLoadingGovernorates: isLoadingGovernorates ?? this.isLoadingGovernorates,
+      selectedAddress:
+          clearSelectedAddress ? null : selectedAddress ?? this.selectedAddress,
+      selectedGovernorateId: clearSelectedGovernorateId
+          ? null
+          : selectedGovernorateId ?? this.selectedGovernorateId,
+      selectedCenterId: clearSelectedCenterId
+          ? null
+          : selectedCenterId ?? this.selectedCenterId,
+      isLoadingGovernorates:
+          isLoadingGovernorates ?? this.isLoadingGovernorates,
       isLoadingCenters: isLoadingCenters ?? this.isLoadingCenters,
       isLoadingAddresses: isLoadingAddresses ?? this.isLoadingAddresses,
       booking: booking ?? this.booking,
@@ -132,7 +139,9 @@ class ServiceBookingState extends Equatable {
       emailError: clearEmailError ? null : emailError ?? this.emailError,
       dayError: clearDayError ? null : dayError ?? this.dayError,
       timeError: clearTimeError ? null : timeError ?? this.timeError,
-      governorateError: clearGovernorateError ? null : governorateError ?? this.governorateError,
+      governorateError: clearGovernorateError
+          ? null
+          : governorateError ?? this.governorateError,
       centerError: clearCenterError ? null : centerError ?? this.centerError,
     );
   }

@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:wassaly/core/imports/packages_imports.dart';
 
 class BookingProviderEntity extends Equatable {
@@ -18,7 +19,8 @@ class BookingProviderEntity extends Equatable {
   });
 
   @override
-  List<Object?> get props => [id, name, avatar, description, rating, reviewsCount];
+  List<Object?> get props =>
+      [id, name, avatar, description, rating, reviewsCount];
 }
 
 class BookingServiceEntity extends Equatable {
@@ -46,7 +48,8 @@ class BookingEntity extends Equatable {
   final String problemDescription;
   final BookingServiceEntity service;
   final BookingProviderEntity provider;
-  final String day;
+  final String dayAr;
+  final String dayEn;
   final String time;
   final String createdAt;
   final String customerName;
@@ -61,7 +64,8 @@ class BookingEntity extends Equatable {
     required this.problemDescription,
     required this.service,
     required this.provider,
-    required this.day,
+    required this.dayAr,
+    required this.dayEn,
     required this.time,
     required this.createdAt,
     required this.customerName,
@@ -71,6 +75,8 @@ class BookingEntity extends Equatable {
     this.center,
   });
 
+  String get day => Intl.getCurrentLocale() == 'ar' ? dayAr : dayEn;
+
   @override
   List<Object?> get props => [
         id,
@@ -78,7 +84,8 @@ class BookingEntity extends Equatable {
         problemDescription,
         service,
         provider,
-        day,
+        dayAr,
+        dayEn,
         time,
         createdAt,
         customerName,

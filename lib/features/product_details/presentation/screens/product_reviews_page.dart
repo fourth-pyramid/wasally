@@ -4,7 +4,6 @@ import 'package:wassaly/features/auth/presentation/bloc/session/session_bloc.dar
 import '../../domain/entities/product_detail_entity.dart';
 import '../bloc/product_details_bloc.dart';
 import '../bloc/product_details_state.dart';
-import '../widgets/product_review_card.dart';
 import '../widgets/product_review_form_sheet.dart';
 
 class ProductReviewsPage extends StatelessWidget {
@@ -39,19 +38,8 @@ class ProductReviewsPage extends StatelessWidget {
 
           return CustomScrollView(
             slivers: [
-              SliverAppBar(
-                floating: true,
-                snap: true,
-                backgroundColor: cs.surface,
-                foregroundColor: cs.primary,
-                elevation: 0,
-                centerTitle: true,
-                title: Text(
-                  context.l10n.product_details_all_reviews,
-                  style: context.theme.textTheme.titleLarge?.copyWith(
-                    color: cs.primary,
-                  ),
-                ),
+              AppSliverTopBar(
+                title: context.l10n.product_details_all_reviews,
               ),
               SliverPadding(
                 padding: EdgeInsets.all(8.r),
@@ -63,8 +51,11 @@ class ProductReviewsPage extends StatelessWidget {
                     final isMine = currentUserId != null &&
                         review.user.id.toString() == currentUserId;
 
-                    return ProductReviewCard(
-                      review: review,
+                    return AppReviewCard(
+                      rating: review.rating,
+                      comment: review.comment,
+                      userName: review.user.name,
+                      userAvatar: review.user.avatar,
                       isCurrentUserReview: isMine,
                       canEdit: isMine && _canEditReview(review.createdAt),
                       onEdit: () => _showReviewSheet(context, review),

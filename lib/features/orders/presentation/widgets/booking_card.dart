@@ -78,6 +78,23 @@ class BookingCard extends StatelessWidget {
               ),
             ],
           ),
+          if (booking.governorate != null || booking.center != null) ...[
+            Divider(height: 24.h),
+            Row(
+              children: [
+                Icon(Icons.location_on_outlined,
+                    size: 14.sp, color: cs.outline),
+                SizedBox(width: 4.w),
+                Expanded(
+                  child: Text(
+                    '${booking.governorate ?? ''}${booking.governorate != null && booking.center != null ? ' - ' : ''}${booking.center ?? ''}',
+                    style: tt.bodySmall?.copyWith(color: cs.outline),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ],
+            ),
+          ],
         ],
       ),
     );
@@ -93,45 +110,56 @@ class _StatusBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     final cs = context.theme.colorScheme;
 
-    Color color;
-    String label;
+    final normalizedStatus = status.trim().toLowerCase();
 
-    switch (status.toLowerCase()) {
-      case 'pending':
-        color = Colors.orange;
-        label = context.l10n.order_status_pending;
-        break;
-      case 'confirmed':
-      case 'completed':
-        color = Colors.green;
-        label = context.l10n.order_status_completed;
-        break;
-      case 'cancelled':
-        color = Colors.red;
-        label = context.l10n.order_status_cancelled;
-        break;
-      default:
-        color = cs.primary;
-        label = status;
-    }
+    final statusConfig = {
+      'pending':
+          _StatusConfig(Colors.orange, context.l10n.order_status_pending),
+      'waiting':
+          _StatusConfig(Colors.orange, context.l10n.order_status_pending),
+      'قيد الانتظار':
+          _StatusConfig(Colors.orange, context.l10n.order_status_pending),
+      'accepted':
+          _StatusConfig(Colors.blue, context.l10n.order_status_accepted),
+      'تم القبول':
+          _StatusConfig(Colors.blue, context.l10n.order_status_accepted),
+      'confirmed':
+          _StatusConfig(Colors.indigo, context.l10n.order_status_confirmed),
+      'completed':
+          _StatusConfig(Colors.green, context.l10n.order_status_completed),
+      'مكتمل':
+          _StatusConfig(Colors.green, context.l10n.order_status_completed),
+      'cancelled':
+          _StatusConfig(Colors.red, context.l10n.order_status_cancelled),
+      'ملغي':
+          _StatusConfig(Colors.red, context.l10n.order_status_cancelled),
+    };
+
+    final config =
+        statusConfig[normalizedStatus] ?? _StatusConfig(cs.primary, status);
 
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.1),
+        color: config.color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(4.r),
-        // border: Border.all(color: color.withValues(alpha: 0.5)),
       ),
       child: Text(
-        label,
+        config.label,
         style: TextStyle(
-          color: color,
+          color: config.color,
           fontSize: 10.sp,
           fontWeight: FontWeight.bold,
         ),
       ),
     );
   }
+}
+
+class _StatusConfig {
+  final Color color;
+  final String label;
+  _StatusConfig(this.color, this.label);
 }
 
 class _InfoItem extends StatelessWidget {

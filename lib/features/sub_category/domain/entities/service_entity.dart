@@ -1,4 +1,3 @@
-
 import '../../../../core/imports/imports.dart';
 
 class ServiceEntity extends Equatable {

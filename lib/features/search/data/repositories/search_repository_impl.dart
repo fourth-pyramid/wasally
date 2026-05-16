@@ -19,7 +19,8 @@ class SearchRepositoryImpl implements SearchRepository {
         page: page,
       );
 
-      return Right(remoteProductsResponse.map((model) => model as ProductEntity));
+      return Right(
+          remoteProductsResponse.map((model) => model as ProductEntity));
     } on Failure catch (failure) {
       return Left(failure);
     } catch (e) {

@@ -1,12 +1,27 @@
 import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/home/domain/entities/product_entity.dart';
 
-class ProductsSkeleton extends StatelessWidget {
-  const ProductsSkeleton({super.key});
+class AppProductsSkeleton extends StatelessWidget {
+  final int crossAxisCount;
+  final double childAspectRatio;
+  final double? mainAxisExtent;
+  final EdgeInsetsGeometry? padding;
+
+  const AppProductsSkeleton({
+    super.key,
+    this.crossAxisCount = 2,
+    this.childAspectRatio = 0.65,
+    this.mainAxisExtent,
+    this.padding,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return SliverProductGrid<ProductEntity>(
+    return AppSliverGrid<ProductEntity>(
+      padding: padding ?? EdgeInsets.zero,
+      crossAxisCount: crossAxisCount,
+      childAspectRatio: childAspectRatio,
+      mainAxisExtent: mainAxisExtent,
       items: List.generate(
         4,
         (index) => ProductEntity(

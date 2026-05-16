@@ -109,7 +109,9 @@ class _ProductReviewFormSheetState extends State<ProductReviewFormSheet> {
     final comment = _commentController.text.trim();
     if (comment.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(context.l10n.product_details_review_comment_required)),
+        SnackBar(
+            content:
+                Text(context.l10n.product_details_review_comment_required)),
       );
       return;
     }

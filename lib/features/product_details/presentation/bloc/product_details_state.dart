@@ -4,7 +4,9 @@ import '../../../home/domain/entities/product_entity.dart';
 import '../../domain/entities/product_detail_entity.dart';
 
 enum ProductDetailsStatus { initial, loading, success, failure }
+
 enum RelatedProductsStatus { initial, loading, success, failure }
+
 enum ReviewActionStatus { initial, loading, success, failure }
 
 class ProductDetailsState extends Equatable {

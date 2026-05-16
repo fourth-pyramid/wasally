@@ -1,9 +1,9 @@
 import 'package:wassaly/core/imports/imports.dart';
+import 'package:wassaly/features/favorite/presentation/bloc/favorite_bloc.dart';
+import 'package:wassaly/features/favorite/presentation/bloc/favorite_event.dart';
+import 'package:wassaly/features/favorite/presentation/bloc/favorite_state.dart';
 
-import '../../../product_details/domain/entities/product_detail_entity.dart';
-import '../../../product_details/presentation/widgets/product_review_card.dart';
 import '../../domain/entities/service_detail_entity.dart';
-import '../bloc/service_details_bloc.dart';
 import 'service_available_days_section.dart';
 import 'service_provider_card.dart';
 
@@ -60,19 +60,30 @@ class ServiceDetailsInfo extends StatelessWidget {
                   ],
                 ),
               ),
-              BlocBuilder<ServiceDetailsBloc, ServiceDetailsState>(
-                builder: (context, state) {
+              BlocSelector<FavoriteBloc, FavoriteState, (bool, bool)>(
+                selector: (state) => (
+                  state.serviceFavoriteIds.contains(service.id) ||
+                      (state.status == FavoriteStatus.initial &&
+                          service.isFavorite),
+                  state.serviceTogglingIds.contains(service.id),
+                ),
+                builder: (context, status) {
+                  final isFavorite = status.$1;
+                  final isToggling = status.$2;
                   return IconButton(
-                    onPressed: state.isFavoriteLoading
+                    onPressed: isToggling
                         ? null
-                        : () => context.read<ServiceDetailsBloc>().add(
-                              ToggleServiceFavoriteEvent(service.id),
+                        : () => context.read<FavoriteBloc>().add(
+                              ToggleServiceFavoriteEvent(
+                                service.id,
+                                expectedIsFavorite: isFavorite,
+                              ),
                             ),
                     icon: Icon(
-                      service.isFavorite
+                      isFavorite
                           ? Icons.favorite_rounded
                           : Icons.favorite_border_rounded,
-                      color: service.isFavorite ? Colors.red : cs.outline,
+                      color: isFavorite ? cs.error : cs.outline,
                       size: 28.r,
                     ),
                   );
@@ -127,19 +138,12 @@ class ServiceDetailsInfo extends StatelessWidget {
               separatorBuilder: (_, __) => 12.verticalSpace,
               itemBuilder: (context, index) {
                 final review = service.reviews[index];
-                // Map ServiceDetailReviewEntity to ProductDetailReviewEntity for reuse
-                final mappedReview = ProductDetailReviewEntity(
-                  id: review.id,
+                return AppReviewCard(
                   rating: review.rating,
                   comment: review.comment,
-                  createdAt: review.createdAt,
-                  user: ProductReviewUserEntity(
-                    id: review.user.id,
-                    name: review.user.name,
-                    avatar: review.user.avatar,
-                  ),
+                  userName: review.user.name,
+                  userAvatar: review.user.avatar,
                 );
-                return ProductReviewCard(review: mappedReview);
               },
             ),
             if (service.reviews.length > 3) ...[

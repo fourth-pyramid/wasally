@@ -4,7 +4,6 @@ import 'package:wassaly/features/home/domain/entities/sub_category_entity.dart';
 import '../bloc/sub_category_bloc.dart';
 import '../bloc/sub_category_event.dart';
 import '../bloc/sub_category_state.dart';
-import '../widgets/widgets.dart';
 
 class SubCategoryPage extends StatelessWidget {
   final SubCategoryEntity subCategory;
@@ -30,17 +29,32 @@ class SubCategoryPage extends StatelessWidget {
 class SubCategoryDetailView extends StatelessWidget {
   final SubCategoryEntity subCategory;
   final bool showAppBar;
+  final int crossAxisCount;
+  final double? childAspectRatio;
+  final double? mainAxisExtent;
+
+  // Custom overrides for services/products
+  final double? serviceChildAspectRatio;
+  final double? serviceMainAxisExtent;
+  final double? productChildAspectRatio;
+  final double? productMainAxisExtent;
 
   const SubCategoryDetailView({
     super.key,
     required this.subCategory,
     this.showAppBar = true,
+    this.crossAxisCount = 2,
+    this.childAspectRatio,
+    this.mainAxisExtent,
+    this.serviceChildAspectRatio,
+    this.serviceMainAxisExtent,
+    this.productChildAspectRatio,
+    this.productMainAxisExtent,
   });
 
   @override
   Widget build(BuildContext context) {
     final cs = context.theme.colorScheme;
-    final tt = context.theme.textTheme;
 
     return BlocBuilder<SubCategoryBloc, SubCategoryState>(
       buildWhen: (previous, current) =>
@@ -89,37 +103,55 @@ class SubCategoryDetailView extends StatelessWidget {
             slivers: [
               // SliverAppBar
               if (showAppBar)
-                SliverAppBar(
-                  backgroundColor: cs.surface,
-                  elevation: 0,
-                  centerTitle: true,
-                  floating: true,
-                  foregroundColor: cs.primary,
-                  title: Text(
-                    subCategory.name,
-                    style: tt.titleLarge?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: cs.primary,
-                    ),
-                  ),
+                AppSliverTopBar(
+                  title: subCategory.name,
                 ),
 
               // Services Section
 
               if (!isLoading && detail != null && detail.services.isNotEmpty)
-                ServicesSection(services: detail.services),
+                AppServicesSection(
+                  services: detail.services,
+                  crossAxisCount: crossAxisCount,
+                  childAspectRatio:
+                      serviceChildAspectRatio ?? childAspectRatio ?? 0.50,
+                  mainAxisExtent: serviceMainAxisExtent ?? mainAxisExtent,
+                ),
+
+              // Services Skeleton
+              if (isLoading)
+                AppServicesSkeleton(
+                  crossAxisCount: crossAxisCount,
+                  childAspectRatio:
+                      serviceChildAspectRatio ?? childAspectRatio ?? 0.50,
+                  mainAxisExtent: serviceMainAxisExtent ?? mainAxisExtent,
+                ),
 
               // Products Section
               if (!isLoading && state.products.data.isNotEmpty)
-                ProductsSection(
+                AppProductsSection(
                   products: state.products.data,
                   hasMore: state.hasMoreProducts,
                   isLoadingMore: state.isLoadingMore,
-                  subCategoryId: subCategory.id,
+                  crossAxisCount: crossAxisCount,
+                  childAspectRatio:
+                      productChildAspectRatio ?? childAspectRatio ?? 0.65,
+                  mainAxisExtent: productMainAxisExtent ?? mainAxisExtent,
+                  onLoadMore: () {
+                    context.read<SubCategoryBloc>().add(
+                          LoadMoreProductsEvent(subCategory.id),
+                        );
+                  },
                 ),
 
               // Products Skeleton
-              if (isLoading) const ProductsSkeleton(),
+              if (isLoading)
+                AppProductsSkeleton(
+                  crossAxisCount: crossAxisCount,
+                  childAspectRatio:
+                      productChildAspectRatio ?? childAspectRatio ?? 0.65,
+                  mainAxisExtent: productMainAxisExtent ?? mainAxisExtent,
+                ),
 
               // Empty state if no data
               if (!isLoading &&
@@ -140,4 +172,3 @@ class SubCategoryDetailView extends StatelessWidget {
     );
   }
 }
-

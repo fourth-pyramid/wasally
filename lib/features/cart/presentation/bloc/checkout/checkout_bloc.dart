@@ -1,6 +1,8 @@
 import 'dart:math';
 
 import 'package:wassaly/core/imports/imports.dart';
+import 'package:wassaly/features/orders/presentation/bloc/orders_bloc.dart';
+import 'package:wassaly/features/orders/presentation/bloc/orders_event.dart';
 
 import '../../../../../features/cart/domain/entities/cart_item_entity.dart';
 import '../../../../../features/cart/domain/entities/coupon_entity.dart';
@@ -27,6 +29,7 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
   final GetCentersUseCase _getCentersUseCase;
   final GetUserDataUseCase _getUserDataUseCase;
   final GetUserAddressesUseCase _getUserAddressesUseCase;
+  final OrdersBloc _ordersBloc;
 
   CheckoutBloc({
     required PlaceOrderUseCase placeOrderUseCase,
@@ -35,12 +38,14 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
     required GetCentersUseCase getCentersUseCase,
     required GetUserDataUseCase getUserDataUseCase,
     required GetUserAddressesUseCase getUserAddressesUseCase,
+    required OrdersBloc ordersBloc,
   })  : _placeOrderUseCase = placeOrderUseCase,
         _applyCouponUseCase = applyCouponUseCase,
         _getGovernoratesUseCase = getGovernoratesUseCase,
         _getCentersUseCase = getCentersUseCase,
         _getUserDataUseCase = getUserDataUseCase,
         _getUserAddressesUseCase = getUserAddressesUseCase,
+        _ordersBloc = ordersBloc,
         super(const CheckoutState()) {
     on<CheckoutInitialized>(_onCheckoutInitialized);
     on<CheckoutGovernorateSelected>(_onGovernorateSelected);
@@ -353,10 +358,13 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
         status: CheckoutStatus.error,
         errorMessage: failure.message,
       )),
-      (order) => emit(state.copyWith(
-        status: CheckoutStatus.success,
-        placedOrder: order,
-      )),
+      (order) {
+        _ordersBloc.add(const GetOrdersEvent());
+        emit(state.copyWith(
+          status: CheckoutStatus.success,
+          placedOrder: order,
+        ));
+      },
     );
   }
 

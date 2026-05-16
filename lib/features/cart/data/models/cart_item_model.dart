@@ -34,9 +34,8 @@ class CartItemModel {
       productImage: entity.productImage,
       price: entity.price,
       productDescription: entity.productDescription,
-      offers: entity.offers
-          ?.map((offer) => OfferModel.fromEntity(offer))
-          .toList(),
+      offers:
+          entity.offers?.map((offer) => OfferModel.fromEntity(offer)).toList(),
       quantity: entity.quantity,
       unitPrice: entity.unitPrice,
       totalPrice: entity.totalPrice,

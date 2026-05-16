@@ -92,6 +92,7 @@ class ProviderHeader extends StatelessWidget {
                     ?.copyWith(color: cs.onSurfaceVariant, height: 1.5),
                 textAlign: TextAlign.center,
               ),
+              16.verticalSpace,
             ],
           ),
         ),

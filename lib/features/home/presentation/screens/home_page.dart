@@ -1,5 +1,6 @@
 import 'package:wassaly/core/imports/imports.dart';
 
+import '../../../brands/presentation/widgets/brands_section.dart';
 import '../bloc/home_bloc.dart';
 import '../bloc/home_event.dart';
 import '../bloc/home_state.dart';
@@ -43,18 +44,8 @@ class _HomeView extends StatelessWidget {
             child: CustomScrollView(
               slivers: [
                 // Sliver AppBar
-                SliverAppBar(
-                  floating: true,
-                  snap: true,
-                  backgroundColor: cs.surface,
-                  elevation: 0,
-                  centerTitle: true,
-                  title: Image.asset(
-                    AppAssets.logo,
-                    height: 60.h,
-                    cacheHeight: (60.h * 2).toInt(),
-                    filterQuality: FilterQuality.high,
-                  ),
+                AppSliverTopBar(
+                  showLogo: true,
                   actions: [
                     IconButton(
                       icon: Icon(Icons.search, color: cs.primary),
@@ -107,8 +98,11 @@ class _HomeView extends StatelessWidget {
 
                   // Spacing
                   SliverToBoxAdapter(
-                    child: 12.verticalSpace,
+                    child: 16.verticalSpace,
                   ),
+
+                  // Brands
+                  const BrandsSection(),
 
                   // Products
                   const ProductsSection(),

@@ -1,8 +1,5 @@
 import 'package:wassaly/core/imports/imports.dart';
 
-import '../../domain/entities/offer_entity.dart';
-import '../../domain/entities/product_entity.dart';
-import '../../domain/entities/review_entity.dart';
 import '../bloc/home_bloc.dart';
 import '../bloc/home_event.dart';
 import '../bloc/home_state.dart';
@@ -59,31 +56,14 @@ class ProductsSection extends StatelessWidget {
             ),
 
             // Grid
-            SliverProductGrid<ProductEntity>(
-              items: products,
+            AppProductsSection(
+              products: products,
               hasMore: state.products.hasMore,
+              isLoadingMore: state.products.hasMore,
               onLoadMore: () {
                 context.read<HomeBloc>().add(LoadMoreProductsEvent());
               },
-              itemBuilder: (context, product, index, wrapAnimation) {
-                return wrapAnimation(
-                  ProductCard(
-                    product: product,
-                  ),
-                );
-              },
             ),
-
-            // Load more indicator
-            if (state.products.hasMore)
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 20.h),
-                  child: const Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                ),
-              ),
           ],
         );
       },
@@ -91,22 +71,6 @@ class ProductsSection extends StatelessWidget {
   }
 
   Widget _buildSkeleton(BuildContext context, ColorScheme cs, TextTheme tt) {
-    final dummyProducts = List.generate(
-      4,
-      (index) => const ProductEntity(
-        id: 0,
-        name: 'منتج تجريبي',
-        image: '',
-        price: '100',
-        description: 'وصف تجريبي',
-        offers: [OfferEntity(id: 0, discountPercentage: 10)],
-        reviews: [
-          ReviewEntity(id: 0, rating: 5, comment: 'ممتاز', createdAt: ''),
-        ],
-        isFavorite: false,
-      ),
-    );
-
     return SliverMainAxisGroup(
       slivers: [
         SliverToBoxAdapter(
@@ -124,17 +88,7 @@ class ProductsSection extends StatelessWidget {
         SliverToBoxAdapter(
           child: 4.verticalSpace,
         ),
-        SliverProductGrid<ProductEntity>(
-          items: dummyProducts,
-          animateItems: false,
-          itemBuilder: (context, product, index, wrapAnimation) {
-            return Skeletonizer(
-              ignoreContainers: true,
-              enabled: true,
-              child: ProductCard(product: product),
-            );
-          },
-        ),
+        const AppProductsSkeleton(),
       ],
     );
   }

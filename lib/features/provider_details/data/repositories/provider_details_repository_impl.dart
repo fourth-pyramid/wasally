@@ -9,7 +9,8 @@ class ProviderDetailsRepositoryImpl implements ProviderDetailsRepository {
   const ProviderDetailsRepositoryImpl(this._remoteDataSource);
 
   @override
-  Future<Either<Failure, ProviderDetailEntity>> getProviderDetails(int providerId) async {
+  Future<Either<Failure, ProviderDetailEntity>> getProviderDetails(
+      int providerId) async {
     try {
       final provider = await _remoteDataSource.getProviderDetails(providerId);
       return Right(provider);

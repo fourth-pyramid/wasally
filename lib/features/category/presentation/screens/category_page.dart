@@ -7,6 +7,7 @@ import 'package:wassaly/features/sub_category/presentation/screens/sub_category_
 import '../bloc/category_bloc.dart';
 import '../bloc/category_event.dart';
 import '../bloc/category_state.dart';
+import '../widgets/widgets.dart';
 
 class CategoryPage extends StatelessWidget {
   final CategoryEntity category;
@@ -38,18 +39,8 @@ class _CategoryView extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: cs.surface,
-      appBar: AppBar(
-        backgroundColor: cs.surface,
-        elevation: 0,
-        centerTitle: true,
-        foregroundColor: cs.primary,
-        title: Text(
-          category.name,
-          style: tt.titleLarge?.copyWith(
-            fontWeight: FontWeight.bold,
-            color: cs.primary,
-          ),
-        ),
+      appBar: AppTopBar(
+        title: category.name,
       ),
       body: BlocBuilder<CategoryBloc, CategoryState>(
         builder: (context, state) {
@@ -71,7 +62,7 @@ class _CategoryView extends StatelessWidget {
               state.status == CategoryStatus.initial;
 
           if (isLoading) {
-            return const AppLoading();
+            return const CategorySkeleton();
           }
 
           final subCategories = state.subCategories.data;
@@ -221,6 +212,9 @@ class _CategoryView extends StatelessWidget {
                                 child: SubCategoryDetailView(
                                   subCategory: state.selectedSubCategory!,
                                   showAppBar: false,
+                                  crossAxisCount: 2,
+                                  productMainAxisExtent: 230.h,
+                                  serviceMainAxisExtent: 190.h,
                                 ),
                               ),
                             ],

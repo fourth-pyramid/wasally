@@ -1,7 +1,7 @@
 import 'package:wassaly/core/imports/imports.dart';
+import 'package:wassaly/core/shared/widgets/service_card.dart';
 
 import '../../../sub_category/domain/entities/service_entity.dart';
-import '../../../sub_category/presentation/widgets/service_card.dart';
 
 class ProviderServicesGrid extends StatelessWidget {
   final List<ServiceEntity> services;
@@ -13,30 +13,31 @@ class ProviderServicesGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (services.isEmpty) return const SizedBox.shrink();
+    if (services.isEmpty) {
+      return const SliverToBoxAdapter(child: SizedBox.shrink());
+    }
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          context.l10n.provider_details_services,
-          style: context.theme.textTheme.titleMedium
-              ?.copyWith(fontWeight: FontWeight.bold),
-        ),
-        16.verticalSpace,
-        GridView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          padding: EdgeInsets.zero,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 8.w,
-            mainAxisSpacing: 8.h,
-            childAspectRatio: 0.66,
+    return SliverMainAxisGroup(
+      slivers: [
+        SliverToBoxAdapter(
+          child: Padding(
+            padding: EdgeInsets.only(bottom: 16.h),
+            child: Text(
+              context.l10n.provider_details_services,
+              style: context.theme.textTheme.titleMedium
+                  ?.copyWith(fontWeight: FontWeight.bold),
+            ),
           ),
-          itemCount: services.length,
-          itemBuilder: (context, index) =>
-              ServiceCard(service: services[index]),
+        ),
+        AppSliverGrid<ServiceEntity>(
+          items: services,
+          padding: EdgeInsets.zero,
+          childAspectRatio: 0.74,
+          itemBuilder: (context, service, index, wrapAnimation) {
+            return wrapAnimation(
+              ServiceCard(service: service),
+            );
+          },
         ),
       ],
     );

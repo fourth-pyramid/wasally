@@ -6,6 +6,8 @@ import 'package:wassaly/features/auth/presentation/screens/otp_verification_page
 import 'package:wassaly/features/auth/presentation/screens/reset_password_page.dart';
 import 'package:wassaly/features/auth/presentation/screens/signup_page.dart';
 import 'package:wassaly/features/auth/presentation/screens/splash_page.dart';
+import 'package:wassaly/features/brands/presentation/pages/brand_details_page.dart';
+import 'package:wassaly/features/brands/presentation/pages/brands_page.dart';
 import 'package:wassaly/features/cart/presentation/bloc/cart_state.dart';
 import 'package:wassaly/features/cart/presentation/bloc/checkout/checkout_bloc.dart';
 import 'package:wassaly/features/cart/presentation/screens/cart_page.dart';
@@ -13,6 +15,7 @@ import 'package:wassaly/features/cart/presentation/screens/checkout_page.dart';
 import 'package:wassaly/features/favorite/presentation/screens/favorite_page.dart';
 import 'package:wassaly/features/home/presentation/screens/home_page.dart';
 import 'package:wassaly/features/main_layout/presentation/screens/main_layout_page.dart';
+import 'package:wassaly/features/orders/presentation/screens/orders_page.dart';
 import 'package:wassaly/features/product_details/presentation/screens/product_details_page.dart';
 import 'package:wassaly/features/profile/domain/entities/address_entity.dart';
 import 'package:wassaly/features/profile/presentation/bloc/profile/profile_bloc.dart';
@@ -21,16 +24,18 @@ import 'package:wassaly/features/profile/presentation/screens/addresses_page.dar
 import 'package:wassaly/features/profile/presentation/screens/edit_profile_page.dart';
 import 'package:wassaly/features/profile/presentation/screens/profile_page.dart';
 import 'package:wassaly/features/profile/presentation/screens/terms_of_service_page.dart';
-import 'package:wassaly/features/orders/presentation/screens/orders_page.dart';
-import 'package:wassaly/features/sub_category/presentation/screens/sub_category_page.dart';
-import 'package:wassaly/features/service_details/presentation/screens/service_details_page.dart';
-import 'package:wassaly/features/service_booking/presentation/screens/service_booking_page.dart';
-import 'package:wassaly/features/service_booking/presentation/screens/booking_success_page.dart';
 import 'package:wassaly/features/provider_details/presentation/screens/provider_details_page.dart';
 import 'package:wassaly/features/service_booking/domain/entities/booking_entity.dart';
+import 'package:wassaly/features/service_booking/presentation/screens/booking_success_page.dart';
+import 'package:wassaly/features/service_booking/presentation/screens/service_booking_page.dart';
 import 'package:wassaly/features/service_details/domain/entities/service_detail_entity.dart';
+import 'package:wassaly/features/service_details/presentation/screens/service_details_page.dart';
+import 'package:wassaly/features/sub_category/presentation/screens/sub_category_page.dart';
 
+import '../../features/category/presentation/screens/all_categories_page.dart';
 import '../../features/category/presentation/screens/category_page.dart';
+import '../../features/home/presentation/bloc/home_bloc.dart';
+import '../../features/home/presentation/bloc/home_event.dart';
 import '../../features/profile/presentation/screens/privacy_policy_page.dart';
 import '../../features/search/presentation/screens/search_page.dart';
 
@@ -119,7 +124,8 @@ final GoRouter appRouter = GoRouter(
       ),
       routes: [
         GoRoute(
-          path: AppRoutes.addAddress.replaceFirst('${AppRoutes.addresses}/', ''),
+          path:
+              AppRoutes.addAddress.replaceFirst('${AppRoutes.addresses}/', ''),
           name: 'addAddress',
           builder: (context, state) => BlocProvider.value(
             value: sl<ProfileBloc>(),
@@ -129,6 +135,14 @@ final GoRouter appRouter = GoRouter(
           ),
         ),
       ],
+    ),
+    GoRoute(
+      path: AppRoutes.allCategories,
+      name: 'allCategories',
+      builder: (context, state) => BlocProvider.value(
+        value: sl<HomeBloc>()..add(GetCategoriesEvent()),
+        child: const CategoriesPage(),
+      ),
     ),
     GoRoute(
       path: AppRoutes.category,
@@ -300,7 +314,8 @@ final GoRouter appRouter = GoRouter(
         final extra = state.extra as Map<String, dynamic>?;
         final service = extra?['service'] as ServiceDetailEntity?;
         final selectedDay = extra?['selectedDay'] as ServiceAvailableDayEntity?;
-        final selectedTime = extra?['selectedTime'] as ServiceAvailableTimeEntity?;
+        final selectedTime =
+            extra?['selectedTime'] as ServiceAvailableTimeEntity?;
 
         if (service == null) {
           return Scaffold(
@@ -340,6 +355,31 @@ final GoRouter appRouter = GoRouter(
           );
         }
         return ProviderDetailsPage(providerId: providerId);
+      },
+    ),
+    GoRoute(
+      path: AppRoutes.brands,
+      name: 'brands',
+      builder: (context, state) => const BrandsPage(),
+    ),
+    GoRoute(
+      path: AppRoutes.brandDetails,
+      name: 'brandDetails',
+      builder: (context, state) {
+        final extra = state.extra as Map<String, dynamic>?;
+        final brandId = extra?['brandId'] as int? ?? 0;
+        final brandName = extra?['brandName'] as String? ?? '';
+        final brandImage = extra?['brandImage'] as String? ?? '';
+        if (brandId <= 0) {
+          return Scaffold(
+            body: Center(child: Text(context.l10n.errors_something_went_wrong)),
+          );
+        }
+        return BrandDetailsPage(
+          brandId: brandId,
+          brandName: brandName,
+          brandImage: brandImage,
+        );
       },
     ),
   ],

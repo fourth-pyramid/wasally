@@ -53,4 +53,3 @@ class CategoryState extends Equatable {
         isLoadingMore,
       ];
 }
-

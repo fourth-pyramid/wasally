@@ -25,7 +25,8 @@ class FavoriteState extends Equatable {
     this.serviceTogglingIds = const {},
     this.failure,
   })  : favorites = favorites ?? const PaginatedResponse(data: []),
-        serviceFavorites = serviceFavorites ?? const PaginatedResponse(data: []);
+        serviceFavorites =
+            serviceFavorites ?? const PaginatedResponse(data: []);
 
   bool get isLoading => status == FavoriteStatus.loading;
   bool get isRefreshing => status == FavoriteStatus.refreshing;

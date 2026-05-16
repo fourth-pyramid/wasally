@@ -1,4 +1,3 @@
-
 import '../../../../core/imports/imports.dart';
 
 abstract class SearchEvent extends Equatable {

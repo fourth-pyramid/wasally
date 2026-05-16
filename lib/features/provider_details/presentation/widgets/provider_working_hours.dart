@@ -1,4 +1,5 @@
 import 'package:wassaly/core/imports/imports.dart';
+
 import '../../domain/entities/provider_detail_entity.dart';
 
 class ProviderWorkingHours extends StatelessWidget {
@@ -15,6 +16,7 @@ class ProviderWorkingHours extends StatelessWidget {
     final tt = context.theme.textTheme;
 
     return AppCard(
+      showShadow: true,
       padding: EdgeInsets.all(16.r),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,11 +55,14 @@ class ProviderWorkingHours extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoRow(BuildContext context, String label, String value, {Color? valueColor}) {
+  Widget _buildInfoRow(BuildContext context, String label, String value,
+      {Color? valueColor}) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(label, style: context.theme.textTheme.bodyMedium?.copyWith(color: context.theme.colorScheme.outline)),
+        Text(label,
+            style: context.theme.textTheme.bodyMedium
+                ?.copyWith(color: context.theme.colorScheme.outline)),
         Text(
           value,
           style: context.theme.textTheme.bodyMedium?.copyWith(

@@ -7,8 +7,8 @@ import 'package:wassaly/core/imports/imports.dart';
 /// - Customizable grid layout via [crossAxisCount], [childAspectRatio], etc.
 /// - Animation support for items
 /// - Built-in padding and spacing
-class SliverProductGrid<T> extends StatelessWidget {
-  const SliverProductGrid({
+class AppSliverGrid<T> extends StatelessWidget {
+  const AppSliverGrid({
     super.key,
     required this.items,
     required this.itemBuilder,
@@ -20,6 +20,7 @@ class SliverProductGrid<T> extends StatelessWidget {
     this.mainAxisSpacing,
     this.crossAxisSpacing,
     this.childAspectRatio = 0.61,
+    this.mainAxisExtent,
     this.animateItems = true,
     this.animationDelayMultiplier = 50,
     this.animationDuration = const Duration(milliseconds: 300),
@@ -59,6 +60,9 @@ class SliverProductGrid<T> extends StatelessWidget {
   /// Ratio of width to height for each item
   final double childAspectRatio;
 
+  /// Fixed height for each item in the cross axis (overrides childAspectRatio if provided)
+  final double? mainAxisExtent;
+
   /// Whether to animate items as they appear
   final bool animateItems;
 
@@ -78,6 +82,7 @@ class SliverProductGrid<T> extends StatelessWidget {
           mainAxisSpacing: mainAxisSpacing ?? 6.h,
           crossAxisSpacing: crossAxisSpacing ?? 6.w,
           childAspectRatio: childAspectRatio,
+          mainAxisExtent: mainAxisExtent,
         ),
         delegate: SliverChildBuilderDelegate(
           (context, index) {

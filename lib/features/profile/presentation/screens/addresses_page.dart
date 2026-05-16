@@ -29,14 +29,8 @@ class _AddressesViewState extends State<_AddressesView> {
     final cs = context.theme.colorScheme;
 
     return Scaffold(
-      appBar: AppBar(
-        foregroundColor: cs.primary,
-        title: Text(
-          context.l10n.profile_saved_addresses,
-          style: context.typography.titleLarge?.copyWith(
-            color: cs.primary,
-          ),
-        ),
+      appBar: AppTopBar(
+        title: context.l10n.profile_saved_addresses,
         centerTitle: true,
       ),
       body: BlocBuilder<ProfileBloc, ProfileState>(

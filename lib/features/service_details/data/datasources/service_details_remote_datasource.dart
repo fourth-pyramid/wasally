@@ -7,7 +7,8 @@ abstract class ServiceDetailsRemoteDataSource {
   Future<void> removeServiceFromFavorites(int serviceId);
 }
 
-class ServiceDetailsRemoteDataSourceImpl implements ServiceDetailsRemoteDataSource {
+class ServiceDetailsRemoteDataSourceImpl
+    implements ServiceDetailsRemoteDataSource {
   final DioService _dioService;
 
   const ServiceDetailsRemoteDataSourceImpl(this._dioService);

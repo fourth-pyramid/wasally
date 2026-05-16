@@ -60,7 +60,8 @@ class CheckoutOrderSummarySection extends StatelessWidget {
                                 color: cs.onSurfaceVariant,
                               ),
                             ),
-                            if (item.offers != null && item.offers!.isNotEmpty) ...[
+                            if (item.offers != null &&
+                                item.offers!.isNotEmpty) ...[
                               2.verticalSpace,
                               Text(
                                 '${context.l10n.shared_save} ${(item.unitPrice * (item.offers!.first.discountPercentage / 100) * item.quantity).toStringAsFixed(0)} ${context.l10n.shared_currency_egp} (${item.offers!.first.discountPercentage}% OFF)',

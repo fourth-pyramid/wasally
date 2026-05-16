@@ -9,15 +9,8 @@ class TermsOfServicePage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: cs.surface,
-      appBar: AppBar(
-        title: Text(context.l10n.terms_of_service_title),
-        backgroundColor: cs.surface,
-        foregroundColor: cs.onSurface,
-        elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: cs.onSurface),
-          onPressed: () => context.pop(),
-        ),
+      appBar: AppTopBar(
+        title: context.l10n.terms_of_service_title,
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16.w),

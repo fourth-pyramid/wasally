@@ -9,7 +9,8 @@ class ServiceDetailsRepositoryImpl implements ServiceDetailsRepository {
   const ServiceDetailsRepositoryImpl(this._remoteDataSource);
 
   @override
-  Future<Either<Failure, ServiceDetailEntity>> getServiceDetails(int serviceId) async {
+  Future<Either<Failure, ServiceDetailEntity>> getServiceDetails(
+      int serviceId) async {
     try {
       final service = await _remoteDataSource.getServiceDetails(serviceId);
       return Right(service);
@@ -21,7 +22,8 @@ class ServiceDetailsRepositoryImpl implements ServiceDetailsRepository {
   }
 
   @override
-  Future<Either<Failure, bool>> toggleServiceFavorite(int serviceId, bool isCurrentlyFavorite) async {
+  Future<Either<Failure, bool>> toggleServiceFavorite(
+      int serviceId, bool isCurrentlyFavorite) async {
     try {
       if (isCurrentlyFavorite) {
         await _remoteDataSource.removeServiceFromFavorites(serviceId);

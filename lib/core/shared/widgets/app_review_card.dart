@@ -1,16 +1,20 @@
 import 'package:wassaly/core/imports/imports.dart';
 
-import '../../domain/entities/product_detail_entity.dart';
-
-class ProductReviewCard extends StatelessWidget {
-  final ProductDetailReviewEntity review;
+class AppReviewCard extends StatelessWidget {
+  final int rating;
+  final String comment;
+  final String userName;
+  final String? userAvatar;
   final bool isCurrentUserReview;
   final bool canEdit;
   final VoidCallback? onEdit;
 
-  const ProductReviewCard({
+  const AppReviewCard({
     super.key,
-    required this.review,
+    required this.rating,
+    required this.comment,
+    required this.userName,
+    this.userAvatar,
     this.isCurrentUserReview = false,
     this.canEdit = false,
     this.onEdit,
@@ -37,7 +41,7 @@ class ProductReviewCard extends StatelessWidget {
               8.horizontalSpace,
               Expanded(
                 child: Text(
-                  review.user.name,
+                  userName,
                   style: tt.titleSmall?.copyWith(
                     color: cs.primary,
                     fontWeight: FontWeight.w700,
@@ -48,11 +52,11 @@ class ProductReviewCard extends StatelessWidget {
                 children: List.generate(
                   5,
                   (index) => Icon(
-                    index < review.rating
+                    index < rating
                         ? Icons.star_rounded
                         : Icons.star_outline_rounded,
                     size: 14.r,
-                    color: index < review.rating ? cs.secondary : cs.outline,
+                    color: index < rating ? cs.secondary : cs.outline,
                   ),
                 ),
               ),
@@ -83,7 +87,7 @@ class ProductReviewCard extends StatelessWidget {
           ),
           8.verticalSpace,
           Text(
-            review.comment,
+            comment,
             style: tt.bodyMedium?.copyWith(color: cs.onSurfaceVariant),
           ),
         ],
@@ -92,8 +96,7 @@ class ProductReviewCard extends StatelessWidget {
   }
 
   Widget _buildAvatar(ColorScheme cs, TextTheme tt) {
-    final hasAvatar =
-        review.user.avatar != null && review.user.avatar!.isNotEmpty;
+    final hasAvatar = userAvatar != null && userAvatar!.isNotEmpty;
 
     if (hasAvatar) {
       return ClipOval(
@@ -101,7 +104,7 @@ class ProductReviewCard extends StatelessWidget {
           width: 32.w,
           height: 24.h,
           memCacheHeight: 32 * 3,
-          imageUrl: review.user.avatar!,
+          imageUrl: userAvatar!,
         ),
       );
     }
@@ -115,9 +118,7 @@ class ProductReviewCard extends StatelessWidget {
       ),
       alignment: Alignment.center,
       child: Text(
-        review.user.name.isNotEmpty
-            ? review.user.name.trim()[0].toUpperCase()
-            : '?',
+        userName.isNotEmpty ? userName.trim()[0].toUpperCase() : '?',
         style: tt.titleSmall?.copyWith(
           color: cs.primary,
           fontWeight: FontWeight.w700,

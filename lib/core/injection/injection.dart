@@ -102,7 +102,8 @@ import '../../features/service_details/data/datasources/service_details_remote_d
 import '../../features/service_details/data/repositories/service_details_repository_impl.dart';
 import '../../features/service_details/domain/repositories/service_details_repository.dart';
 import '../../features/service_details/domain/usecases/get_service_details_usecase.dart';
-import '../../features/service_details/domain/usecases/toggle_service_favorite_usecase.dart' as detail_favorite;
+import '../../features/service_details/domain/usecases/toggle_service_favorite_usecase.dart'
+    as detail_favorite;
 import '../../features/service_details/presentation/bloc/service_details_bloc.dart';
 import '../../features/service_booking/data/datasources/booking_remote_datasource.dart';
 import '../../features/service_booking/data/repositories/booking_repository_impl.dart';
@@ -115,6 +116,12 @@ import '../../features/provider_details/data/repositories/provider_details_repos
 import '../../features/provider_details/domain/repositories/provider_details_repository.dart';
 import '../../features/provider_details/domain/usecases/get_provider_details_usecase.dart';
 import '../../features/provider_details/presentation/cubit/provider_details_cubit.dart';
+import '../../features/brands/data/datasources/brands_remote_datasource.dart';
+import '../../features/brands/data/repositories/brands_repository_impl.dart';
+import '../../features/brands/domain/repositories/brands_repository.dart';
+import '../../features/brands/domain/usecases/get_brand_products_usecase.dart';
+import '../../features/brands/domain/usecases/get_brands_usecase.dart';
+import '../../features/brands/presentation/bloc/brands_bloc.dart';
 
 final sl = GetIt.instance;
 
@@ -191,7 +198,7 @@ void initDependencies() {
         updateQuantityUseCase: sl(),
       ));
 
-  sl.registerFactory(() => OrdersBloc(
+  sl.registerLazySingleton(() => OrdersBloc(
         getOrdersUseCase: sl(),
         getMyBookingsUseCase: sl(),
       ));
@@ -203,6 +210,7 @@ void initDependencies() {
         getCentersUseCase: sl(),
         getUserDataUseCase: sl(),
         getUserAddressesUseCase: sl(),
+        ordersBloc: sl(),
       ));
 
   sl.registerFactoryParam<OtpVerificationBloc, String, VerificationType>(
@@ -235,11 +243,18 @@ void initDependencies() {
         getCentersUseCase: sl(),
         getUserDataUseCase: sl(),
         getUserAddressesUseCase: sl(),
+        ordersBloc: sl(),
       ));
 
   // Provider Details
   sl.registerFactory(() => ProviderDetailsCubit(
         getProviderDetailsUseCase: sl(),
+      ));
+
+  // Brands
+  sl.registerFactory(() => BrandsBloc(
+        sl(),
+        sl(),
       ));
 
   // UseCases - Auth
@@ -310,7 +325,8 @@ void initDependencies() {
 
   // UseCases - Service Details
   sl.registerLazySingleton(() => GetServiceDetailsUseCase(sl()));
-  sl.registerLazySingleton(() => detail_favorite.ToggleServiceFavoriteUseCase(sl()));
+  sl.registerLazySingleton(
+      () => detail_favorite.ToggleServiceFavoriteUseCase(sl()));
 
   // UseCases - Service Booking
   sl.registerLazySingleton(() => CreateBookingUseCase(sl()));
@@ -318,6 +334,10 @@ void initDependencies() {
 
   // UseCases - Provider Details
   sl.registerLazySingleton(() => GetProviderDetailsUseCase(sl()));
+
+  // UseCases - Brands
+  sl.registerLazySingleton(() => GetBrandsUseCase(sl()));
+  sl.registerLazySingleton(() => GetBrandProductsUseCase(sl()));
 
   // Repositories
   sl.registerLazySingleton<AuthRepository>(
@@ -337,8 +357,7 @@ void initDependencies() {
   sl.registerLazySingleton<CartRepository>(
       () => CartRepositoryImpl(sl(), sl()));
 
-  sl.registerLazySingleton<OrdersRepository>(
-      () => OrdersRepositoryImpl(sl()));
+  sl.registerLazySingleton<OrdersRepository>(() => OrdersRepositoryImpl(sl()));
 
   sl.registerLazySingleton<ServiceDetailsRepository>(
       () => ServiceDetailsRepositoryImpl(sl()));
@@ -346,6 +365,8 @@ void initDependencies() {
       () => BookingRepositoryImpl(sl()));
   sl.registerLazySingleton<ProviderDetailsRepository>(
       () => ProviderDetailsRepositoryImpl(sl()));
+  sl.registerLazySingleton<BrandsRepository>(
+      () => BrandsRepositoryImpl(sl()));
 
   // DataSources
   sl.registerLazySingleton<AuthRemoteDataSource>(
@@ -382,4 +403,6 @@ void initDependencies() {
       () => BookingRemoteDataSourceImpl(DioService.instance));
   sl.registerLazySingleton<ProviderDetailsRemoteDataSource>(
       () => ProviderDetailsRemoteDataSourceImpl(DioService.instance));
+  sl.registerLazySingleton<BrandsRemoteDataSource>(
+      () => BrandsRemoteDataSourceImpl(DioService.instance));
 }

@@ -39,8 +39,7 @@ class CategoryRemoteDataSourceImpl implements CategoryRemoteDataSource {
         }
 
         final data = responseData['data'] as List<dynamic>? ?? [];
-        final pagination =
-            responseData['pagination'] as Map<String, dynamic>?;
+        final pagination = responseData['pagination'] as Map<String, dynamic>?;
 
         return CategoryDetailModel.fromJson(
           category: category,

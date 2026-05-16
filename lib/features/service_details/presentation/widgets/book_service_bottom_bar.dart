@@ -18,7 +18,8 @@ class BookServiceBottomBar extends StatelessWidget {
     final tt = context.theme.textTheme;
 
     return Container(
-      padding: EdgeInsets.fromLTRB(16.w, 12.h, 16.w, context.bottomPadding + 12.h),
+      padding:
+          EdgeInsets.fromLTRB(16.w, 12.h, 16.w, context.bottomPadding + 12.h),
       decoration: BoxDecoration(
         color: cs.surface,
         boxShadow: [

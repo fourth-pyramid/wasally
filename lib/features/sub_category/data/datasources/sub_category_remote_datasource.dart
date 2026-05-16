@@ -40,9 +40,8 @@ class SubCategoryRemoteDataSourceImpl implements SubCategoryRemoteDataSource {
         }
 
         final pagination = responseData['pagination'] as Map<String, dynamic>?;
-        final subCategoryData = data is List
-            ? (data.isEmpty ? null : data.first)
-            : data;
+        final subCategoryData =
+            data is List ? (data.isEmpty ? null : data.first) : data;
 
         if (subCategoryData is! Map<String, dynamic>) {
           throw const ServerFailure('No data found');

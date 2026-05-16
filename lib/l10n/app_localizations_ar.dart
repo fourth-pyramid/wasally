@@ -39,6 +39,12 @@ class SAr extends S {
   String get shared_save => 'حفظ';
 
   @override
+  String get shared_show_more => 'اظهر المزيد';
+
+  @override
+  String get shared_show_less => 'اظهر أقل';
+
+  @override
   String get common_currency => 'ج.م';
 
   @override
@@ -1023,6 +1029,12 @@ class SAr extends S {
   String get order_payment_method => 'طريقة الدفع';
 
   @override
+  String get order_payment_cash => 'نقدي';
+
+  @override
+  String get order_payment_online => 'أونلاين';
+
+  @override
   String get order_no_orders_msg => 'ليس لديك أي طلبات بعد';
 
   @override
@@ -1039,6 +1051,21 @@ class SAr extends S {
 
   @override
   String get order_status_pending => 'قيد الانتظار';
+
+  @override
+  String get order_status_accepted => 'مقبول';
+
+  @override
+  String get order_status_confirmed => 'مؤكد';
+
+  @override
+  String get order_status_processing => 'قيد التنفيذ';
+
+  @override
+  String get order_status_shipped => 'تم الشحن';
+
+  @override
+  String get order_status_delivered => 'تم التوصيل';
 
   @override
   String get order_status_completed => 'مكتمل';
@@ -1221,4 +1248,16 @@ class SAr extends S {
 
   @override
   String get provider_details_services => 'الخدمات المقدمة';
+
+  @override
+  String get brands => 'البراندات';
+
+  @override
+  String get no_brands => 'لا يوجد براندات مضافة حالياً';
+
+  @override
+  String get brand_products => 'منتجات البراند';
+
+  @override
+  String get no_brand_products => 'لا يوجد منتجات في هذا البراند حالياً';
 }

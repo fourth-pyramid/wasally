@@ -1,4 +1,3 @@
-
 import '../../../../core/imports/imports.dart';
 
 /// Model for OTP verification request body

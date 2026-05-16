@@ -17,6 +17,7 @@ abstract final class AppRoutes {
   // Main layout shell
   static const String home = '/';
   static const String category = '/category';
+  static const String allCategories = '/all-categories';
   static const String cart = '/cart';
   static const String favorite = '/favorite';
   static const String profile = '/profile';
@@ -50,4 +51,8 @@ abstract final class AppRoutes {
 
   // Provider details
   static const String providerDetails = '/provider-details';
+
+  // Brands
+  static const String brands = '/brands';
+  static const String brandDetails = '/brand-details';
 }

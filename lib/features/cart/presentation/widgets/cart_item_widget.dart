@@ -211,7 +211,8 @@ class CartItemWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildPriceSection(BuildContext context, ColorScheme cs, TextTheme tt) {
+  Widget _buildPriceSection(
+      BuildContext context, ColorScheme cs, TextTheme tt) {
     final hasOffer = item.offers != null && item.offers!.isNotEmpty;
     final originalPrice = double.tryParse(item.price) ?? 0.0;
     final discountedPrice = hasOffer
@@ -334,7 +335,8 @@ class _QtyButton extends StatelessWidget {
           child: Icon(
             icon,
             size: 18.r,
-            color: isEnabled ? cs.onSurface : cs.onSurface.withValues(alpha: 0.3),
+            color:
+                isEnabled ? cs.onSurface : cs.onSurface.withValues(alpha: 0.3),
           ),
         ),
       ),

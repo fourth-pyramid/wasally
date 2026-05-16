@@ -10,7 +10,8 @@ class ProductDetailsRepositoryImpl implements ProductDetailsRepository {
   const ProductDetailsRepositoryImpl(this._remoteDataSource);
 
   @override
-  Future<Either<Failure, ProductDetailEntity>> getProductDetails(int productId) async {
+  Future<Either<Failure, ProductDetailEntity>> getProductDetails(
+      int productId) async {
     try {
       final detail = await _remoteDataSource.getProductDetails(productId);
       return Right(detail);

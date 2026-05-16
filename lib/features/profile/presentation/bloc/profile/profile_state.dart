@@ -65,15 +65,13 @@ class ProfileState extends Equatable {
       governorates: governorates ?? this.governorates,
       centers: centers ?? this.centers,
       errorMessage: clearError ? null : (errorMessage ?? this.errorMessage),
-      actionError:
-          clearActionError ? null : (actionError ?? this.actionError),
+      actionError: clearActionError ? null : (actionError ?? this.actionError),
       addressError:
           clearAddressError ? null : (addressError ?? this.addressError),
       governorateError: clearGovernorateError
           ? null
           : (governorateError ?? this.governorateError),
-      centerError:
-          clearCenterError ? null : (centerError ?? this.centerError),
+      centerError: clearCenterError ? null : (centerError ?? this.centerError),
     );
   }
 

@@ -5,7 +5,8 @@ abstract class ProviderDetailsRemoteDataSource {
   Future<ProviderDetailModel> getProviderDetails(int providerId);
 }
 
-class ProviderDetailsRemoteDataSourceImpl implements ProviderDetailsRemoteDataSource {
+class ProviderDetailsRemoteDataSourceImpl
+    implements ProviderDetailsRemoteDataSource {
   final DioService _dioService;
 
   const ProviderDetailsRemoteDataSourceImpl(this._dioService);

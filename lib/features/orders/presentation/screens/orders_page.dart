@@ -13,8 +13,8 @@ class OrdersPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => sl<OrdersBloc>()
+    return BlocProvider.value(
+      value: sl<OrdersBloc>()
         ..add(const GetOrdersEvent())
         ..add(const GetServiceBookingsEvent()),
       child: _OrdersView(initialIndex: initialIndex),
@@ -35,17 +35,8 @@ class _OrdersView extends StatelessWidget {
       length: 2,
       initialIndex: initialIndex,
       child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: cs.surface,
-          elevation: 0,
-          centerTitle: true,
-          foregroundColor: cs.primary,
-          title: Text(
-            context.l10n.profile_my_orders,
-            style: context.typography.titleLarge?.copyWith(
-              color: cs.primary,
-            ),
-          ),
+        appBar: AppTopBar(
+          title: context.l10n.profile_my_orders,
           bottom: TabBar(
             labelColor: cs.primary,
             unselectedLabelColor: cs.onSurfaceVariant,

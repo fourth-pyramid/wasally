@@ -15,6 +15,7 @@ class ProviderReviewCard extends StatelessWidget {
     final tt = context.theme.textTheme;
 
     return AppCard(
+      showShadow: true,
       padding: EdgeInsets.all(12.r),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

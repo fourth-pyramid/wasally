@@ -87,21 +87,14 @@ class _AddAddressViewState extends State<_AddAddressView> {
 
   @override
   Widget build(BuildContext context) {
-    final cs = context.theme.colorScheme;
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       behavior: HitTestBehavior.translucent,
       child: Scaffold(
-        appBar: AppBar(
-          foregroundColor: cs.primary,
-          title: Text(
-            _isEditing
-                ? context.l10n.profile_edit_address
-                : context.l10n.profile_add_address,
-            style: context.typography.titleLarge?.copyWith(
-              color: cs.primary,
-            ),
-          ),
+        appBar: AppTopBar(
+          title: _isEditing
+              ? context.l10n.profile_edit_address
+              : context.l10n.profile_add_address,
           centerTitle: true,
         ),
         body: BlocListener<ProfileBloc, ProfileState>(
@@ -145,8 +138,9 @@ class _AddAddressViewState extends State<_AddAddressView> {
                     controller: _addressController,
                     prefixIcon: const Icon(Icons.location_on_outlined),
                     maxLines: 3,
-                    validator: (v) =>
-                        v!.isEmpty ? context.l10n.profile_address_required : null,
+                    validator: (v) => v!.isEmpty
+                        ? context.l10n.profile_address_required
+                        : null,
                   ),
                   16.verticalSpace,
                   _buildGovernorateDropdown(context),
@@ -268,7 +262,8 @@ class _AddAddressViewState extends State<_AddAddressView> {
                     _selectedCenterId = value;
                   });
                 },
-          validator: (v) => v == null ? context.l10n.profile_select_center : null,
+          validator: (v) =>
+              v == null ? context.l10n.profile_select_center : null,
           suffixIcon: isLoading
               ? SizedBox(
                   width: 12.w,

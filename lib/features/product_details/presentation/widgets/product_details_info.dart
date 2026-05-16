@@ -1,4 +1,7 @@
 import 'package:wassaly/core/imports/imports.dart';
+import 'package:wassaly/features/favorite/presentation/bloc/favorite_bloc.dart';
+import 'package:wassaly/features/favorite/presentation/bloc/favorite_event.dart';
+import 'package:wassaly/features/favorite/presentation/bloc/favorite_state.dart';
 import 'package:wassaly/features/auth/presentation/bloc/session/session_bloc.dart';
 
 import '../../../home/domain/entities/product_entity.dart';
@@ -7,7 +10,6 @@ import '../bloc/product_details_bloc.dart';
 import '../bloc/product_details_state.dart';
 import '../screens/product_reviews_page.dart';
 import 'product_details_meta_chip.dart';
-import 'product_review_card.dart';
 import 'product_review_form_sheet.dart';
 import 'product_specifications_grid.dart';
 import 'related_products_section.dart';
@@ -87,6 +89,34 @@ class ProductDetailsInfo extends StatelessWidget {
                   ),
                 ),
               ],
+              BlocSelector<FavoriteBloc, FavoriteState, (bool, bool)>(
+                selector: (state) => (
+                  state.favoriteIds.contains(product.id) ||
+                      (!state.hasLoaded && product.isFavorite),
+                  state.togglingIds.contains(product.id),
+                ),
+                builder: (context, status) {
+                  final isFavorite = status.$1;
+                  final isToggling = status.$2;
+                  return IconButton(
+                    onPressed: isToggling
+                        ? null
+                        : () => context.read<FavoriteBloc>().add(
+                              ToggleFavoriteEvent(
+                                product.id,
+                                expectedIsFavorite: isFavorite,
+                              ),
+                            ),
+                    icon: Icon(
+                      isFavorite
+                          ? Icons.favorite_rounded
+                          : Icons.favorite_border_rounded,
+                      color: isFavorite ? cs.error : cs.outline,
+                      size: 28.r,
+                    ),
+                  );
+                },
+              ),
             ],
           ),
           10.verticalSpace,
@@ -172,8 +202,11 @@ class _ReviewsSection extends StatelessWidget {
               final isMine = currentUserId != null &&
                   review.user.id.toString() == currentUserId;
 
-              return ProductReviewCard(
-                review: review,
+              return AppReviewCard(
+                rating: review.rating,
+                comment: review.comment,
+                userName: review.user.name,
+                userAvatar: review.user.avatar,
                 isCurrentUserReview: isMine,
                 canEdit: isMine && _canEditReview(review.createdAt),
                 onEdit: () => _showReviewSheet(context, review: review),
@@ -282,7 +315,8 @@ class _ProductMeta extends StatelessWidget {
         if (product.brand != null)
           ProductDetailsMetaChip(
             icon: Icons.verified_outlined,
-            label: '${context.l10n.product_details_brand}: ${product.brand!.name}',
+            label:
+                '${context.l10n.product_details_brand}: ${product.brand!.name}',
           ),
         if (product.subCategory != null)
           ProductDetailsMetaChip(

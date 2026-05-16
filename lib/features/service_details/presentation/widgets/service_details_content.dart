@@ -23,26 +23,11 @@ class _ServiceDetailsContentState extends State<ServiceDetailsContent> {
 
   @override
   Widget build(BuildContext context) {
-    final cs = context.theme.colorScheme;
-    final tt = context.theme.textTheme;
-
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          SliverAppBar(
-            floating: true,
-            snap: true,
-            backgroundColor: cs.surface,
-            foregroundColor: cs.primary,
-            elevation: 0,
-            centerTitle: true,
-            title: Text(
-              context.l10n.service_details_title,
-              style: tt.titleLarge?.copyWith(
-                color: cs.primary,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+          AppSliverTopBar(
+            title: context.l10n.service_details_title,
           ),
           SliverToBoxAdapter(
             child: Column(

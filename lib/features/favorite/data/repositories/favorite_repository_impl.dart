@@ -82,7 +82,8 @@ class FavoriteRepositoryImpl implements FavoriteRepository {
   }
 
   @override
-  Future<Either<Failure, void>> removeServiceFromFavorites(int serviceId) async {
+  Future<Either<Failure, void>> removeServiceFromFavorites(
+      int serviceId) async {
     try {
       await remoteDataSource.removeServiceFromFavorites(serviceId);
       return const Right(null);

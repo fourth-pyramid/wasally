@@ -17,6 +17,7 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
     on<GetOrdersEvent>(_onGetOrders);
     on<GetServiceBookingsEvent>(_onGetServiceBookings);
     on<LoadMoreOrdersEvent>(_onLoadMoreOrders);
+    on<ResetOrdersEvent>((event, emit) => emit(const OrdersState()));
   }
 
   Future<void> _onGetOrders(

@@ -21,8 +21,6 @@ class ProductDetailsContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cs = context.theme.colorScheme;
-    final tt = context.theme.textTheme;
     final gallery = _resolveGallery(product);
 
     final price = double.tryParse(product.price) ?? 0;
@@ -31,19 +29,8 @@ class ProductDetailsContent extends StatelessWidget {
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          SliverAppBar(
-            floating: true,
-            snap: true,
-            backgroundColor: cs.surface,
-            foregroundColor: cs.primary,
-            elevation: 0,
-            centerTitle: true,
-            title: Text(
-              context.l10n.product_details_title,
-              style: tt.titleLarge?.copyWith(
-                color: cs.primary,
-              ),
-            ),
+          AppSliverTopBar(
+            title: context.l10n.product_details_title,
           ),
           SliverToBoxAdapter(
             child: Column(

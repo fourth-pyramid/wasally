@@ -156,8 +156,8 @@ class _EditProfileViewState extends State<_EditProfileView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(context.l10n.profile_edit_profile),
+      appBar: AppTopBar(
+        title: context.l10n.profile_edit_profile,
         centerTitle: true,
       ),
       body: BlocListener<ProfileBloc, ProfileState>(

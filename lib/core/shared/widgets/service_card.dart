@@ -4,7 +4,10 @@ import 'package:wassaly/features/favorite/presentation/bloc/favorite_event.dart'
 import 'package:wassaly/features/favorite/presentation/bloc/favorite_state.dart';
 import 'package:wassaly/features/sub_category/domain/entities/service_entity.dart';
 
-class ServiceCard extends StatelessWidget {
+final activeServiceMarqueeId = ValueNotifier<int?>(null);
+
+
+class ServiceCard extends StatefulWidget {
   final ServiceEntity service;
   final VoidCallback? onTap;
 
@@ -14,12 +17,53 @@ class ServiceCard extends StatelessWidget {
     this.onTap,
   });
 
+  @override
+  State<ServiceCard> createState() => _ServiceCardState();
+}
+
+class _ServiceCardState extends State<ServiceCard> {
+  bool _isActive = false;
+
+  @override
+  void initState() {
+    super.initState();
+    activeServiceMarqueeId.addListener(_onActiveIdChanged);
+  }
+
+  @override
+  void dispose() {
+    activeServiceMarqueeId.removeListener(_onActiveIdChanged);
+    if (activeServiceMarqueeId.value == widget.service.id) {
+      activeServiceMarqueeId.value = null;
+    }
+    super.dispose();
+  }
+
+  void _onActiveIdChanged() {
+    final isNowActive = activeServiceMarqueeId.value == widget.service.id;
+    if (isNowActive != _isActive) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          setState(() => _isActive = isNowActive);
+        }
+      });
+    }
+  }
+
+  void _onLongPress() {
+    if (activeServiceMarqueeId.value == widget.service.id) {
+      activeServiceMarqueeId.value = null;
+    } else {
+      activeServiceMarqueeId.value = widget.service.id;
+    }
+  }
+
   void _openServiceDetails(BuildContext context) {
-    if (service.id <= 0) return;
+    if (widget.service.id <= 0) return;
 
     context.push(
       AppRoutes.serviceDetails,
-      extra: {'serviceId': service.id},
+      extra: {'serviceId': widget.service.id},
     );
   }
 
@@ -29,13 +73,18 @@ class ServiceCard extends StatelessWidget {
     final tt = context.theme.textTheme;
 
     return GestureDetector(
-      onTap: onTap ?? () => _openServiceDetails(context),
-      child: Container(
+      onTap: widget.onTap ?? () => _openServiceDetails(context),
+      onLongPress: _onLongPress,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
         decoration: BoxDecoration(
           color: cs.surface,
           borderRadius: BorderRadius.circular(9.r),
           border: Border.all(
-            color: cs.outlineVariant.withValues(alpha: 0.5),
+            color: _isActive
+                ? cs.primary.withValues(alpha: 0.6)
+                : cs.outlineVariant.withValues(alpha: 0.5),
+            width: _isActive ? 1.5 : 1.0,
           ),
         ),
         clipBehavior: Clip.antiAlias,
@@ -44,14 +93,16 @@ class ServiceCard extends StatelessWidget {
           children: [
             // Image section
             SizedBox(
-              height: 140.h,
+              height: 120.h,
               width: double.infinity,
               child: Stack(
                 children: [
                   Positioned.fill(
-                    child: service.image != null && service.image!.isNotEmpty
-                        ? AppCachedImage(
-                            imageUrl: service.image!,
+                    child: widget.service.image != null &&
+                            widget.service.image!.isNotEmpty
+                        ? CommonImage(
+                            imageUrl: widget.service.image!,
+                            memCacheHeight: 120 * 3,
                             fit: BoxFit.cover,
                             borderRadius: BorderRadius.vertical(
                               top: Radius.circular(9.r),
@@ -73,10 +124,10 @@ class ServiceCard extends StatelessWidget {
                     child:
                         BlocSelector<FavoriteBloc, FavoriteState, (bool, bool)>(
                       selector: (state) => (
-                        state.serviceFavoriteIds.contains(service.id) ||
+                        state.serviceFavoriteIds.contains(widget.service.id) ||
                             (state.status == FavoriteStatus.initial &&
-                                service.isFavorite),
-                        state.serviceTogglingIds.contains(service.id),
+                                widget.service.isFavorite),
+                        state.serviceTogglingIds.contains(widget.service.id),
                       ),
                       builder: (context, status) {
                         final isFavorite = status.$1;
@@ -87,7 +138,7 @@ class ServiceCard extends StatelessWidget {
                               : () {
                                   context.read<FavoriteBloc>().add(
                                         ToggleServiceFavoriteEvent(
-                                          service.id,
+                                          widget.service.id,
                                           expectedIsFavorite: isFavorite,
                                         ),
                                       );
@@ -135,33 +186,31 @@ class ServiceCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // Title
-                    Text(
-                      service.title,
+                    MarqueeText(
+                      text: widget.service.title,
+                      isActive: _isActive,
                       style: tt.titleSmall?.copyWith(
                         fontWeight: FontWeight.bold,
                         color: cs.onSurface,
                       ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
                     ),
                     4.verticalSpace,
 
                     // Description
-                    if (service.description.isNotEmpty)
-                      Text(
-                        service.description,
+                    if (widget.service.description.isNotEmpty)
+                      MarqueeText(
+                        text: widget.service.description,
+                        isActive: _isActive,
                         style: tt.labelSmall?.copyWith(
                           color: cs.onSurfaceVariant,
                         ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
                       ),
 
-                    const Spacer(),
+                    // const Spacer(),
 
                     // Price
                     Text(
-                      '${service.price} ${context.l10n.shared_currency_egp}',
+                      '${widget.service.price} ${context.l10n.shared_currency_egp}',
                       style: tt.labelMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                         color: cs.primary,
