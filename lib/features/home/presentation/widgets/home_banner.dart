@@ -182,7 +182,18 @@ class _HomeBannerState extends State<HomeBanner> {
                 AppButton(
                   label: context.l10n.home_browse_now,
                   onPressed: () {
-                    // TODO: Navigate or perform action based on type
+                    switch (banner.type) {
+                      case 'product_page':
+                        context.push(AppRoutes.search);
+                        break;
+                      case 'coupon_page':
+                        context.push(AppRoutes.offers);
+                        break;
+                      case 'home_page':
+                      default:
+                        // Do nothing for home_page or unknown types
+                        break;
+                    }
                   },
                   variant: ButtonVariant.success,
                   height: ButtonSize.small,

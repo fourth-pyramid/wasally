@@ -11,10 +11,19 @@ class BookingCard extends StatelessWidget {
     final cs = context.theme.colorScheme;
     final tt = context.theme.textTheme;
 
-    return AppCard(
-      showShadow: true,
-      margin: EdgeInsets.only(bottom: 10.h),
-      padding: EdgeInsets.all(12.r),
+    return Padding(
+      padding: EdgeInsets.only(bottom: 10.h),
+      child: InkWell(
+        onTap: () {
+          context.push(
+            AppRoutes.bookingDetails,
+            extra: {'booking': booking},
+          );
+        },
+        borderRadius: BorderRadius.circular(16.r),
+        child: AppCard(
+          showShadow: true,
+          padding: EdgeInsets.all(12.r),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -34,7 +43,7 @@ class BookingCard extends StatelessWidget {
                   memCacheHeight: 50 * 2,
                 ),
               ),
-              SizedBox(width: 12.w),
+              12.horizontalSpace,
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,7 +76,7 @@ class BookingCard extends StatelessWidget {
               ),
               _InfoItem(
                 icon: Icons.access_time,
-                label: booking.time,
+                label: booking.time.to12HourFormat(),
               ),
               Text(
                 '${booking.service.price} ${context.l10n.shared_currency_egp}',
@@ -84,7 +93,7 @@ class BookingCard extends StatelessWidget {
               children: [
                 Icon(Icons.location_on_outlined,
                     size: 14.sp, color: cs.outline),
-                SizedBox(width: 4.w),
+                4.horizontalSpace,
                 Expanded(
                   child: Text(
                     '${booking.governorate ?? ''}${booking.governorate != null && booking.center != null ? ' - ' : ''}${booking.center ?? ''}',
@@ -97,7 +106,9 @@ class BookingCard extends StatelessWidget {
           ],
         ],
       ),
-    );
+    ),
+  ),
+);
   }
 }
 

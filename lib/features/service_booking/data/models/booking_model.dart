@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 import '../../domain/entities/booking_entity.dart';
 
 class BookingProviderModel extends BookingProviderEntity {
@@ -69,8 +71,49 @@ class BookingModel extends BookingEntity {
       dayAr = (dayMap['name_ar'] ?? '') as String;
       dayEn = (dayMap['name_en'] ?? '') as String;
     } else if (json['day'] is String) {
-      dayAr = json['day'] as String;
-      dayEn = json['day'] as String;
+      final dayStr = json['day'] as String;
+      final parsedDate = DateTime.tryParse(dayStr);
+      if (parsedDate != null) {
+        dayAr = DateFormat('EEEE, d MMMM yyyy', 'ar').format(parsedDate);
+        dayEn = DateFormat('EEEE, d MMMM yyyy', 'en').format(parsedDate);
+      } else {
+        // If it's a weekday name, translate/map it
+        final lowerInput = dayStr.trim().toLowerCase();
+        const weekdayEnToAr = {
+          'monday': 'الإثنين',
+          'tuesday': 'الثلاثاء',
+          'wednesday': 'الأربعاء',
+          'thursday': 'الخميس',
+          'friday': 'الجمعة',
+          'saturday': 'السبت',
+          'sunday': 'الأحد',
+        };
+        const weekdayArToEn = {
+          'الإثنين': 'Monday',
+          'الاثنين': 'Monday',
+          'الثلاثاء': 'Tuesday',
+          'الأربعاء': 'Wednesday',
+          'الاربعاء': 'Wednesday',
+          'الخميس': 'Thursday',
+          'الجمعة': 'Friday',
+          'السبت': 'Saturday',
+          'الأحد': 'Sunday',
+          'الاحد': 'Sunday',
+        };
+
+        if (weekdayEnToAr.containsKey(lowerInput)) {
+          dayAr = weekdayEnToAr[lowerInput]!;
+          dayEn = dayStr.isNotEmpty
+              ? '${dayStr[0].toUpperCase()}${dayStr.substring(1).toLowerCase()}'
+              : '';
+        } else if (weekdayArToEn.containsKey(dayStr.trim())) {
+          dayAr = dayStr;
+          dayEn = weekdayArToEn[dayStr.trim()]!;
+        } else {
+          dayAr = dayStr;
+          dayEn = dayStr;
+        }
+      }
     }
 
     // Handle available_time object

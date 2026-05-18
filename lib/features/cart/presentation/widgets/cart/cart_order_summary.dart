@@ -56,14 +56,14 @@ class CartOrderSummary extends StatelessWidget {
           _SummaryRow(
             label: context.l10n.cart_subtotal,
             value:
-                '${totalOriginalPrice.toStringAsFixed(0)} ${context.l10n.shared_currency_egp}',
+                '${totalOriginalPrice.toStringAsFixed(2)} ${context.l10n.shared_currency_egp}',
           ),
           if (productOffersDiscount > 0) ...[
             8.verticalSpace,
             _SummaryRow(
               label: context.l10n.cart_product_offers,
               value:
-                  '- ${productOffersDiscount.toStringAsFixed(0)} ${context.l10n.shared_currency_egp}',
+                  '- ${productOffersDiscount.toStringAsFixed(2)} ${context.l10n.shared_currency_egp}',
               valueColor: Colors.green,
             ),
           ],
@@ -73,7 +73,7 @@ class CartOrderSummary extends StatelessWidget {
           _SummaryRow(
             label: context.l10n.cart_total,
             value:
-                '${total.toStringAsFixed(0)} ${context.l10n.shared_currency_egp}',
+                '${total.toStringAsFixed(2)} ${context.l10n.shared_currency_egp}',
             isBold: true,
             valueColor: cs.primary,
           ),

@@ -1,6 +1,8 @@
 import 'package:wassaly/core/imports/imports.dart';
 
 import '../../../domain/entities/order_entity.dart';
+import '../../bloc/orders_bloc.dart';
+import '../../bloc/orders_event.dart';
 
 class OrderCard extends StatelessWidget {
   final OrderEntity order;
@@ -16,8 +18,15 @@ class OrderCard extends StatelessWidget {
       showShadow: true,
       margin: EdgeInsets.only(bottom: 10.h),
       padding: EdgeInsets.all(12.r),
-      onTap: () =>
-          context.push(AppRoutes.orderDetails, extra: {'orderId': order.id}),
+      onTap: () async {
+        final result = await context.push<bool?>(
+          AppRoutes.orderDetails,
+          extra: {'orderId': order.id},
+        );
+        if ((result ?? false) && context.mounted) {
+          context.read<OrdersBloc>().add(const GetOrdersEvent());
+        }
+      },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -73,7 +82,21 @@ class OrderCard extends StatelessWidget {
                 style: tt.bodyMedium?.copyWith(color: cs.onSurfaceVariant),
               ),
               Text(
-                order.createdAt,
+                order.createdAt.toDateOnly(),
+                style: tt.bodySmall,
+              ),
+            ],
+          ),
+          8.verticalSpace,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                context.l10n.service_booking_time,
+                style: tt.bodyMedium?.copyWith(color: cs.onSurfaceVariant),
+              ),
+              Text(
+                order.createdAt.to12HourTimeOnly(),
                 style: tt.bodySmall,
               ),
             ],

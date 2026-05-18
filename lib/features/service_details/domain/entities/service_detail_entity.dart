@@ -45,15 +45,7 @@ class ServiceAvailableTimeEntity extends Equatable {
     required this.time,
   });
 
-  String get displayTime {
-    final parts = time.split(':');
-    if (parts.length < 2) return time;
-    final hour = int.tryParse(parts[0]) ?? 0;
-    final minute = parts[1];
-    final period = hour >= 12 ? 'م' : 'ص';
-    final displayHour = hour > 12 ? hour - 12 : (hour == 0 ? 12 : hour);
-    return '$displayHour:$minute $period';
-  }
+  String get displayTime => time.to12HourFormat();
 
   @override
   List<Object?> get props => [id, time];

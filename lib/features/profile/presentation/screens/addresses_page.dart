@@ -178,7 +178,7 @@ class _AddressCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '${address.address} , ${address.centerName} , ${address.governorateName}',
+            '${(address.address as String).cleanAddress(center: address.centerName as String, governorate: address.governorateName as String)} , ${address.centerName} , ${address.governorateName}',
             style: tt.bodyMedium?.copyWith(
               color: cs.onSurfaceVariant,
             ),

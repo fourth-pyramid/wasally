@@ -20,6 +20,9 @@ import 'package:wassaly/features/orders/presentation/screens/orders_page.dart';
 import 'package:wassaly/features/orders/presentation/bloc/order_detail/order_detail_bloc.dart';
 import 'package:wassaly/features/orders/presentation/bloc/order_detail/order_detail_event.dart';
 import 'package:wassaly/features/orders/presentation/screens/order_details_page.dart';
+import 'package:wassaly/features/orders/presentation/screens/booking_details_page.dart';
+import 'package:wassaly/features/service_booking/presentation/bloc/booking_detail/booking_detail_bloc.dart';
+import 'package:wassaly/features/service_booking/presentation/bloc/booking_detail/booking_detail_event.dart';
 import 'package:wassaly/features/product_details/presentation/screens/product_details_page.dart';
 import 'package:wassaly/features/profile/domain/entities/address_entity.dart';
 import 'package:wassaly/features/profile/presentation/bloc/profile/profile_bloc.dart';
@@ -128,6 +131,23 @@ final GoRouter appRouter = GoRouter(
         return BlocProvider(
           create: (_) => sl<OrderDetailBloc>()..add(FetchOrderDetailEvent(orderId)),
           child: OrderDetailsPage(orderId: orderId),
+        );
+      },
+    ),
+    GoRoute(
+      path: AppRoutes.bookingDetails,
+      name: 'bookingDetails',
+      builder: (context, state) {
+        final extra = state.extra as Map<String, dynamic>?;
+        final booking = extra?['booking'] as BookingEntity?;
+        if (booking == null) {
+          return Scaffold(
+            body: Center(child: Text(context.l10n.errors_something_went_wrong)),
+          );
+        }
+        return BlocProvider(
+          create: (_) => sl<BookingDetailBloc>()..add(InitializeBookingDetailEvent(booking)),
+          child: BookingDetailsPage(booking: booking),
         );
       },
     ),

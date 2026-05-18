@@ -252,7 +252,9 @@ class _CheckoutFormSectionState extends State<CheckoutFormSection> {
                                         ),
                                         4.verticalSpace,
                                         Text(
-                                          address.address,
+                                          address.address.cleanAddress(
+                                              center: address.centerName,
+                                              governorate: address.governorateName),
                                           style: tt.bodySmall?.copyWith(
                                             color: cs.onSurfaceVariant,
                                           ),

@@ -64,7 +64,7 @@ class BookingSuccessPage extends StatelessWidget {
                         context, context.l10n.service_booking_day, booking.day),
                     12.verticalSpace,
                     _buildRow(context, context.l10n.service_booking_time,
-                        booking.time),
+                        booking.time.to12HourFormat()),
                   ],
                 ),
               ),

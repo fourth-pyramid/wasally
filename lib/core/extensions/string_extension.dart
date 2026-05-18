@@ -84,9 +84,58 @@ extension StringExtension on String {
     }
     return null;
   }
+
+  String cleanAddress({required String center, required String governorate}) {
+    String clean = this;
+    if (governorate.isNotEmpty) {
+      clean = clean.replaceAll(governorate, '').trim();
+    }
+    if (center.isNotEmpty) {
+      clean = clean.replaceAll(center, '').trim();
+    }
+
+    final titleWords = [
+      'المنزل',
+      'العمل',
+      'Home',
+      'Work',
+      'بيت',
+      'شغل',
+      'مكتب',
+      'المكتب'
+    ];
+    for (final title in titleWords) {
+      if (clean.startsWith(title)) {
+        clean = clean.substring(title.length).trim();
+      }
+    }
+
+    final separators = ['،', ',', '-', '•', '/', r'\'];
+    bool changed = true;
+    while (changed) {
+      changed = false;
+      for (final sep in separators) {
+        if (clean.startsWith(sep)) {
+          clean = clean.substring(1).trim();
+          changed = true;
+        }
+        if (clean.endsWith(sep)) {
+          clean = clean.substring(0, clean.length - 1).trim();
+          changed = true;
+        }
+      }
+    }
+
+    return clean.isEmpty ? this : clean;
+  }
 }
 
 extension StringOptionalExtension on String? {
   bool get isNullOrEmpty => this == null || this!.trim().isEmpty;
   bool get isNotNullOrEmpty => !isNullOrEmpty;
+
+  String cleanAddress({required String center, required String governorate}) {
+    if (this == null) return '';
+    return this!.cleanAddress(center: center, governorate: governorate);
+  }
 }

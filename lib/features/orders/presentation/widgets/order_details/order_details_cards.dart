@@ -6,14 +6,13 @@ class OrderHeaderCard extends StatelessWidget {
   final OrderEntity order;
   final bool isCancelled;
 
-  const OrderHeaderCard({super.key, required this.order, required this.isCancelled});
+  const OrderHeaderCard(
+      {super.key, required this.order, required this.isCancelled});
 
   @override
   Widget build(BuildContext context) {
     final cs = context.theme.colorScheme;
     final tt = context.theme.textTheme;
-    final isAr = context.isArabic;
-
     return AppCard(
       showShadow: true,
       padding: EdgeInsets.all(16.r),
@@ -26,10 +25,10 @@ class OrderHeaderCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    isAr ? 'رقم الطلب' : 'Order Number',
+                    context.l10n.order_details_number,
                     style: tt.bodySmall?.copyWith(color: cs.onSurfaceVariant),
                   ),
-                  4.kH,
+                  4.verticalSpace,
                   Text(
                     '#${order.orderNumber}',
                     style: tt.titleMedium?.copyWith(
@@ -57,27 +56,40 @@ class OrderHeaderCard extends StatelessWidget {
               ),
             ],
           ),
-          12.kH,
+          12.verticalSpace,
           const AppDivider(),
-          12.kH,
+          12.verticalSpace,
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               _buildHeaderInfoItem(
                 context,
                 icon: Icons.calendar_today_rounded,
-                label: isAr ? 'التاريخ والوقت' : 'Date & Time',
-                value: order.createdAt,
+                label: context.l10n.order_date,
+                value: order.createdAt.toDateOnly(),
               ),
               _buildHeaderInfoItem(
                 context,
+                icon: Icons.access_time_rounded,
+                label: context.l10n.service_booking_time,
+                value: order.createdAt.to12HourTimeOnly(),
+              ),
+            ],
+          ),
+          12.verticalSpace,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              _buildHeaderInfoItem(
+                context,
                 icon: Icons.payment_rounded,
-                label: isAr ? 'طريقة الدفع' : 'Payment Method',
+                label: context.l10n.order_payment_method,
                 value: order.paymentMethod.toLowerCase().contains('cash') ||
                         order.paymentMethod.contains('كاش')
-                    ? (isAr ? 'كاش عند الاستلام' : 'Cash on Delivery')
+                    ? context.l10n.order_details_payment_cod
                     : order.paymentMethod,
               ),
+              const Expanded(child: SizedBox.shrink()),
             ],
           ),
         ],
@@ -94,7 +106,7 @@ class OrderHeaderCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Icon(icon, size: 18.r, color: cs.primary),
-          8.kW,
+          8.horizontalSpace,
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -106,7 +118,7 @@ class OrderHeaderCard extends StatelessWidget {
                     fontSize: 10.sp,
                   ),
                 ),
-                4.kH,
+                4.verticalSpace,
                 Text(
                   value,
                   style: tt.bodyMedium?.copyWith(
@@ -130,7 +142,6 @@ class OrderCancelledAlert extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isAr = context.isArabic;
     return Container(
       padding: EdgeInsets.all(12.r),
       decoration: BoxDecoration(
@@ -141,24 +152,22 @@ class OrderCancelledAlert extends StatelessWidget {
       child: Row(
         children: [
           Icon(Icons.cancel_outlined, color: Colors.red, size: 24.r),
-          12.kW,
+          12.horizontalSpace,
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  isAr ? 'تم إلغاء هذا الطلب' : 'This order has been cancelled',
+                  context.l10n.order_details_cancelled_title,
                   style: TextStyle(
                     color: Colors.red,
                     fontWeight: FontWeight.bold,
                     fontSize: 13.sp,
                   ),
                 ),
-                2.kH,
+                2.verticalSpace,
                 Text(
-                  isAr
-                      ? 'تم إلغاء طلبك. يرجى التواصل مع الدعم الفني لمزيد من التفاصيل.'
-                      : 'Your order was cancelled. Please contact support for more details.',
+                  context.l10n.order_details_cancelled_msg,
                   style: TextStyle(
                     color: Colors.red.withValues(alpha: 0.8),
                     fontSize: 11.sp,
@@ -180,8 +189,6 @@ class OrderDeliveryInfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isAr = context.isArabic;
-
     // Delivery fields from OrderEntity
     final customerName = order.customerName ?? '';
     final customerPhone = order.customerPhone ?? '';
@@ -189,7 +196,9 @@ class OrderDeliveryInfoCard extends StatelessWidget {
     final governorate = order.governorateName ?? '';
     final center = order.centerName ?? '';
 
-    final fullAddressPath = '$deliveryAddress - $center - $governorate';
+    final cleanStreet =
+        deliveryAddress.cleanAddress(center: center, governorate: governorate);
+    final fullAddressPath = '$cleanStreet - $center - $governorate';
 
     return AppCard(
       showShadow: true,
@@ -199,25 +208,25 @@ class OrderDeliveryInfoCard extends StatelessWidget {
           _buildInfoRow(
             context,
             icon: Icons.person_outline_rounded,
-            title: isAr ? 'اسم العميل' : 'Customer Name',
+            title: context.l10n.order_details_customer_name,
             content: customerName,
           ),
-          12.kH,
+          12.verticalSpace,
           const AppDivider(),
-          12.kH,
+          12.verticalSpace,
           _buildInfoRow(
             context,
             icon: Icons.phone_android_rounded,
-            title: isAr ? 'رقم الهاتف' : 'Phone Number',
+            title: context.l10n.order_details_customer_phone,
             content: customerPhone,
           ),
-          12.kH,
+          12.verticalSpace,
           const AppDivider(),
-          12.kH,
+          12.verticalSpace,
           _buildInfoRow(
             context,
             icon: Icons.location_on_outlined,
-            title: isAr ? 'عنوان التوصيل' : 'Delivery Address',
+            title: context.l10n.order_details_address,
             content: fullAddressPath,
           ),
         ],
@@ -226,7 +235,9 @@ class OrderDeliveryInfoCard extends StatelessWidget {
   }
 
   Widget _buildInfoRow(BuildContext context,
-      {required IconData icon, required String title, required String content}) {
+      {required IconData icon,
+      required String title,
+      required String content}) {
     final cs = context.theme.colorScheme;
     final tt = context.theme.textTheme;
     return Row(
@@ -240,7 +251,7 @@ class OrderDeliveryInfoCard extends StatelessWidget {
           ),
           child: Icon(icon, size: 20.r, color: cs.primary),
         ),
-        12.kW,
+        12.horizontalSpace,
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -252,7 +263,7 @@ class OrderDeliveryInfoCard extends StatelessWidget {
                   fontWeight: FontWeight.w500,
                 ),
               ),
-              4.kH,
+              4.verticalSpace,
               Text(
                 content.isNotEmpty ? content : '---',
                 style: tt.bodyMedium?.copyWith(
@@ -277,29 +288,28 @@ class OrderItemsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final cs = context.theme.colorScheme;
     final tt = context.theme.textTheme;
-    final isAr = context.isArabic;
 
     return AppCard(
       showShadow: true,
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
-      child: ListView.separated(
+      child: ListView.builder(
+        padding: EdgeInsets.zero,
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         itemCount: items.length,
-        separatorBuilder: (context, index) => const AppDivider(),
         itemBuilder: (context, index) {
           final item = items[index];
           final product = item.product;
 
           final productName =
-              product?.name ?? (isAr ? 'منتج غير معروف' : 'Unknown Product');
+              product?.name ?? context.l10n.order_details_unknown_product;
           final productImage = product?.image ?? '';
           final quantity = item.quantity;
           final unitPrice = item.price;
           final totalItemPrice = item.totalPrice;
 
           return Padding(
-            padding: EdgeInsets.symmetric(vertical: 12.h),
+            padding: EdgeInsets.symmetric(vertical: 0.h),
             child: Row(
               children: [
                 // Product Image
@@ -317,7 +327,7 @@ class OrderItemsCard extends StatelessWidget {
                     fit: BoxFit.cover,
                   ),
                 ),
-                12.kW,
+                12.horizontalSpace,
                 // Product Name, quantity and Price
                 Expanded(
                   child: Column(
@@ -332,15 +342,33 @@ class OrderItemsCard extends StatelessWidget {
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
-                      8.kH,
+                      8.verticalSpace,
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            '$quantity x $unitPrice ${context.l10n.common_currency}',
-                            style: tt.bodySmall?.copyWith(
-                              color: cs.onSurfaceVariant,
-                            ),
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                '$quantity',
+                                style: tt.bodySmall?.copyWith(
+                                  color: cs.onSurfaceVariant,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                ' × ',
+                                style: tt.bodySmall?.copyWith(
+                                  color: cs.onSurfaceVariant,
+                                ),
+                              ),
+                              Text(
+                                '$unitPrice ${context.l10n.common_currency}',
+                                style: tt.bodySmall?.copyWith(
+                                  color: cs.onSurfaceVariant,
+                                ),
+                              ),
+                            ],
                           ),
                           Text(
                             '$totalItemPrice ${context.l10n.common_currency}',
@@ -372,7 +400,6 @@ class OrderReceiptSummaryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final cs = context.theme.colorScheme;
     final tt = context.theme.textTheme;
-    final isAr = context.isArabic;
 
     final subTotal = order.subTotal ?? (order.totalPrice - order.deliveryFees);
     final deliveryFees = order.deliveryFees;
@@ -386,32 +413,32 @@ class OrderReceiptSummaryCard extends StatelessWidget {
         children: [
           _buildReceiptRow(
             context,
-            label: isAr ? 'المجموع الفرعي' : 'Subtotal',
+            label: context.l10n.order_details_subtotal,
             value: '$subTotal ${context.l10n.common_currency}',
           ),
-          8.kH,
+          8.verticalSpace,
           _buildReceiptRow(
             context,
-            label: isAr ? 'مصاريف التوصيل' : 'Delivery Fees',
+            label: context.l10n.order_details_delivery_fees,
             value: '$deliveryFees ${context.l10n.common_currency}',
           ),
           if (discount > 0) ...[
-            8.kH,
+            8.verticalSpace,
             _buildReceiptRow(
               context,
-              label: isAr ? 'قيمة الخصم' : 'Discount',
+              label: context.l10n.order_details_discount,
               value: '-$discount ${context.l10n.common_currency}',
               valueColor: Colors.green,
             ),
           ],
-          12.kH,
+          12.verticalSpace,
           const AppDivider(),
-          12.kH,
+          12.verticalSpace,
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                isAr ? 'الإجمالي الكلي' : 'Total Price',
+                context.l10n.order_details_total,
                 style: tt.titleMedium?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: cs.onSurface,

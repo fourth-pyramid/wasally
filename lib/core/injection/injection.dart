@@ -98,6 +98,9 @@ import '../../features/orders/data/repositories/orders_repository_impl.dart';
 import '../../features/orders/domain/repositories/orders_repository.dart';
 import '../../features/orders/domain/usecases/get_orders_usecase.dart';
 import '../../features/orders/domain/usecases/get_order_details_usecase.dart';
+import '../../features/orders/domain/usecases/cancel_order_usecase.dart';
+import '../../features/orders/domain/usecases/update_order_usecase.dart';
+import '../../features/orders/domain/usecases/delete_order_usecase.dart';
 import '../../features/orders/presentation/bloc/orders_bloc.dart';
 import '../../features/orders/presentation/bloc/order_detail/order_detail_bloc.dart';
 import '../../features/service_details/data/datasources/service_details_remote_datasource.dart';
@@ -114,7 +117,11 @@ import '../../features/service_booking/data/repositories/booking_repository_impl
 import '../../features/service_booking/domain/repositories/booking_repository.dart';
 import '../../features/service_booking/domain/usecases/create_booking_usecase.dart';
 import '../../features/service_booking/domain/usecases/get_my_bookings_usecase.dart';
+import '../../features/service_booking/domain/usecases/update_booking_usecase.dart';
+import '../../features/service_booking/domain/usecases/cancel_booking_usecase.dart';
+import '../../features/service_booking/domain/usecases/delete_booking_usecase.dart';
 import '../../features/service_booking/presentation/bloc/service_booking_bloc.dart';
+import '../../features/service_booking/presentation/bloc/booking_detail/booking_detail_bloc.dart';
 import '../../features/provider_details/data/datasources/provider_details_remote_datasource.dart';
 import '../../features/provider_details/data/repositories/provider_details_repository_impl.dart';
 import '../../features/provider_details/domain/repositories/provider_details_repository.dart';
@@ -214,6 +221,9 @@ void initDependencies() {
 
   sl.registerFactory(() => OrderDetailBloc(
         getOrderDetailsUseCase: sl(),
+        cancelOrderUseCase: sl(),
+        updateOrderUseCase: sl(),
+        deleteOrderUseCase: sl(),
       ));
 
   sl.registerFactory(() => CheckoutBloc(
@@ -258,6 +268,13 @@ void initDependencies() {
         getCentersUseCase: sl(),
         getUserDataUseCase: sl(),
         getUserAddressesUseCase: sl(),
+        ordersBloc: sl(),
+      ));
+
+  sl.registerFactory(() => BookingDetailBloc(
+        cancelBookingUseCase: sl(),
+        updateBookingUseCase: sl(),
+        deleteBookingUseCase: sl(),
         ordersBloc: sl(),
       ));
 
@@ -342,6 +359,9 @@ void initDependencies() {
   // UseCases - Orders
   sl.registerLazySingleton(() => GetOrdersUseCase(sl()));
   sl.registerLazySingleton(() => GetOrderDetailsUseCase(sl()));
+  sl.registerLazySingleton(() => CancelOrderUseCase(sl()));
+  sl.registerLazySingleton(() => UpdateOrderUseCase(sl()));
+  sl.registerLazySingleton(() => DeleteOrderUseCase(sl()));
 
   // UseCases - Service Details
   sl.registerLazySingleton(() => GetServiceDetailsUseCase(sl()));
@@ -353,6 +373,9 @@ void initDependencies() {
   // UseCases - Service Booking
   sl.registerLazySingleton(() => CreateBookingUseCase(sl()));
   sl.registerLazySingleton(() => GetMyBookingsUseCase(sl()));
+  sl.registerLazySingleton(() => UpdateBookingUseCase(sl()));
+  sl.registerLazySingleton(() => CancelBookingUseCase(sl()));
+  sl.registerLazySingleton(() => DeleteBookingUseCase(sl()));
 
   // UseCases - Provider Details
   sl.registerLazySingleton(() => GetProviderDetailsUseCase(sl()));

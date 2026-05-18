@@ -24,65 +24,75 @@ class CheckoutOrderSummarySection extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Product list
-            ...state.items.map((item) => Padding(
-                  padding: EdgeInsets.only(bottom: 12.h),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Product image
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(8.r),
-                        child: AppCachedImage(
-                          imageUrl: item.productImage,
-                          width: 56.w,
-                          height: 56.w,
-                          fit: BoxFit.cover,
-                        ),
+            ...state.items.map((item) {
+              final hasOffer = item.offers != null && item.offers!.isNotEmpty;
+              final originalPrice = double.tryParse(item.price) ?? 0.0;
+              final discountedPrice = hasOffer
+                  ? originalPrice *
+                      (1 - (item.offers!.first.discountPercentage / 100))
+                  : originalPrice;
+              final discountedTotal = discountedPrice * item.quantity;
+              final savings = (originalPrice - discountedPrice) * item.quantity;
+
+              return Padding(
+                padding: EdgeInsets.only(bottom: 12.h),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Product image
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(8.r),
+                      child: AppCachedImage(
+                        imageUrl: item.productImage,
+                        width: 56.w,
+                        height: 56.w,
+                        fit: BoxFit.cover,
                       ),
-                      12.horizontalSpace,
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
+                    ),
+                    12.horizontalSpace,
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            item.productName,
+                            style: tt.bodyMedium?.copyWith(
+                              fontWeight: FontWeight.w600,
+                            ),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          4.verticalSpace,
+                          Text(
+                            '${item.quantity} × ${discountedPrice.toStringAsFixed(2)} ${context.l10n.shared_currency_egp}',
+                            style: tt.bodySmall?.copyWith(
+                              color: cs.onSurfaceVariant,
+                            ),
+                          ),
+                          if (hasOffer) ...[
+                            2.verticalSpace,
                             Text(
-                              item.productName,
-                              style: tt.bodyMedium?.copyWith(
+                              '${context.l10n.shared_save} ${savings.toStringAsFixed(2)} ${context.l10n.shared_currency_egp} (${item.offers!.first.discountPercentage.toInt()}% OFF)',
+                              style: tt.labelSmall?.copyWith(
+                                color: Colors.green,
                                 fontWeight: FontWeight.w600,
                               ),
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
                             ),
-                            4.verticalSpace,
-                            Text(
-                              'x${item.quantity}  •  ${item.unitPrice.toStringAsFixed(0)} ${context.l10n.shared_currency_egp}',
-                              style: tt.bodySmall?.copyWith(
-                                color: cs.onSurfaceVariant,
-                              ),
-                            ),
-                            if (item.offers != null &&
-                                item.offers!.isNotEmpty) ...[
-                              2.verticalSpace,
-                              Text(
-                                '${context.l10n.shared_save} ${(item.unitPrice * (item.offers!.first.discountPercentage / 100) * item.quantity).toStringAsFixed(0)} ${context.l10n.shared_currency_egp} (${item.offers!.first.discountPercentage}% OFF)',
-                                style: tt.labelSmall?.copyWith(
-                                  color: Colors.green,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ],
                           ],
-                        ),
+                        ],
                       ),
-                      Text(
-                        '${item.totalPrice.toStringAsFixed(0)} ${context.l10n.shared_currency_egp}',
-                        style: tt.bodyMedium?.copyWith(
-                          fontWeight: FontWeight.w600,
-                          color: cs.primary,
-                        ),
+                    ),
+                    Text(
+                      '${discountedTotal.toStringAsFixed(2)} ${context.l10n.shared_currency_egp}',
+                      style: tt.bodyMedium?.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: cs.primary,
                       ),
-                    ],
-                  ),
-                )),
+                    ),
+                  ],
+                ),
+              );
+            }),
 
             if (state.items.isNotEmpty) ...[
               AppDivider(color: cs.outline.withValues(alpha: 0.3), height: 1),
@@ -93,14 +103,14 @@ class CheckoutOrderSummarySection extends StatelessWidget {
             _SummaryRow(
               label: context.l10n.checkout_subtotal,
               value:
-                  '${state.subtotal.toStringAsFixed(0)} ${context.l10n.shared_currency_egp}',
+                  '${state.subtotal.toStringAsFixed(2)} ${context.l10n.shared_currency_egp}',
             ),
             if (state.productDiscounts > 0) ...[
               8.verticalSpace,
               _SummaryRow(
                 label: context.l10n.cart_product_offers,
                 value:
-                    '- ${state.productDiscounts.toStringAsFixed(0)} ${context.l10n.shared_currency_egp}',
+                    '- ${state.productDiscounts.toStringAsFixed(2)} ${context.l10n.shared_currency_egp}',
                 valueColor: Colors.green,
               ),
             ],
@@ -110,7 +120,7 @@ class CheckoutOrderSummarySection extends StatelessWidget {
             _SummaryRow(
               label: context.l10n.checkout_shipping,
               value:
-                  '${state.shippingFee.toStringAsFixed(0)} ${context.l10n.shared_currency_egp}',
+                  '${state.shippingFee.toStringAsFixed(2)} ${context.l10n.shared_currency_egp}',
             ),
 
             // Discount (only when coupon applied)
@@ -119,7 +129,7 @@ class CheckoutOrderSummarySection extends StatelessWidget {
               _SummaryRow(
                 label: context.l10n.checkout_discount,
                 value:
-                    '- ${state.discountAmount.toStringAsFixed(0)} ${context.l10n.shared_currency_egp}',
+                    '- ${state.discountAmount.toStringAsFixed(2)} ${context.l10n.shared_currency_egp}',
                 valueColor: cs.primary,
               ),
             ],
@@ -132,7 +142,7 @@ class CheckoutOrderSummarySection extends StatelessWidget {
             _SummaryRow(
               label: context.l10n.checkout_total,
               value:
-                  '${state.total.toStringAsFixed(0)} ${context.l10n.shared_currency_egp}',
+                  '${state.total.toStringAsFixed(2)} ${context.l10n.shared_currency_egp}',
               isBold: true,
               valueColor: cs.primary,
             ),

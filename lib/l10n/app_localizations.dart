@@ -289,6 +289,36 @@ abstract class S {
   /// **'Invalid sub-category'**
   String get errors_invalid_sub_category;
 
+  /// No description provided for @nav_nav_home.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get nav_nav_home;
+
+  /// No description provided for @nav_nav_category.
+  ///
+  /// In en, this message translates to:
+  /// **'Categories'**
+  String get nav_nav_category;
+
+  /// No description provided for @nav_nav_cart.
+  ///
+  /// In en, this message translates to:
+  /// **'Cart'**
+  String get nav_nav_cart;
+
+  /// No description provided for @nav_nav_favorite.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorites'**
+  String get nav_nav_favorite;
+
+  /// No description provided for @nav_nav_profile.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get nav_nav_profile;
+
   /// No description provided for @home_home_title.
   ///
   /// In en, this message translates to:
@@ -349,36 +379,6 @@ abstract class S {
   /// **'No sub-categories'**
   String get home_no_sub_categories;
 
-  /// No description provided for @nav_nav_home.
-  ///
-  /// In en, this message translates to:
-  /// **'Home'**
-  String get nav_nav_home;
-
-  /// No description provided for @nav_nav_category.
-  ///
-  /// In en, this message translates to:
-  /// **'Categories'**
-  String get nav_nav_category;
-
-  /// No description provided for @nav_nav_cart.
-  ///
-  /// In en, this message translates to:
-  /// **'Cart'**
-  String get nav_nav_cart;
-
-  /// No description provided for @nav_nav_favorite.
-  ///
-  /// In en, this message translates to:
-  /// **'Favorites'**
-  String get nav_nav_favorite;
-
-  /// No description provided for @nav_nav_profile.
-  ///
-  /// In en, this message translates to:
-  /// **'Profile'**
-  String get nav_nav_profile;
-
   /// No description provided for @search_search_hint.
   ///
   /// In en, this message translates to:
@@ -408,6 +408,120 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Explore our product categories'**
   String get category_category_subtitle;
+
+  /// No description provided for @product_details_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Product Details'**
+  String get product_details_title;
+
+  /// No description provided for @product_details_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get product_details_description;
+
+  /// No description provided for @product_details_reviews.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Reviews'**
+  String get product_details_reviews;
+
+  /// No description provided for @product_details_brand.
+  ///
+  /// In en, this message translates to:
+  /// **'Brand'**
+  String get product_details_brand;
+
+  /// No description provided for @product_details_sub_category.
+  ///
+  /// In en, this message translates to:
+  /// **'Sub-category'**
+  String get product_details_sub_category;
+
+  /// No description provided for @product_details_offer.
+  ///
+  /// In en, this message translates to:
+  /// **'Offer'**
+  String get product_details_offer;
+
+  /// No description provided for @product_details_discount.
+  ///
+  /// In en, this message translates to:
+  /// **'Discount'**
+  String get product_details_discount;
+
+  /// No description provided for @product_details_related_products.
+  ///
+  /// In en, this message translates to:
+  /// **'Similar Products'**
+  String get product_details_related_products;
+
+  /// No description provided for @product_details_no_related_products.
+  ///
+  /// In en, this message translates to:
+  /// **'No similar products found'**
+  String get product_details_no_related_products;
+
+  /// No description provided for @product_details_show_more.
+  ///
+  /// In en, this message translates to:
+  /// **'Show more'**
+  String get product_details_show_more;
+
+  /// No description provided for @product_details_all_reviews.
+  ///
+  /// In en, this message translates to:
+  /// **'All reviews'**
+  String get product_details_all_reviews;
+
+  /// No description provided for @product_details_add_review.
+  ///
+  /// In en, this message translates to:
+  /// **'Add review'**
+  String get product_details_add_review;
+
+  /// No description provided for @product_details_edit_review.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit review'**
+  String get product_details_edit_review;
+
+  /// No description provided for @product_details_review_comment_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Write your review'**
+  String get product_details_review_comment_hint;
+
+  /// No description provided for @product_details_review_comment_required.
+  ///
+  /// In en, this message translates to:
+  /// **'Please write your review'**
+  String get product_details_review_comment_required;
+
+  /// No description provided for @product_details_review_created.
+  ///
+  /// In en, this message translates to:
+  /// **'Review added successfully'**
+  String get product_details_review_created;
+
+  /// No description provided for @product_details_review_updated.
+  ///
+  /// In en, this message translates to:
+  /// **'Review updated successfully'**
+  String get product_details_review_updated;
+
+  /// No description provided for @product_details_review_options.
+  ///
+  /// In en, this message translates to:
+  /// **'Review options'**
+  String get product_details_review_options;
+
+  /// No description provided for @product_details_edit_time_expired.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit time expired'**
+  String get product_details_edit_time_expired;
 
   /// No description provided for @cart_cart_title.
   ///
@@ -648,120 +762,6 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Services'**
   String get favorite_services;
-
-  /// No description provided for @product_details_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Product Details'**
-  String get product_details_title;
-
-  /// No description provided for @product_details_description.
-  ///
-  /// In en, this message translates to:
-  /// **'Description'**
-  String get product_details_description;
-
-  /// No description provided for @product_details_reviews.
-  ///
-  /// In en, this message translates to:
-  /// **'Customer Reviews'**
-  String get product_details_reviews;
-
-  /// No description provided for @product_details_brand.
-  ///
-  /// In en, this message translates to:
-  /// **'Brand'**
-  String get product_details_brand;
-
-  /// No description provided for @product_details_sub_category.
-  ///
-  /// In en, this message translates to:
-  /// **'Sub-category'**
-  String get product_details_sub_category;
-
-  /// No description provided for @product_details_offer.
-  ///
-  /// In en, this message translates to:
-  /// **'Offer'**
-  String get product_details_offer;
-
-  /// No description provided for @product_details_discount.
-  ///
-  /// In en, this message translates to:
-  /// **'Discount'**
-  String get product_details_discount;
-
-  /// No description provided for @product_details_related_products.
-  ///
-  /// In en, this message translates to:
-  /// **'Similar Products'**
-  String get product_details_related_products;
-
-  /// No description provided for @product_details_no_related_products.
-  ///
-  /// In en, this message translates to:
-  /// **'No similar products found'**
-  String get product_details_no_related_products;
-
-  /// No description provided for @product_details_show_more.
-  ///
-  /// In en, this message translates to:
-  /// **'Show more'**
-  String get product_details_show_more;
-
-  /// No description provided for @product_details_all_reviews.
-  ///
-  /// In en, this message translates to:
-  /// **'All reviews'**
-  String get product_details_all_reviews;
-
-  /// No description provided for @product_details_add_review.
-  ///
-  /// In en, this message translates to:
-  /// **'Add review'**
-  String get product_details_add_review;
-
-  /// No description provided for @product_details_edit_review.
-  ///
-  /// In en, this message translates to:
-  /// **'Edit review'**
-  String get product_details_edit_review;
-
-  /// No description provided for @product_details_review_comment_hint.
-  ///
-  /// In en, this message translates to:
-  /// **'Write your review'**
-  String get product_details_review_comment_hint;
-
-  /// No description provided for @product_details_review_comment_required.
-  ///
-  /// In en, this message translates to:
-  /// **'Please write your review'**
-  String get product_details_review_comment_required;
-
-  /// No description provided for @product_details_review_created.
-  ///
-  /// In en, this message translates to:
-  /// **'Review added successfully'**
-  String get product_details_review_created;
-
-  /// No description provided for @product_details_review_updated.
-  ///
-  /// In en, this message translates to:
-  /// **'Review updated successfully'**
-  String get product_details_review_updated;
-
-  /// No description provided for @product_details_review_options.
-  ///
-  /// In en, this message translates to:
-  /// **'Review options'**
-  String get product_details_review_options;
-
-  /// No description provided for @product_details_edit_time_expired.
-  ///
-  /// In en, this message translates to:
-  /// **'Edit time expired'**
-  String get product_details_edit_time_expired;
 
   /// No description provided for @profile_my_account.
   ///
@@ -1555,6 +1555,150 @@ abstract class S {
   /// **'Reset Password'**
   String get auth_reset_password_button;
 
+  /// No description provided for @no_cached_user.
+  ///
+  /// In en, this message translates to:
+  /// **'No user data found'**
+  String get no_cached_user;
+
+  /// No description provided for @reset_password_strength_weak.
+  ///
+  /// In en, this message translates to:
+  /// **'Weak'**
+  String get reset_password_strength_weak;
+
+  /// No description provided for @reset_password_strength_medium.
+  ///
+  /// In en, this message translates to:
+  /// **'Medium'**
+  String get reset_password_strength_medium;
+
+  /// No description provided for @reset_password_strength_strong.
+  ///
+  /// In en, this message translates to:
+  /// **'Strong'**
+  String get reset_password_strength_strong;
+
+  /// No description provided for @reset_password_new_password_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your new password'**
+  String get reset_password_new_password_hint;
+
+  /// No description provided for @reset_password_confirm_password_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm your new password'**
+  String get reset_password_confirm_password_hint;
+
+  /// No description provided for @reset_password_reset_button.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset Password'**
+  String get reset_password_reset_button;
+
+  /// No description provided for @reset_password_back_to_login.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to login'**
+  String get reset_password_back_to_login;
+
+  /// No description provided for @otp_verification_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone verified successfully!'**
+  String get otp_verification_success;
+
+  /// No description provided for @otp_resend_success.
+  ///
+  /// In en, this message translates to:
+  /// **'OTP resent successfully!'**
+  String get otp_resend_success;
+
+  /// No description provided for @otp_verify_now.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify Now'**
+  String get otp_verify_now;
+
+  /// No description provided for @reset_password_success_message.
+  ///
+  /// In en, this message translates to:
+  /// **'Password reset successfully!'**
+  String get reset_password_success_message;
+
+  /// No description provided for @reset_password_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset Password'**
+  String get reset_password_title;
+
+  /// No description provided for @reset_password_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a strong new password'**
+  String get reset_password_subtitle;
+
+  /// No description provided for @reset_password_requirements_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must meet the following requirements:'**
+  String get reset_password_requirements_title;
+
+  /// No description provided for @reset_password_req_min_length.
+  ///
+  /// In en, this message translates to:
+  /// **'At least 6 characters long'**
+  String get reset_password_req_min_length;
+
+  /// No description provided for @reset_password_req_match.
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords must match'**
+  String get reset_password_req_match;
+
+  /// No description provided for @otp_otp_sent_to.
+  ///
+  /// In en, this message translates to:
+  /// **'OTP sent to '**
+  String get otp_otp_sent_to;
+
+  /// No description provided for @otp_didnt_receive_code.
+  ///
+  /// In en, this message translates to:
+  /// **'Didn\'t receive code?'**
+  String get otp_didnt_receive_code;
+
+  /// No description provided for @otp_resend_code.
+  ///
+  /// In en, this message translates to:
+  /// **'Resend Code'**
+  String get otp_resend_code;
+
+  /// No description provided for @reset_password_strength_very_weak.
+  ///
+  /// In en, this message translates to:
+  /// **'Very Weak'**
+  String get reset_password_strength_very_weak;
+
+  /// No description provided for @reset_password_strength_fair.
+  ///
+  /// In en, this message translates to:
+  /// **'Fair'**
+  String get reset_password_strength_fair;
+
+  /// No description provided for @reset_password_strength_good.
+  ///
+  /// In en, this message translates to:
+  /// **'Good'**
+  String get reset_password_strength_good;
+
+  /// No description provided for @otp_retry_after.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry after {seconds}s'**
+  String otp_retry_after(int seconds);
+
   /// No description provided for @checkout_title.
   ///
   /// In en, this message translates to:
@@ -1716,6 +1860,618 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Remove'**
   String get checkout_remove_coupon;
+
+  /// No description provided for @order_items_count.
+  ///
+  /// In en, this message translates to:
+  /// **'Items Count'**
+  String get order_items_count;
+
+  /// No description provided for @order_date.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get order_date;
+
+  /// No description provided for @order_payment_method.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment Method'**
+  String get order_payment_method;
+
+  /// No description provided for @order_payment_cash.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash'**
+  String get order_payment_cash;
+
+  /// No description provided for @order_payment_online.
+  ///
+  /// In en, this message translates to:
+  /// **'Online'**
+  String get order_payment_online;
+
+  /// No description provided for @order_no_orders_msg.
+  ///
+  /// In en, this message translates to:
+  /// **'You don\'t have any orders yet'**
+  String get order_no_orders_msg;
+
+  /// No description provided for @order_no_orders_title.
+  ///
+  /// In en, this message translates to:
+  /// **'No Orders'**
+  String get order_no_orders_title;
+
+  /// No description provided for @order_total_price.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Price'**
+  String get order_total_price;
+
+  /// No description provided for @order_products.
+  ///
+  /// In en, this message translates to:
+  /// **'Products'**
+  String get order_products;
+
+  /// No description provided for @order_services.
+  ///
+  /// In en, this message translates to:
+  /// **'Services'**
+  String get order_services;
+
+  /// No description provided for @order_status_pending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get order_status_pending;
+
+  /// No description provided for @order_status_accepted.
+  ///
+  /// In en, this message translates to:
+  /// **'Accepted'**
+  String get order_status_accepted;
+
+  /// No description provided for @order_status_confirmed.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmed'**
+  String get order_status_confirmed;
+
+  /// No description provided for @order_status_processing.
+  ///
+  /// In en, this message translates to:
+  /// **'Processing'**
+  String get order_status_processing;
+
+  /// No description provided for @order_status_shipped.
+  ///
+  /// In en, this message translates to:
+  /// **'Shipped'**
+  String get order_status_shipped;
+
+  /// No description provided for @order_status_delivered.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivered'**
+  String get order_status_delivered;
+
+  /// No description provided for @order_status_completed.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get order_status_completed;
+
+  /// No description provided for @order_status_cancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get order_status_cancelled;
+
+  /// No description provided for @order_cancel_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel Order'**
+  String get order_cancel_title;
+
+  /// No description provided for @order_cancel_confirm_msg.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to cancel this order?'**
+  String get order_cancel_confirm_msg;
+
+  /// No description provided for @order_delete_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Order'**
+  String get order_delete_title;
+
+  /// No description provided for @order_delete_confirm_msg.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this order? This action cannot be undone.'**
+  String get order_delete_confirm_msg;
+
+  /// No description provided for @order_delete_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Order deleted successfully'**
+  String get order_delete_success;
+
+  /// No description provided for @order_tracker_pending_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Your order is pending confirmation'**
+  String get order_tracker_pending_desc;
+
+  /// No description provided for @order_tracker_accepted_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Your order has been accepted'**
+  String get order_tracker_accepted_desc;
+
+  /// No description provided for @order_tracker_processing_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Your order is being processed and packed'**
+  String get order_tracker_processing_desc;
+
+  /// No description provided for @order_tracker_shipped_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Your order is out for delivery'**
+  String get order_tracker_shipped_desc;
+
+  /// No description provided for @order_tracker_delivered_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Order delivered successfully. Thank you!'**
+  String get order_tracker_delivered_desc;
+
+  /// No description provided for @order_details_number.
+  ///
+  /// In en, this message translates to:
+  /// **'Order Number'**
+  String get order_details_number;
+
+  /// No description provided for @order_details_date_time.
+  ///
+  /// In en, this message translates to:
+  /// **'Date & Time'**
+  String get order_details_date_time;
+
+  /// No description provided for @order_details_payment_cod.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash on Delivery'**
+  String get order_details_payment_cod;
+
+  /// No description provided for @order_details_cancelled_title.
+  ///
+  /// In en, this message translates to:
+  /// **'This order has been cancelled'**
+  String get order_details_cancelled_title;
+
+  /// No description provided for @order_details_cancelled_msg.
+  ///
+  /// In en, this message translates to:
+  /// **'Your order was cancelled. Please contact support for more details.'**
+  String get order_details_cancelled_msg;
+
+  /// No description provided for @order_details_customer_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Name'**
+  String get order_details_customer_name;
+
+  /// No description provided for @order_details_customer_phone.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone Number'**
+  String get order_details_customer_phone;
+
+  /// No description provided for @order_details_address.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivery Address'**
+  String get order_details_address;
+
+  /// No description provided for @order_details_unknown_product.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown Product'**
+  String get order_details_unknown_product;
+
+  /// No description provided for @order_details_subtotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Subtotal'**
+  String get order_details_subtotal;
+
+  /// No description provided for @order_details_delivery_fees.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivery Fees'**
+  String get order_details_delivery_fees;
+
+  /// No description provided for @order_details_discount.
+  ///
+  /// In en, this message translates to:
+  /// **'Discount'**
+  String get order_details_discount;
+
+  /// No description provided for @order_details_total.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Price'**
+  String get order_details_total;
+
+  /// No description provided for @order_details_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Order Details'**
+  String get order_details_title;
+
+  /// No description provided for @order_details_status.
+  ///
+  /// In en, this message translates to:
+  /// **'Order Status'**
+  String get order_details_status;
+
+  /// No description provided for @order_details_delivery_info.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivery & Customer Info'**
+  String get order_details_delivery_info;
+
+  /// No description provided for @order_details_ordered_products.
+  ///
+  /// In en, this message translates to:
+  /// **'Ordered Products'**
+  String get order_details_ordered_products;
+
+  /// No description provided for @order_details_payment_summary.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment Summary'**
+  String get order_details_payment_summary;
+
+  /// No description provided for @order_details_actions.
+  ///
+  /// In en, this message translates to:
+  /// **'Actions'**
+  String get order_details_actions;
+
+  /// No description provided for @order_details_cancel_btn.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel Order'**
+  String get order_details_cancel_btn;
+
+  /// No description provided for @order_details_update_btn.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Order'**
+  String get order_details_update_btn;
+
+  /// No description provided for @order_details_action_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Action completed successfully'**
+  String get order_details_action_success;
+
+  /// No description provided for @order_update_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Order Details'**
+  String get order_update_title;
+
+  /// No description provided for @order_update_name_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Name'**
+  String get order_update_name_label;
+
+  /// No description provided for @order_update_phone_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone Number'**
+  String get order_update_phone_label;
+
+  /// No description provided for @order_update_required.
+  ///
+  /// In en, this message translates to:
+  /// **'Required'**
+  String get order_update_required;
+
+  /// No description provided for @order_update_current_address.
+  ///
+  /// In en, this message translates to:
+  /// **'Current Address: {address}'**
+  String order_update_current_address(String address);
+
+  /// No description provided for @order_update_save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Changes'**
+  String get order_update_save;
+
+  /// No description provided for @service_details_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Service Details'**
+  String get service_details_title;
+
+  /// No description provided for @service_details_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get service_details_description;
+
+  /// No description provided for @service_details_provider.
+  ///
+  /// In en, this message translates to:
+  /// **'Provider'**
+  String get service_details_provider;
+
+  /// No description provided for @service_details_book_now.
+  ///
+  /// In en, this message translates to:
+  /// **'Book Now'**
+  String get service_details_book_now;
+
+  /// No description provided for @service_details_no_available_days.
+  ///
+  /// In en, this message translates to:
+  /// **'No available slots at the moment'**
+  String get service_details_no_available_days;
+
+  /// No description provided for @service_details_available_days.
+  ///
+  /// In en, this message translates to:
+  /// **'Available Days'**
+  String get service_details_available_days;
+
+  /// No description provided for @service_details_available_times.
+  ///
+  /// In en, this message translates to:
+  /// **'Available Times'**
+  String get service_details_available_times;
+
+  /// No description provided for @service_booking_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Service Booking'**
+  String get service_booking_title;
+
+  /// No description provided for @service_booking_customer_info.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Information'**
+  String get service_booking_customer_info;
+
+  /// No description provided for @service_booking_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Full Name'**
+  String get service_booking_name;
+
+  /// No description provided for @service_booking_phone.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone Number'**
+  String get service_booking_phone;
+
+  /// No description provided for @service_booking_email.
+  ///
+  /// In en, this message translates to:
+  /// **'Email Address'**
+  String get service_booking_email;
+
+  /// No description provided for @service_booking_problem.
+  ///
+  /// In en, this message translates to:
+  /// **'Problem Description'**
+  String get service_booking_problem;
+
+  /// No description provided for @service_booking_problem_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Explain your problem here...'**
+  String get service_booking_problem_hint;
+
+  /// No description provided for @service_booking_address_info.
+  ///
+  /// In en, this message translates to:
+  /// **'Address Information'**
+  String get service_booking_address_info;
+
+  /// No description provided for @service_booking_selected_day.
+  ///
+  /// In en, this message translates to:
+  /// **'Selected Day'**
+  String get service_booking_selected_day;
+
+  /// No description provided for @service_booking_selected_time.
+  ///
+  /// In en, this message translates to:
+  /// **'Selected Time'**
+  String get service_booking_selected_time;
+
+  /// No description provided for @service_booking_confirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Booking'**
+  String get service_booking_confirm;
+
+  /// No description provided for @service_booking_success_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking Successful!'**
+  String get service_booking_success_title;
+
+  /// No description provided for @service_booking_success_msg.
+  ///
+  /// In en, this message translates to:
+  /// **'Your booking request has been received, the provider will contact you soon.'**
+  String get service_booking_success_msg;
+
+  /// No description provided for @service_booking_id.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking ID'**
+  String get service_booking_id;
+
+  /// No description provided for @service_booking_service.
+  ///
+  /// In en, this message translates to:
+  /// **'Service'**
+  String get service_booking_service;
+
+  /// No description provided for @service_booking_provider.
+  ///
+  /// In en, this message translates to:
+  /// **'Provider'**
+  String get service_booking_provider;
+
+  /// No description provided for @service_booking_day.
+  ///
+  /// In en, this message translates to:
+  /// **'Day'**
+  String get service_booking_day;
+
+  /// No description provided for @service_booking_time.
+  ///
+  /// In en, this message translates to:
+  /// **'Time'**
+  String get service_booking_time;
+
+  /// No description provided for @service_booking_go_home.
+  ///
+  /// In en, this message translates to:
+  /// **'Go Home'**
+  String get service_booking_go_home;
+
+  /// No description provided for @service_booking_view_orders.
+  ///
+  /// In en, this message translates to:
+  /// **'View My Bookings'**
+  String get service_booking_view_orders;
+
+  /// No description provided for @provider_details_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Provider Details'**
+  String get provider_details_title;
+
+  /// No description provided for @provider_details_working_hours.
+  ///
+  /// In en, this message translates to:
+  /// **'Working Hours'**
+  String get provider_details_working_hours;
+
+  /// No description provided for @provider_details_days.
+  ///
+  /// In en, this message translates to:
+  /// **'Working Days'**
+  String get provider_details_days;
+
+  /// No description provided for @provider_details_time.
+  ///
+  /// In en, this message translates to:
+  /// **'Working Hours'**
+  String get provider_details_time;
+
+  /// No description provided for @provider_details_price_from.
+  ///
+  /// In en, this message translates to:
+  /// **'Price Starts From'**
+  String get provider_details_price_from;
+
+  /// No description provided for @provider_details_services.
+  ///
+  /// In en, this message translates to:
+  /// **'Offered Services'**
+  String get provider_details_services;
+
+  /// No description provided for @provider_details_contact_info.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact Information'**
+  String get provider_details_contact_info;
+
+  /// No description provided for @provider_details_contact_person.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact Person'**
+  String get provider_details_contact_person;
+
+  /// No description provided for @provider_details_phone.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone Number'**
+  String get provider_details_phone;
+
+  /// No description provided for @provider_details_email.
+  ///
+  /// In en, this message translates to:
+  /// **'Email Address'**
+  String get provider_details_email;
+
+  /// No description provided for @provider_details_status.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get provider_details_status;
+
+  /// No description provided for @provider_details_status_active.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get provider_details_status_active;
+
+  /// No description provided for @provider_details_status_inactive.
+  ///
+  /// In en, this message translates to:
+  /// **'Inactive'**
+  String get provider_details_status_inactive;
+
+  /// No description provided for @provider_details_successful_orders.
+  ///
+  /// In en, this message translates to:
+  /// **'Successful Orders'**
+  String get provider_details_successful_orders;
+
+  /// No description provided for @brands.
+  ///
+  /// In en, this message translates to:
+  /// **'Brands'**
+  String get brands;
+
+  /// No description provided for @no_brands.
+  ///
+  /// In en, this message translates to:
+  /// **'No brands added yet'**
+  String get no_brands;
+
+  /// No description provided for @brand_products.
+  ///
+  /// In en, this message translates to:
+  /// **'Brand Products'**
+  String get brand_products;
+
+  /// No description provided for @no_brand_products.
+  ///
+  /// In en, this message translates to:
+  /// **'No products in this brand yet'**
+  String get no_brand_products;
+
+  /// No description provided for @offers.
+  ///
+  /// In en, this message translates to:
+  /// **'Offers'**
+  String get offers;
 
   /// No description provided for @privacy_policy_title.
   ///
@@ -2017,533 +2773,101 @@ abstract class S {
   /// **'Thank you for using Wassaly!'**
   String get terms_of_service_footer_note;
 
-  /// No description provided for @order_items_count.
+  /// No description provided for @booking_details_title.
   ///
   /// In en, this message translates to:
-  /// **'Items Count'**
-  String get order_items_count;
+  /// **'Booking Details'**
+  String get booking_details_title;
 
-  /// No description provided for @order_date.
+  /// No description provided for @booking_delete_title.
   ///
   /// In en, this message translates to:
-  /// **'Date'**
-  String get order_date;
+  /// **'Delete Booking'**
+  String get booking_delete_title;
 
-  /// No description provided for @order_payment_method.
+  /// No description provided for @booking_delete_confirm_msg.
   ///
   /// In en, this message translates to:
-  /// **'Payment Method'**
-  String get order_payment_method;
+  /// **'Are you sure you want to delete this booking? This action cannot be undone.'**
+  String get booking_delete_confirm_msg;
 
-  /// No description provided for @order_payment_cash.
+  /// No description provided for @booking_delete_success.
   ///
   /// In en, this message translates to:
-  /// **'Cash'**
-  String get order_payment_cash;
+  /// **'Booking deleted successfully'**
+  String get booking_delete_success;
 
-  /// No description provided for @order_payment_online.
+  /// No description provided for @booking_details_action_success.
   ///
   /// In en, this message translates to:
-  /// **'Online'**
-  String get order_payment_online;
+  /// **'Action completed successfully'**
+  String get booking_details_action_success;
 
-  /// No description provided for @order_no_orders_msg.
+  /// No description provided for @booking_details_cancel_btn.
   ///
   /// In en, this message translates to:
-  /// **'You don\'t have any orders yet'**
-  String get order_no_orders_msg;
+  /// **'Cancel Booking'**
+  String get booking_details_cancel_btn;
 
-  /// No description provided for @order_no_orders_title.
+  /// No description provided for @booking_cancel_title.
   ///
   /// In en, this message translates to:
-  /// **'No Orders'**
-  String get order_no_orders_title;
+  /// **'Cancel Booking'**
+  String get booking_cancel_title;
 
-  /// No description provided for @order_total_price.
+  /// No description provided for @booking_cancel_confirm_msg.
   ///
   /// In en, this message translates to:
-  /// **'Total Price'**
-  String get order_total_price;
+  /// **'Are you sure you want to cancel this booking?'**
+  String get booking_cancel_confirm_msg;
 
-  /// No description provided for @order_products.
+  /// No description provided for @booking_details_update_btn.
   ///
   /// In en, this message translates to:
-  /// **'Products'**
-  String get order_products;
+  /// **'Update Booking'**
+  String get booking_details_update_btn;
 
-  /// No description provided for @order_services.
+  /// No description provided for @booking_update_title.
   ///
   /// In en, this message translates to:
-  /// **'Services'**
-  String get order_services;
+  /// **'Update Booking Info'**
+  String get booking_update_title;
 
-  /// No description provided for @order_status_pending.
-  ///
-  /// In en, this message translates to:
-  /// **'Pending'**
-  String get order_status_pending;
-
-  /// No description provided for @order_status_accepted.
-  ///
-  /// In en, this message translates to:
-  /// **'Accepted'**
-  String get order_status_accepted;
-
-  /// No description provided for @order_status_confirmed.
-  ///
-  /// In en, this message translates to:
-  /// **'Confirmed'**
-  String get order_status_confirmed;
-
-  /// No description provided for @order_status_processing.
-  ///
-  /// In en, this message translates to:
-  /// **'Processing'**
-  String get order_status_processing;
-
-  /// No description provided for @order_status_shipped.
-  ///
-  /// In en, this message translates to:
-  /// **'Shipped'**
-  String get order_status_shipped;
-
-  /// No description provided for @order_status_delivered.
-  ///
-  /// In en, this message translates to:
-  /// **'Delivered'**
-  String get order_status_delivered;
-
-  /// No description provided for @order_status_completed.
-  ///
-  /// In en, this message translates to:
-  /// **'Completed'**
-  String get order_status_completed;
-
-  /// No description provided for @order_status_cancelled.
-  ///
-  /// In en, this message translates to:
-  /// **'Cancelled'**
-  String get order_status_cancelled;
-
-  /// No description provided for @no_cached_user.
-  ///
-  /// In en, this message translates to:
-  /// **'No user data found'**
-  String get no_cached_user;
-
-  /// No description provided for @reset_password_strength_weak.
-  ///
-  /// In en, this message translates to:
-  /// **'Weak'**
-  String get reset_password_strength_weak;
-
-  /// No description provided for @reset_password_strength_medium.
-  ///
-  /// In en, this message translates to:
-  /// **'Medium'**
-  String get reset_password_strength_medium;
-
-  /// No description provided for @reset_password_strength_strong.
-  ///
-  /// In en, this message translates to:
-  /// **'Strong'**
-  String get reset_password_strength_strong;
-
-  /// No description provided for @reset_password_new_password_hint.
-  ///
-  /// In en, this message translates to:
-  /// **'Enter your new password'**
-  String get reset_password_new_password_hint;
-
-  /// No description provided for @reset_password_confirm_password_hint.
-  ///
-  /// In en, this message translates to:
-  /// **'Confirm your new password'**
-  String get reset_password_confirm_password_hint;
-
-  /// No description provided for @reset_password_reset_button.
-  ///
-  /// In en, this message translates to:
-  /// **'Reset Password'**
-  String get reset_password_reset_button;
-
-  /// No description provided for @reset_password_back_to_login.
-  ///
-  /// In en, this message translates to:
-  /// **'Back to login'**
-  String get reset_password_back_to_login;
-
-  /// No description provided for @otp_verification_success.
-  ///
-  /// In en, this message translates to:
-  /// **'Phone verified successfully!'**
-  String get otp_verification_success;
-
-  /// No description provided for @otp_resend_success.
-  ///
-  /// In en, this message translates to:
-  /// **'OTP resent successfully!'**
-  String get otp_resend_success;
-
-  /// No description provided for @otp_verify_now.
-  ///
-  /// In en, this message translates to:
-  /// **'Verify Now'**
-  String get otp_verify_now;
-
-  /// No description provided for @reset_password_success_message.
-  ///
-  /// In en, this message translates to:
-  /// **'Password reset successfully!'**
-  String get reset_password_success_message;
-
-  /// No description provided for @reset_password_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Reset Password'**
-  String get reset_password_title;
-
-  /// No description provided for @reset_password_subtitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Enter a strong new password'**
-  String get reset_password_subtitle;
-
-  /// No description provided for @reset_password_requirements_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Password must meet the following requirements:'**
-  String get reset_password_requirements_title;
-
-  /// No description provided for @reset_password_req_min_length.
-  ///
-  /// In en, this message translates to:
-  /// **'At least 6 characters long'**
-  String get reset_password_req_min_length;
-
-  /// No description provided for @reset_password_req_match.
-  ///
-  /// In en, this message translates to:
-  /// **'Passwords must match'**
-  String get reset_password_req_match;
-
-  /// No description provided for @otp_otp_sent_to.
-  ///
-  /// In en, this message translates to:
-  /// **'OTP sent to '**
-  String get otp_otp_sent_to;
-
-  /// No description provided for @otp_didnt_receive_code.
-  ///
-  /// In en, this message translates to:
-  /// **'Didn\'t receive code?'**
-  String get otp_didnt_receive_code;
-
-  /// No description provided for @otp_resend_code.
-  ///
-  /// In en, this message translates to:
-  /// **'Resend Code'**
-  String get otp_resend_code;
-
-  /// No description provided for @reset_password_strength_very_weak.
-  ///
-  /// In en, this message translates to:
-  /// **'Very Weak'**
-  String get reset_password_strength_very_weak;
-
-  /// No description provided for @reset_password_strength_fair.
-  ///
-  /// In en, this message translates to:
-  /// **'Fair'**
-  String get reset_password_strength_fair;
-
-  /// No description provided for @reset_password_strength_good.
-  ///
-  /// In en, this message translates to:
-  /// **'Good'**
-  String get reset_password_strength_good;
-
-  /// No description provided for @otp_retry_after.
-  ///
-  /// In en, this message translates to:
-  /// **'Retry after {seconds}s'**
-  String otp_retry_after(int seconds);
-
-  /// No description provided for @service_details_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Service Details'**
-  String get service_details_title;
-
-  /// No description provided for @service_details_description.
-  ///
-  /// In en, this message translates to:
-  /// **'Description'**
-  String get service_details_description;
-
-  /// No description provided for @service_details_provider.
-  ///
-  /// In en, this message translates to:
-  /// **'Provider'**
-  String get service_details_provider;
-
-  /// No description provided for @service_details_book_now.
-  ///
-  /// In en, this message translates to:
-  /// **'Book Now'**
-  String get service_details_book_now;
-
-  /// No description provided for @service_details_no_available_days.
-  ///
-  /// In en, this message translates to:
-  /// **'No available slots at the moment'**
-  String get service_details_no_available_days;
-
-  /// No description provided for @service_details_available_days.
-  ///
-  /// In en, this message translates to:
-  /// **'Available Days'**
-  String get service_details_available_days;
-
-  /// No description provided for @service_details_available_times.
-  ///
-  /// In en, this message translates to:
-  /// **'Available Times'**
-  String get service_details_available_times;
-
-  /// No description provided for @service_booking_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Service Booking'**
-  String get service_booking_title;
-
-  /// No description provided for @service_booking_customer_info.
-  ///
-  /// In en, this message translates to:
-  /// **'Customer Information'**
-  String get service_booking_customer_info;
-
-  /// No description provided for @service_booking_name.
-  ///
-  /// In en, this message translates to:
-  /// **'Full Name'**
-  String get service_booking_name;
-
-  /// No description provided for @service_booking_phone.
-  ///
-  /// In en, this message translates to:
-  /// **'Phone Number'**
-  String get service_booking_phone;
-
-  /// No description provided for @service_booking_email.
-  ///
-  /// In en, this message translates to:
-  /// **'Email Address'**
-  String get service_booking_email;
-
-  /// No description provided for @service_booking_problem.
+  /// No description provided for @booking_update_problem_label.
   ///
   /// In en, this message translates to:
   /// **'Problem Description'**
-  String get service_booking_problem;
+  String get booking_update_problem_label;
 
-  /// No description provided for @service_booking_problem_hint.
+  /// No description provided for @booking_update_phone_label.
   ///
   /// In en, this message translates to:
-  /// **'Explain your problem here...'**
-  String get service_booking_problem_hint;
+  /// **'Customer Phone'**
+  String get booking_update_phone_label;
 
-  /// No description provided for @service_booking_address_info.
+  /// No description provided for @booking_update_save.
   ///
   /// In en, this message translates to:
-  /// **'Address Information'**
-  String get service_booking_address_info;
+  /// **'Save Changes'**
+  String get booking_update_save;
 
-  /// No description provided for @service_booking_selected_day.
+  /// No description provided for @booking_details_status.
   ///
   /// In en, this message translates to:
-  /// **'Selected Day'**
-  String get service_booking_selected_day;
+  /// **'Booking Status'**
+  String get booking_details_status;
 
-  /// No description provided for @service_booking_selected_time.
+  /// No description provided for @booking_details_info.
   ///
   /// In en, this message translates to:
-  /// **'Selected Time'**
-  String get service_booking_selected_time;
+  /// **'Customer & Service Info'**
+  String get booking_details_info;
 
-  /// No description provided for @service_booking_confirm.
+  /// No description provided for @booking_details_actions.
   ///
   /// In en, this message translates to:
-  /// **'Confirm Booking'**
-  String get service_booking_confirm;
-
-  /// No description provided for @service_booking_success_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Booking Successful!'**
-  String get service_booking_success_title;
-
-  /// No description provided for @service_booking_success_msg.
-  ///
-  /// In en, this message translates to:
-  /// **'Your booking request has been received, the provider will contact you soon.'**
-  String get service_booking_success_msg;
-
-  /// No description provided for @service_booking_id.
-  ///
-  /// In en, this message translates to:
-  /// **'Booking ID'**
-  String get service_booking_id;
-
-  /// No description provided for @service_booking_service.
-  ///
-  /// In en, this message translates to:
-  /// **'Service'**
-  String get service_booking_service;
-
-  /// No description provided for @service_booking_provider.
-  ///
-  /// In en, this message translates to:
-  /// **'Provider'**
-  String get service_booking_provider;
-
-  /// No description provided for @service_booking_day.
-  ///
-  /// In en, this message translates to:
-  /// **'Day'**
-  String get service_booking_day;
-
-  /// No description provided for @service_booking_time.
-  ///
-  /// In en, this message translates to:
-  /// **'Time'**
-  String get service_booking_time;
-
-  /// No description provided for @service_booking_go_home.
-  ///
-  /// In en, this message translates to:
-  /// **'Go Home'**
-  String get service_booking_go_home;
-
-  /// No description provided for @service_booking_view_orders.
-  ///
-  /// In en, this message translates to:
-  /// **'View My Bookings'**
-  String get service_booking_view_orders;
-
-  /// No description provided for @provider_details_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Provider Details'**
-  String get provider_details_title;
-
-  /// No description provided for @provider_details_working_hours.
-  ///
-  /// In en, this message translates to:
-  /// **'Working Hours'**
-  String get provider_details_working_hours;
-
-  /// No description provided for @provider_details_days.
-  ///
-  /// In en, this message translates to:
-  /// **'Working Days'**
-  String get provider_details_days;
-
-  /// No description provided for @provider_details_time.
-  ///
-  /// In en, this message translates to:
-  /// **'Working Hours'**
-  String get provider_details_time;
-
-  /// No description provided for @provider_details_price_from.
-  ///
-  /// In en, this message translates to:
-  /// **'Price Starts From'**
-  String get provider_details_price_from;
-
-  /// No description provided for @provider_details_services.
-  ///
-  /// In en, this message translates to:
-  /// **'Offered Services'**
-  String get provider_details_services;
-
-  /// No description provided for @brands.
-  ///
-  /// In en, this message translates to:
-  /// **'Brands'**
-  String get brands;
-
-  /// No description provided for @no_brands.
-  ///
-  /// In en, this message translates to:
-  /// **'No brands added yet'**
-  String get no_brands;
-
-  /// No description provided for @brand_products.
-  ///
-  /// In en, this message translates to:
-  /// **'Brand Products'**
-  String get brand_products;
-
-  /// No description provided for @no_brand_products.
-  ///
-  /// In en, this message translates to:
-  /// **'No products in this brand yet'**
-  String get no_brand_products;
-
-  /// No description provided for @offers.
-  ///
-  /// In en, this message translates to:
-  /// **'Offers'**
-  String get offers;
-
-  /// No description provided for @provider_details_contact_info.
-  ///
-  /// In en, this message translates to:
-  /// **'Contact Information'**
-  String get provider_details_contact_info;
-
-  /// No description provided for @provider_details_contact_person.
-  ///
-  /// In en, this message translates to:
-  /// **'Contact Person'**
-  String get provider_details_contact_person;
-
-  /// No description provided for @provider_details_phone.
-  ///
-  /// In en, this message translates to:
-  /// **'Phone Number'**
-  String get provider_details_phone;
-
-  /// No description provided for @provider_details_email.
-  ///
-  /// In en, this message translates to:
-  /// **'Email Address'**
-  String get provider_details_email;
-
-  /// No description provided for @provider_details_status.
-  ///
-  /// In en, this message translates to:
-  /// **'Status'**
-  String get provider_details_status;
-
-  /// No description provided for @provider_details_status_active.
-  ///
-  /// In en, this message translates to:
-  /// **'Active'**
-  String get provider_details_status_active;
-
-  /// No description provided for @provider_details_status_inactive.
-  ///
-  /// In en, this message translates to:
-  /// **'Inactive'**
-  String get provider_details_status_inactive;
-
-  /// No description provided for @provider_details_successful_orders.
-  ///
-  /// In en, this message translates to:
-  /// **'Successful Orders'**
-  String get provider_details_successful_orders;
+  /// **'Actions'**
+  String get booking_details_actions;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

@@ -35,5 +35,41 @@ class OrdersRepositoryImpl implements OrdersRepository {
       return Left(ServerFailure(e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, void>> cancelOrder(int orderId) async {
+    try {
+      await _remoteDataSource.cancelOrder(orderId);
+      return const Right(null);
+    } on Failure catch (failure) {
+      return Left(failure);
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> updateOrder(int orderId, Map<String, dynamic> data) async {
+    try {
+      await _remoteDataSource.updateOrder(orderId, data);
+      return const Right(null);
+    } on Failure catch (failure) {
+      return Left(failure);
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> deleteOrder(int orderId) async {
+    try {
+      await _remoteDataSource.deleteOrder(orderId);
+      return const Right(null);
+    } on Failure catch (failure) {
+      return Left(failure);
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
 }
 

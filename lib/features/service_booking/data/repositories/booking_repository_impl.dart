@@ -32,4 +32,41 @@ class BookingRepositoryImpl implements BookingRepository {
       return Left(ServerFailure(e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, BookingEntity>> updateBooking(
+      UpdateBookingParams params) async {
+    try {
+      final booking = await _remoteDataSource.updateBooking(params);
+      return Right(booking);
+    } on Failure catch (failure) {
+      return Left(failure);
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> cancelBooking(int bookingId) async {
+    try {
+      await _remoteDataSource.cancelBooking(bookingId);
+      return const Right(null);
+    } on Failure catch (failure) {
+      return Left(failure);
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> deleteBooking(int bookingId) async {
+    try {
+      await _remoteDataSource.deleteBooking(bookingId);
+      return const Right(null);
+    } on Failure catch (failure) {
+      return Left(failure);
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
 }

@@ -30,7 +30,8 @@ class AppReviewCard extends StatefulWidget {
 
 class _AppReviewCardState extends State<AppReviewCard> {
   Timer? _timer;
-  final ValueNotifier<Duration> _remainingNotifier = ValueNotifier(Duration.zero);
+  final ValueNotifier<Duration> _remainingNotifier =
+      ValueNotifier(Duration.zero);
 
   @override
   void initState() {
@@ -127,12 +128,28 @@ class _AppReviewCardState extends State<AppReviewCard> {
               _buildAvatar(cs, tt),
               8.horizontalSpace,
               Expanded(
-                child: Text(
-                  widget.userName,
-                  style: tt.titleSmall?.copyWith(
-                    color: cs.primary,
-                    fontWeight: FontWeight.w700,
-                  ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      widget.userName,
+                      style: tt.titleSmall?.copyWith(
+                        color: cs.primary,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    if (widget.createdAt != null &&
+                        widget.createdAt!.trim().isNotEmpty) ...[
+                      2.verticalSpace,
+                      Text(
+                        widget.createdAt!.to12HourFormat(),
+                        style: tt.bodySmall?.copyWith(
+                          color: cs.onSurfaceVariant,
+                          fontSize: 10.sp,
+                        ),
+                      ),
+                    ],
+                  ],
                 ),
               ),
               Row(
@@ -152,7 +169,9 @@ class _AppReviewCardState extends State<AppReviewCard> {
                 ValueListenableBuilder<Duration>(
                   valueListenable: _remainingNotifier,
                   builder: (context, remaining, child) {
-                    final canEdit = widget.createdAt == null ? widget.canEdit : remaining > Duration.zero;
+                    final canEdit = widget.createdAt == null
+                        ? widget.canEdit
+                        : remaining > Duration.zero;
                     return PopupMenuButton<String>(
                       tooltip: context.l10n.product_details_review_options,
                       icon: Icon(
@@ -183,8 +202,8 @@ class _AppReviewCardState extends State<AppReviewCard> {
                               : Text(
                                   canEdit
                                       ? context.l10n.shared_edit
-                                      : context
-                                          .l10n.product_details_edit_time_expired,
+                                      : context.l10n
+                                          .product_details_edit_time_expired,
                                 ),
                         ),
                       ],
@@ -261,7 +280,8 @@ class _ReviewEditMenuItemContent extends StatefulWidget {
 class __ReviewEditMenuItemContentState
     extends State<_ReviewEditMenuItemContent> {
   Timer? _menuTimer;
-  final ValueNotifier<Duration> _remainingNotifier = ValueNotifier(Duration.zero);
+  final ValueNotifier<Duration> _remainingNotifier =
+      ValueNotifier(Duration.zero);
 
   @override
   void initState() {

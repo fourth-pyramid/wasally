@@ -23,46 +23,35 @@ class OrderTrackerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final cs = context.theme.colorScheme;
     final tt = context.theme.textTheme;
-    final isAr = context.isArabic;
 
     final List<_TimelineStep> steps = [
       _TimelineStep(
-        title: isAr ? 'قيد الانتظار' : 'Pending',
-        description: isAr
-            ? 'تم استلام طلبك وبانتظار المراجعة'
-            : 'Your order is pending confirmation',
+        title: context.l10n.order_status_pending,
+        description: context.l10n.order_tracker_pending_desc,
         icon: Icons.access_time_filled_rounded,
         color: Colors.orange,
       ),
       _TimelineStep(
-        title: isAr ? 'تم القبول' : 'Accepted',
-        description: isAr
-            ? 'تمت الموافقة على طلبك من المتجر'
-            : 'Your order has been accepted',
+        title: context.l10n.order_status_accepted,
+        description: context.l10n.order_tracker_accepted_desc,
         icon: Icons.check_circle_rounded,
         color: Colors.blue,
       ),
       _TimelineStep(
-        title: isAr ? 'جاري التحضير' : 'Processing',
-        description: isAr
-            ? 'يتم الآن تجهيز وتعبئة طلبك بعناية'
-            : 'Your order is being processed and packed',
+        title: context.l10n.order_status_processing,
+        description: context.l10n.order_tracker_processing_desc,
         icon: Icons.inventory_2_rounded,
         color: Colors.cyan,
       ),
       _TimelineStep(
-        title: isAr ? 'تم الشحن' : 'Shipped',
-        description: isAr
-            ? 'طلبك في الطريق إليك الآن'
-            : 'Your order is out for delivery',
+        title: context.l10n.order_status_shipped,
+        description: context.l10n.order_tracker_shipped_desc,
         icon: Icons.local_shipping_rounded,
         color: Colors.indigo,
       ),
       _TimelineStep(
-        title: isAr ? 'تم التوصيل' : 'Delivered',
-        description: isAr
-            ? 'تم تسليم الطلب بنجاح. شكراً لك!'
-            : 'Order delivered successfully. Thank you!',
+        title: context.l10n.order_status_delivered,
+        description: context.l10n.order_tracker_delivered_desc,
         icon: Icons.stars_rounded,
         color: Colors.green,
       ),
@@ -164,7 +153,7 @@ class OrderTrackerWidget extends StatelessWidget {
                   ],
                 ),
               ),
-              16.kW,
+              16.horizontalSpace,
               // Right: Step Details Text
               Expanded(
                 child: Opacity(
@@ -185,7 +174,7 @@ class OrderTrackerWidget extends StatelessWidget {
                                 : cs.onSurfaceVariant,
                           ),
                         ),
-                        4.kH,
+                        4.verticalSpace,
                         Text(
                           step.description,
                           style: tt.bodySmall?.copyWith(

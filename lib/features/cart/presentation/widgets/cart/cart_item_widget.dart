@@ -219,6 +219,8 @@ class CartItemWidget extends StatelessWidget {
         ? originalPrice * (1 - (item.offers!.first.discountPercentage / 100))
         : originalPrice;
 
+    final discountedTotal = discountedPrice * item.quantity;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -227,7 +229,7 @@ class CartItemWidget extends StatelessWidget {
           children: [
             if (hasOffer) ...[
               Text(
-                originalPrice.toStringAsFixed(0),
+                originalPrice.toStringAsFixed(2),
                 style: tt.bodySmall?.copyWith(
                   color: cs.onSurface.withValues(alpha: 0.5),
                   decoration: TextDecoration.lineThrough,
@@ -236,7 +238,7 @@ class CartItemWidget extends StatelessWidget {
               ),
               8.horizontalSpace,
               Text(
-                discountedPrice.toStringAsFixed(0),
+                discountedPrice.toStringAsFixed(2),
                 style: tt.titleMedium?.copyWith(
                   color: cs.primary,
                   fontWeight: FontWeight.bold,
@@ -264,7 +266,7 @@ class CartItemWidget extends StatelessWidget {
               ),
             ] else ...[
               Text(
-                originalPrice.toStringAsFixed(0),
+                originalPrice.toStringAsFixed(2),
                 style: tt.titleMedium?.copyWith(
                   color: cs.primary,
                   fontWeight: FontWeight.bold,
@@ -280,39 +282,41 @@ class CartItemWidget extends StatelessWidget {
         ),
         4.verticalSpace,
         // Total price line
-        Row(
-          children: [
-            Text(
-              context.l10n.cart_total_price,
-              style: tt.bodySmall?.copyWith(
-                color: cs.onSurface.withValues(alpha: 0.7),
-              ),
-            ),
-            4.horizontalSpace,
-            Text(
-              '${item.totalPrice.toStringAsFixed(0)} ${context.l10n.shared_currency_egp}',
-              style: tt.bodyMedium?.copyWith(
-                color: hasOffer
-                    ? cs.onSurface.withValues(alpha: 0.5)
-                    : cs.onSurface,
-                fontWeight: FontWeight.w600,
-                decoration: hasOffer ? TextDecoration.lineThrough : null,
-                decorationColor:
-                    hasOffer ? cs.onSurface.withValues(alpha: 0.5) : null,
-              ),
-            ),
-            8.horizontalSpace,
-            Text(
-              '(${item.quantity} ${context.l10n.cart_items})',
-              style: tt.bodySmall?.copyWith(
-                color: cs.onSurface.withValues(alpha: 0.5),
-              ),
-            ),
-          ],
-        ),
+        // Wrap(
+        //   crossAxisAlignment: WrapCrossAlignment.center,
+        //   spacing: 4.w,
+        //   children: [
+        //     Text(
+        //       context.l10n.cart_total_price,
+        //       style: tt.bodySmall?.copyWith(
+        //         color: cs.onSurface.withValues(alpha: 0.7),
+        //       ),
+        //     ),
+        //     // Text(
+        //     //   '${originalTotal.toStringAsFixed(2)} ${context.l10n.shared_currency_egp}',
+        //     //   style: tt.bodyMedium?.copyWith(
+        //     //     color: hasOffer
+        //     //         ? cs.onSurface.withValues(alpha: 0.5)
+        //     //         : cs.onSurface,
+        //     //     fontWeight: FontWeight.w600,
+        //     //     decoration: hasOffer ? TextDecoration.lineThrough : null,
+        //     //     decorationColor:
+        //     //         hasOffer ? cs.onSurface.withValues(alpha: 0.5) : null,
+        //     //   ),
+        //     // ),
+        //     // Text(
+        //     //   '(${item.quantity} ${context.l10n.cart_items})',
+        //     //   style: tt.bodySmall?.copyWith(
+        //     //     color: cs.onSurface.withValues(alpha: 0.5),
+        //     //   ),
+        //     // ),
+        //   ],
+        // ),
         if (hasOffer) ...[
           2.verticalSpace,
-          Row(
+          Wrap(
+            crossAxisAlignment: WrapCrossAlignment.center,
+            spacing: 4.w,
             children: [
               Text(
                 context.l10n.cart_total_after_discount,
@@ -321,9 +325,8 @@ class CartItemWidget extends StatelessWidget {
                   fontWeight: FontWeight.w500,
                 ),
               ),
-              4.horizontalSpace,
               Text(
-                '${(discountedPrice * item.quantity).toStringAsFixed(0)} ${context.l10n.shared_currency_egp}',
+                '${discountedTotal.toStringAsFixed(2)} ${context.l10n.shared_currency_egp}',
                 style: tt.bodyMedium?.copyWith(
                   color: cs.primary,
                   fontWeight: FontWeight.bold,

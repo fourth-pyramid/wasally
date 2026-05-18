@@ -75,7 +75,7 @@ class AppButton extends StatelessWidget {
     final (bg, fg, border) = switch (variant) {
       ButtonVariant.primary => (
           color ?? cs.primary,
-          color ?? cs.onPrimary,
+          textColor ?? cs.onPrimary,
           null
         ),
       ButtonVariant.secondary => (

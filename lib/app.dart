@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/favorite/presentation/bloc/favorite_bloc.dart';
 import 'package:wassaly/features/favorite/presentation/bloc/favorite_state.dart';
@@ -17,6 +18,7 @@ class App extends StatelessWidget {
 
   Widget _buildMaterialApp(
       BuildContext context, ThemeMode themeMode, String language) {
+    Intl.defaultLocale = language;
     return MaterialApp.router(
       key: ValueKey(language),
       onGenerateTitle: (context) => context.l10n.app_title,

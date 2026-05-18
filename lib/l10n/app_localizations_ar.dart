@@ -110,6 +110,21 @@ class SAr extends S {
   String get errors_invalid_sub_category => 'فئة فرعية غير صالحة';
 
   @override
+  String get nav_nav_home => 'الرئيسية';
+
+  @override
+  String get nav_nav_category => 'الفئات';
+
+  @override
+  String get nav_nav_cart => 'السلة';
+
+  @override
+  String get nav_nav_favorite => 'المفضلة';
+
+  @override
+  String get nav_nav_profile => 'الحساب';
+
+  @override
   String get home_home_title => 'الرئيسية';
 
   @override
@@ -140,21 +155,6 @@ class SAr extends S {
   String get home_no_sub_categories => 'لا توجد فئات فرعية';
 
   @override
-  String get nav_nav_home => 'الرئيسية';
-
-  @override
-  String get nav_nav_category => 'الفئات';
-
-  @override
-  String get nav_nav_cart => 'السلة';
-
-  @override
-  String get nav_nav_favorite => 'المفضلة';
-
-  @override
-  String get nav_nav_profile => 'الحساب';
-
-  @override
   String get search_search_hint => 'ابحث عن المنتجات والخدمات';
 
   @override
@@ -168,6 +168,64 @@ class SAr extends S {
 
   @override
   String get category_category_subtitle => 'استكشف فئات منتجاتنا';
+
+  @override
+  String get product_details_title => 'تفاصيل المنتج';
+
+  @override
+  String get product_details_description => 'الوصف';
+
+  @override
+  String get product_details_reviews => 'آراء العملاء';
+
+  @override
+  String get product_details_brand => 'العلامة التجارية';
+
+  @override
+  String get product_details_sub_category => 'الفئة الفرعية';
+
+  @override
+  String get product_details_offer => 'عرض';
+
+  @override
+  String get product_details_discount => 'خصم';
+
+  @override
+  String get product_details_related_products => 'منتجات مماثلة';
+
+  @override
+  String get product_details_no_related_products =>
+      'لم يتم العثور على منتجات مماثلة';
+
+  @override
+  String get product_details_show_more => 'عرض المزيد';
+
+  @override
+  String get product_details_all_reviews => 'كل التقييمات';
+
+  @override
+  String get product_details_add_review => 'أضف تقييماً';
+
+  @override
+  String get product_details_edit_review => 'تعديل التقييم';
+
+  @override
+  String get product_details_review_comment_hint => 'اكتب تقييمك';
+
+  @override
+  String get product_details_review_comment_required => 'يرجى كتابة تقييمك';
+
+  @override
+  String get product_details_review_created => 'تم إضافة التقييم بنجاح';
+
+  @override
+  String get product_details_review_updated => 'تم تحديث التقييم بنجاح';
+
+  @override
+  String get product_details_review_options => 'خيارات التقييم';
+
+  @override
+  String get product_details_edit_time_expired => 'انتهى وقت التعديل';
 
   @override
   String get cart_cart_title => 'السلة';
@@ -289,64 +347,6 @@ class SAr extends S {
 
   @override
   String get favorite_services => 'الخدمات';
-
-  @override
-  String get product_details_title => 'تفاصيل المنتج';
-
-  @override
-  String get product_details_description => 'الوصف';
-
-  @override
-  String get product_details_reviews => 'آراء العملاء';
-
-  @override
-  String get product_details_brand => 'العلامة التجارية';
-
-  @override
-  String get product_details_sub_category => 'الفئة الفرعية';
-
-  @override
-  String get product_details_offer => 'عرض';
-
-  @override
-  String get product_details_discount => 'خصم';
-
-  @override
-  String get product_details_related_products => 'منتجات مماثلة';
-
-  @override
-  String get product_details_no_related_products =>
-      'لم يتم العثور على منتجات مماثلة';
-
-  @override
-  String get product_details_show_more => 'عرض المزيد';
-
-  @override
-  String get product_details_all_reviews => 'كل التقييمات';
-
-  @override
-  String get product_details_add_review => 'أضف تقييماً';
-
-  @override
-  String get product_details_edit_review => 'تعديل التقييم';
-
-  @override
-  String get product_details_review_comment_hint => 'اكتب تقييمك';
-
-  @override
-  String get product_details_review_comment_required => 'يرجى كتابة تقييمك';
-
-  @override
-  String get product_details_review_created => 'تم إضافة التقييم بنجاح';
-
-  @override
-  String get product_details_review_updated => 'تم تحديث التقييم بنجاح';
-
-  @override
-  String get product_details_review_options => 'خيارات التقييم';
-
-  @override
-  String get product_details_edit_time_expired => 'انتهى وقت التعديل';
 
   @override
   String get profile_my_account => 'حسابي';
@@ -541,14 +541,13 @@ class SAr extends S {
       'كلمة المرور الحالية مطلوبة لتغيير كلمة المرور';
 
   @override
-  String get profile_no_addresses => 'No addresses yet';
+  String get profile_no_addresses => 'لا توجد عناوين بعد';
 
   @override
-  String get profile_add_address_hint =>
-      'Add your first address to get started';
+  String get profile_add_address_hint => 'أضف عنوانك الأول للبدء';
 
   @override
-  String get profile_addresses_error => 'Failed to load addresses';
+  String get profile_addresses_error => 'فشل تحميل العناوين';
 
   @override
   String get profile_select_language => 'اختر اللغة';
@@ -769,6 +768,82 @@ class SAr extends S {
   String get auth_reset_password_button => 'إعادة تعيين كلمة المرور';
 
   @override
+  String get no_cached_user => 'لم يتم العثور على بيانات المستخدم';
+
+  @override
+  String get reset_password_strength_weak => 'ضعيف';
+
+  @override
+  String get reset_password_strength_medium => 'متوسط';
+
+  @override
+  String get reset_password_strength_strong => 'قوي';
+
+  @override
+  String get reset_password_new_password_hint => 'أدخل كلمة المرور الجديدة';
+
+  @override
+  String get reset_password_confirm_password_hint => 'أكد كلمة المرور الجديدة';
+
+  @override
+  String get reset_password_reset_button => 'إعادة تعيين كلمة المرور';
+
+  @override
+  String get reset_password_back_to_login => 'العودة لتسجيل الدخول';
+
+  @override
+  String get otp_verification_success => 'تم تأكيد الهاتف بنجاح!';
+
+  @override
+  String get otp_resend_success => 'تم إعادة إرسال الرمز بنجاح!';
+
+  @override
+  String get otp_verify_now => 'تحقق الآن';
+
+  @override
+  String get reset_password_success_message =>
+      'تم إعادة تعيين كلمة المرور بنجاح!';
+
+  @override
+  String get reset_password_title => 'إعادة تعيين كلمة المرور';
+
+  @override
+  String get reset_password_subtitle => 'أدخل كلمة مرور جديدة وقوية';
+
+  @override
+  String get reset_password_requirements_title =>
+      'يجب أن تستوفي كلمة المرور المتطلبات التالية:';
+
+  @override
+  String get reset_password_req_min_length => '6 أحرف على الأقل';
+
+  @override
+  String get reset_password_req_match => 'يجب أن تتطابق كلمات المرور';
+
+  @override
+  String get otp_otp_sent_to => 'تم إرسال الرمز إلى ';
+
+  @override
+  String get otp_didnt_receive_code => 'لم تستلم الرمز؟';
+
+  @override
+  String get otp_resend_code => 'إعادة إرسال الرمز';
+
+  @override
+  String get reset_password_strength_very_weak => 'ضعيف جداً';
+
+  @override
+  String get reset_password_strength_fair => 'مقبول';
+
+  @override
+  String get reset_password_strength_good => 'جيد';
+
+  @override
+  String otp_retry_after(int seconds) {
+    return 'أعد المحاولة بعد $seconds ثانية';
+  }
+
+  @override
   String get checkout_title => 'الدفع';
 
   @override
@@ -848,6 +923,319 @@ class SAr extends S {
 
   @override
   String get checkout_remove_coupon => 'إزالة';
+
+  @override
+  String get order_items_count => 'عدد العناصر';
+
+  @override
+  String get order_date => 'التاريخ';
+
+  @override
+  String get order_payment_method => 'طريقة الدفع';
+
+  @override
+  String get order_payment_cash => 'نقدي';
+
+  @override
+  String get order_payment_online => 'أونلاين';
+
+  @override
+  String get order_no_orders_msg => 'ليس لديك أي طلبات بعد';
+
+  @override
+  String get order_no_orders_title => 'لا توجد طلبات';
+
+  @override
+  String get order_total_price => 'السعر الإجمالي';
+
+  @override
+  String get order_products => 'المنتجات';
+
+  @override
+  String get order_services => 'الخدمات';
+
+  @override
+  String get order_status_pending => 'قيد الانتظار';
+
+  @override
+  String get order_status_accepted => 'مقبول';
+
+  @override
+  String get order_status_confirmed => 'مؤكد';
+
+  @override
+  String get order_status_processing => 'قيد التنفيذ';
+
+  @override
+  String get order_status_shipped => 'تم الشحن';
+
+  @override
+  String get order_status_delivered => 'تم التوصيل';
+
+  @override
+  String get order_status_completed => 'مكتمل';
+
+  @override
+  String get order_status_cancelled => 'ملغي';
+
+  @override
+  String get order_cancel_title => 'إلغاء الطلب';
+
+  @override
+  String get order_cancel_confirm_msg =>
+      'هل أنت متأكد من رغبتك في إلغاء هذا الطلب؟';
+
+  @override
+  String get order_delete_title => 'حذف الطلب';
+
+  @override
+  String get order_delete_confirm_msg =>
+      'هل أنت متأكد من رغبتك في حذف هذا الطلب؟ لا يمكن التراجع عن هذا الإجراء.';
+
+  @override
+  String get order_delete_success => 'تم حذف الطلب بنجاح';
+
+  @override
+  String get order_tracker_pending_desc => 'تم استلام طلبك وبانتظار المراجعة';
+
+  @override
+  String get order_tracker_accepted_desc => 'تمت الموافقة على طلبك من المتجر';
+
+  @override
+  String get order_tracker_processing_desc =>
+      'يتم الآن تجهيز وتعبئة طلبك بعناية';
+
+  @override
+  String get order_tracker_shipped_desc => 'طلبك في الطريق إليك الآن';
+
+  @override
+  String get order_tracker_delivered_desc => 'تم تسليم الطلب بنجاح. شكراً لك!';
+
+  @override
+  String get order_details_number => 'رقم الطلب';
+
+  @override
+  String get order_details_date_time => 'التاريخ والوقت';
+
+  @override
+  String get order_details_payment_cod => 'كاش عند الاستلام';
+
+  @override
+  String get order_details_cancelled_title => 'تم إلغاء هذا الطلب';
+
+  @override
+  String get order_details_cancelled_msg =>
+      'تم إلغاء طلبك. يرجى التواصل مع الدعم الفني لمزيد من التفاصيل.';
+
+  @override
+  String get order_details_customer_name => 'اسم العميل';
+
+  @override
+  String get order_details_customer_phone => 'رقم الهاتف';
+
+  @override
+  String get order_details_address => 'عنوان التوصيل';
+
+  @override
+  String get order_details_unknown_product => 'منتج غير معروف';
+
+  @override
+  String get order_details_subtotal => 'المجموع الفرعي';
+
+  @override
+  String get order_details_delivery_fees => 'مصاريف التوصيل';
+
+  @override
+  String get order_details_discount => 'قيمة الخصم';
+
+  @override
+  String get order_details_total => 'الإجمالي الكلي';
+
+  @override
+  String get order_details_title => 'تفاصيل الطلب';
+
+  @override
+  String get order_details_status => 'حالة الطلب';
+
+  @override
+  String get order_details_delivery_info => 'معلومات التوصيل والعميل';
+
+  @override
+  String get order_details_ordered_products => 'المنتجات المطلوبة';
+
+  @override
+  String get order_details_payment_summary => 'ملخص الدفع';
+
+  @override
+  String get order_details_actions => 'الإجراءات';
+
+  @override
+  String get order_details_cancel_btn => 'إلغاء الطلب';
+
+  @override
+  String get order_details_update_btn => 'تعديل الطلب';
+
+  @override
+  String get order_details_action_success => 'تمت العملية بنجاح';
+
+  @override
+  String get order_update_title => 'تعديل بيانات الطلب';
+
+  @override
+  String get order_update_name_label => 'اسم العميل';
+
+  @override
+  String get order_update_phone_label => 'رقم الهاتف';
+
+  @override
+  String get order_update_required => 'مطلوب';
+
+  @override
+  String order_update_current_address(String address) {
+    return 'العنوان الحالي: $address';
+  }
+
+  @override
+  String get order_update_save => 'حفظ التعديلات';
+
+  @override
+  String get service_details_title => 'تفاصيل الخدمة';
+
+  @override
+  String get service_details_description => 'وصف الخدمة';
+
+  @override
+  String get service_details_provider => 'مقدم الخدمة';
+
+  @override
+  String get service_details_book_now => 'احجز الآن';
+
+  @override
+  String get service_details_no_available_days => 'لا توجد مواعيد متاحة حالياً';
+
+  @override
+  String get service_details_available_days => 'الأيام المتاحة';
+
+  @override
+  String get service_details_available_times => 'الأوقات المتاحة';
+
+  @override
+  String get service_booking_title => 'حجز الخدمة';
+
+  @override
+  String get service_booking_customer_info => 'بيانات العميل';
+
+  @override
+  String get service_booking_name => 'الاسم بالكامل';
+
+  @override
+  String get service_booking_phone => 'رقم الهاتف';
+
+  @override
+  String get service_booking_email => 'البريد الإلكتروني';
+
+  @override
+  String get service_booking_problem => 'وصف المشكلة';
+
+  @override
+  String get service_booking_problem_hint => 'اشرح المشكلة التي تواجهها هنا...';
+
+  @override
+  String get service_booking_address_info => 'بيانات العنوان';
+
+  @override
+  String get service_booking_selected_day => 'اليوم المختار';
+
+  @override
+  String get service_booking_selected_time => 'الوقت المختار';
+
+  @override
+  String get service_booking_confirm => 'تأكيد الحجز';
+
+  @override
+  String get service_booking_success_title => 'تم الحجز بنجاح!';
+
+  @override
+  String get service_booking_success_msg =>
+      'تم استلام طلب الحجز الخاص بك بنجاح، وسيتواصل معك مقدم الخدمة قريباً.';
+
+  @override
+  String get service_booking_id => 'رقم الحجز';
+
+  @override
+  String get service_booking_service => 'الخدمة';
+
+  @override
+  String get service_booking_provider => 'مقدم الخدمة';
+
+  @override
+  String get service_booking_day => 'اليوم';
+
+  @override
+  String get service_booking_time => 'الوقت';
+
+  @override
+  String get service_booking_go_home => 'العودة للرئيسية';
+
+  @override
+  String get service_booking_view_orders => 'مشاهدة طلباتي';
+
+  @override
+  String get provider_details_title => 'تفاصيل مقدم الخدمة';
+
+  @override
+  String get provider_details_working_hours => 'مواعيد العمل';
+
+  @override
+  String get provider_details_days => 'أيام العمل';
+
+  @override
+  String get provider_details_time => 'ساعات العمل';
+
+  @override
+  String get provider_details_price_from => 'يبدأ السعر من';
+
+  @override
+  String get provider_details_services => 'الخدمات المقدمة';
+
+  @override
+  String get provider_details_contact_info => 'معلومات الاتصال';
+
+  @override
+  String get provider_details_contact_person => 'شخص الاتصال';
+
+  @override
+  String get provider_details_phone => 'رقم الهاتف';
+
+  @override
+  String get provider_details_email => 'البريد الإلكتروني';
+
+  @override
+  String get provider_details_status => 'الحالة';
+
+  @override
+  String get provider_details_status_active => 'نشط';
+
+  @override
+  String get provider_details_status_inactive => 'غير نشط';
+
+  @override
+  String get provider_details_successful_orders => 'الطلبات الناجحة';
+
+  @override
+  String get brands => 'البراندات';
+
+  @override
+  String get no_brands => 'لا يوجد براندات مضافة حالياً';
+
+  @override
+  String get brand_products => 'منتجات البراند';
+
+  @override
+  String get no_brand_products => 'لا يوجد منتجات في هذا البراند حالياً';
+
+  @override
+  String get offers => 'العروض';
 
   @override
   String get privacy_policy_title => 'سياسة الخصوصية';
@@ -1023,271 +1411,52 @@ class SAr extends S {
   String get terms_of_service_footer_note => 'شكراً لاستخدامك وصلي!';
 
   @override
-  String get order_items_count => 'عدد العناصر';
+  String get booking_details_title => 'تفاصيل الحجز';
 
   @override
-  String get order_date => 'التاريخ';
+  String get booking_delete_title => 'حذف الحجز';
 
   @override
-  String get order_payment_method => 'طريقة الدفع';
+  String get booking_delete_confirm_msg =>
+      'هل أنت متأكد من رغبتك في حذف هذا الحجز؟ لا يمكن التراجع عن هذا الإجراء.';
 
   @override
-  String get order_payment_cash => 'نقدي';
+  String get booking_delete_success => 'تم حذف الحجز بنجاح';
 
   @override
-  String get order_payment_online => 'أونلاين';
+  String get booking_details_action_success => 'تمت العملية بنجاح';
 
   @override
-  String get order_no_orders_msg => 'ليس لديك أي طلبات بعد';
+  String get booking_details_cancel_btn => 'إلغاء الحجز';
 
   @override
-  String get order_no_orders_title => 'لا توجد طلبات';
+  String get booking_cancel_title => 'إلغاء الحجز';
 
   @override
-  String get order_total_price => 'السعر الإجمالي';
+  String get booking_cancel_confirm_msg =>
+      'هل أنت متأكد من رغبتك في إلغاء هذا الحجز؟';
 
   @override
-  String get order_products => 'المنتجات';
+  String get booking_details_update_btn => 'تعديل الحجز';
 
   @override
-  String get order_services => 'الخدمات';
+  String get booking_update_title => 'تعديل بيانات الحجز';
 
   @override
-  String get order_status_pending => 'قيد الانتظار';
+  String get booking_update_problem_label => 'وصف المشكلة';
 
   @override
-  String get order_status_accepted => 'مقبول';
+  String get booking_update_phone_label => 'رقم الهاتف';
 
   @override
-  String get order_status_confirmed => 'مؤكد';
+  String get booking_update_save => 'حفظ التعديلات';
 
   @override
-  String get order_status_processing => 'قيد التنفيذ';
+  String get booking_details_status => 'حالة الحجز';
 
   @override
-  String get order_status_shipped => 'تم الشحن';
+  String get booking_details_info => 'معلومات العميل والخدمة';
 
   @override
-  String get order_status_delivered => 'تم التوصيل';
-
-  @override
-  String get order_status_completed => 'مكتمل';
-
-  @override
-  String get order_status_cancelled => 'ملغي';
-
-  @override
-  String get no_cached_user => 'لم يتم العثور على بيانات المستخدم';
-
-  @override
-  String get reset_password_strength_weak => 'ضعيف';
-
-  @override
-  String get reset_password_strength_medium => 'متوسط';
-
-  @override
-  String get reset_password_strength_strong => 'قوي';
-
-  @override
-  String get reset_password_new_password_hint => 'أدخل كلمة المرور الجديدة';
-
-  @override
-  String get reset_password_confirm_password_hint => 'أكد كلمة المرور الجديدة';
-
-  @override
-  String get reset_password_reset_button => 'إعادة تعيين كلمة المرور';
-
-  @override
-  String get reset_password_back_to_login => 'العودة لتسجيل الدخول';
-
-  @override
-  String get otp_verification_success => 'تم تأكيد الهاتف بنجاح!';
-
-  @override
-  String get otp_resend_success => 'تم إعادة إرسال الرمز بنجاح!';
-
-  @override
-  String get otp_verify_now => 'تحقق الآن';
-
-  @override
-  String get reset_password_success_message =>
-      'تم إعادة تعيين كلمة المرور بنجاح!';
-
-  @override
-  String get reset_password_title => 'إعادة تعيين كلمة المرور';
-
-  @override
-  String get reset_password_subtitle => 'أدخل كلمة مرور جديدة وقوية';
-
-  @override
-  String get reset_password_requirements_title =>
-      'يجب أن تستوفي كلمة المرور المتطلبات التالية:';
-
-  @override
-  String get reset_password_req_min_length => '6 أحرف على الأقل';
-
-  @override
-  String get reset_password_req_match => 'يجب أن تتطابق كلمات المرور';
-
-  @override
-  String get otp_otp_sent_to => 'تم إرسال الرمز إلى ';
-
-  @override
-  String get otp_didnt_receive_code => 'لم تستلم الرمز؟';
-
-  @override
-  String get otp_resend_code => 'إعادة إرسال الرمز';
-
-  @override
-  String get reset_password_strength_very_weak => 'ضعيف جداً';
-
-  @override
-  String get reset_password_strength_fair => 'مقبول';
-
-  @override
-  String get reset_password_strength_good => 'جيد';
-
-  @override
-  String otp_retry_after(int seconds) {
-    return 'أعد المحاولة بعد $seconds ثانية';
-  }
-
-  @override
-  String get service_details_title => 'تفاصيل الخدمة';
-
-  @override
-  String get service_details_description => 'وصف الخدمة';
-
-  @override
-  String get service_details_provider => 'مقدم الخدمة';
-
-  @override
-  String get service_details_book_now => 'احجز الآن';
-
-  @override
-  String get service_details_no_available_days => 'لا توجد مواعيد متاحة حالياً';
-
-  @override
-  String get service_details_available_days => 'الأيام المتاحة';
-
-  @override
-  String get service_details_available_times => 'الأوقات المتاحة';
-
-  @override
-  String get service_booking_title => 'حجز الخدمة';
-
-  @override
-  String get service_booking_customer_info => 'بيانات العميل';
-
-  @override
-  String get service_booking_name => 'الاسم بالكامل';
-
-  @override
-  String get service_booking_phone => 'رقم الهاتف';
-
-  @override
-  String get service_booking_email => 'البريد الإلكتروني';
-
-  @override
-  String get service_booking_problem => 'وصف المشكلة';
-
-  @override
-  String get service_booking_problem_hint => 'اشرح المشكلة التي تواجهها هنا...';
-
-  @override
-  String get service_booking_address_info => 'بيانات العنوان';
-
-  @override
-  String get service_booking_selected_day => 'اليوم المختار';
-
-  @override
-  String get service_booking_selected_time => 'الوقت المختار';
-
-  @override
-  String get service_booking_confirm => 'تأكيد الحجز';
-
-  @override
-  String get service_booking_success_title => 'تم الحجز بنجاح!';
-
-  @override
-  String get service_booking_success_msg =>
-      'تم استلام طلب الحجز الخاص بك بنجاح، وسيتواصل معك مقدم الخدمة قريباً.';
-
-  @override
-  String get service_booking_id => 'رقم الحجز';
-
-  @override
-  String get service_booking_service => 'الخدمة';
-
-  @override
-  String get service_booking_provider => 'مقدم الخدمة';
-
-  @override
-  String get service_booking_day => 'اليوم';
-
-  @override
-  String get service_booking_time => 'الوقت';
-
-  @override
-  String get service_booking_go_home => 'العودة للرئيسية';
-
-  @override
-  String get service_booking_view_orders => 'مشاهدة طلباتي';
-
-  @override
-  String get provider_details_title => 'تفاصيل مقدم الخدمة';
-
-  @override
-  String get provider_details_working_hours => 'مواعيد العمل';
-
-  @override
-  String get provider_details_days => 'أيام العمل';
-
-  @override
-  String get provider_details_time => 'ساعات العمل';
-
-  @override
-  String get provider_details_price_from => 'يبدأ السعر من';
-
-  @override
-  String get provider_details_services => 'الخدمات المقدمة';
-
-  @override
-  String get brands => 'البراندات';
-
-  @override
-  String get no_brands => 'لا يوجد براندات مضافة حالياً';
-
-  @override
-  String get brand_products => 'منتجات البراند';
-
-  @override
-  String get no_brand_products => 'لا يوجد منتجات في هذا البراند حالياً';
-
-  @override
-  String get offers => 'العروض';
-
-  @override
-  String get provider_details_contact_info => 'معلومات الاتصال';
-
-  @override
-  String get provider_details_contact_person => 'شخص الاتصال';
-
-  @override
-  String get provider_details_phone => 'رقم الهاتف';
-
-  @override
-  String get provider_details_email => 'البريد الإلكتروني';
-
-  @override
-  String get provider_details_status => 'الحالة';
-
-  @override
-  String get provider_details_status_active => 'نشط';
-
-  @override
-  String get provider_details_status_inactive => 'غير نشط';
-
-  @override
-  String get provider_details_successful_orders => 'الطلبات الناجحة';
+  String get booking_details_actions => 'الإجراءات';
 }

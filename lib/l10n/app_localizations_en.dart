@@ -110,6 +110,21 @@ class SEn extends S {
   String get errors_invalid_sub_category => 'Invalid sub-category';
 
   @override
+  String get nav_nav_home => 'Home';
+
+  @override
+  String get nav_nav_category => 'Categories';
+
+  @override
+  String get nav_nav_cart => 'Cart';
+
+  @override
+  String get nav_nav_favorite => 'Favorites';
+
+  @override
+  String get nav_nav_profile => 'Profile';
+
+  @override
   String get home_home_title => 'Home';
 
   @override
@@ -140,21 +155,6 @@ class SEn extends S {
   String get home_no_sub_categories => 'No sub-categories';
 
   @override
-  String get nav_nav_home => 'Home';
-
-  @override
-  String get nav_nav_category => 'Categories';
-
-  @override
-  String get nav_nav_cart => 'Cart';
-
-  @override
-  String get nav_nav_favorite => 'Favorites';
-
-  @override
-  String get nav_nav_profile => 'Profile';
-
-  @override
   String get search_search_hint => 'Search for products and services';
 
   @override
@@ -169,6 +169,64 @@ class SEn extends S {
 
   @override
   String get category_category_subtitle => 'Explore our product categories';
+
+  @override
+  String get product_details_title => 'Product Details';
+
+  @override
+  String get product_details_description => 'Description';
+
+  @override
+  String get product_details_reviews => 'Customer Reviews';
+
+  @override
+  String get product_details_brand => 'Brand';
+
+  @override
+  String get product_details_sub_category => 'Sub-category';
+
+  @override
+  String get product_details_offer => 'Offer';
+
+  @override
+  String get product_details_discount => 'Discount';
+
+  @override
+  String get product_details_related_products => 'Similar Products';
+
+  @override
+  String get product_details_no_related_products => 'No similar products found';
+
+  @override
+  String get product_details_show_more => 'Show more';
+
+  @override
+  String get product_details_all_reviews => 'All reviews';
+
+  @override
+  String get product_details_add_review => 'Add review';
+
+  @override
+  String get product_details_edit_review => 'Edit review';
+
+  @override
+  String get product_details_review_comment_hint => 'Write your review';
+
+  @override
+  String get product_details_review_comment_required =>
+      'Please write your review';
+
+  @override
+  String get product_details_review_created => 'Review added successfully';
+
+  @override
+  String get product_details_review_updated => 'Review updated successfully';
+
+  @override
+  String get product_details_review_options => 'Review options';
+
+  @override
+  String get product_details_edit_time_expired => 'Edit time expired';
 
   @override
   String get cart_cart_title => 'Cart';
@@ -292,64 +350,6 @@ class SEn extends S {
 
   @override
   String get favorite_services => 'Services';
-
-  @override
-  String get product_details_title => 'Product Details';
-
-  @override
-  String get product_details_description => 'Description';
-
-  @override
-  String get product_details_reviews => 'Customer Reviews';
-
-  @override
-  String get product_details_brand => 'Brand';
-
-  @override
-  String get product_details_sub_category => 'Sub-category';
-
-  @override
-  String get product_details_offer => 'Offer';
-
-  @override
-  String get product_details_discount => 'Discount';
-
-  @override
-  String get product_details_related_products => 'Similar Products';
-
-  @override
-  String get product_details_no_related_products => 'No similar products found';
-
-  @override
-  String get product_details_show_more => 'Show more';
-
-  @override
-  String get product_details_all_reviews => 'All reviews';
-
-  @override
-  String get product_details_add_review => 'Add review';
-
-  @override
-  String get product_details_edit_review => 'Edit review';
-
-  @override
-  String get product_details_review_comment_hint => 'Write your review';
-
-  @override
-  String get product_details_review_comment_required =>
-      'Please write your review';
-
-  @override
-  String get product_details_review_created => 'Review added successfully';
-
-  @override
-  String get product_details_review_updated => 'Review updated successfully';
-
-  @override
-  String get product_details_review_options => 'Review options';
-
-  @override
-  String get product_details_edit_time_expired => 'Edit time expired';
 
   @override
   String get profile_my_account => 'My Account';
@@ -771,6 +771,82 @@ class SEn extends S {
   String get auth_reset_password_button => 'Reset Password';
 
   @override
+  String get no_cached_user => 'No user data found';
+
+  @override
+  String get reset_password_strength_weak => 'Weak';
+
+  @override
+  String get reset_password_strength_medium => 'Medium';
+
+  @override
+  String get reset_password_strength_strong => 'Strong';
+
+  @override
+  String get reset_password_new_password_hint => 'Enter your new password';
+
+  @override
+  String get reset_password_confirm_password_hint =>
+      'Confirm your new password';
+
+  @override
+  String get reset_password_reset_button => 'Reset Password';
+
+  @override
+  String get reset_password_back_to_login => 'Back to login';
+
+  @override
+  String get otp_verification_success => 'Phone verified successfully!';
+
+  @override
+  String get otp_resend_success => 'OTP resent successfully!';
+
+  @override
+  String get otp_verify_now => 'Verify Now';
+
+  @override
+  String get reset_password_success_message => 'Password reset successfully!';
+
+  @override
+  String get reset_password_title => 'Reset Password';
+
+  @override
+  String get reset_password_subtitle => 'Enter a strong new password';
+
+  @override
+  String get reset_password_requirements_title =>
+      'Password must meet the following requirements:';
+
+  @override
+  String get reset_password_req_min_length => 'At least 6 characters long';
+
+  @override
+  String get reset_password_req_match => 'Passwords must match';
+
+  @override
+  String get otp_otp_sent_to => 'OTP sent to ';
+
+  @override
+  String get otp_didnt_receive_code => 'Didn\'t receive code?';
+
+  @override
+  String get otp_resend_code => 'Resend Code';
+
+  @override
+  String get reset_password_strength_very_weak => 'Very Weak';
+
+  @override
+  String get reset_password_strength_fair => 'Fair';
+
+  @override
+  String get reset_password_strength_good => 'Good';
+
+  @override
+  String otp_retry_after(int seconds) {
+    return 'Retry after ${seconds}s';
+  }
+
+  @override
   String get checkout_title => 'Checkout';
 
   @override
@@ -851,6 +927,321 @@ class SEn extends S {
 
   @override
   String get checkout_remove_coupon => 'Remove';
+
+  @override
+  String get order_items_count => 'Items Count';
+
+  @override
+  String get order_date => 'Date';
+
+  @override
+  String get order_payment_method => 'Payment Method';
+
+  @override
+  String get order_payment_cash => 'Cash';
+
+  @override
+  String get order_payment_online => 'Online';
+
+  @override
+  String get order_no_orders_msg => 'You don\'t have any orders yet';
+
+  @override
+  String get order_no_orders_title => 'No Orders';
+
+  @override
+  String get order_total_price => 'Total Price';
+
+  @override
+  String get order_products => 'Products';
+
+  @override
+  String get order_services => 'Services';
+
+  @override
+  String get order_status_pending => 'Pending';
+
+  @override
+  String get order_status_accepted => 'Accepted';
+
+  @override
+  String get order_status_confirmed => 'Confirmed';
+
+  @override
+  String get order_status_processing => 'Processing';
+
+  @override
+  String get order_status_shipped => 'Shipped';
+
+  @override
+  String get order_status_delivered => 'Delivered';
+
+  @override
+  String get order_status_completed => 'Completed';
+
+  @override
+  String get order_status_cancelled => 'Cancelled';
+
+  @override
+  String get order_cancel_title => 'Cancel Order';
+
+  @override
+  String get order_cancel_confirm_msg =>
+      'Are you sure you want to cancel this order?';
+
+  @override
+  String get order_delete_title => 'Delete Order';
+
+  @override
+  String get order_delete_confirm_msg =>
+      'Are you sure you want to delete this order? This action cannot be undone.';
+
+  @override
+  String get order_delete_success => 'Order deleted successfully';
+
+  @override
+  String get order_tracker_pending_desc => 'Your order is pending confirmation';
+
+  @override
+  String get order_tracker_accepted_desc => 'Your order has been accepted';
+
+  @override
+  String get order_tracker_processing_desc =>
+      'Your order is being processed and packed';
+
+  @override
+  String get order_tracker_shipped_desc => 'Your order is out for delivery';
+
+  @override
+  String get order_tracker_delivered_desc =>
+      'Order delivered successfully. Thank you!';
+
+  @override
+  String get order_details_number => 'Order Number';
+
+  @override
+  String get order_details_date_time => 'Date & Time';
+
+  @override
+  String get order_details_payment_cod => 'Cash on Delivery';
+
+  @override
+  String get order_details_cancelled_title => 'This order has been cancelled';
+
+  @override
+  String get order_details_cancelled_msg =>
+      'Your order was cancelled. Please contact support for more details.';
+
+  @override
+  String get order_details_customer_name => 'Customer Name';
+
+  @override
+  String get order_details_customer_phone => 'Phone Number';
+
+  @override
+  String get order_details_address => 'Delivery Address';
+
+  @override
+  String get order_details_unknown_product => 'Unknown Product';
+
+  @override
+  String get order_details_subtotal => 'Subtotal';
+
+  @override
+  String get order_details_delivery_fees => 'Delivery Fees';
+
+  @override
+  String get order_details_discount => 'Discount';
+
+  @override
+  String get order_details_total => 'Total Price';
+
+  @override
+  String get order_details_title => 'Order Details';
+
+  @override
+  String get order_details_status => 'Order Status';
+
+  @override
+  String get order_details_delivery_info => 'Delivery & Customer Info';
+
+  @override
+  String get order_details_ordered_products => 'Ordered Products';
+
+  @override
+  String get order_details_payment_summary => 'Payment Summary';
+
+  @override
+  String get order_details_actions => 'Actions';
+
+  @override
+  String get order_details_cancel_btn => 'Cancel Order';
+
+  @override
+  String get order_details_update_btn => 'Update Order';
+
+  @override
+  String get order_details_action_success => 'Action completed successfully';
+
+  @override
+  String get order_update_title => 'Update Order Details';
+
+  @override
+  String get order_update_name_label => 'Customer Name';
+
+  @override
+  String get order_update_phone_label => 'Phone Number';
+
+  @override
+  String get order_update_required => 'Required';
+
+  @override
+  String order_update_current_address(String address) {
+    return 'Current Address: $address';
+  }
+
+  @override
+  String get order_update_save => 'Save Changes';
+
+  @override
+  String get service_details_title => 'Service Details';
+
+  @override
+  String get service_details_description => 'Description';
+
+  @override
+  String get service_details_provider => 'Provider';
+
+  @override
+  String get service_details_book_now => 'Book Now';
+
+  @override
+  String get service_details_no_available_days =>
+      'No available slots at the moment';
+
+  @override
+  String get service_details_available_days => 'Available Days';
+
+  @override
+  String get service_details_available_times => 'Available Times';
+
+  @override
+  String get service_booking_title => 'Service Booking';
+
+  @override
+  String get service_booking_customer_info => 'Customer Information';
+
+  @override
+  String get service_booking_name => 'Full Name';
+
+  @override
+  String get service_booking_phone => 'Phone Number';
+
+  @override
+  String get service_booking_email => 'Email Address';
+
+  @override
+  String get service_booking_problem => 'Problem Description';
+
+  @override
+  String get service_booking_problem_hint => 'Explain your problem here...';
+
+  @override
+  String get service_booking_address_info => 'Address Information';
+
+  @override
+  String get service_booking_selected_day => 'Selected Day';
+
+  @override
+  String get service_booking_selected_time => 'Selected Time';
+
+  @override
+  String get service_booking_confirm => 'Confirm Booking';
+
+  @override
+  String get service_booking_success_title => 'Booking Successful!';
+
+  @override
+  String get service_booking_success_msg =>
+      'Your booking request has been received, the provider will contact you soon.';
+
+  @override
+  String get service_booking_id => 'Booking ID';
+
+  @override
+  String get service_booking_service => 'Service';
+
+  @override
+  String get service_booking_provider => 'Provider';
+
+  @override
+  String get service_booking_day => 'Day';
+
+  @override
+  String get service_booking_time => 'Time';
+
+  @override
+  String get service_booking_go_home => 'Go Home';
+
+  @override
+  String get service_booking_view_orders => 'View My Bookings';
+
+  @override
+  String get provider_details_title => 'Provider Details';
+
+  @override
+  String get provider_details_working_hours => 'Working Hours';
+
+  @override
+  String get provider_details_days => 'Working Days';
+
+  @override
+  String get provider_details_time => 'Working Hours';
+
+  @override
+  String get provider_details_price_from => 'Price Starts From';
+
+  @override
+  String get provider_details_services => 'Offered Services';
+
+  @override
+  String get provider_details_contact_info => 'Contact Information';
+
+  @override
+  String get provider_details_contact_person => 'Contact Person';
+
+  @override
+  String get provider_details_phone => 'Phone Number';
+
+  @override
+  String get provider_details_email => 'Email Address';
+
+  @override
+  String get provider_details_status => 'Status';
+
+  @override
+  String get provider_details_status_active => 'Active';
+
+  @override
+  String get provider_details_status_inactive => 'Inactive';
+
+  @override
+  String get provider_details_successful_orders => 'Successful Orders';
+
+  @override
+  String get brands => 'Brands';
+
+  @override
+  String get no_brands => 'No brands added yet';
+
+  @override
+  String get brand_products => 'Brand Products';
+
+  @override
+  String get no_brand_products => 'No products in this brand yet';
+
+  @override
+  String get offers => 'Offers';
 
   @override
   String get privacy_policy_title => 'Privacy Policy';
@@ -1027,272 +1418,52 @@ class SEn extends S {
   String get terms_of_service_footer_note => 'Thank you for using Wassaly!';
 
   @override
-  String get order_items_count => 'Items Count';
+  String get booking_details_title => 'Booking Details';
 
   @override
-  String get order_date => 'Date';
+  String get booking_delete_title => 'Delete Booking';
 
   @override
-  String get order_payment_method => 'Payment Method';
+  String get booking_delete_confirm_msg =>
+      'Are you sure you want to delete this booking? This action cannot be undone.';
 
   @override
-  String get order_payment_cash => 'Cash';
+  String get booking_delete_success => 'Booking deleted successfully';
 
   @override
-  String get order_payment_online => 'Online';
+  String get booking_details_action_success => 'Action completed successfully';
 
   @override
-  String get order_no_orders_msg => 'You don\'t have any orders yet';
+  String get booking_details_cancel_btn => 'Cancel Booking';
 
   @override
-  String get order_no_orders_title => 'No Orders';
+  String get booking_cancel_title => 'Cancel Booking';
 
   @override
-  String get order_total_price => 'Total Price';
+  String get booking_cancel_confirm_msg =>
+      'Are you sure you want to cancel this booking?';
 
   @override
-  String get order_products => 'Products';
+  String get booking_details_update_btn => 'Update Booking';
 
   @override
-  String get order_services => 'Services';
+  String get booking_update_title => 'Update Booking Info';
 
   @override
-  String get order_status_pending => 'Pending';
+  String get booking_update_problem_label => 'Problem Description';
 
   @override
-  String get order_status_accepted => 'Accepted';
+  String get booking_update_phone_label => 'Customer Phone';
 
   @override
-  String get order_status_confirmed => 'Confirmed';
+  String get booking_update_save => 'Save Changes';
 
   @override
-  String get order_status_processing => 'Processing';
+  String get booking_details_status => 'Booking Status';
 
   @override
-  String get order_status_shipped => 'Shipped';
+  String get booking_details_info => 'Customer & Service Info';
 
   @override
-  String get order_status_delivered => 'Delivered';
-
-  @override
-  String get order_status_completed => 'Completed';
-
-  @override
-  String get order_status_cancelled => 'Cancelled';
-
-  @override
-  String get no_cached_user => 'No user data found';
-
-  @override
-  String get reset_password_strength_weak => 'Weak';
-
-  @override
-  String get reset_password_strength_medium => 'Medium';
-
-  @override
-  String get reset_password_strength_strong => 'Strong';
-
-  @override
-  String get reset_password_new_password_hint => 'Enter your new password';
-
-  @override
-  String get reset_password_confirm_password_hint =>
-      'Confirm your new password';
-
-  @override
-  String get reset_password_reset_button => 'Reset Password';
-
-  @override
-  String get reset_password_back_to_login => 'Back to login';
-
-  @override
-  String get otp_verification_success => 'Phone verified successfully!';
-
-  @override
-  String get otp_resend_success => 'OTP resent successfully!';
-
-  @override
-  String get otp_verify_now => 'Verify Now';
-
-  @override
-  String get reset_password_success_message => 'Password reset successfully!';
-
-  @override
-  String get reset_password_title => 'Reset Password';
-
-  @override
-  String get reset_password_subtitle => 'Enter a strong new password';
-
-  @override
-  String get reset_password_requirements_title =>
-      'Password must meet the following requirements:';
-
-  @override
-  String get reset_password_req_min_length => 'At least 6 characters long';
-
-  @override
-  String get reset_password_req_match => 'Passwords must match';
-
-  @override
-  String get otp_otp_sent_to => 'OTP sent to ';
-
-  @override
-  String get otp_didnt_receive_code => 'Didn\'t receive code?';
-
-  @override
-  String get otp_resend_code => 'Resend Code';
-
-  @override
-  String get reset_password_strength_very_weak => 'Very Weak';
-
-  @override
-  String get reset_password_strength_fair => 'Fair';
-
-  @override
-  String get reset_password_strength_good => 'Good';
-
-  @override
-  String otp_retry_after(int seconds) {
-    return 'Retry after ${seconds}s';
-  }
-
-  @override
-  String get service_details_title => 'Service Details';
-
-  @override
-  String get service_details_description => 'Description';
-
-  @override
-  String get service_details_provider => 'Provider';
-
-  @override
-  String get service_details_book_now => 'Book Now';
-
-  @override
-  String get service_details_no_available_days =>
-      'No available slots at the moment';
-
-  @override
-  String get service_details_available_days => 'Available Days';
-
-  @override
-  String get service_details_available_times => 'Available Times';
-
-  @override
-  String get service_booking_title => 'Service Booking';
-
-  @override
-  String get service_booking_customer_info => 'Customer Information';
-
-  @override
-  String get service_booking_name => 'Full Name';
-
-  @override
-  String get service_booking_phone => 'Phone Number';
-
-  @override
-  String get service_booking_email => 'Email Address';
-
-  @override
-  String get service_booking_problem => 'Problem Description';
-
-  @override
-  String get service_booking_problem_hint => 'Explain your problem here...';
-
-  @override
-  String get service_booking_address_info => 'Address Information';
-
-  @override
-  String get service_booking_selected_day => 'Selected Day';
-
-  @override
-  String get service_booking_selected_time => 'Selected Time';
-
-  @override
-  String get service_booking_confirm => 'Confirm Booking';
-
-  @override
-  String get service_booking_success_title => 'Booking Successful!';
-
-  @override
-  String get service_booking_success_msg =>
-      'Your booking request has been received, the provider will contact you soon.';
-
-  @override
-  String get service_booking_id => 'Booking ID';
-
-  @override
-  String get service_booking_service => 'Service';
-
-  @override
-  String get service_booking_provider => 'Provider';
-
-  @override
-  String get service_booking_day => 'Day';
-
-  @override
-  String get service_booking_time => 'Time';
-
-  @override
-  String get service_booking_go_home => 'Go Home';
-
-  @override
-  String get service_booking_view_orders => 'View My Bookings';
-
-  @override
-  String get provider_details_title => 'Provider Details';
-
-  @override
-  String get provider_details_working_hours => 'Working Hours';
-
-  @override
-  String get provider_details_days => 'Working Days';
-
-  @override
-  String get provider_details_time => 'Working Hours';
-
-  @override
-  String get provider_details_price_from => 'Price Starts From';
-
-  @override
-  String get provider_details_services => 'Offered Services';
-
-  @override
-  String get brands => 'Brands';
-
-  @override
-  String get no_brands => 'No brands added yet';
-
-  @override
-  String get brand_products => 'Brand Products';
-
-  @override
-  String get no_brand_products => 'No products in this brand yet';
-
-  @override
-  String get offers => 'Offers';
-
-  @override
-  String get provider_details_contact_info => 'Contact Information';
-
-  @override
-  String get provider_details_contact_person => 'Contact Person';
-
-  @override
-  String get provider_details_phone => 'Phone Number';
-
-  @override
-  String get provider_details_email => 'Email Address';
-
-  @override
-  String get provider_details_status => 'Status';
-
-  @override
-  String get provider_details_status_active => 'Active';
-
-  @override
-  String get provider_details_status_inactive => 'Inactive';
-
-  @override
-  String get provider_details_successful_orders => 'Successful Orders';
+  String get booking_details_actions => 'Actions';
 }

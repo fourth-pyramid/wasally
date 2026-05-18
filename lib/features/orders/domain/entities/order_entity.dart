@@ -15,7 +15,9 @@ class OrderEntity extends Equatable {
   final String? customerName;
   final String? customerPhone;
   final String? deliveryAddress;
+  final String? governorateId;
   final String? governorateName;
+  final String? centerId;
   final String? centerName;
 
   const OrderEntity({
@@ -32,7 +34,9 @@ class OrderEntity extends Equatable {
     this.customerName,
     this.customerPhone,
     this.deliveryAddress,
+    this.governorateId,
     this.governorateName,
+    this.centerId,
     this.centerName,
   });
 
@@ -51,7 +55,9 @@ class OrderEntity extends Equatable {
         customerName,
         customerPhone,
         deliveryAddress,
+        governorateId,
         governorateName,
+        centerId,
         centerName,
       ];
 }

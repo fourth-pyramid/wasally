@@ -128,7 +128,15 @@ class CartRemoteDataSourceImpl implements CartRemoteDataSource {
               responseData?['message']?.toString() ?? 'Failed to apply coupon');
         }
 
-        return CouponModel.fromJson(responseData!);
+        final data = responseData!['data'] as Map<String, dynamic>;
+        final isValid = data['is_valid'] as bool? ?? true;
+
+        if (!isValid) {
+          throw ServerFailure(
+              responseData['message']?.toString() ?? 'Coupon is not valid');
+        }
+
+        return CouponModel.fromJson(data);
       },
     );
   }

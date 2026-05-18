@@ -144,3 +144,24 @@ class BookingParams extends Equatable {
         centerId,
       ];
 }
+
+class UpdateBookingParams extends Equatable {
+  final int bookingId;
+  final String problemDescription;
+  final String customerPhone;
+
+  const UpdateBookingParams({
+    required this.bookingId,
+    required this.problemDescription,
+    required this.customerPhone,
+  });
+
+  Map<String, dynamic> toJson() => {
+        'booking_id': bookingId,
+        'problem_description': problemDescription,
+        'customer_phone': customerPhone,
+      };
+
+  @override
+  List<Object?> get props => [bookingId, problemDescription, customerPhone];
+}
