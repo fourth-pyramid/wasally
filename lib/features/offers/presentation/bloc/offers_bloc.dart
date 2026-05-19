@@ -41,9 +41,13 @@ class OffersBloc extends Bloc<OffersEvent, OffersState> {
     LoadMoreOffersEvent event,
     Emitter<OffersState> emit,
   ) async {
-    if (state.hasReachedMax || state.status == AppStatus.loading) return;
+    if (state.hasReachedMax ||
+        state.status == AppStatus.loading ||
+        state.isLoadingMore) {
+      return;
+    }
 
-    emit(state.copyWith(status: AppStatus.loading));
+    emit(state.copyWith(isLoadingMore: true));
 
     final nextPage = state.currentPage + 1;
     final result = await _getOffersUseCase(nextPage);
@@ -51,13 +55,13 @@ class OffersBloc extends Bloc<OffersEvent, OffersState> {
     result.fold(
       (failure) {
         emit(state.copyWith(
-          status: AppStatus.failure,
+          isLoadingMore: false,
           errorMessage: failure.message,
         ));
       },
       (response) {
         emit(state.copyWith(
-          status: AppStatus.success,
+          isLoadingMore: false,
           products: List.of(state.products)..addAll(response.data),
           currentPage: response.currentPage,
           hasReachedMax: response.currentPage >= response.lastPage,

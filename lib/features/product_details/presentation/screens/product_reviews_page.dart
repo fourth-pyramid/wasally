@@ -26,8 +26,13 @@ class ProductReviewsPage extends StatelessWidget {
         listener: (context, state) {
           if (state.reviewActionStatus == ReviewActionStatus.success ||
               state.reviewActionStatus == ReviewActionStatus.failure) {
+            final message = state.reviewActionMessage == 'product_details_review_created'
+                ? context.l10n.product_details_review_created
+                : state.reviewActionMessage == 'product_details_review_updated'
+                    ? context.l10n.product_details_review_updated
+                    : state.reviewActionMessage;
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.reviewActionMessage)),
+              SnackBar(content: Text(message)),
             );
           }
         },

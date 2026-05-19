@@ -135,7 +135,7 @@ class ProductDetailsBloc
         await _refreshProductAfterReviewAction(
           productId: event.productId,
           emit: emit,
-          successMessage: rootContext!.l10n.product_details_review_created,
+          successMessage: 'product_details_review_created',
         );
       },
     );
@@ -173,7 +173,7 @@ class ProductDetailsBloc
         await _refreshProductAfterReviewAction(
           productId: event.productId,
           emit: emit,
-          successMessage: rootContext!.l10n.product_details_review_updated,
+          successMessage: 'product_details_review_updated',
         );
       },
     );

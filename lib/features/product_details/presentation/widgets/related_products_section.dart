@@ -39,7 +39,7 @@ class RelatedProductsSection extends StatelessWidget {
             status == RelatedProductsStatus.loading)
           SizedBox(
             height: 245.h,
-            child: const Center(child: CircularProgressIndicator()),
+            child: const Center(child: AppLoading()),
           )
         else if (status == RelatedProductsStatus.failure || products.isEmpty)
           SizedBox(

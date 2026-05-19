@@ -1,5 +1,5 @@
 import 'package:wassaly/core/imports/imports.dart';
-import 'package:wassaly/core/services/internet_connection_service.dart';
+
 
 /// A reusable generic function to handle potential exceptions in async tasks
 /// and map them to the [Either] type matching [FutureEither<T>].
@@ -26,7 +26,7 @@ FutureEither<T> runTask<T>(
       if (!hasNetwork) {
         AppLogger.warning('Network unavailable for task');
         // Don't show toast here - let the UI handle the error display
-        return left(NetworkFailure(rootContext!.l10n.errors_no_internet));
+        return left(const NetworkFailure('errors_no_internet'));
       }
     }
     final errorMessage = AppErrorHandler.format(e);

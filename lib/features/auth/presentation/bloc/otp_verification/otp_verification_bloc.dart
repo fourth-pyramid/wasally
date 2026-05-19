@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/auth/data/models/verify_otp_response_model.dart';
 import 'package:wassaly/features/auth/domain/usecases/forget_verify_otp_usecase.dart';
@@ -21,13 +19,12 @@ class OtpVerificationBloc
   OtpVerificationBloc({
     required String email,
     required VerificationType verificationType,
-    VerifyOtpUseCase? verifyOtpUseCase,
-    ForgetVerifyOtpUseCase? forgetVerifyOtpUseCase,
-    ResendOtpUseCase? resendOtpUseCase,
-  })  : _verifyOtpUseCase = verifyOtpUseCase ?? sl<VerifyOtpUseCase>(),
-        _forgetVerifyOtpUseCase =
-            forgetVerifyOtpUseCase ?? sl<ForgetVerifyOtpUseCase>(),
-        _resendOtpUseCase = resendOtpUseCase ?? sl<ResendOtpUseCase>(),
+    required VerifyOtpUseCase verifyOtpUseCase,
+    required ForgetVerifyOtpUseCase forgetVerifyOtpUseCase,
+    required ResendOtpUseCase resendOtpUseCase,
+  })  : _verifyOtpUseCase = verifyOtpUseCase,
+        _forgetVerifyOtpUseCase = forgetVerifyOtpUseCase,
+        _resendOtpUseCase = resendOtpUseCase,
         super(OtpVerificationState(
           email: email,
           verificationType: verificationType,

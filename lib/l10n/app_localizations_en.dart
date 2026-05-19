@@ -229,6 +229,12 @@ class SEn extends S {
   String get product_details_edit_time_expired => 'Edit time expired';
 
   @override
+  String get product_details_review_edit_window => 'Time remaining to edit:';
+
+  @override
+  String get product_details_your_review => 'Your Review';
+
+  @override
   String get service_details_no_reviews_yet => 'No reviews yet';
 
   @override
@@ -931,6 +937,22 @@ class SEn extends S {
 
   @override
   String get checkout_order_success => 'Order placed successfully!';
+
+  @override
+  String get checkout_success_title => 'Order Placed Successfully!';
+
+  @override
+  String get checkout_success_msg =>
+      'Your order has been received and is being processed.';
+
+  @override
+  String get checkout_order_id => 'Order ID';
+
+  @override
+  String get checkout_go_home => 'Go Home';
+
+  @override
+  String get checkout_view_orders => 'View My Orders';
 
   @override
   String get checkout_validation_name_required => 'Name is required';

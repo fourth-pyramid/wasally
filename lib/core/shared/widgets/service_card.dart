@@ -6,64 +6,26 @@ import 'package:wassaly/features/sub_category/domain/entities/service_entity.dar
 
 final activeServiceMarqueeId = ValueNotifier<int?>(null);
 
-class ServiceCard extends StatefulWidget {
-  final ServiceEntity service;
-  final VoidCallback? onTap;
-
+class ServiceCard extends StatelessWidget {
   const ServiceCard({
     super.key,
     required this.service,
     this.onTap,
   });
 
-  @override
-  State<ServiceCard> createState() => _ServiceCardState();
-}
-
-class _ServiceCardState extends State<ServiceCard> {
-  final ValueNotifier<bool> _isActiveNotifier = ValueNotifier(false);
-
-  @override
-  void initState() {
-    super.initState();
-    activeServiceMarqueeId.addListener(_onActiveIdChanged);
-  }
-
-  @override
-  void dispose() {
-    activeServiceMarqueeId.removeListener(_onActiveIdChanged);
-    if (activeServiceMarqueeId.value == widget.service.id) {
-      activeServiceMarqueeId.value = null;
-    }
-    _isActiveNotifier.dispose();
-    super.dispose();
-  }
-
-  void _onActiveIdChanged() {
-    final isNowActive = activeServiceMarqueeId.value == widget.service.id;
-    if (isNowActive != _isActiveNotifier.value) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (mounted) {
-          _isActiveNotifier.value = isNowActive;
-        }
-      });
-    }
-  }
+  final ServiceEntity service;
+  final VoidCallback? onTap;
 
   void _onLongPress() {
-    if (activeServiceMarqueeId.value == widget.service.id) {
-      activeServiceMarqueeId.value = null;
-    } else {
-      activeServiceMarqueeId.value = widget.service.id;
-    }
+    activeServiceMarqueeId.value =
+        activeServiceMarqueeId.value == service.id ? null : service.id;
   }
 
   void _openServiceDetails(BuildContext context) {
-    if (widget.service.id <= 0) return;
-
+    if (service.id <= 0) return;
     context.push(
       AppRoutes.serviceDetails,
-      extra: {'serviceId': widget.service.id},
+      extra: {'serviceId': service.id},
     );
   }
 
@@ -73,11 +35,12 @@ class _ServiceCardState extends State<ServiceCard> {
     final tt = context.theme.textTheme;
 
     return GestureDetector(
-      onTap: widget.onTap ?? () => _openServiceDetails(context),
+      onTap: onTap ?? () => _openServiceDetails(context),
       onLongPress: _onLongPress,
-      child: ValueListenableBuilder<bool>(
-        valueListenable: _isActiveNotifier,
-        builder: (context, isActive, child) {
+      child: ValueListenableBuilder<int?>(
+        valueListenable: activeServiceMarqueeId,
+        builder: (context, activeId, child) {
+          final isActive = activeId == service.id;
           return AnimatedContainer(
             duration: const Duration(milliseconds: 200),
             decoration: BoxDecoration(
@@ -91,145 +54,170 @@ class _ServiceCardState extends State<ServiceCard> {
               ),
             ),
             clipBehavior: Clip.antiAlias,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Image section
-                SizedBox(
-                  height: 120.h,
-                  width: double.infinity,
-                  child: Stack(
-                    children: [
-                      Positioned.fill(
-                        child: widget.service.image != null &&
-                                widget.service.image!.isNotEmpty
-                            ? CommonImage(
-                                imageUrl: widget.service.image!,
-                                memCacheHeight: 120 * 3,
-                                fit: BoxFit.cover,
-                                borderRadius: BorderRadius.vertical(
-                                  top: Radius.circular(9.r),
-                                ),
-                              )
-                            : ColoredBox(
-                                color: cs.surfaceContainerLow,
-                                child: Center(
-                                  child: Icon(
-                                    Icons.image_not_supported_outlined,
-                                    color: cs.onSurfaceVariant,
-                                    size: 40.r,
-                                  ),
-                                ),
-                              ),
+            child: child,
+          );
+        },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _ServiceImageSection(service: service),
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 8.h),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _ActiveServiceMarqueeText(
+                      serviceId: service.id,
+                      text: service.title,
+                      style: tt.titleSmall?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: context.theme.colorScheme.onSurface,
                       ),
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: BlocSelector<FavoriteBloc, FavoriteState,
-                            (bool, bool)>(
-                          selector: (state) => (
-                            state.serviceFavoriteIds
-                                    .contains(widget.service.id) ||
-                                (state.status == FavoriteStatus.initial &&
-                                    widget.service.isFavorite),
-                            state.serviceTogglingIds
-                                .contains(widget.service.id),
-                          ),
-                          builder: (context, status) {
-                            final isFavorite = status.$1;
-                            final isToggling = status.$2;
-                            return GestureDetector(
-                              onTap: isToggling
-                                  ? null
-                                  : () {
-                                      context.read<FavoriteBloc>().add(
-                                            ToggleServiceFavoriteEvent(
-                                              widget.service.id,
-                                              expectedIsFavorite: isFavorite,
-                                            ),
-                                          );
-                                    },
-                              child: Container(
-                                margin: EdgeInsetsDirectional.symmetric(
-                                    horizontal: 6.w, vertical: 6.h),
-                                padding: const EdgeInsets.all(6),
-                                decoration: BoxDecoration(
-                                  color: cs.surface.withValues(alpha: 0.9),
-                                  shape: BoxShape.circle,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: cs.shadow.withValues(alpha: 0.1),
-                                      blurRadius: 4,
-                                      offset: const Offset(0, 2),
-                                    ),
-                                  ],
-                                ),
-                                child: Icon(
-                                  isFavorite
-                                      ? Icons.favorite_rounded
-                                      : Icons.favorite_outline_rounded,
-                                  size: 18.r,
-                                  color: isFavorite
-                                      ? cs.error
-                                      : cs.onSurfaceVariant,
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                // Content section
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 6.w,
-                      vertical: 8.h,
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // Title
-                        MarqueeText(
-                          text: widget.service.title,
-                          isActive: isActive,
-                          style: tt.titleSmall?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: cs.onSurface,
-                          ),
+                    4.verticalSpace,
+                    if (service.description.isNotEmpty)
+                      _ActiveServiceMarqueeText(
+                        serviceId: service.id,
+                        text: service.description,
+                        style: tt.labelSmall?.copyWith(
+                          color: context.theme.colorScheme.onSurfaceVariant,
                         ),
-                        4.verticalSpace,
+                      ),
+                    Text(
+                      '${service.price} ${context.l10n.shared_currency_egp}',
+                      style: tt.labelMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: context.theme.colorScheme.primary,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
 
-                        // Description
-                        if (widget.service.description.isNotEmpty)
-                          MarqueeText(
-                            text: widget.service.description,
-                            isActive: isActive,
-                            style: tt.labelSmall?.copyWith(
-                              color: cs.onSurfaceVariant,
-                            ),
-                          ),
+class _ActiveServiceMarqueeText extends StatelessWidget {
+  const _ActiveServiceMarqueeText({
+    required this.serviceId,
+    required this.text,
+    this.style,
+  });
 
-                        // const Spacer(),
+  final int serviceId;
+  final String text;
+  final TextStyle? style;
 
-                        // Price
-                        Text(
-                          '${widget.service.price} ${context.l10n.shared_currency_egp}',
-                          style: tt.labelMedium?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: cs.primary,
-                          ),
+  @override
+  Widget build(BuildContext context) {
+    // FIX 2: ValueListenableBuilder wraps ONLY the reactive part
+    // MarqueeText itself changes (isActive), no stable child to hoist here,
+    // but we keep the VLB tight around only this text widget — not the whole card
+    return ValueListenableBuilder<int?>(
+      valueListenable: activeServiceMarqueeId,
+      builder: (context, activeId, _) {
+        return MarqueeText(
+          text: text,
+          isActive: activeId == serviceId,
+          style: style,
+        );
+      },
+    );
+  }
+}
+
+class _ServiceImageSection extends StatelessWidget {
+  const _ServiceImageSection({required this.service});
+
+  final ServiceEntity service;
+
+  // FIX 10: named method — no new lambda on every BlocSelector rebuild
+  void _onFavoriteTap(BuildContext context, bool isFavorite) {
+    context.read<FavoriteBloc>().add(
+          ToggleServiceFavoriteEvent(
+            service.id,
+            expectedIsFavorite: isFavorite,
+          ),
+        );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final cs = context.theme.colorScheme;
+    return SizedBox(
+      height: 120.h,
+      width: double.infinity,
+      child: Stack(
+        children: [
+          Positioned.fill(
+            child: service.image != null && service.image!.isNotEmpty
+                ? CommonImage(
+                    imageUrl: service.image!,
+                    memCacheHeight: 120 * 3,
+                    fit: BoxFit.cover,
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(9.r),
+                    ),
+                  )
+                : ColoredBox(
+                    color: cs.surfaceContainerLow,
+                    child: Center(
+                      child: Icon(
+                        Icons.image_not_supported_outlined,
+                        color: cs.onSurfaceVariant,
+                        size: 40.r,
+                      ),
+                    ),
+                  ),
+          ),
+          Align(
+            alignment: Alignment.topLeft,
+            child: BlocSelector<FavoriteBloc, FavoriteState, (bool, bool)>(
+              selector: (state) => (
+                state.serviceFavoriteIds.contains(service.id) ||
+                    (state.status == FavoriteStatus.initial &&
+                        service.isFavorite),
+                state.serviceTogglingIds.contains(service.id),
+              ),
+              builder: (context, status) {
+                final isFavorite = status.$1;
+                final isToggling = status.$2;
+                return GestureDetector(
+                  // FIX 10: named method reference
+                  onTap: isToggling ? null : () => _onFavoriteTap(context, isFavorite),
+                  child: Container(
+                    margin: EdgeInsetsDirectional.symmetric(
+                        horizontal: 6.w, vertical: 6.h),
+                    padding: const EdgeInsets.all(6),
+                    decoration: BoxDecoration(
+                      color: cs.surface.withValues(alpha: 0.9),
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: cs.shadow.withValues(alpha: 0.1),
+                          blurRadius: 4,
+                          offset: const Offset(0, 2),
                         ),
                       ],
                     ),
+                    child: Icon(
+                      isFavorite
+                          ? Icons.favorite_rounded
+                          : Icons.favorite_outline_rounded,
+                      size: 18.r,
+                      color: isFavorite ? cs.error : cs.onSurfaceVariant,
+                    ),
                   ),
-                ),
-              ],
+                );
+              },
             ),
-          );
-        },
+          ),
+        ],
       ),
     );
   }

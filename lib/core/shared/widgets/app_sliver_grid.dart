@@ -26,54 +26,37 @@ class AppSliverGrid<T> extends StatelessWidget {
     this.animationDuration = const Duration(milliseconds: 300),
   });
 
-  /// List of items to display
   final List<T> items;
-
-  /// Builder function to create a widget for each item
-  /// Provides the item, index, and optional animation wrapper
   final Widget Function(BuildContext context, T item, int index,
       Widget Function(Widget child) wrapAnimation) itemBuilder;
-
-  /// Optional callback to extract a unique key per item.
-  /// When provided, Flutter can efficiently diff the list on removals
-  /// instead of rebuilding (and re-animating) every child.
   final Key Function(T item)? itemKey;
-
-  /// Whether there are more items to load (pagination)
   final bool hasMore;
-
-  /// Callback when reaching the end of the list for pagination
   final VoidCallback? onLoadMore;
-
-  /// Padding around the grid
   final EdgeInsetsGeometry? padding;
-
-  /// Number of columns in the grid
   final int crossAxisCount;
-
-  /// Vertical spacing between items
   final double? mainAxisSpacing;
-
-  /// Horizontal spacing between items
   final double? crossAxisSpacing;
-
-  /// Ratio of width to height for each item
   final double childAspectRatio;
-
-  /// Fixed height for each item in the cross axis (overrides childAspectRatio if provided)
   final double? mainAxisExtent;
-
-  /// Whether to animate items as they appear
   final bool animateItems;
-
-  /// Delay multiplier for staggered animation (ms per item index modulo)
   final int animationDelayMultiplier;
-
-  /// Duration of the fade-in animation
   final Duration animationDuration;
+
+  // FIX 1: extracted كـ method — بتتعمل مرة واحدة لكل index
+  // بدل ما تتعرف جوه الـ builder في كل build
+  Widget _wrapAnimation(Widget child, int index) {
+    if (!animateItems) return child;
+    return child.animate().fadeIn(
+          delay: Duration(milliseconds: animationDelayMultiplier * (index % 4)),
+          duration: animationDuration,
+        );
+  }
 
   @override
   Widget build(BuildContext context) {
+    // FIX 2: نحسب آخر index مرة واحدة بره الـ builder
+    final lastIndex = items.length - 1;
+
     return SliverPadding(
       padding: padding ?? EdgeInsets.symmetric(horizontal: 8.w),
       sliver: SliverGrid(
@@ -86,26 +69,25 @@ class AppSliverGrid<T> extends StatelessWidget {
         ),
         delegate: SliverChildBuilderDelegate(
           (context, index) {
-            // Trigger load more when reaching the end
-            if (index >= items.length - 1 && hasMore) {
-              onLoadMore?.call();
+            // FIX 3: بنكال onLoadMore على index == lastIndex بالظبط
+            // مش >= عشان متكالش أكتر من مرة
+            if (index == lastIndex && hasMore) {
+              // FIX 4: addPostFrameCallback عشان منكالش onLoadMore
+              // جوه build cycle — ده كان ممكن يسبب setState during build
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                onLoadMore?.call();
+              });
             }
 
             final item = items[index];
 
-            Widget wrapAnimation(Widget child) {
-              if (!animateItems) return child;
-              return child.animate().fadeIn(
-                    delay: Duration(
-                        milliseconds: animationDelayMultiplier * (index % 4)),
-                    duration: animationDuration,
-                  );
-            }
+            final child = itemBuilder(
+              context,
+              item,
+              index,
+              (widget) => _wrapAnimation(widget, index), // FIX 1 applied
+            );
 
-            final child = itemBuilder(context, item, index, wrapAnimation);
-
-            // Wrap with a keyed widget so Flutter preserves state across
-            // list mutations (e.g. favorite removal) instead of rebuilding.
             final key = itemKey?.call(item);
             return key != null ? KeyedSubtree(key: key, child: child) : child;
           },

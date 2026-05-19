@@ -32,9 +32,6 @@ class _FavoriteViewState extends State<_FavoriteView>
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
       final bloc = context.read<FavoriteBloc>();
-      // Only load if never fetched before (status == initial).
-      // Avoids double-loading when MainLayoutPage already fired the event,
-      // and avoids reloading when data was fetched but returned empty.
       if (bloc.state.status == FavoriteStatus.initial) {
         bloc.add(const GetFavoritesEvent());
         bloc.add(const GetServiceFavoritesEvent());

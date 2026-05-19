@@ -5,8 +5,21 @@ import 'package:wassaly/features/orders/presentation/bloc/orders_state.dart';
 import 'package:wassaly/features/orders/presentation/widgets/order_details/booking_card.dart';
 import 'package:wassaly/features/service_booking/domain/entities/booking_entity.dart';
 
-class ServiceBookingsTab extends StatelessWidget {
+class ServiceBookingsTab extends StatefulWidget {
   const ServiceBookingsTab({super.key});
+
+  @override
+  State<ServiceBookingsTab> createState() => _ServiceBookingsTabState();
+}
+
+class _ServiceBookingsTabState extends State<ServiceBookingsTab> {
+  void _onRetry() {
+    context.read<OrdersBloc>().add(const GetServiceBookingsEvent());
+  }
+
+  Future<void> _onRefresh() async {
+    context.read<OrdersBloc>().add(const GetServiceBookingsEvent());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,9 +43,7 @@ class ServiceBookingsTab extends StatelessWidget {
               message: errorMessage.isNotEmpty
                   ? errorMessage
                   : context.l10n.errors_error_occurred_message,
-              onRetry: () => context
-                  .read<OrdersBloc>()
-                  .add(const GetServiceBookingsEvent()),
+              onRetry: _onRetry,
             ),
           );
         }
@@ -45,9 +56,7 @@ class ServiceBookingsTab extends StatelessWidget {
         }
 
         return RefreshIndicator(
-          onRefresh: () async {
-            context.read<OrdersBloc>().add(const GetServiceBookingsEvent());
-          },
+          onRefresh: _onRefresh,
           child: CustomScrollView(
             slivers: [
               SliverPadding(

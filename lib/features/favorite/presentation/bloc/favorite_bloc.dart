@@ -13,6 +13,8 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
   final GetServiceFavoritesUseCase getServiceFavoritesUseCase;
   final ToggleFavoriteUseCase toggleFavoriteUseCase;
   final ToggleServiceFavoriteUseCase toggleServiceFavoriteUseCase;
+  
+  StreamSubscription<void>? _connectivitySub;
 
   FavoriteBloc(
     this.getFavoritesUseCase,
@@ -25,6 +27,13 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
     on<ToggleFavoriteEvent>(_onToggleFavorite);
     on<ToggleServiceFavoriteEvent>(_onToggleServiceFavorite);
     on<ClearFavoritesEvent>(_onClearFavorites);
+
+    _connectivitySub = sl<InternetConnectionService>()
+        .connectivityRestoredStream
+        .listen((_) {
+      add(const GetFavoritesEvent());
+      add(const GetServiceFavoritesEvent());
+    });
   }
 
   void _onClearFavorites(
@@ -323,5 +332,11 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
         }
       },
     );
+  }
+
+  @override
+  Future<void> close() {
+    _connectivitySub?.cancel();
+    return super.close();
   }
 }

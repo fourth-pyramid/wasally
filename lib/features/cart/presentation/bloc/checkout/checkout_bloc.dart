@@ -308,19 +308,19 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
   ) async {
     // Validate form
     final nameError = state.customerName.trim().isEmpty
-        ? rootContext!.l10n.checkout_validation_name_required
+        ? 'checkout_validation_name_required'
         : null;
     final phoneError = state.customerPhone.trim().isEmpty
-        ? rootContext!.l10n.checkout_validation_phone_required
+        ? 'checkout_validation_phone_required'
         : null;
     final addressError = state.customerAddress.trim().isEmpty
-        ? rootContext!.l10n.checkout_validation_address_required
+        ? 'checkout_validation_address_required'
         : null;
     final governorateError = state.selectedGovernorateId == null
-        ? rootContext!.l10n.checkout_validation_governorate_required
+        ? 'checkout_validation_governorate_required'
         : null;
     final centerError = state.selectedCenterId == null
-        ? rootContext!.l10n.checkout_validation_center_required
+        ? 'checkout_validation_center_required'
         : null;
 
     if (nameError != null ||

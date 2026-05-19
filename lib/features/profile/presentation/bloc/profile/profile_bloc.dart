@@ -109,7 +109,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         } else {
           emit(state.copyWith(
             status: AppStatus.failure,
-            errorMessage: rootContext!.l10n.no_cached_user,
+            errorMessage: 'profile_no_cached_user',
           ));
         }
       },

@@ -69,40 +69,37 @@ class AppCachedImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        // Adjust sizing for screenutil if enabled
-        final double? adjustedWidth = width?.w;
-        final double? adjustedHeight = height?.h;
+    // FIX 12: removed LayoutBuilder — constraints were never used,
+    // only width?.w / height?.h which come from widget props directly
+    final double? adjustedWidth = width?.w;
+    final double? adjustedHeight = height?.h;
 
-        Widget imageContent = CachedNetworkImage(
-          imageUrl: imageUrl,
-          cacheKey: cacheKey,
-          width: adjustedWidth,
-          height: adjustedHeight,
-          memCacheHeight: memCacheHeight,
-          memCacheWidth: memCacheWidth,
-          fit: fit,
-          color: color,
-          colorBlendMode: colorBlendMode,
-          alignment: alignment,
-          fadeInDuration: fadeInDuration ?? const Duration(milliseconds: 500),
-          placeholder: (context, url) =>
-              placeholder ?? _buildDefaultPlaceholder(context),
-          errorWidget: (context, url, error) =>
-              errorWidget ?? _buildDefaultErrorWidget(context),
-        );
-
-        if (borderRadius != null) {
-          imageContent = ClipRRect(
-            borderRadius: borderRadius!,
-            child: imageContent,
-          );
-        }
-
-        return imageContent;
-      },
+    Widget imageContent = CachedNetworkImage(
+      imageUrl: imageUrl,
+      cacheKey: cacheKey,
+      width: adjustedWidth,
+      height: adjustedHeight,
+      memCacheHeight: memCacheHeight,
+      memCacheWidth: memCacheWidth,
+      fit: fit,
+      color: color,
+      colorBlendMode: colorBlendMode,
+      alignment: alignment,
+      fadeInDuration: fadeInDuration ?? const Duration(milliseconds: 500),
+      placeholder: (context, url) =>
+          placeholder ?? _buildDefaultPlaceholder(context),
+      errorWidget: (context, url, error) =>
+          errorWidget ?? _buildDefaultErrorWidget(context),
     );
+
+    if (borderRadius != null) {
+      imageContent = ClipRRect(
+        borderRadius: borderRadius!,
+        child: imageContent,
+      );
+    }
+
+    return imageContent;
   }
 
   Widget _buildDefaultPlaceholder(BuildContext context) {

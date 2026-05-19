@@ -1,9 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import '../../extensions/context_extension.dart';
-import '../../routing/global_navigator.dart';
-import '../../utils/failure.dart';
+import 'package:wassaly/core/imports/imports.dart';
 
 /// Displays an error state with consistent UI based on Failure type.
 ///
@@ -14,28 +9,26 @@ import '../../utils/failure.dart';
 ///   onRetry: () => refetch(),
 /// )
 /// ```
-class AppErrorWidget extends StatelessWidget {
+class AppErrorWidget extends StatefulWidget {
   // Default constructor for backward compatibility
-  AppErrorWidget({
+  const AppErrorWidget({
     super.key,
-    String? title,
+    this.title,
     this.message,
     this.onRetry,
     this.icon = Icons.error_outline_rounded,
-  })  : title = title ?? rootContext?.l10n.errors_something_went_wrong,
-        failure = const UnknownFailure('Unknown error'),
+  })  : failure = const UnknownFailure('Unknown error'),
         customMessage = null,
         showRetryButton = true;
 
   // Legacy constructor for backward compatibility
-  AppErrorWidget.legacy({
+  const AppErrorWidget.legacy({
     super.key,
-    String? title,
+    this.title,
     this.message,
     this.onRetry,
     this.icon = Icons.error_outline_rounded,
-  })  : title = title ?? rootContext?.l10n.errors_something_went_wrong,
-        failure = const UnknownFailure('Unknown error'),
+  })  : failure = const UnknownFailure('Unknown error'),
         customMessage = null,
         showRetryButton = true;
 
@@ -61,6 +54,33 @@ class AppErrorWidget extends StatelessWidget {
   final IconData icon;
 
   @override
+  State<AppErrorWidget> createState() => _AppErrorWidgetState();
+}
+
+class _AppErrorWidgetState extends State<AppErrorWidget> {
+  StreamSubscription<void>? _connectivitySub;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.onRetry != null) {
+      _connectivitySub = sl<InternetConnectionService>()
+          .connectivityRestoredStream
+          .listen((_) {
+        if (mounted && widget.onRetry != null) {
+          widget.onRetry!();
+        }
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _connectivitySub?.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
@@ -71,7 +91,7 @@ class AppErrorWidget extends StatelessWidget {
             _buildErrorIcon(context),
             24.h.verticalSpace,
             _buildErrorMessage(context),
-            if (showRetryButton && onRetry != null) ...[
+            if (widget.showRetryButton && widget.onRetry != null) ...[
               32.h.verticalSpace,
               _buildRetryButton(context),
             ],
@@ -81,11 +101,39 @@ class AppErrorWidget extends StatelessWidget {
     );
   }
 
+  bool _isNetworkError(BuildContext context) {
+    if (widget.failure is NetworkFailure) return true;
+
+    final msg = widget.message ?? widget.customMessage ?? '';
+    final t = widget.title ?? '';
+
+    if (msg == 'errors_no_internet' ||
+        msg == 'errors_no_internet_message' ||
+        msg == 'no_internet' ||
+        msg.contains('wifi_off') ||
+        msg == context.l10n.errors_no_internet ||
+        msg == context.l10n.errors_no_internet_message ||
+        t == context.l10n.errors_no_internet_title) {
+      return true;
+    }
+
+    return false;
+  }
+
   Widget _buildErrorIcon(BuildContext context) {
-    // If legacy title/message/icon were provided, respect the explicit icon
-    if (title != null || message != null) {
+    if (_isNetworkError(context)) {
       return Icon(
-        icon,
+        Icons.wifi_off_rounded,
+        size: 80.r,
+        color: context.appColors.warning, // Semantic warning
+      );
+    }
+
+    // If legacy title/message/icon were provided, respect the explicit icon
+    if ((widget.title != null || widget.message != null) &&
+        widget.icon != Icons.error_outline_rounded) {
+      return Icon(
+        widget.icon,
         size: 80.r,
         color: context.theme.colorScheme.onSurface,
       );
@@ -94,7 +142,7 @@ class AppErrorWidget extends StatelessWidget {
     IconData iconData;
     Color iconColor;
 
-    switch (failure.runtimeType) {
+    switch (widget.failure.runtimeType) {
       case const (NetworkFailure):
         iconData = Icons.wifi_off_rounded;
         iconColor = context.appColors.warning; // Semantic warning
@@ -124,8 +172,17 @@ class AppErrorWidget extends StatelessWidget {
   }
 
   Widget _buildErrorMessage(BuildContext context) {
-    final titleText = title ?? _getErrorTitle(context);
-    final messageText = customMessage ?? _getErrorMessage(context);
+    final bool isNetError = _isNetworkError(context);
+    final titleText = isNetError
+        ? context.l10n.errors_no_internet_title
+        : (widget.title ?? _getErrorTitle(context));
+
+    final rawMessage = widget.customMessage ?? widget.message ?? _getErrorMessage(context);
+    final messageText = isNetError
+        ? context.l10n.errors_no_internet_message
+        : (rawMessage == 'errors_no_internet'
+            ? context.l10n.errors_no_internet_message
+            : rawMessage);
 
     return Column(
       children: [
@@ -152,36 +209,20 @@ class AppErrorWidget extends StatelessWidget {
   }
 
   Widget _buildRetryButton(BuildContext context) {
-    return SizedBox(
-      width: 120.w,
-      height: 44.h,
-      child: OutlinedButton(
-        onPressed: onRetry,
-        style: OutlinedButton.styleFrom(
-          side: BorderSide(
-            color: context.theme.colorScheme.onSurface.withValues(alpha: 0.3),
-            width: 1,
-          ),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8.r),
-          ),
-        ),
-        child: Text(
-          context.l10n.retry,
-          style: context.theme.textTheme.bodyMedium?.copyWith(
-            color: context.theme.colorScheme.primary,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ),
+    return AppButton(
+      label: context.l10n.retry,
+      variant: ButtonVariant.secondary,
+      height: ButtonSize.medium,
+      isFullWidth: false,
+      onPressed: widget.onRetry,
     );
   }
 
   String _getErrorTitle(BuildContext context) {
     // Respect explicit legacy title if provided
-    if (title != null) return title!;
+    if (widget.title != null) return widget.title!;
 
-    switch (failure.runtimeType) {
+    switch (widget.failure.runtimeType) {
       case const (NetworkFailure):
         return context.l10n.errors_no_internet_title;
       case const (NotFoundFailure):
@@ -191,15 +232,15 @@ class AppErrorWidget extends StatelessWidget {
       case const (CacheFailure):
         return context.l10n.errors_cache_error_title;
       default:
-        return context.l10n.errors_error_occurred_title;
+        return context.l10n.errors_something_went_wrong;
     }
   }
 
   String _getErrorMessage(BuildContext context) {
     // Respect explicit legacy message if provided
-    if (message != null && message!.isNotEmpty) return message!;
+    if (widget.message != null && widget.message!.isNotEmpty) return widget.message!;
 
-    switch (failure.runtimeType) {
+    switch (widget.failure.runtimeType) {
       case const (NetworkFailure):
         return context.l10n.errors_no_internet_message;
       case const (NotFoundFailure):

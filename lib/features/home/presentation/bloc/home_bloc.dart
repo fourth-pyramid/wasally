@@ -3,6 +3,7 @@ import 'package:wassaly/core/imports/imports.dart';
 import '../../domain/entities/category_entity.dart';
 import '../../domain/entities/product_entity.dart';
 import '../../domain/entities/sub_category_entity.dart';
+import '../../domain/entities/banner_entity.dart';
 import '../../domain/usecases/get_banners_usecase.dart';
 import '../../domain/usecases/get_categories_usecase.dart';
 import '../../domain/usecases/get_popular_services_usecase.dart';
@@ -27,6 +28,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<GetPopularServicesEvent>(_onGetPopularServices);
     on<GetProductsEvent>(_onGetProducts);
     on<LoadMoreProductsEvent>(_onLoadMoreProducts);
+    on<HomeInitializeEvent>(_onHomeInitialize);
   }
 
   Future<void> _onGetBanners(
@@ -159,5 +161,78 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         ));
       },
     );
+  }
+
+  Future<void> _onHomeInitialize(
+      HomeInitializeEvent event, Emitter<HomeState> emit) async {
+    emit(state.copyWith(
+      bannersStatus: HomeStatus.loading,
+      categoriesStatus: HomeStatus.loading,
+      popularServicesStatus: HomeStatus.loading,
+      productsStatus: HomeStatus.loading,
+      banners: const [],
+      categories: const [],
+      popularServices: const [],
+      products: const PaginatedResponse(data: []),
+      failure: null,
+    ));
+
+    final results = await Future.wait([
+      getBannersUseCase(),
+      getCategoriesUseCase(),
+      getPopularServicesUseCase(),
+      getProductsUseCase(page: 1),
+    ]);
+
+    final bannersResult = results[0] as Either<Failure, List<BannerEntity>>;
+    final categoriesResult = results[1] as Either<Failure, List<CategoryEntity>>;
+    final servicesResult = results[2] as Either<Failure, List<SubCategoryEntity>>;
+    final productsResult = results[3] as Either<Failure, PaginatedResponse<ProductEntity>>;
+
+    HomeStatus bannersStatus = HomeStatus.success;
+    List<BannerEntity> banners = const [];
+    bannersResult.fold(
+      (_) => bannersStatus = HomeStatus.failure,
+      (data) => banners = data,
+    );
+
+    HomeStatus categoriesStatus = HomeStatus.success;
+    List<CategoryEntity> categories = const [];
+    categoriesResult.fold(
+      (_) => categoriesStatus = HomeStatus.failure,
+      (data) => categories = data,
+    );
+
+    HomeStatus servicesStatus = HomeStatus.success;
+    List<SubCategoryEntity> services = const [];
+    servicesResult.fold(
+      (_) => servicesStatus = HomeStatus.failure,
+      (data) => services = data,
+    );
+
+    HomeStatus productsStatus = HomeStatus.success;
+    PaginatedResponse<ProductEntity> products = const PaginatedResponse(data: []);
+    productsResult.fold(
+      (_) => productsStatus = HomeStatus.failure,
+      (data) => products = data,
+    );
+
+    Failure? firstFailure;
+    bannersResult.fold((f) => firstFailure ??= f, (_) {});
+    categoriesResult.fold((f) => firstFailure ??= f, (_) {});
+    servicesResult.fold((f) => firstFailure ??= f, (_) {});
+    productsResult.fold((f) => firstFailure ??= f, (_) {});
+
+    emit(state.copyWith(
+      bannersStatus: bannersStatus,
+      banners: banners,
+      categoriesStatus: categoriesStatus,
+      categories: categories,
+      popularServicesStatus: servicesStatus,
+      popularServices: services,
+      productsStatus: productsStatus,
+      products: products,
+      failure: firstFailure,
+    ));
   }
 }

@@ -212,6 +212,7 @@ void initDependencies() {
         addToCartUseCase: sl(),
         removeFromCartUseCase: sl(),
         updateQuantityUseCase: sl(),
+        cartRepository: sl(),
       ));
 
   sl.registerLazySingleton(() => OrdersBloc(
@@ -417,6 +418,9 @@ void initDependencies() {
       () => BrandsRepositoryImpl(sl()));
   sl.registerLazySingleton<OffersRepository>(
       () => OffersRepositoryImpl(sl()));
+
+  sl.registerLazySingleton<InternetConnectionService>(
+      () => InternetConnectionService());
 
   // DataSources
   sl.registerLazySingleton<AuthRemoteDataSource>(

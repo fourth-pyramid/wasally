@@ -5,7 +5,7 @@ import '../../domain/entities/brand_entity.dart';
 
 enum BrandsStatus { initial, loading, success, failure }
 
-enum BrandProductsStatus { initial, loading, success, failure }
+enum BrandProductsStatus { initial, loading, loadingMore, success, failure }
 
 class BrandsState extends Equatable {
   final BrandsStatus status;

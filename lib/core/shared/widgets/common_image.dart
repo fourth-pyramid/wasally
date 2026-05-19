@@ -6,17 +6,6 @@ import 'package:wassaly/core/imports/imports.dart';
 /// API paths (starting with `/`). Relative paths are resolved against [AppConfig.baseUrl].
 /// Automatically uses [SvgPicture] for SVG files.
 class CommonImage extends StatelessWidget {
-  final String imageUrl;
-  final double? width;
-  final double? height;
-  final BoxFit fit;
-  final Color? color;
-  final Widget? placeholder;
-  final Widget? errorWidget;
-  final BorderRadius? borderRadius;
-  final int? memCacheHeight;
-  final int? memCacheWidth;
-
   const CommonImage({
     super.key,
     required this.imageUrl,
@@ -31,9 +20,21 @@ class CommonImage extends StatelessWidget {
     this.memCacheWidth,
   });
 
+  final String imageUrl;
+  final double? width;
+  final double? height;
+  final BoxFit fit;
+  final Color? color;
+  final Widget? placeholder;
+  final Widget? errorWidget;
+  final BorderRadius? borderRadius;
+  final int? memCacheHeight;
+  final int? memCacheWidth;
+
   /// Resolves a potentially relative path to an absolute URL.
   /// e.g. "/storage/images/foo.jpg" → "https://wasly.bynona.store/storage/images/foo.jpg"
   String get _resolvedUrl {
+    if (imageUrl.isEmpty) return '';
     if (imageUrl.startsWith('http')) return imageUrl;
     if (imageUrl.startsWith('/')) return '${AppConfig.baseUrl}$imageUrl';
     return imageUrl;
@@ -41,9 +42,12 @@ class CommonImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double? adjustedWidth = width?.w;
-    final double? adjustedHeight = height?.h;
     final resolved = _resolvedUrl;
+
+    // FIX 11: guard — short-circuit before any other check
+    if (resolved.isEmpty) {
+      return errorWidget ?? _buildDefaultErrorWidget(context);
+    }
 
     Widget image;
 
@@ -63,8 +67,8 @@ class CommonImage extends StatelessWidget {
     } else if (resolved.endsWith('.svg')) {
       image = SvgPicture.asset(
         resolved,
-        width: adjustedWidth,
-        height: adjustedHeight,
+        width: width?.w,
+        height: height?.h,
         fit: fit,
         colorFilter:
             color != null ? ColorFilter.mode(color!, BlendMode.srcIn) : null,
@@ -74,12 +78,12 @@ class CommonImage extends StatelessWidget {
         resolved,
         cacheHeight: memCacheHeight,
         cacheWidth: memCacheWidth,
-        width: adjustedWidth,
-        height: adjustedHeight,
+        width: width?.w,
+        height: height?.h,
         fit: fit,
         color: color,
         errorBuilder: (context, error, stackTrace) =>
-            errorWidget ?? _buildDefaultErrorWidget(),
+            errorWidget ?? _buildDefaultErrorWidget(context),
       );
     }
 
@@ -93,14 +97,16 @@ class CommonImage extends StatelessWidget {
     return image;
   }
 
-  Widget _buildDefaultErrorWidget() {
+  // FIX 7: use colorScheme tokens — never hard-coded colors
+  Widget _buildDefaultErrorWidget(BuildContext context) {
+    final cs = context.theme.colorScheme;
     return Container(
       width: width,
       height: height,
-      color: Colors.grey[200],
-      child: const Icon(
+      color: cs.surfaceContainerLow,
+      child: Icon(
         Icons.error_outline,
-        color: Colors.grey,
+        color: cs.onSurfaceVariant,
       ),
     );
   }

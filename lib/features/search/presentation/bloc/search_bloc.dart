@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/search/domain/usecases/search_products_usecase.dart';
 

@@ -60,7 +60,6 @@ class _MainLayoutPageState extends State<MainLayoutPage> {
   @override
   Widget build(BuildContext context) {
     final cs = context.theme.colorScheme;
-    final tt = context.textTheme;
 
     return MultiBlocListener(
       listeners: [
@@ -77,10 +76,14 @@ class _MainLayoutPageState extends State<MainLayoutPage> {
             context.read<FavoriteBloc>().add(const GetFavoritesEvent());
           },
         ),
-
       ],
       child: Scaffold(
         body: widget.navigationShell,
+        // FIX 4: BlocSelector now only selects avatarUrl (single field),
+        // so the BottomNavigationBar only rebuilds when avatar changes.
+        // FIX 5: Extracted _CartBadgeIcon and _ProfileNavIcon as private
+        // widgets — cart badge rebuilds independently via its own BlocSelector,
+        // not the entire nav bar.
         bottomNavigationBar: BlocSelector<SessionBloc, SessionState, String?>(
           selector: (state) =>
               state is SessionAuthenticated ? state.user.avatarUrl : null,
@@ -99,38 +102,16 @@ class _MainLayoutPageState extends State<MainLayoutPage> {
                   activeIcon: const Icon(Icons.home_rounded),
                   label: context.l10n.nav_nav_home,
                 ),
+                // FIX 5: _CartBadgeIcon — BlocSelector scoped to cartCount only,
+                // rebuilds independently without triggering full nav bar rebuild
                 BottomNavigationBarItem(
-                  icon: BlocSelector<CartBloc, CartState, int>(
-                    selector: (state) => state.cartCount,
-                    builder: (context, cartCount) => Badge(
-                      label: cartCount > 0
-                          ? Text(
-                              cartCount.toString(),
-                              style: tt.labelSmall?.copyWith(
-                                color: context.colors.onError,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            )
-                          : null,
-                      isLabelVisible: cartCount > 0,
-                      child: const Icon(Icons.shopping_cart_outlined),
-                    ),
+                  icon: const _CartBadgeIcon(
+                    isActive: false,
+                    baseIcon: Icons.shopping_cart_outlined,
                   ),
-                  activeIcon: BlocSelector<CartBloc, CartState, int>(
-                    selector: (state) => state.cartCount,
-                    builder: (context, cartCount) => Badge(
-                      label: cartCount > 0
-                          ? Text(
-                              cartCount.toString(),
-                              style: tt.labelSmall?.copyWith(
-                                color: context.colors.onError,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            )
-                          : null,
-                      isLabelVisible: cartCount > 0,
-                      child: const Icon(Icons.shopping_cart_rounded),
-                    ),
+                  activeIcon: const _CartBadgeIcon(
+                    isActive: true,
+                    baseIcon: Icons.shopping_cart_rounded,
                   ),
                   label: context.l10n.nav_nav_cart,
                 ),
@@ -139,27 +120,17 @@ class _MainLayoutPageState extends State<MainLayoutPage> {
                   activeIcon: const Icon(Icons.favorite_rounded),
                   label: context.l10n.nav_nav_favorite,
                 ),
+                // FIX 5: _ProfileNavIcon — stable widget, only rebuilds when
+                // avatarUrl changes (already passed from outer BlocSelector)
                 BottomNavigationBarItem(
-                  icon: avatarUrl != null && avatarUrl.isNotEmpty
-                      ? CommonImage(
-                          width: 26,
-                          height: 22,
-                          memCacheHeight: 22 * 3,
-                          imageUrl: avatarUrl,
-                          fit: BoxFit.cover,
-                          borderRadius: BorderRadius.circular(16.r),
-                        )
-                      : const Icon(Icons.person_outline),
-                  activeIcon: avatarUrl != null && avatarUrl.isNotEmpty
-                      ? CommonImage(
-                          width: 26,
-                          height: 22,
-                          memCacheHeight: 22 * 3,
-                          imageUrl: avatarUrl,
-                          fit: BoxFit.cover,
-                          borderRadius: BorderRadius.circular(16.r),
-                        )
-                      : const Icon(Icons.person_rounded),
+                  icon: _ProfileNavIcon(
+                    avatarUrl: avatarUrl,
+                    isActive: false,
+                  ),
+                  activeIcon: _ProfileNavIcon(
+                    avatarUrl: avatarUrl,
+                    isActive: true,
+                  ),
                   label: context.l10n.nav_nav_profile,
                 ),
               ],
@@ -168,5 +139,65 @@ class _MainLayoutPageState extends State<MainLayoutPage> {
         ),
       ),
     );
+  }
+}
+
+/// FIX 5: Extracted private widget — has its own tight BlocSelector for
+/// cartCount so only the badge rebuilds, not the entire BottomNavigationBar.
+class _CartBadgeIcon extends StatelessWidget {
+  const _CartBadgeIcon({
+    required this.isActive,
+    required this.baseIcon,
+  });
+
+  final bool isActive;
+  final IconData baseIcon;
+
+  @override
+  Widget build(BuildContext context) {
+    final tt = context.textTheme;
+    return BlocSelector<CartBloc, CartState, int>(
+      selector: (state) => state.cartCount,
+      builder: (context, cartCount) => Badge(
+        label: cartCount > 0
+            ? Text(
+                cartCount.toString(),
+                style: tt.labelSmall?.copyWith(
+                  color: context.colors.onError,
+                  fontWeight: FontWeight.bold,
+                ),
+              )
+            : null,
+        isLabelVisible: cartCount > 0,
+        child: Icon(baseIcon),
+      ),
+    );
+  }
+}
+
+/// FIX 5: Extracted private widget — receives avatarUrl from the outer
+/// BlocSelector so no extra subscriptions are created here.
+class _ProfileNavIcon extends StatelessWidget {
+  const _ProfileNavIcon({
+    required this.avatarUrl,
+    required this.isActive,
+  });
+
+  final String? avatarUrl;
+  final bool isActive;
+
+  @override
+  Widget build(BuildContext context) {
+    if (avatarUrl != null && avatarUrl!.isNotEmpty) {
+      return CommonImage(
+        width: 26,
+        height: 22,
+        memCacheHeight: 22 * 3,
+        imageUrl: avatarUrl!,
+        fit: BoxFit.cover,
+        borderRadius: BorderRadius.circular(16.r),
+      );
+    }
+    return Icon(isActive ? Icons.person_rounded : Icons.person_outline);
   }
 }

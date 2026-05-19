@@ -53,9 +53,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
     result.fold(
       (failure) async {
-        // Check if the error indicates account is not verified
-        if (failure.message
-            .contains(rootContext!.l10n.auth_account_not_active)) {
+        // Check if the error indicates account is not verified (robust language-independent check)
+        final msg = failure.message.toLowerCase();
+        if (msg.contains('not active') || msg.contains('active') || msg.contains('غير نشط') || msg.contains('نشط')) {
           emit(state.copyWith(
             isLoading: false,
             verificationEmail: state.email,

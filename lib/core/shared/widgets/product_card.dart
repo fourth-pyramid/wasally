@@ -5,26 +5,9 @@ import '../../../features/favorite/presentation/bloc/favorite_event.dart';
 import '../../../features/favorite/presentation/bloc/favorite_state.dart';
 import '../../../features/home/domain/entities/product_entity.dart';
 
-/// Shared notifier that holds the currently active (long-pressed) product id.
-/// When a card long-presses, it sets its id here.
-/// All other cards listen and stop their marquee automatically.
 final activeMarqueeId = ValueNotifier<int?>(null);
 
-
-
-/// A reusable product card widget for displaying product information.
-///
-/// Used across the app in grids, lists, and other product displays.
-/// Features:
-/// - Product image with cached loading
-/// - Favorite toggle button
-/// - Discount badge
-/// - Rating display
-/// - Price with original price strikethrough when discounted
-/// - Auto-scrolling (marquee) on long-press — stays active until another card
-///   is long-pressed, or the same card is long-pressed again to toggle off
-/// - Default product detail navigation, with optional action overrides
-class ProductCard extends StatefulWidget {
+class ProductCard extends StatelessWidget {
   const ProductCard({
     super.key,
     required this.product,
@@ -38,139 +21,86 @@ class ProductCard extends StatefulWidget {
   final VoidCallback? onFavoriteTap;
   final VoidCallback? onOpenProductTap;
 
-  @override
-  State<ProductCard> createState() => _ProductCardState();
-}
-
-class _ProductCardState extends State<ProductCard> {
-  final ValueNotifier<bool> _isActiveNotifier = ValueNotifier(false);
-
-  @override
-  void initState() {
-    super.initState();
-    activeMarqueeId.addListener(_onActiveIdChanged);
-  }
-
-  @override
-  void dispose() {
-    activeMarqueeId.removeListener(_onActiveIdChanged);
-    // If this card was the active one, clear the notifier
-    if (activeMarqueeId.value == widget.product.id) {
-      activeMarqueeId.value = null;
-    }
-    _isActiveNotifier.dispose();
-    super.dispose();
-  }
-
-  void _onActiveIdChanged() {
-    final isNowActive = activeMarqueeId.value == widget.product.id;
-    if (isNowActive != _isActiveNotifier.value) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (mounted) {
-          _isActiveNotifier.value = isNowActive;
-        }
-      });
-    }
-  }
-
   void _onLongPress() {
-    // Toggle off if same card is long-pressed again, otherwise activate
-    if (activeMarqueeId.value == widget.product.id) {
-      activeMarqueeId.value = null;
-    } else {
-      activeMarqueeId.value = widget.product.id;
-    }
+    activeMarqueeId.value =
+        activeMarqueeId.value == product.id ? null : product.id;
   }
 
-  void _openProductDetails() {
-    if (widget.product.id <= 0) return;
-
-    context.push(
-      AppRoutes.productDetails,
-      extra: {'productId': widget.product.id},
-    );
+  void _openProductDetails(BuildContext context) {
+    if (product.id <= 0) return;
+    context.push(AppRoutes.productDetails, extra: {'productId': product.id});
   }
 
   @override
   Widget build(BuildContext context) {
     final cs = context.theme.colorScheme;
     final tt = context.theme.textTheme;
-
-    final originalPrice = double.tryParse(widget.product.price) ?? 0;
-    final hasDiscount = widget.product.hasOffer;
-    final discountedPrice = widget.product.discountedPrice;
+    final originalPrice = double.tryParse(product.price) ?? 0;
+    final hasDiscount = product.hasOffer;
+    final discountedPrice = product.discountedPrice;
 
     return GestureDetector(
-      onTap: widget.onTap ?? _openProductDetails,
+      onTap: onTap ?? () => _openProductDetails(context),
       onLongPress: _onLongPress,
-      child: ValueListenableBuilder<bool>(
-        valueListenable: _isActiveNotifier,
-        builder: (context, isActive, child) {
+      child: ValueListenableBuilder<int?>(
+        valueListenable: activeMarqueeId,
+        builder: (context, activeId, child) {
+          final isActive = activeId == product.id;
           return AnimatedContainer(
             duration: const Duration(milliseconds: 200),
             decoration: BoxDecoration(
               color: cs.surface,
               borderRadius: BorderRadius.circular(12.r),
               border: Border.all(
-                // Subtle highlight when marquee is active
                 color: isActive
                     ? cs.primary.withValues(alpha: 0.6)
                     : cs.outlineVariant.withValues(alpha: 0.5),
                 width: isActive ? 1.5 : 1.0,
               ),
-        ),
-        clipBehavior: Clip.antiAlias,
+            ),
+            clipBehavior: Clip.antiAlias,
+            child: child,
+          );
+        },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Image section with favorite & discount badge
-            _buildImageSection(cs),
-
-            // Content section
+            _ProductImageSection(
+              product: product,
+              onFavoriteTap: onFavoriteTap,
+            ),
             Expanded(
               child: Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 6.w,
-                  vertical: 4.h,
-                ),
+                padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 4.h),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Description — marquee when active
-                    if (widget.product.description.isNotEmpty)
-                      MarqueeText(
-                        text: widget.product.description,
-                        isActive: isActive,
+                    if (product.description.isNotEmpty)
+                      _ActiveMarqueeText(
+                        productId: product.id,
+                        text: product.description,
                         style: tt.labelSmall?.copyWith(
                           color: cs.onSurfaceVariant,
                         ),
                       ),
                     4.verticalSpace,
-
-                    // Product name — marquee when active
-                    MarqueeText(
-                      text: widget.product.name,
-                      isActive: isActive,
+                    _ActiveMarqueeText(
+                      productId: product.id,
+                      text: product.name,
                       style: tt.titleSmall?.copyWith(
                         fontWeight: FontWeight.bold,
                         color: cs.onSurface,
                       ),
                     ),
-
                     const Spacer(),
-
-                    // Rating row
-                    if (widget.product.reviewCount > 0)
+                    if (product.reviewCount > 0)
                       Row(
                         children: [
-                          Icon(
-                            Icons.star_rounded,
-                            size: 14.r,
-                            color: cs.secondary,
-                          ),
+                          Icon(Icons.star_rounded,
+                              size: 14.r, color: cs.secondary),
                           2.horizontalSpace,
                           Text(
-                            '${widget.product.averageRating.toStringAsFixed(1)} (${widget.product.reviewCount})',
+                            '${product.averageRating.toStringAsFixed(1)} (${product.reviewCount})',
                             style: tt.labelSmall?.copyWith(
                               fontWeight: FontWeight.w600,
                               color: cs.onSurface,
@@ -178,52 +108,83 @@ class _ProductCardState extends State<ProductCard> {
                           ),
                         ],
                       ),
-
-                    _buildPriceRow(
-                      cs,
-                      tt,
-                      originalPrice,
-                      discountedPrice,
-                      hasDiscount,
+                    _PriceRow(
+                      product: product,
+                      originalPrice: originalPrice,
+                      discountedPrice: discountedPrice,
+                      hasDiscount: hasDiscount,
+                      onOpenProductTap: onOpenProductTap ??
+                          () => _openProductDetails(context),
                     ),
                   ],
                 ),
               ),
             ),
           ],
-            ),
-          );
-        },
+        ),
       ),
     );
   }
+}
 
-  Widget _buildImageSection(ColorScheme cs) {
+class _ActiveMarqueeText extends StatelessWidget {
+  const _ActiveMarqueeText({
+    required this.productId,
+    required this.text,
+    this.style,
+  });
+
+  final int productId;
+  final String text;
+  final TextStyle? style;
+
+  @override
+  Widget build(BuildContext context) {
+    return ValueListenableBuilder<int?>(
+      valueListenable: activeMarqueeId,
+      builder: (context, activeId, _) {
+        return MarqueeText(
+          text: text,
+          isActive: activeId == productId,
+          style: style,
+        );
+      },
+    );
+  }
+}
+
+class _ProductImageSection extends StatelessWidget {
+  const _ProductImageSection({
+    required this.product,
+    this.onFavoriteTap,
+  });
+
+  final ProductEntity product;
+  final VoidCallback? onFavoriteTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final cs = context.theme.colorScheme;
     return SizedBox(
       height: 140.h,
       width: double.infinity,
       child: Stack(
         children: [
-          // Product image
           Positioned.fill(
             child: CommonImage(
               memCacheHeight: 140 * 3,
-              imageUrl: widget.product.image,
+              imageUrl: product.image,
               fit: BoxFit.contain,
-              borderRadius: BorderRadius.vertical(
-                top: Radius.circular(9.r),
-              ),
+              borderRadius: BorderRadius.vertical(top: Radius.circular(9.r)),
             ),
           ),
-
-          // Favorite button — uses BlocSelector for granular rebuilds
           Align(
             alignment: Alignment.topLeft,
             child: BlocSelector<FavoriteBloc, FavoriteState, (bool, bool)>(
               selector: (state) => (
-                state.favoriteIds.contains(widget.product.id) ||
-                    (!state.hasLoaded && widget.product.isFavorite),
-                state.togglingIds.contains(widget.product.id),
+                state.favoriteIds.contains(product.id) ||
+                    (!state.hasLoaded && product.isFavorite),
+                state.togglingIds.contains(product.id),
               ),
               builder: (context, status) {
                 final isFavorite = status.$1;
@@ -231,15 +192,13 @@ class _ProductCardState extends State<ProductCard> {
                 return GestureDetector(
                   onTap: isToggling
                       ? null
-                      : widget.onFavoriteTap ??
-                          () {
-                            context.read<FavoriteBloc>().add(
-                                  ToggleFavoriteEvent(
-                                    widget.product.id,
-                                    expectedIsFavorite: isFavorite,
-                                  ),
-                                );
-                          },
+                      : onFavoriteTap ??
+                          () => context.read<FavoriteBloc>().add(
+                                ToggleFavoriteEvent(
+                                  product.id,
+                                  expectedIsFavorite: isFavorite,
+                                ),
+                              ),
                   child: Container(
                     margin: EdgeInsetsDirectional.symmetric(
                         horizontal: 6.w, vertical: 6.h),
@@ -267,24 +226,19 @@ class _ProductCardState extends State<ProductCard> {
               },
             ),
           ),
-
-          // Discount badge
-          if (widget.product.hasOffer)
+          if (product.hasOffer)
             Align(
               alignment: Alignment.topRight,
               child: Container(
                 margin: EdgeInsetsDirectional.symmetric(
                     horizontal: 6.w, vertical: 6.h),
-                padding: EdgeInsets.symmetric(
-                  horizontal: 8.w,
-                  vertical: 6.h,
-                ),
+                padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 6.h),
                 decoration: BoxDecoration(
                   color: cs.error,
                   borderRadius: BorderRadius.circular(4.r),
                 ),
                 child: Text(
-                  '${widget.product.discountPercentage}%-',
+                  '${product.discountPercentage}%-',
                   style: TextStyle(
                     color: cs.onError,
                     fontSize: 11.sp,
@@ -297,14 +251,27 @@ class _ProductCardState extends State<ProductCard> {
       ),
     );
   }
+}
 
-  Widget _buildPriceRow(
-    ColorScheme cs,
-    TextTheme tt,
-    double originalPrice,
-    double discountedPrice,
-    bool hasDiscount,
-  ) {
+class _PriceRow extends StatelessWidget {
+  const _PriceRow({
+    required this.product,
+    required this.originalPrice,
+    required this.discountedPrice,
+    required this.hasDiscount,
+    required this.onOpenProductTap,
+  });
+
+  final ProductEntity product;
+  final double originalPrice;
+  final double discountedPrice;
+  final bool hasDiscount;
+  final VoidCallback onOpenProductTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final cs = context.theme.colorScheme;
+    final tt = context.theme.textTheme;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -330,23 +297,16 @@ class _ProductCardState extends State<ProductCard> {
             ),
           ],
         ),
-
         const Spacer(),
-
-        // Eye button
         GestureDetector(
-          onTap: widget.onOpenProductTap ?? _openProductDetails,
+          onTap: onOpenProductTap,
           child: Container(
             padding: EdgeInsets.all(8.r),
             decoration: BoxDecoration(
               color: cs.primary,
               borderRadius: BorderRadius.circular(8.r),
             ),
-            child: Icon(
-              Icons.remove_red_eye,
-              size: 18.r,
-              color: cs.onPrimary,
-            ),
+            child: Icon(Icons.remove_red_eye, size: 18.r, color: cs.onPrimary),
           ),
         ),
       ],

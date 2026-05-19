@@ -82,9 +82,12 @@ class BrandsBloc extends Bloc<BrandsEvent, BrandsState> {
     Emitter<BrandsState> emit,
   ) async {
     if (state.hasReachedMax ||
-        state.productsStatus == BrandProductsStatus.loading) {
+        state.productsStatus == BrandProductsStatus.loading ||
+        state.productsStatus == BrandProductsStatus.loadingMore) {
       return;
     }
+
+    emit(state.copyWith(productsStatus: BrandProductsStatus.loadingMore));
 
     final nextPage = state.currentPage + 1;
 
@@ -96,7 +99,7 @@ class BrandsBloc extends Bloc<BrandsEvent, BrandsState> {
     result.fold(
       (failure) => emit(
         state.copyWith(
-          productsStatus: BrandProductsStatus.failure,
+          productsStatus: BrandProductsStatus.success, // revert status to success so user can retry
           productsErrorMessage: failure.message,
         ),
       ),

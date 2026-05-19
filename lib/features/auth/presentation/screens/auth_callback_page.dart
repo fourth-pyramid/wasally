@@ -1,6 +1,5 @@
 import 'package:wassaly/core/imports/imports.dart';
-import 'package:wassaly/features/auth/data/datasources/auth_local_datasource.dart';
-import 'package:wassaly/features/auth/data/models/user_model.dart';
+import 'package:wassaly/features/auth/domain/usecases/google_login_usecase.dart';
 import 'package:wassaly/features/auth/presentation/bloc/session/session_bloc.dart';
 
 class AuthCallbackPage extends StatefulWidget {
@@ -24,7 +23,7 @@ class AuthCallbackPage extends StatefulWidget {
 }
 
 class _AuthCallbackPageState extends State<AuthCallbackPage> {
-  final AuthLocalDataSource _localDataSource = sl<AuthLocalDataSource>();
+  final GoogleLoginUseCase _googleLoginUseCase = sl<GoogleLoginUseCase>();
 
   @override
   void initState() {
@@ -49,35 +48,30 @@ class _AuthCallbackPageState extends State<AuthCallbackPage> {
       return;
     }
 
-    try {
-      // Save token
-      await _localDataSource.saveToken(token);
+    final result = await _googleLoginUseCase.completeGoogleLogin(
+      token: token,
+      id: id,
+      fullName: widget.fullName ?? '',
+      email: email,
+      avatar: widget.avatar,
+    );
 
-      // Create and cache user
-      final user = UserModel(
-        id: id,
-        email: email,
-        name: widget.fullName,
-        phone: null,
-        avatarUrl: widget.avatar,
-        token: token,
+    if (mounted) {
+      result.fold(
+        (failure) {
+          context.showTypedSnackBar(context.l10n.auth_login_failed,
+              type: SnackBarType.error);
+          context.go(AppRoutes.login);
+        },
+        (user) {
+          // Notify SessionBloc about the logged-in user so avatar appears immediately
+          sl<SessionBloc>().add(SessionUserUpdated(user));
+
+          context.showTypedSnackBar(context.l10n.auth_login_success,
+              type: SnackBarType.info);
+          context.go(AppRoutes.home);
+        },
       );
-      await _localDataSource.cacheUser(user);
-
-      if (mounted) {
-        // Notify SessionBloc about the logged-in user so avatar appears immediately
-        sl<SessionBloc>().add(SessionUserUpdated(user));
-
-        context.showTypedSnackBar(context.l10n.auth_login_success,
-            type: SnackBarType.info);
-        context.go(AppRoutes.home);
-      }
-    } catch (e) {
-      if (mounted) {
-        context.showTypedSnackBar(context.l10n.auth_login_failed,
-            type: SnackBarType.error);
-        context.go(AppRoutes.login);
-      }
     }
   }
 

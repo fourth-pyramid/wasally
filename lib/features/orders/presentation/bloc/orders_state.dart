@@ -2,7 +2,7 @@ import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/service_booking/domain/entities/booking_entity.dart';
 import '../../domain/entities/order_entity.dart';
 
-enum OrdersStatus { initial, loading, success, failure }
+enum OrdersStatus { initial, loading, loadingMore, success, failure }
 
 class OrdersState extends Equatable {
   final OrdersStatus status;

@@ -18,7 +18,9 @@ class OrderModel {
     return OrderModel(
       id: data['id']?.toString() ?? '',
       status: data['status']?.toString() ?? '',
-      total: (data['total'] as num?)?.toDouble() ?? 0.0,
+      total: (data['total_price'] as num?)?.toDouble() ??
+          (data['total'] as num?)?.toDouble() ??
+          0.0,
       createdAt: data['created_at']?.toString() ?? '',
     );
   }

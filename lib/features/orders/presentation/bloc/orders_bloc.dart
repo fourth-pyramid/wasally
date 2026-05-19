@@ -79,9 +79,13 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
 
   Future<void> _onLoadMoreOrders(
       LoadMoreOrdersEvent event, Emitter<OrdersState> emit) async {
-    if (state.status == OrdersStatus.loading || !state.orders.hasMore) {
+    if (state.status == OrdersStatus.loading ||
+        state.status == OrdersStatus.loadingMore ||
+        !state.orders.hasMore) {
       return;
     }
+
+    emit(state.copyWith(status: OrdersStatus.loadingMore));
 
     final nextPage = state.orders.currentPage + 1;
 
@@ -89,10 +93,11 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
 
     result.fold(
       (failure) {
-        // We don't change status to failure here to keep showing current orders
+        emit(state.copyWith(status: OrdersStatus.success));
       },
       (paginatedResponse) {
         emit(state.copyWith(
+          status: OrdersStatus.success,
           orders: paginatedResponse.copyWith(
             data: [...state.orders.data, ...paginatedResponse.data],
           ),

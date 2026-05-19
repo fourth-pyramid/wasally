@@ -13,6 +13,8 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
+  StreamSubscription<void>? _connectivitySub;
+
   @override
   void initState() {
     super.initState();
@@ -24,121 +26,137 @@ class _CartPageState extends State<CartPage> {
         cartBloc.add(const LoadCartItemsEvent());
       }
     });
+    _connectivitySub = sl<InternetConnectionService>()
+        .connectivityRestoredStream
+        .listen((_) {
+      if (mounted) _onRetryLoad(context);
+    });
   }
+
+  @override
+  void dispose() {
+    _connectivitySub?.cancel();
+    super.dispose();
+  }
+
+  // FIX 10: named methods — no new lambdas in build()
+  void _onRetryLoad(BuildContext context) =>
+      context.read<CartBloc>().add(const LoadCartItemsEvent());
 
   @override
   Widget build(BuildContext context) {
     final cs = context.theme.colorScheme;
 
+    // FIX 4: Scaffold + CustomScrollView + AppSliverTopBar are OUTSIDE BlocBuilder
+    // — they never change with cart state
     return Scaffold(
       backgroundColor: cs.surface,
-      body: BlocBuilder<CartBloc, CartState>(
-        // Only rebuild when visible content changes.
-        // Ignoring addingProductIds / inCartProductIds changes prevents
-        // flutter_animate from restarting animations mid-frame, which caused
-        // "setState() called during build" exceptions.
-        buildWhen: (prev, curr) =>
-            prev.status != curr.status ||
-            prev.items != curr.items ||
-            prev.failure != curr.failure,
-        builder: (context, state) {
-          return CustomScrollView(
-            physics: const AlwaysScrollableScrollPhysics(),
-            slivers: [
-              // ─── AppBar ────────────────────────────────────────────────────────────
-              AppSliverTopBar(
-                automaticallyImplyLeading: false,
-                title: context.l10n.cart_cart_title,
-              ),
+      body: CustomScrollView(
+        physics: const AlwaysScrollableScrollPhysics(),
+        slivers: [
+          // ─── AppBar (static — outside BlocBuilder) ─────────────────────────
+          AppSliverTopBar(
+            automaticallyImplyLeading: false,
+            title: context.l10n.cart_cart_title,
+          ),
 
-              // ─── Content ───────────────────────────────────────────────────────────
-              if (state.isLoading && state.items.isEmpty)
-                const SliverFillRemaining(
+          // ─── Dynamic content (only what changes with state) ─────────────────
+          BlocBuilder<CartBloc, CartState>(
+            // Only rebuild when visible content changes.
+            // Ignoring addingProductIds / inCartProductIds changes prevents
+            // flutter_animate from restarting animations mid-frame.
+            buildWhen: (prev, curr) =>
+                prev.status != curr.status ||
+                prev.items != curr.items ||
+                prev.failure != curr.failure,
+            builder: (context, state) {
+              if (state.isLoading && state.items.isEmpty) {
+                return const SliverFillRemaining(
                   child: Center(child: AppLoading()),
-                )
-              else if (state.isError && state.items.isEmpty)
-                SliverFillRemaining(
+                );
+              }
+              if (state.isError && state.items.isEmpty) {
+                return SliverFillRemaining(
                   child: Center(
                     child: state.failure != null
                         ? AppErrorWidget.failure(
                             failure: state.failure!,
-                            onRetry: () => context
-                                .read<CartBloc>()
-                                .add(const LoadCartItemsEvent()),
+                            onRetry: () => _onRetryLoad(context), // FIX 10
                           )
                         : AppErrorWidget(
                             title: context.l10n.errors_error_occurred_title,
                             message: state.errorMessage.isNotEmpty
                                 ? state.errorMessage
                                 : context.l10n.errors_error_occurred_message,
-                            onRetry: () => context
-                                .read<CartBloc>()
-                                .add(const LoadCartItemsEvent()),
+                            onRetry: () => _onRetryLoad(context), // FIX 10
                           ),
                   ),
-                )
-              else if (state.items.isEmpty)
-                SliverFillRemaining(
+                );
+              }
+              if (state.items.isEmpty) {
+                return SliverFillRemaining(
                   hasScrollBody: false,
                   child: AppEmptyState(
                     icon: Icons.shopping_basket_outlined,
                     title: context.l10n.cart_empty_title,
                     subtitle: context.l10n.cart_empty_subtitle,
                   ),
-                )
-              else ...[
-                // Cart Items List
-                SliverPadding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-                  sliver: SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                      (context, index) {
-                        final item = state.items[index];
-                        return CartItemWidget(
-                          item: item,
-                          onRemove: () => context
-                              .read<CartBloc>()
-                              .add(RemoveFromCartEvent(item.id)),
-                          onQuantityIncrease: () =>
-                              context.read<CartBloc>().add(
-                                    UpdateQuantityEvent(
-                                      cartItemId: item.id,
-                                      quantity: item.quantity + 1,
+                );
+              }
+              return SliverMainAxisGroup(
+                slivers: [
+                  // Cart Items List
+                  SliverPadding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 16.w, vertical: 16.h),
+                    sliver: SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                        (context, index) {
+                          final item = state.items[index];
+                          return CartItemWidget(
+                            item: item,
+                            onRemove: () => context
+                                .read<CartBloc>()
+                                .add(RemoveFromCartEvent(item.id)),
+                            onQuantityIncrease: () =>
+                                context.read<CartBloc>().add(
+                                      UpdateQuantityEvent(
+                                        cartItemId: item.id,
+                                        quantity: item.quantity + 1,
+                                      ),
                                     ),
-                                  ),
-                          onQuantityDecrease: () {
-                            if (item.quantity > 1) {
-                              context.read<CartBloc>().add(
-                                    UpdateQuantityEvent(
-                                      cartItemId: item.id,
-                                      quantity: item.quantity - 1,
-                                    ),
-                                  );
-                            } else {
-                              context.read<CartBloc>().add(
-                                    RemoveFromCartEvent(item.id),
-                                  );
-                            }
-                          },
-                        );
-                      },
-                      childCount: state.items.length,
+                            onQuantityDecrease: () {
+                              if (item.quantity > 1) {
+                                context.read<CartBloc>().add(
+                                      UpdateQuantityEvent(
+                                        cartItemId: item.id,
+                                        quantity: item.quantity - 1,
+                                      ),
+                                    );
+                              } else {
+                                context
+                                    .read<CartBloc>()
+                                    .add(RemoveFromCartEvent(item.id));
+                              }
+                            },
+                          );
+                        },
+                        childCount: state.items.length,
+                      ),
                     ),
                   ),
-                ),
-
-                // Order Summary
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding: EdgeInsets.fromLTRB(16.w, 0, 16.w, 32.h),
-                    child: CartOrderSummary(state: state),
+                  // Order Summary
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(16.w, 0, 16.w, 32.h),
+                      child: CartOrderSummary(state: state),
+                    ),
                   ),
-                ),
-              ],
-            ],
-          );
-        },
+                ],
+              );
+            },
+          ),
+        ],
       ),
     );
   }

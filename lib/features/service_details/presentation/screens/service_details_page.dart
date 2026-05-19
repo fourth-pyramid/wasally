@@ -12,6 +12,10 @@ class ServiceDetailsPage extends StatelessWidget {
     required this.serviceId,
   });
 
+  void _onRetry(BuildContext context) {
+    context.read<ServiceDetailsBloc>().add(FetchServiceDetailsEvent(serviceId));
+  }
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -40,9 +44,7 @@ class ServiceDetailsPage extends StatelessWidget {
                     child: AppErrorWidget(
                       message: state.errorMessage ??
                           context.l10n.errors_something_went_wrong,
-                      onRetry: () => context
-                          .read<ServiceDetailsBloc>()
-                          .add(FetchServiceDetailsEvent(serviceId)),
+                      onRetry: () => _onRetry(context),
                     ),
                   ),
                 ],

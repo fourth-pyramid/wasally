@@ -108,7 +108,7 @@ class ServiceDetailsBloc
         await _refreshServiceAfterReviewAction(
           serviceId: event.serviceId,
           emit: emit,
-          successMessage: rootContext!.l10n.product_details_review_created,
+          successMessage: 'product_details_review_created',
         );
       },
     );
@@ -147,7 +147,7 @@ class ServiceDetailsBloc
           await _refreshServiceAfterReviewAction(
             serviceId: state.service!.id,
             emit: emit,
-            successMessage: rootContext!.l10n.product_details_review_updated,
+            successMessage: 'product_details_review_updated',
           );
         }
       },

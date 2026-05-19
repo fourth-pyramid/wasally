@@ -33,6 +33,14 @@ class _ProductOrdersTabState extends State<ProductOrdersTab> {
     }
   }
 
+  void _onRetry() {
+    context.read<OrdersBloc>().add(const GetOrdersEvent());
+  }
+
+  Future<void> _onRefresh() async {
+    context.read<OrdersBloc>().add(const GetOrdersEvent());
+  }
+
   bool get _isBottom {
     if (!_scrollController.hasClients) return false;
     final maxScroll = _scrollController.position.maxScrollExtent;
@@ -59,8 +67,7 @@ class _ProductOrdersTabState extends State<ProductOrdersTab> {
               message: errorMessage.isNotEmpty
                   ? errorMessage
                   : context.l10n.errors_error_occurred_message,
-              onRetry: () =>
-                  context.read<OrdersBloc>().add(const GetOrdersEvent()),
+              onRetry: _onRetry,
             ),
           );
         }
@@ -73,9 +80,7 @@ class _ProductOrdersTabState extends State<ProductOrdersTab> {
         }
 
         return RefreshIndicator(
-          onRefresh: () async {
-            context.read<OrdersBloc>().add(const GetOrdersEvent());
-          },
+          onRefresh: _onRefresh,
           child: CustomScrollView(
             controller: _scrollController,
             slivers: [

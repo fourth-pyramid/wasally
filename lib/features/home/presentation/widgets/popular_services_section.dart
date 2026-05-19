@@ -7,6 +7,10 @@ import 'package:wassaly/features/home/presentation/widgets/service_item.dart';
 class PopularServicesSection extends StatelessWidget {
   const PopularServicesSection({super.key});
 
+  // FIX 10: named method — no new lambdas per item per BlocSelector rebuild
+  void _onServiceTap(BuildContext context, SubCategoryEntity service) =>
+      context.push(AppRoutes.subCategory, extra: {'subCategory': service});
+
   @override
   Widget build(BuildContext context) {
     final cs = context.theme.colorScheme;
@@ -112,10 +116,7 @@ class PopularServicesSection extends StatelessWidget {
                           return ServiceItem(
                             name: service.name,
                             imageUrl: service.image,
-                            onTap: () => context.push(
-                              AppRoutes.subCategory,
-                              extra: {'subCategory': service},
-                            ),
+                            onTap: () => _onServiceTap(context, service),
                           );
                         },
                       ),

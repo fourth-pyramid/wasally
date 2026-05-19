@@ -43,6 +43,7 @@ abstract final class AppRoutes {
 
   // Checkout
   static const String checkout = '/checkout';
+  static const String orderSuccess = '/order-success';
 
   // Service details
   static const String serviceDetails = '/service-details';

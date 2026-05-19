@@ -7,6 +7,10 @@ import 'package:wassaly/features/home/presentation/widgets/category_card.dart';
 class MainCategoriesSection extends StatelessWidget {
   const MainCategoriesSection({super.key});
 
+  // FIX 10: named method — no new lambdas on every BlocSelector rebuild
+  void _onCategoryTap(BuildContext context, CategoryEntity category) =>
+      context.push(AppRoutes.category, extra: {'category': category});
+
   @override
   Widget build(BuildContext context) {
     final cs = context.theme.colorScheme;
@@ -108,10 +112,7 @@ class MainCategoriesSection extends StatelessWidget {
               child: CategoryCard(
                 title: categories[firstIndex].name,
                 imageUrl: categories[firstIndex].image,
-                onTap: () => context.push(
-                  AppRoutes.category,
-                  extra: {'category': categories[firstIndex]},
-                ),
+                onTap: () => _onCategoryTap(context, categories[firstIndex]),
               ),
             ),
           ],
@@ -134,10 +135,7 @@ class MainCategoriesSection extends StatelessWidget {
               child: CategoryCard(
                 title: categories[leftIndex].name,
                 imageUrl: categories[leftIndex].image,
-                onTap: () => context.push(
-                  AppRoutes.category,
-                  extra: {'category': categories[leftIndex]},
-                ),
+                onTap: () => _onCategoryTap(context, categories[leftIndex]),
               ),
             ),
             12.horizontalSpace,
@@ -146,10 +144,7 @@ class MainCategoriesSection extends StatelessWidget {
                 child: CategoryCard(
                   title: categories[rightIndex].name,
                   imageUrl: categories[rightIndex].image,
-                  onTap: () => context.push(
-                    AppRoutes.category,
-                    extra: {'category': categories[rightIndex]},
-                  ),
+                  onTap: () => _onCategoryTap(context, categories[rightIndex]),
                 ),
               )
             else

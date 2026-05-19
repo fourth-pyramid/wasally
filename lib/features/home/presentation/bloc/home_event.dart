@@ -16,3 +16,5 @@ class GetPopularServicesEvent extends HomeEvent {}
 class GetProductsEvent extends HomeEvent {}
 
 class LoadMoreProductsEvent extends HomeEvent {}
+
+class HomeInitializeEvent extends HomeEvent {}

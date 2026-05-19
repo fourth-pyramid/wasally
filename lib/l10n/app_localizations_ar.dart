@@ -228,6 +228,12 @@ class SAr extends S {
   String get product_details_edit_time_expired => 'انتهى وقت التعديل';
 
   @override
+  String get product_details_review_edit_window => 'الوقت المتبقي للتعديل:';
+
+  @override
+  String get product_details_your_review => 'تقييمك';
+
+  @override
   String get service_details_no_reviews_yet => 'لا توجد تقييمات بعد';
 
   @override
@@ -928,6 +934,22 @@ class SAr extends S {
 
   @override
   String get checkout_order_success => 'تم تقديم الطلب بنجاح!';
+
+  @override
+  String get checkout_success_title => 'تم تقديم الطلب بنجاح!';
+
+  @override
+  String get checkout_success_msg =>
+      'تم استلام طلبك بنجاح وجاري العمل على تجهيزه.';
+
+  @override
+  String get checkout_order_id => 'رقم الطلب';
+
+  @override
+  String get checkout_go_home => 'العودة للرئيسية';
+
+  @override
+  String get checkout_view_orders => 'عرض طلباتي';
 
   @override
   String get checkout_validation_name_required => 'الاسم مطلوب';

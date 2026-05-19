@@ -21,6 +21,155 @@ class _BookingDetailsPageState extends State<BookingDetailsPage> {
   bool _shouldRefresh = false;
   bool _allowPop = false;
 
+  void _onRetry() {
+    context
+        .read<BookingDetailBloc>()
+        .add(InitializeBookingDetailEvent(widget.booking));
+  }
+
+  Future<void> _onCancelBooking(BookingEntity booking) async {
+    final confirmed = await showAppDialog<bool>(
+      child: Builder(
+        builder: (ctx) => Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16.r),
+          ),
+          child: Padding(
+            padding: EdgeInsets.all(24.w),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  Icons.cancel_outlined,
+                  size: 48.r,
+                  color: context.theme.colorScheme.error,
+                ),
+                16.verticalSpace,
+                Text(
+                  context.l10n.booking_cancel_title,
+                  style: context.theme.textTheme.headlineSmall?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: context.theme.colorScheme.onSurface,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                8.verticalSpace,
+                Text(
+                  context.l10n.booking_cancel_confirm_msg,
+                  style: context.theme.textTheme.bodyMedium?.copyWith(
+                    color: context.theme.colorScheme.onSurfaceVariant,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                24.verticalSpace,
+                Row(
+                  children: [
+                    Expanded(
+                      child: AppButton(
+                        label: context.l10n.shared_cancel,
+                        variant: ButtonVariant.ghost,
+                        isFullWidth: false,
+                        onPressed: () => Navigator.of(ctx).pop(false),
+                      ),
+                    ),
+                    12.horizontalSpace,
+                    Expanded(
+                      child: AppButton(
+                        isFullWidth: true,
+                        label: context.l10n.booking_details_cancel_btn,
+                        variant: ButtonVariant.danger,
+                        onPressed: () => Navigator.of(ctx).pop(true),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+
+    if (!mounted) return;
+
+    if (confirmed ?? false) {
+      context.read<BookingDetailBloc>().add(CancelBookingEvent(booking.id));
+    }
+  }
+
+  Future<void> _onDeleteBooking(BookingEntity booking) async {
+    final confirmed = await showAppDialog<bool>(
+      child: Builder(
+        builder: (ctx) => Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16.r),
+          ),
+          child: Padding(
+            padding: EdgeInsets.all(24.w),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  Icons.delete_outline,
+                  size: 48.r,
+                  color: context.theme.colorScheme.error,
+                ),
+                16.verticalSpace,
+                Text(
+                  context.l10n.booking_delete_title,
+                  style: context.theme.textTheme.headlineSmall?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: context.theme.colorScheme.onSurface,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                8.verticalSpace,
+                Text(
+                  context.l10n.booking_delete_confirm_msg,
+                  style: context.theme.textTheme.bodyMedium?.copyWith(
+                    color: context.theme.colorScheme.onSurfaceVariant,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                24.verticalSpace,
+                Row(
+                  children: [
+                    Expanded(
+                      child: AppButton(
+                        label: context.l10n.shared_cancel,
+                        variant: ButtonVariant.ghost,
+                        isFullWidth: false,
+                        onPressed: () => Navigator.of(ctx).pop(false),
+                      ),
+                    ),
+                    12.horizontalSpace,
+                    Expanded(
+                      child: AppButton(
+                        isFullWidth: true,
+                        label: context.l10n.shared_delete,
+                        variant: ButtonVariant.danger,
+                        onPressed: () => Navigator.of(ctx).pop(true),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+
+    if (!mounted) return;
+
+    if (confirmed ?? false) {
+      setState(() {
+        _isDeleting = true;
+      });
+      context.read<BookingDetailBloc>().add(DeleteBookingEvent(booking.id));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final tt = context.theme.textTheme;
@@ -63,72 +212,78 @@ class _BookingDetailsPageState extends State<BookingDetailsPage> {
               );
             }
           },
-          child: BlocBuilder<BookingDetailBloc, BookingDetailState>(
-            buildWhen: (previous, current) =>
-                previous.status != current.status ||
-                previous.booking != current.booking ||
-                previous.errorMessage != current.errorMessage,
-            builder: (context, state) {
-              if (state.status == BookingDetailStatus.loading &&
-                  state.booking == null) {
-                return const Center(child: AppLoading());
-              }
+          child: CustomScrollView(
+            physics: const BouncingScrollPhysics(),
+            slivers: [
+              AppSliverTopBar(
+                title: context.l10n.booking_details_title,
+                onPressed: () => context.pop(_shouldRefresh),
+              ),
+              BlocBuilder<BookingDetailBloc, BookingDetailState>(
+                buildWhen: (previous, current) =>
+                    previous.status != current.status ||
+                    previous.booking != current.booking ||
+                    previous.errorMessage != current.errorMessage,
+                builder: (context, state) {
+                  if (state.status == BookingDetailStatus.loading &&
+                      state.booking == null) {
+                    return const SliverFillRemaining(
+                      child: Center(child: AppLoading()),
+                    );
+                  }
 
-              if (state.status == BookingDetailStatus.failure &&
-                  state.booking == null) {
-                return Center(
-                  child: AppErrorWidget(
-                    title: context.l10n.errors_error_occurred_title,
-                    message: state.errorMessage.isNotEmpty
-                        ? state.errorMessage
-                        : context.l10n.errors_error_occurred_message,
-                    onRetry: () => context
-                        .read<BookingDetailBloc>()
-                        .add(InitializeBookingDetailEvent(widget.booking)),
-                  ),
-                );
-              }
+                  if (state.status == BookingDetailStatus.failure &&
+                      state.booking == null) {
+                    return SliverFillRemaining(
+                      hasScrollBody: false,
+                      child: Center(
+                        child: AppErrorWidget(
+                          title: context.l10n.errors_error_occurred_title,
+                          message: state.errorMessage.isNotEmpty
+                              ? state.errorMessage
+                              : context.l10n.errors_error_occurred_message,
+                          onRetry: _onRetry,
+                        ),
+                      ),
+                    );
+                  }
 
-              final booking = state.booking;
-              if (booking == null) {
-                return Center(
-                  child: Text(
-                    context.l10n.errors_something_went_wrong,
-                    style: tt.bodyLarge,
-                  ),
-                );
-              }
+                  final booking = state.booking;
+                  if (booking == null) {
+                    return SliverFillRemaining(
+                      hasScrollBody: false,
+                      child: Center(
+                        child: Text(
+                          context.l10n.errors_something_went_wrong,
+                          style: tt.bodyLarge,
+                        ),
+                      ),
+                    );
+                  }
 
-              final normStatus = booking.status.trim().toLowerCase();
-              final isCancelled = normStatus.contains('cancelled') ||
-                  normStatus.contains('ملغي') ||
-                  normStatus.contains('rejected') ||
-                  normStatus.contains('failed');
+                  final normStatus = booking.status.trim().toLowerCase();
+                  final isCancelled = normStatus.contains('cancelled') ||
+                      normStatus.contains('ملغي') ||
+                      normStatus.contains('rejected') ||
+                      normStatus.contains('failed');
 
-              final isPending = normStatus.contains('pending') ||
-                  normStatus.contains('waiting') ||
-                  normStatus.contains('قيد الانتظار');
+                  final isPending = normStatus.contains('pending') ||
+                      normStatus.contains('waiting') ||
+                      normStatus.contains('قيد الانتظار');
 
-              final isCompleted = normStatus.contains('completed') ||
-                  normStatus.contains('مكتمل') ||
-                  normStatus.contains('success');
+                  final isCompleted = normStatus.contains('completed') ||
+                      normStatus.contains('مكتمل') ||
+                      normStatus.contains('success');
 
-              final canDelete = isCompleted ||
-                  isCancelled ||
-                  normStatus.contains('accepted') ||
-                  normStatus.contains('confirmed') ||
-                  normStatus.contains('تم القبول') ||
-                  normStatus.contains('مؤكد');
-              final canCancelOrUpdate = isPending;
+                  final canDelete = isCompleted ||
+                      isCancelled ||
+                      normStatus.contains('accepted') ||
+                      normStatus.contains('confirmed') ||
+                      normStatus.contains('تم القبول') ||
+                      normStatus.contains('مؤكد');
+                  final canCancelOrUpdate = isPending;
 
-              return CustomScrollView(
-                physics: const BouncingScrollPhysics(),
-                slivers: [
-                  AppSliverTopBar(
-                    title: context.l10n.booking_details_title,
-                    onPressed: () => context.pop(_shouldRefresh),
-                  ),
-                  SliverPadding(
+                  return SliverPadding(
                     padding:
                         EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
                     sliver: SliverList(
@@ -181,127 +336,7 @@ class _BookingDetailsPageState extends State<BookingDetailsPage> {
                                             .l10n.booking_details_cancel_btn,
                                         onPressed: isActionLoading
                                             ? null
-                                            : () async {
-                                                final confirmed =
-                                                    await showAppDialog<bool>(
-                                                        child: Builder(
-                                                  builder: (ctx) => Dialog(
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              16.r),
-                                                    ),
-                                                    child: Padding(
-                                                      padding:
-                                                          EdgeInsets.all(24.w),
-                                                      child: Column(
-                                                        mainAxisSize:
-                                                            MainAxisSize.min,
-                                                        children: [
-                                                          Icon(
-                                                            Icons
-                                                                .cancel_outlined,
-                                                            size: 48.r,
-                                                            color: context
-                                                                .theme
-                                                                .colorScheme
-                                                                .error,
-                                                          ),
-                                                          16.verticalSpace,
-                                                          Text(
-                                                            context.l10n
-                                                                .booking_cancel_title,
-                                                            style: context
-                                                                .theme
-                                                                .textTheme
-                                                                .headlineSmall
-                                                                ?.copyWith(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              color: context
-                                                                  .theme
-                                                                  .colorScheme
-                                                                  .onSurface,
-                                                            ),
-                                                            textAlign: TextAlign
-                                                                .center,
-                                                          ),
-                                                          8.verticalSpace,
-                                                          Text(
-                                                            context.l10n
-                                                                .booking_cancel_confirm_msg,
-                                                            style: context
-                                                                .theme
-                                                                .textTheme
-                                                                .bodyMedium
-                                                                ?.copyWith(
-                                                              color: context
-                                                                  .theme
-                                                                  .colorScheme
-                                                                  .onSurfaceVariant,
-                                                            ),
-                                                            textAlign: TextAlign
-                                                                .center,
-                                                          ),
-                                                          24.verticalSpace,
-                                                          Row(
-                                                            children: [
-                                                              Expanded(
-                                                                child:
-                                                                    AppButton(
-                                                                  label: context
-                                                                      .l10n
-                                                                      .shared_cancel,
-                                                                  variant:
-                                                                      ButtonVariant
-                                                                          .ghost,
-                                                                  isFullWidth:
-                                                                      false,
-                                                                  onPressed: () =>
-                                                                      Navigator.of(
-                                                                              ctx)
-                                                                          .pop(
-                                                                              false),
-                                                                ),
-                                                              ),
-                                                              12.horizontalSpace,
-                                                              Expanded(
-                                                                child:
-                                                                    AppButton(
-                                                                  isFullWidth:
-                                                                      true,
-                                                                  label: context
-                                                                      .l10n
-                                                                      .booking_details_cancel_btn,
-                                                                  variant:
-                                                                      ButtonVariant
-                                                                          .danger,
-                                                                  onPressed: () =>
-                                                                      Navigator.of(
-                                                                              ctx)
-                                                                          .pop(
-                                                                              true),
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ));
-
-                                                if (!context.mounted) return;
-
-                                                if (confirmed ?? false) {
-                                                  context
-                                                      .read<BookingDetailBloc>()
-                                                      .add(CancelBookingEvent(
-                                                          booking.id));
-                                                }
-                                              },
+                                            : () => _onCancelBooking(booking),
                                         variant: ButtonVariant.danger,
                                       ),
                                     ),
@@ -344,122 +379,7 @@ class _BookingDetailsPageState extends State<BookingDetailsPage> {
                                   isFullWidth: true,
                                   onPressed: isActionLoading
                                       ? null
-                                      : () async {
-                                          final confirmed =
-                                              await showAppDialog<bool>(
-                                            child: Builder(
-                                              builder: (ctx) => Dialog(
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          16.r),
-                                                ),
-                                                child: Padding(
-                                                  padding: EdgeInsets.all(24.w),
-                                                  child: Column(
-                                                    mainAxisSize:
-                                                        MainAxisSize.min,
-                                                    children: [
-                                                      Icon(
-                                                        Icons.delete_outline,
-                                                        size: 48.r,
-                                                        color: context.theme
-                                                            .colorScheme.error,
-                                                      ),
-                                                      16.verticalSpace,
-                                                      Text(
-                                                        context.l10n
-                                                            .booking_delete_title,
-                                                        style: context
-                                                            .theme
-                                                            .textTheme
-                                                            .headlineSmall
-                                                            ?.copyWith(
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          color: context
-                                                              .theme
-                                                              .colorScheme
-                                                              .onSurface,
-                                                        ),
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                      ),
-                                                      8.verticalSpace,
-                                                      Text(
-                                                        context.l10n
-                                                            .booking_delete_confirm_msg,
-                                                        style: context
-                                                            .theme
-                                                            .textTheme
-                                                            .bodyMedium
-                                                            ?.copyWith(
-                                                          color: context
-                                                              .theme
-                                                              .colorScheme
-                                                              .onSurfaceVariant,
-                                                        ),
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                      ),
-                                                      24.verticalSpace,
-                                                      Row(
-                                                        children: [
-                                                          Expanded(
-                                                            child: AppButton(
-                                                              label: context
-                                                                  .l10n
-                                                                  .shared_cancel,
-                                                              variant:
-                                                                  ButtonVariant
-                                                                      .ghost,
-                                                              isFullWidth:
-                                                                  false,
-                                                              onPressed: () =>
-                                                                  Navigator.of(
-                                                                          ctx)
-                                                                      .pop(
-                                                                          false),
-                                                            ),
-                                                          ),
-                                                          12.horizontalSpace,
-                                                          Expanded(
-                                                            child: AppButton(
-                                                              isFullWidth: true,
-                                                              label: context
-                                                                  .l10n
-                                                                  .shared_delete,
-                                                              variant:
-                                                                  ButtonVariant
-                                                                      .danger,
-                                                              onPressed: () =>
-                                                                  Navigator.of(
-                                                                          ctx)
-                                                                      .pop(
-                                                                          true),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          );
-
-                                          if (!context.mounted) return;
-
-                                          if (confirmed ?? false) {
-                                            setState(() {
-                                              _isDeleting = true;
-                                            });
-                                            context
-                                                .read<BookingDetailBloc>()
-                                                .add(DeleteBookingEvent(
-                                                    booking.id));
-                                          }
-                                        },
+                                      : () => _onDeleteBooking(booking),
                                   variant: ButtonVariant.outline,
                                   textColor: context.theme.colorScheme.error,
                                 );
@@ -469,10 +389,10 @@ class _BookingDetailsPageState extends State<BookingDetailsPage> {
                         ],
                       ]),
                     ),
-                  ),
-                ],
-              );
-            },
+                  );
+              },
+            ),
+          ],
           ),
         ),
       ),

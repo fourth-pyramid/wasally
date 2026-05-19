@@ -1,4 +1,5 @@
 import 'package:wassaly/core/imports/imports.dart';
+import 'package:wassaly/features/orders/domain/entities/order_entity.dart';
 import 'package:wassaly/features/orders/presentation/bloc/order_detail/order_detail_bloc.dart';
 import 'package:wassaly/features/orders/presentation/bloc/order_detail/order_detail_event.dart';
 import 'package:wassaly/features/orders/presentation/bloc/order_detail/order_detail_state.dart';
@@ -19,6 +20,153 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
   bool _isDeleting = false;
   bool _shouldRefresh = false;
   bool _allowPop = false;
+
+  void _onRetry() {
+    context.read<OrderDetailBloc>().add(FetchOrderDetailEvent(widget.orderId));
+  }
+
+  Future<void> _onCancelOrder(OrderEntity order) async {
+    final confirmed = await showAppDialog<bool>(
+      child: Builder(
+        builder: (ctx) => Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16.r),
+          ),
+          child: Padding(
+            padding: EdgeInsets.all(24.w),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  Icons.cancel_outlined,
+                  size: 48.r,
+                  color: context.theme.colorScheme.error,
+                ),
+                16.verticalSpace,
+                Text(
+                  context.l10n.order_cancel_title,
+                  style: context.theme.textTheme.headlineSmall?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: context.theme.colorScheme.onSurface,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                8.verticalSpace,
+                Text(
+                  context.l10n.order_cancel_confirm_msg,
+                  style: context.theme.textTheme.bodyMedium?.copyWith(
+                    color: context.theme.colorScheme.onSurfaceVariant,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                24.verticalSpace,
+                Row(
+                  children: [
+                    Expanded(
+                      child: AppButton(
+                        label: context.l10n.shared_cancel,
+                        variant: ButtonVariant.ghost,
+                        isFullWidth: false,
+                        onPressed: () => Navigator.of(ctx).pop(false),
+                      ),
+                    ),
+                    12.horizontalSpace,
+                    Expanded(
+                      child: AppButton(
+                        isFullWidth: true,
+                        label: context.l10n.order_details_cancel_btn,
+                        variant: ButtonVariant.danger,
+                        onPressed: () => Navigator.of(ctx).pop(true),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+
+    if (!mounted) return;
+
+    if (confirmed ?? false) {
+      context.read<OrderDetailBloc>().add(CancelOrderEvent(order.id));
+    }
+  }
+
+  Future<void> _onDeleteOrder(OrderEntity order) async {
+    final confirmed = await showAppDialog<bool>(
+      child: Builder(
+        builder: (ctx) => Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16.r),
+          ),
+          child: Padding(
+            padding: EdgeInsets.all(24.w),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  Icons.delete_outline,
+                  size: 48.r,
+                  color: context.theme.colorScheme.error,
+                ),
+                16.verticalSpace,
+                Text(
+                  context.l10n.order_delete_title,
+                  style: context.theme.textTheme.headlineSmall?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: context.theme.colorScheme.onSurface,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                8.verticalSpace,
+                Text(
+                  context.l10n.order_delete_confirm_msg,
+                  style: context.theme.textTheme.bodyMedium?.copyWith(
+                    color: context.theme.colorScheme.onSurfaceVariant,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                24.verticalSpace,
+                Row(
+                  children: [
+                    Expanded(
+                      child: AppButton(
+                        label: context.l10n.shared_cancel,
+                        variant: ButtonVariant.ghost,
+                        isFullWidth: false,
+                        onPressed: () => Navigator.of(ctx).pop(false),
+                      ),
+                    ),
+                    12.horizontalSpace,
+                    Expanded(
+                      child: AppButton(
+                        isFullWidth: true,
+                        label: context.l10n.shared_delete,
+                        variant: ButtonVariant.danger,
+                        onPressed: () => Navigator.of(ctx).pop(true),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+
+    if (!mounted) return;
+
+    if (confirmed ?? false) {
+      setState(() {
+        _isDeleting = true;
+      });
+      context.read<OrderDetailBloc>().add(DeleteOrderEvent(order.id));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,71 +210,77 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
               );
             }
           },
-          child: BlocBuilder<OrderDetailBloc, OrderDetailState>(
-            buildWhen: (previous, current) =>
-                previous.status != current.status ||
-                previous.order != current.order ||
-                previous.errorMessage != current.errorMessage,
-            builder: (context, state) {
-              // Only show full loading on initial fetch (no order yet)
-              if (state.status == OrderDetailStatus.loading &&
-                  state.order == null) {
-                return const Center(child: AppLoading());
-              }
+          child: CustomScrollView(
+            physics: const BouncingScrollPhysics(),
+            slivers: [
+              AppSliverTopBar(
+                title: context.l10n.order_details_title,
+                onPressed: () => context.pop(_shouldRefresh),
+              ),
+              BlocBuilder<OrderDetailBloc, OrderDetailState>(
+                buildWhen: (previous, current) =>
+                    previous.status != current.status ||
+                    previous.order != current.order ||
+                    previous.errorMessage != current.errorMessage,
+                builder: (context, state) {
+                  // Only show full loading on initial fetch (no order yet)
+                  if (state.status == OrderDetailStatus.loading &&
+                      state.order == null) {
+                    return const SliverFillRemaining(
+                      child: Center(child: AppLoading()),
+                    );
+                  }
 
-              if (state.status == OrderDetailStatus.failure &&
-                  state.order == null) {
-                return Center(
-                  child: AppErrorWidget(
-                    title: context.l10n.errors_error_occurred_title,
-                    message: state.errorMessage.isNotEmpty
-                        ? state.errorMessage
-                        : context.l10n.errors_error_occurred_message,
-                    onRetry: () => context
-                        .read<OrderDetailBloc>()
-                        .add(FetchOrderDetailEvent(widget.orderId)),
-                  ),
-                );
-              }
+                  if (state.status == OrderDetailStatus.failure &&
+                      state.order == null) {
+                    return SliverFillRemaining(
+                      hasScrollBody: false,
+                      child: Center(
+                        child: AppErrorWidget(
+                          title: context.l10n.errors_error_occurred_title,
+                          message: state.errorMessage.isNotEmpty
+                              ? state.errorMessage
+                              : context.l10n.errors_error_occurred_message,
+                          onRetry: _onRetry,
+                        ),
+                      ),
+                    );
+                  }
 
-              final order = state.order;
-              if (order == null) {
-                return Center(
-                  child: Text(
-                    context.l10n.errors_something_went_wrong,
-                    style: tt.bodyLarge,
-                  ),
-                );
-              }
+                  final order = state.order;
+                  if (order == null) {
+                    return SliverFillRemaining(
+                      hasScrollBody: false,
+                      child: Center(
+                        child: Text(
+                          context.l10n.errors_something_went_wrong,
+                          style: tt.bodyLarge,
+                        ),
+                      ),
+                    );
+                  }
 
-              final normStatus = order.status.trim().toLowerCase();
-              final isCancelled = normStatus.contains('cancelled') ||
-                  normStatus.contains('ملغي') ||
-                  normStatus.contains('rejected') ||
-                  normStatus.contains('failed');
+                  final normStatus = order.status.trim().toLowerCase();
+                  final isCancelled = normStatus.contains('cancelled') ||
+                      normStatus.contains('ملغي') ||
+                      normStatus.contains('rejected') ||
+                      normStatus.contains('failed');
 
-              final isPending = normStatus.contains('pending') ||
-                  normStatus.contains('قيد الانتظار') ||
-                  normStatus.contains('new') ||
-                  normStatus.contains('جديد');
+                  final isPending = normStatus.contains('pending') ||
+                      normStatus.contains('قيد الانتظار') ||
+                      normStatus.contains('new') ||
+                      normStatus.contains('جديد');
 
-              final isDelivered = normStatus.contains('delivered') ||
-                  normStatus.contains('completed') ||
-                  normStatus.contains('تم التوصيل') ||
-                  normStatus.contains('مكتمل') ||
-                  normStatus.contains('success');
+                  final isDelivered = normStatus.contains('delivered') ||
+                      normStatus.contains('completed') ||
+                      normStatus.contains('تم التوصيل') ||
+                      normStatus.contains('مكتمل') ||
+                      normStatus.contains('success');
 
-              final canDelete = isDelivered || isCancelled;
-              final canCancelOrUpdate = isPending;
+                  final canDelete = isDelivered || isCancelled;
+                  final canCancelOrUpdate = isPending;
 
-              return CustomScrollView(
-                physics: const BouncingScrollPhysics(),
-                slivers: [
-                  AppSliverTopBar(
-                    title: context.l10n.order_details_title,
-                    onPressed: () => context.pop(_shouldRefresh),
-                  ),
-                  SliverPadding(
+                  return SliverPadding(
                     padding:
                         EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
                     sliver: SliverList(
@@ -192,126 +346,7 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                                             .l10n.order_details_cancel_btn,
                                         onPressed: isActionLoading
                                             ? null
-                                            : () async {
-                                                final confirmed =
-                                                    await showAppDialog<bool>(
-                                                  child: Builder(
-                                                    builder: (ctx) => Dialog(
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(16.r),
-                                                      ),
-                                                      child: Padding(
-                                                        padding: EdgeInsets.all(
-                                                            24.w),
-                                                        child: Column(
-                                                          mainAxisSize:
-                                                              MainAxisSize.min,
-                                                          children: [
-                                                            Icon(
-                                                              Icons
-                                                                  .cancel_outlined,
-                                                              size: 48.r,
-                                                              color: context
-                                                                  .theme
-                                                                  .colorScheme
-                                                                  .error,
-                                                            ),
-                                                            16.verticalSpace,
-                                                            Text(
-                                                              context.l10n
-                                                                  .order_cancel_title,
-                                                              style: context
-                                                                  .theme
-                                                                  .textTheme
-                                                                  .headlineSmall
-                                                                  ?.copyWith(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: context
-                                                                    .theme
-                                                                    .colorScheme
-                                                                    .onSurface,
-                                                              ),
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .center,
-                                                            ),
-                                                            8.verticalSpace,
-                                                            Text(
-                                                              context.l10n
-                                                                  .order_cancel_confirm_msg,
-                                                              style: context
-                                                                  .theme
-                                                                  .textTheme
-                                                                  .bodyMedium
-                                                                  ?.copyWith(
-                                                                color: context
-                                                                    .theme
-                                                                    .colorScheme
-                                                                    .onSurfaceVariant,
-                                                              ),
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .center,
-                                                            ),
-                                                            24.verticalSpace,
-                                                            Row(
-                                                              children: [
-                                                                Expanded(
-                                                                  child:
-                                                                      AppButton(
-                                                                    label: context
-                                                                        .l10n
-                                                                        .shared_cancel,
-                                                                    variant:
-                                                                        ButtonVariant
-                                                                            .ghost,
-                                                                    isFullWidth:
-                                                                        false,
-                                                                    onPressed: () =>
-                                                                        Navigator.of(ctx)
-                                                                            .pop(false),
-                                                                  ),
-                                                                ),
-                                                                12.horizontalSpace,
-                                                                Expanded(
-                                                                  child:
-                                                                      AppButton(
-                                                                    isFullWidth:
-                                                                        true,
-                                                                    label: context
-                                                                        .l10n
-                                                                        .order_details_cancel_btn,
-                                                                    variant:
-                                                                        ButtonVariant
-                                                                            .danger,
-                                                                    onPressed: () =>
-                                                                        Navigator.of(ctx)
-                                                                            .pop(true),
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                );
-
-                                                if (!context.mounted) return;
-
-                                                if (confirmed ?? false) {
-                                                  context
-                                                      .read<OrderDetailBloc>()
-                                                      .add(CancelOrderEvent(
-                                                          order.id));
-                                                }
-                                              },
+                                            : () => _onCancelOrder(order),
                                         variant: ButtonVariant.danger,
                                       ),
                                     ),
@@ -354,120 +389,7 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                                   isFullWidth: true,
                                   onPressed: isActionLoading
                                       ? null
-                                      : () async {
-                                          final confirmed =
-                                              await showAppDialog<bool>(
-                                            child: Builder(
-                                              builder: (ctx) => Dialog(
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          16.r),
-                                                ),
-                                                child: Padding(
-                                                  padding: EdgeInsets.all(24.w),
-                                                  child: Column(
-                                                    mainAxisSize:
-                                                        MainAxisSize.min,
-                                                    children: [
-                                                      Icon(
-                                                        Icons.delete_outline,
-                                                        size: 48.r,
-                                                        color: context.theme
-                                                            .colorScheme.error,
-                                                      ),
-                                                      16.verticalSpace,
-                                                      Text(
-                                                        context.l10n
-                                                            .order_delete_title,
-                                                        style: context
-                                                            .theme
-                                                            .textTheme
-                                                            .headlineSmall
-                                                            ?.copyWith(
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          color: context
-                                                              .theme
-                                                              .colorScheme
-                                                              .onSurface,
-                                                        ),
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                      ),
-                                                      8.verticalSpace,
-                                                      Text(
-                                                        context.l10n
-                                                            .order_delete_confirm_msg,
-                                                        style: context
-                                                            .theme
-                                                            .textTheme
-                                                            .bodyMedium
-                                                            ?.copyWith(
-                                                          color: context
-                                                              .theme
-                                                              .colorScheme
-                                                              .onSurfaceVariant,
-                                                        ),
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                      ),
-                                                      24.verticalSpace,
-                                                      Row(
-                                                        children: [
-                                                          Expanded(
-                                                            child: AppButton(
-                                                              label: context
-                                                                  .l10n
-                                                                  .shared_cancel,
-                                                              variant:
-                                                                  ButtonVariant
-                                                                      .ghost,
-                                                              isFullWidth:
-                                                                  false,
-                                                              onPressed: () =>
-                                                                  Navigator.of(
-                                                                          ctx)
-                                                                      .pop(
-                                                                          false),
-                                                            ),
-                                                          ),
-                                                          12.horizontalSpace,
-                                                          Expanded(
-                                                            child: AppButton(
-                                                              isFullWidth: true,
-                                                              label: context
-                                                                  .l10n
-                                                                  .shared_delete,
-                                                              variant:
-                                                                  ButtonVariant
-                                                                      .danger,
-                                                              onPressed: () =>
-                                                                  Navigator.of(
-                                                                          ctx)
-                                                                      .pop(
-                                                                          true),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          );
-
-                                          if (!context.mounted) return;
-
-                                          if (confirmed ?? false) {
-                                            setState(() {
-                                              _isDeleting = true;
-                                            });
-                                            context.read<OrderDetailBloc>().add(
-                                                DeleteOrderEvent(order.id));
-                                          }
-                                        },
+                                      : () => _onDeleteOrder(order),
                                   variant: ButtonVariant.outline,
                                   textColor: context.theme.colorScheme.error,
                                 );
@@ -477,10 +399,10 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                         ],
                       ]),
                     ),
-                  ),
-                ],
-              );
-            },
+                  );
+              },
+            ),
+          ],
           ),
         ),
       ),

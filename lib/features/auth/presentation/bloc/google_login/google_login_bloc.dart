@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/auth/domain/entities/user_entity.dart';
 import 'package:wassaly/features/auth/domain/usecases/google_login_usecase.dart';

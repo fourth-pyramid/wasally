@@ -85,7 +85,7 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
   ) async {
     if (!state.isTermsAccepted) {
       emit(state.copyWith(
-        errorMessage: rootContext!.l10n.auth_terms_required,
+        errorMessage: 'auth_terms_required',
       ));
       return;
     }

@@ -60,17 +60,17 @@ class _MarqueeTextState extends State<MarqueeText> {
   Future<void> _runMarquee(double maxScroll) async {
     while (mounted && _isRunning) {
       await Future<void>.delayed(const Duration(milliseconds: 400));
-      if (!mounted || !_isRunning) break;
+      if (!mounted || !_isRunning || !_scrollController.hasClients) break;
 
       await _scrollController.animateTo(
         maxScroll,
         duration: Duration(milliseconds: (maxScroll * 18).toInt()),
         curve: Curves.linear,
       );
-      if (!mounted || !_isRunning) break;
+      if (!mounted || !_isRunning || !_scrollController.hasClients) break;
 
       await Future<void>.delayed(const Duration(milliseconds: 800));
-      if (!mounted || !_isRunning) break;
+      if (!mounted || !_isRunning || !_scrollController.hasClients) break;
 
       _scrollController.jumpTo(0);
     }

@@ -11,9 +11,8 @@ class ResetPasswordBloc extends Bloc<ResetPasswordEvent, ResetPasswordState> {
   ResetPasswordBloc({
     required String email,
     required String token,
-    ResetPasswordUseCase? resetPasswordUseCase,
-  })  : _resetPasswordUseCase =
-            resetPasswordUseCase ?? sl<ResetPasswordUseCase>(),
+    required ResetPasswordUseCase resetPasswordUseCase,
+  })  : _resetPasswordUseCase = resetPasswordUseCase,
         super(ResetPasswordState(email: email, token: token)) {
     on<NewPasswordChanged>(_onNewPasswordChanged);
     on<ConfirmPasswordChanged>(_onConfirmPasswordChanged);

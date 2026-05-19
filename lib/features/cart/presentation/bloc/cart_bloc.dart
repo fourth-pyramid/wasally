@@ -13,13 +13,16 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   final AddToCartUseCase addToCartUseCase;
   final RemoveFromCartUseCase removeFromCartUseCase;
   final UpdateQuantityUseCase updateQuantityUseCase;
+  final CartRepository _cartRepository;
 
   CartBloc({
     required this.getCartItemsUseCase,
     required this.addToCartUseCase,
     required this.removeFromCartUseCase,
     required this.updateQuantityUseCase,
-  }) : super(const CartState()) {
+    required CartRepository cartRepository,
+  })  : _cartRepository = cartRepository,
+        super(const CartState()) {
     on<LoadCartItemsEvent>(_onLoadCartItems);
     on<AddToCartEvent>(_onAddToCart);
     on<RemoveFromCartEvent>(_onRemoveFromCart);
@@ -230,8 +233,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   // Helper method to save cart items locally
   Future<void> _saveCartItemsLocally(List<CartItemEntity> items) async {
     try {
-      final cartRepository = sl<CartRepository>();
-      await cartRepository.saveCartItemsLocally(items);
+      await _cartRepository.saveCartItemsLocally(items);
     } catch (e) {
       // Silently fail - local storage is optional
     }

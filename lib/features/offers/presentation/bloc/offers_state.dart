@@ -4,6 +4,7 @@ import 'package:wassaly/features/home/domain/entities/product_entity.dart';
 
 class OffersState extends Equatable {
   final AppStatus status;
+  final bool isLoadingMore;
   final List<ProductEntity> products;
   final String errorMessage;
   final int currentPage;
@@ -11,6 +12,7 @@ class OffersState extends Equatable {
 
   const OffersState({
     this.status = AppStatus.initial,
+    this.isLoadingMore = false,
     this.products = const [],
     this.errorMessage = '',
     this.currentPage = 1,
@@ -19,6 +21,7 @@ class OffersState extends Equatable {
 
   OffersState copyWith({
     AppStatus? status,
+    bool? isLoadingMore,
     List<ProductEntity>? products,
     String? errorMessage,
     int? currentPage,
@@ -26,6 +29,7 @@ class OffersState extends Equatable {
   }) {
     return OffersState(
       status: status ?? this.status,
+      isLoadingMore: isLoadingMore ?? this.isLoadingMore,
       products: products ?? this.products,
       errorMessage: errorMessage ?? this.errorMessage,
       currentPage: currentPage ?? this.currentPage,
@@ -36,6 +40,7 @@ class OffersState extends Equatable {
   @override
   List<Object?> get props => [
         status,
+        isLoadingMore,
         products,
         errorMessage,
         currentPage,

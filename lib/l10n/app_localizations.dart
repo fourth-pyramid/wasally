@@ -523,6 +523,18 @@ abstract class S {
   /// **'Edit time expired'**
   String get product_details_edit_time_expired;
 
+  /// No description provided for @product_details_review_edit_window.
+  ///
+  /// In en, this message translates to:
+  /// **'Time remaining to edit:'**
+  String get product_details_review_edit_window;
+
+  /// No description provided for @product_details_your_review.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Review'**
+  String get product_details_your_review;
+
   /// No description provided for @service_details_no_reviews_yet.
   ///
   /// In en, this message translates to:
@@ -1866,6 +1878,36 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Order placed successfully!'**
   String get checkout_order_success;
+
+  /// No description provided for @checkout_success_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Order Placed Successfully!'**
+  String get checkout_success_title;
+
+  /// No description provided for @checkout_success_msg.
+  ///
+  /// In en, this message translates to:
+  /// **'Your order has been received and is being processed.'**
+  String get checkout_success_msg;
+
+  /// No description provided for @checkout_order_id.
+  ///
+  /// In en, this message translates to:
+  /// **'Order ID'**
+  String get checkout_order_id;
+
+  /// No description provided for @checkout_go_home.
+  ///
+  /// In en, this message translates to:
+  /// **'Go Home'**
+  String get checkout_go_home;
+
+  /// No description provided for @checkout_view_orders.
+  ///
+  /// In en, this message translates to:
+  /// **'View My Orders'**
+  String get checkout_view_orders;
 
   /// No description provided for @checkout_validation_name_required.
   ///

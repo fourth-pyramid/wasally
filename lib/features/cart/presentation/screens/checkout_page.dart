@@ -24,19 +24,13 @@ class CheckoutPage extends StatelessWidget {
           // Refresh cart items after successful order
           context.read<CartBloc>().add(const LoadCartItemsEvent());
 
-          // Navigate to order confirmation — pop back to cart for now
-          // Replace with actual order confirmation route when available
-          try {
-            if (context.mounted && context.canPop()) {
-              context.pop();
-            }
-          } catch (_) {}
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(context.l10n.checkout_order_success),
-              backgroundColor: cs.primary,
-            ),
-          );
+          // Navigate to order confirmation
+          if (context.mounted) {
+            context.pushReplacement(
+              AppRoutes.orderSuccess,
+              extra: state.placedOrder,
+            );
+          }
         } else if (state.status == CheckoutStatus.error &&
             state.errorMessage != null) {
           ScaffoldMessenger.of(context).showSnackBar(

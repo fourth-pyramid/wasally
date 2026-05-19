@@ -35,7 +35,9 @@ class App extends StatelessWidget {
           listenWhen: (previous, current) =>
               previous.errorMessage != current.errorMessage,
           listener: (context, state) {},
-          child: SessionListenerWrapper(child: child!),
+          child: SessionListenerWrapper(
+            child: InternetConnectionWrapper(child: child!),
+          ),
         );
       },
     );
