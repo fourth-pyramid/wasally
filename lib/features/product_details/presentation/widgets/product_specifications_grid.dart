@@ -71,8 +71,8 @@ class ProductSpecificationsGrid extends StatelessWidget {
           if (item.icon.isNotEmpty) ...[
             CommonImage(
               imageUrl: item.icon,
-              height: 25.h,
-              width: 25.w,
+              height: 25,
+              width: 25,
               memCacheHeight: 25 * 3,
               memCacheWidth: 25 * 3,
               fit: BoxFit.contain,

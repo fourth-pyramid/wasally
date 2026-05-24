@@ -32,6 +32,11 @@ class AppEmptyState extends StatelessWidget {
   Widget build(BuildContext context) {
     final cs = context.theme.colorScheme;
     final tt = context.theme.textTheme;
+    final isIOS = context.isIOS;
+
+    final displayIcon = (isIOS && icon == Icons.inbox_outlined)
+        ? CupertinoIcons.tray
+        : icon;
 
     return Center(
       child: Padding(
@@ -48,7 +53,7 @@ class AppEmptyState extends StatelessWidget {
                 shape: BoxShape.circle,
               ),
               child: Icon(
-                icon,
+                displayIcon,
                 size: 80.r,
                 color: cs.primary.withValues(alpha: 0.4),
               ),

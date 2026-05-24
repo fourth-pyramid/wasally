@@ -165,7 +165,7 @@ class _HomeViewState extends State<_HomeView> {
                     SliverToBoxAdapter(
                       child: Padding(
                         padding: EdgeInsets.only(top: 8.h),
-                        child: const HomeBanner(),
+                        child: const RepaintBoundary(child: HomeBanner()),
                       ),
                     ),
                     // Spacing
@@ -193,9 +193,11 @@ class _HomeViewState extends State<_HomeView> {
                           onTap: () => context.push(AppRoutes.offers),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(12.r),
-                            child: Image.asset(
-                              'assets/images/offers.png',
+                            child: const CommonImage(
+                              imageUrl: 'assets/images/offers.png',
                               width: double.infinity,
+                              height: 150,
+                              memCacheHeight: 150 * 3,
                               fit: BoxFit.cover,
                             ),
                           ),

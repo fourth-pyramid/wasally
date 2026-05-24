@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -41,6 +42,13 @@ extension ContextExtension on BuildContext {
     bool isScrollControlled = true,
     bool useSafeArea = true,
   }) {
+    if (isIOS) {
+      return showCupertinoModalPopup<T>(
+        context: this,
+        useRootNavigator: false,
+        builder: builder,
+      );
+    }
     return showModalBottomSheet<T>(
       context: this,
       builder: builder,
@@ -49,9 +57,20 @@ extension ContextExtension on BuildContext {
     );
   }
 
-  Future<T?> showAppDialog<T>({required WidgetBuilder builder}) {
+  Future<T?> showAppDialog<T>({
+    required WidgetBuilder builder,
+    bool barrierDismissible = true,
+  }) {
+    if (isIOS) {
+      return showCupertinoDialog<T>(
+        context: this,
+        barrierDismissible: barrierDismissible,
+        builder: builder,
+      );
+    }
     return showDialog<T>(
       context: this,
+      barrierDismissible: barrierDismissible,
       builder: builder,
     );
   }

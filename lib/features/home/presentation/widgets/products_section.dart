@@ -58,6 +58,8 @@ class ProductsSection extends StatelessWidget {
 
             // Grid
             AppProductsSection(
+              padding: EdgeInsets.symmetric(horizontal: 4.w),
+              mainAxisExtent: 230.h,
               isLoading: isLoading,
               products: productsList,
               hasMore: products.hasMore,

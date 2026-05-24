@@ -85,6 +85,7 @@ class _GoogleLoginButtonState extends State<GoogleLoginButton>
                     width: 24,
                     height: 24,
                     color: cs.onSurface,
+                  memCacheHeight: 24 * 2,
                   ),
             textColor: cs.onSurface,
           );

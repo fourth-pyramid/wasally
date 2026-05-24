@@ -7,7 +7,7 @@ import '../models/sub_category_model.dart';
 abstract class HomeRemoteDataSource {
   Future<List<BannerModel>> getBanners();
   Future<List<CategoryModel>> getCategories();
-  Future<List<SubCategoryModel>> getPopularServices();
+  Future<PaginatedResponse<SubCategoryModel>> getPopularServices({int page = 1});
   Future<PaginatedResponse<ProductModel>> getProducts({int page = 1});
 }
 
@@ -73,8 +73,13 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   }
 
   @override
-  Future<List<SubCategoryModel>> getPopularServices() async {
-    final result = await _dioService.get('/api/sub-categories');
+  Future<PaginatedResponse<SubCategoryModel>> getPopularServices({
+    int page = 1,
+  }) async {
+    final result = await _dioService.get(
+      '/api/sub-categories',
+      queryParameters: {'page': page},
+    );
 
     return result.fold(
       (failure) => throw failure,
@@ -88,14 +93,32 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
         }
 
         final data = responseData['data'];
+        final pagination =
+            responseData['pagination'] as Map<String, dynamic>? ?? {};
+        final lastPage = pagination['last_page'] as int? ?? 1;
+        final total = pagination['total'] as int? ?? 0;
+        final currentPage = pagination['current_page'] as int? ?? page;
+
         if (data == null) {
-          return <SubCategoryModel>[];
+          return PaginatedResponse(
+            data: const <SubCategoryModel>[],
+            currentPage: currentPage,
+            lastPage: lastPage,
+            total: total,
+          );
         }
 
         final List<dynamic> list = data as List<dynamic>;
-        return list
+        final services = list
             .map((e) => SubCategoryModel.fromJson(e as Map<String, dynamic>))
             .toList();
+
+        return PaginatedResponse(
+          data: services,
+          currentPage: currentPage,
+          lastPage: lastPage,
+          total: total,
+        );
       },
     );
   }

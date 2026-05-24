@@ -71,8 +71,8 @@ class ServiceProviderCard extends StatelessWidget {
                       ),
                       child: CommonImage(
                         imageUrl: provider.user.avatar ?? provider.cover,
-                        width: 60.w,
-                        height: 60.h,
+                        width: 60,
+                        height: 60,
                         memCacheHeight: 60 * 2,
                         borderRadius: BorderRadius.circular(11.r),
                         enableFullScreenView: true,

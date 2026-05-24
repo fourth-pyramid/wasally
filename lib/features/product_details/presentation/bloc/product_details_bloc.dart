@@ -1,6 +1,7 @@
 import 'package:wassaly/core/imports/imports.dart';
 
 import '../../../sub_category/domain/usecases/get_sub_category_detail_usecase.dart';
+import '../../domain/entities/product_detail_entity.dart';
 import '../../domain/usecases/create_product_review_usecase.dart';
 import '../../domain/usecases/get_product_details_usecase.dart';
 import '../../domain/usecases/update_product_review_usecase.dart';
@@ -52,10 +53,14 @@ class ProductDetailsBloc
         ),
       ),
       (product) async {
+        final sortedProduct = product.copyWith(
+          reviews: _sortReviewsNewestFirst(product.reviews),
+        );
+
         emit(
           state.copyWith(
             status: ProductDetailsStatus.success,
-            product: product,
+            product: sortedProduct,
           ),
         );
 
@@ -193,14 +198,34 @@ class ProductDetailsBloc
           reviewActionMessage: failure.message,
         ),
       ),
-      (product) => emit(
-        state.copyWith(
-          status: ProductDetailsStatus.success,
-          product: product,
-          reviewActionStatus: ReviewActionStatus.success,
-          reviewActionMessage: successMessage,
-        ),
-      ),
+      (product) {
+        final sortedProduct = product.copyWith(
+          reviews: _sortReviewsNewestFirst(product.reviews),
+        );
+
+        emit(
+          state.copyWith(
+            status: ProductDetailsStatus.success,
+            product: sortedProduct,
+            reviewActionStatus: ReviewActionStatus.success,
+            reviewActionMessage: successMessage,
+          ),
+        );
+      },
     );
+  }
+
+  List<ProductDetailReviewEntity> _sortReviewsNewestFirst(
+    List<ProductDetailReviewEntity> reviews,
+  ) {
+    return List<ProductDetailReviewEntity>.from(reviews)
+      ..sort((a, b) {
+        final dateA = a.createdAt.toLocalDateTime();
+        final dateB = b.createdAt.toLocalDateTime();
+        if (dateA != null && dateB != null) {
+          return dateB.compareTo(dateA);
+        }
+        return b.id.compareTo(a.id);
+      });
   }
 }

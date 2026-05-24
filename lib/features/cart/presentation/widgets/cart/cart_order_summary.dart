@@ -14,27 +14,9 @@ class CartOrderSummary extends StatelessWidget {
     final cs = context.theme.colorScheme;
     final tt = context.theme.textTheme;
 
-    final totalOriginalPrice = state.items.fold<double>(
-      0,
-      (sum, item) => sum + (double.tryParse(item.price) ?? 0.0) * item.quantity,
-    );
-
-    final totalAfterProductOffers = state.items.fold<double>(
-      0,
-      (sum, item) {
-        final originalPrice = double.tryParse(item.price) ?? 0.0;
-        final hasOffer = item.offers != null && item.offers!.isNotEmpty;
-        final discountedPrice = hasOffer
-            ? originalPrice *
-                (1 - (item.offers!.first.discountPercentage / 100))
-            : originalPrice;
-        return sum + (discountedPrice * item.quantity);
-      },
-    );
-
-    final productOffersDiscount = totalOriginalPrice - totalAfterProductOffers;
-
-    final total = totalAfterProductOffers.clamp(0.0, double.infinity);
+    final totalOriginalPrice = state.totalOriginalPrice;
+    final productOffersDiscount = state.productOffersDiscount;
+    final total = state.total;
 
     return Container(
       padding: EdgeInsets.all(16.w),

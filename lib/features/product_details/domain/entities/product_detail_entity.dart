@@ -112,6 +112,38 @@ class ProductDetailEntity extends Equatable {
     required this.provider,
   });
 
+  ProductDetailEntity copyWith({
+    int? id,
+    String? name,
+    String? image,
+    String? price,
+    String? description,
+    List<ProductSpecificationEntity>? specifications,
+    List<ProductDetailImageEntity>? images,
+    ProductMetaEntity? subCategory,
+    ProductMetaEntity? brand,
+    List<ProductDetailReviewEntity>? reviews,
+    List<int>? offerPercentages,
+    bool? isFavorite,
+    ServiceProviderEntity? provider,
+  }) {
+    return ProductDetailEntity(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      image: image ?? this.image,
+      price: price ?? this.price,
+      description: description ?? this.description,
+      specifications: specifications ?? this.specifications,
+      images: images ?? this.images,
+      subCategory: subCategory ?? this.subCategory,
+      brand: brand ?? this.brand,
+      reviews: reviews ?? this.reviews,
+      offerPercentages: offerPercentages ?? this.offerPercentages,
+      isFavorite: isFavorite ?? this.isFavorite,
+      provider: provider ?? this.provider,
+    );
+  }
+
   int get discountPercentage =>
       offerPercentages.isNotEmpty ? offerPercentages.first : 0;
 

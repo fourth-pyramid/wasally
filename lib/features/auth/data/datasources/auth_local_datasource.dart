@@ -13,7 +13,7 @@ abstract class AuthLocalDataSource {
   /// Delete token from secure storage
   Future<void> deleteToken();
 
-  /// Cache user data locally
+  /// Cache user data locally (secure storage)
   Future<void> cacheUser(UserModel user);
 
   /// Get cached user data
@@ -25,12 +25,11 @@ abstract class AuthLocalDataSource {
 
 class AuthLocalDataSourceImpl implements AuthLocalDataSource {
   final SecureStorageService _secureStorage;
-  final StorageService _storage;
 
   static const String _tokenKey = 'auth_token';
   static const String _userKey = 'cached_user';
 
-  const AuthLocalDataSourceImpl(this._secureStorage, this._storage);
+  const AuthLocalDataSourceImpl(this._secureStorage);
 
   @override
   Future<void> saveToken(String token) async {
@@ -62,28 +61,38 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
   @override
   Future<void> cacheUser(UserModel user) async {
     final userJson = jsonEncode(user.toJson());
-    await _storage.setString(_userKey, userJson);
-    AppLogger.info('User cached locally');
+    final result = await _secureStorage.write(_userKey, userJson);
+    result.fold(
+      (failure) => AppLogger.error('Failed to cache user: ${failure.message}'),
+      (_) => AppLogger.info('User cached in secure storage'),
+    );
   }
 
   @override
   Future<UserModel?> getCachedUser() async {
-    final userJson = _storage.getString(_userKey);
-    if (userJson == null) return null;
-
-    try {
-      final userMap = jsonDecode(userJson) as Map<String, dynamic>;
-      return UserModel.fromJson(userMap);
-    } catch (e) {
-      AppLogger.error('Error parsing cached user: $e');
-      return null;
-    }
+    final result = await _secureStorage.read(_userKey);
+    return result.fold(
+      (failure) => null,
+      (userJson) {
+        if (userJson == null) return null;
+        try {
+          final userMap = jsonDecode(userJson) as Map<String, dynamic>;
+          return UserModel.fromJson(userMap);
+        } catch (e) {
+          AppLogger.error('Error parsing cached user: $e');
+          return null;
+        }
+      },
+    );
   }
 
   @override
   Future<void> clearAuthData() async {
     await deleteToken();
-    await _storage.remove(_userKey);
-    AppLogger.info('All auth data cleared');
+    final result = await _secureStorage.delete(_userKey);
+    result.fold(
+      (failure) => AppLogger.error('Failed to clear user cache: ${failure.message}'),
+      (_) => AppLogger.info('All auth data cleared from secure storage'),
+    );
   }
 }

@@ -2,11 +2,13 @@ import 'package:wassaly/core/imports/imports.dart';
 import '../../domain/entities/booking_entity.dart';
 import '../../domain/repositories/booking_repository.dart';
 import '../datasources/booking_remote_datasource.dart';
+import '../datasources/booking_local_datasource.dart';
 
 class BookingRepositoryImpl implements BookingRepository {
   final BookingRemoteDataSource _remoteDataSource;
+  final BookingLocalDataSource _localDataSource;
 
-  const BookingRepositoryImpl(this._remoteDataSource);
+  const BookingRepositoryImpl(this._remoteDataSource, this._localDataSource);
 
   @override
   Future<Either<Failure, BookingEntity>> createBooking(
@@ -25,10 +27,15 @@ class BookingRepositoryImpl implements BookingRepository {
   Future<Either<Failure, List<BookingEntity>>> getMyBookings() async {
     try {
       final bookings = await _remoteDataSource.getMyBookings();
+      await _localDataSource.cacheBookings(bookings);
       return Right(bookings);
     } on Failure catch (failure) {
+      final cached = _localDataSource.getCachedBookings();
+      if (cached.isNotEmpty) return Right(cached);
       return Left(failure);
     } catch (e) {
+      final cached = _localDataSource.getCachedBookings();
+      if (cached.isNotEmpty) return Right(cached);
       return Left(ServerFailure(e.toString()));
     }
   }

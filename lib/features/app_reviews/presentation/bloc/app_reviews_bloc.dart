@@ -44,13 +44,12 @@ class AppReviewsBloc extends Bloc<AppReviewsEvent, AppReviewsState> {
       (reviews) {
         final sortedReviews = List<AppReviewEntity>.from(reviews)
           ..sort((a, b) {
-            try {
-              final dateA = DateTime.parse(a.createdAt);
-              final dateB = DateTime.parse(b.createdAt);
+            final dateA = a.createdAt.toLocalDateTime();
+            final dateB = b.createdAt.toLocalDateTime();
+            if (dateA != null && dateB != null) {
               return dateB.compareTo(dateA);
-            } catch (_) {
-              return b.id.compareTo(a.id);
             }
+            return b.id.compareTo(a.id);
           });
         emit(state.copyWith(
           status: AppStatus.success,

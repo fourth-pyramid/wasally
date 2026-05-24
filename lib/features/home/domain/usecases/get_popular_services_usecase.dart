@@ -7,7 +7,8 @@ class GetPopularServicesUseCase {
 
   GetPopularServicesUseCase(this.repository);
 
-  Future<Either<Failure, List<SubCategoryEntity>>> call() async {
-    return await repository.getPopularServices();
+  Future<Either<Failure, PaginatedResponse<SubCategoryEntity>>> call(
+      {int page = 1}) async {
+    return await repository.getPopularServices(page: page);
   }
 }

@@ -9,3 +9,4 @@ export 'storage_service.dart';
 export 'version_update_service.dart';
 export 'internet_connection_service.dart';
 export 'home_navigation_service.dart';
+export 'hive_service.dart';

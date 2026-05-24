@@ -20,6 +20,14 @@ class BrandsSection extends StatelessWidget {
 class _BrandsSectionView extends StatelessWidget {
   const _BrandsSectionView();
 
+  static const _dummyBrands = [
+    BrandEntity(id: 0, name: 'اسم الماركة', image: ''),
+    BrandEntity(id: 0, name: 'اسم الماركة', image: ''),
+    BrandEntity(id: 0, name: 'اسم الماركة', image: ''),
+    BrandEntity(id: 0, name: 'اسم الماركة', image: ''),
+    BrandEntity(id: 0, name: 'اسم الماركة', image: ''),
+  ];
+
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
@@ -33,15 +41,6 @@ class _BrandsSectionView extends StatelessWidget {
         final (status, brands) = data;
 
         if (status == BrandsStatus.loading || status == BrandsStatus.initial) {
-          final dummyBrands = List.generate(
-            5,
-            (index) => const BrandEntity(
-              id: 0,
-              name: 'اسم الماركة',
-              image: '',
-            ),
-          );
-
           return SliverToBoxAdapter(
             child: Skeletonizer(
               enabled: true,
@@ -68,10 +67,10 @@ class _BrandsSectionView extends StatelessWidget {
                         SliverPadding(
                           padding: EdgeInsets.symmetric(horizontal: 8.w),
                           sliver: SliverList.builder(
-                            itemCount: dummyBrands.length,
+                            itemCount: _dummyBrands.length,
                             itemBuilder: (context, index) {
                               return BrandCard(
-                                brand: dummyBrands[index],
+                                brand: _dummyBrands[index],
                               );
                             },
                           ),

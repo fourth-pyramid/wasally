@@ -93,6 +93,47 @@ class ProviderDetailEntity extends Equatable {
     required this.products,
   });
 
+  ProviderDetailEntity copyWith({
+    int? id,
+    ProviderDetailUserEntity? user,
+    String? title,
+    String? serviceDescription,
+    String? priceFrom,
+    String? fromDay,
+    String? toDay,
+    String? startTime,
+    String? endTime,
+    String? status,
+    String? cover,
+    double? averageRating,
+    int? reviewsCount,
+    int? successfulOrdersCount,
+    List<ProviderDetailReviewEntity>? reviews,
+    List<ServiceEntity>? services,
+    List<ProductEntity>? products,
+  }) {
+    return ProviderDetailEntity(
+      id: id ?? this.id,
+      user: user ?? this.user,
+      title: title ?? this.title,
+      serviceDescription: serviceDescription ?? this.serviceDescription,
+      priceFrom: priceFrom ?? this.priceFrom,
+      fromDay: fromDay ?? this.fromDay,
+      toDay: toDay ?? this.toDay,
+      startTime: startTime ?? this.startTime,
+      endTime: endTime ?? this.endTime,
+      status: status ?? this.status,
+      cover: cover ?? this.cover,
+      averageRating: averageRating ?? this.averageRating,
+      reviewsCount: reviewsCount ?? this.reviewsCount,
+      successfulOrdersCount:
+          successfulOrdersCount ?? this.successfulOrdersCount,
+      reviews: reviews ?? this.reviews,
+      services: services ?? this.services,
+      products: products ?? this.products,
+    );
+  }
+
   @override
   List<Object?> get props => [
         id,

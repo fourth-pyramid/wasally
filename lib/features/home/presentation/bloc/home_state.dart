@@ -13,7 +13,8 @@ class HomeState extends Equatable {
   final HomeStatus categoriesStatus;
   final List<CategoryEntity> categories;
   final HomeStatus popularServicesStatus;
-  final List<SubCategoryEntity> popularServices;
+  final PaginatedResponse<SubCategoryEntity> popularServices;
+  final bool isPopularServicesLoadingMore;
   final HomeStatus productsStatus;
   final PaginatedResponse<ProductEntity> products;
   final bool isProductsLoadingMore;
@@ -25,7 +26,8 @@ class HomeState extends Equatable {
     this.categoriesStatus = HomeStatus.initial,
     this.categories = const [],
     this.popularServicesStatus = HomeStatus.initial,
-    this.popularServices = const [],
+    this.popularServices = const PaginatedResponse(data: []),
+    this.isPopularServicesLoadingMore = false,
     this.productsStatus = HomeStatus.initial,
     this.products = const PaginatedResponse(data: []),
     this.isProductsLoadingMore = false,
@@ -38,7 +40,8 @@ class HomeState extends Equatable {
     HomeStatus? categoriesStatus,
     List<CategoryEntity>? categories,
     HomeStatus? popularServicesStatus,
-    List<SubCategoryEntity>? popularServices,
+    PaginatedResponse<SubCategoryEntity>? popularServices,
+    bool? isPopularServicesLoadingMore,
     HomeStatus? productsStatus,
     PaginatedResponse<ProductEntity>? products,
     bool? isProductsLoadingMore,
@@ -52,6 +55,8 @@ class HomeState extends Equatable {
       popularServicesStatus:
           popularServicesStatus ?? this.popularServicesStatus,
       popularServices: popularServices ?? this.popularServices,
+      isPopularServicesLoadingMore:
+          isPopularServicesLoadingMore ?? this.isPopularServicesLoadingMore,
       productsStatus: productsStatus ?? this.productsStatus,
       products: products ?? this.products,
       isProductsLoadingMore:
@@ -68,6 +73,7 @@ class HomeState extends Equatable {
         categories,
         popularServicesStatus,
         popularServices,
+        isPopularServicesLoadingMore,
         productsStatus,
         products,
         isProductsLoadingMore,

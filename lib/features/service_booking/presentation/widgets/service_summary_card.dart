@@ -21,8 +21,9 @@ class ServiceSummaryCard extends StatelessWidget {
         children: [
           CommonImage(
             imageUrl: service.image,
-            width: 80.r,
-            height: 80.r,
+            width: 80,
+            height: 80,
+            memCacheHeight: 80 * 2,
             borderRadius: BorderRadius.circular(12.r),
           ),
           16.horizontalSpace,

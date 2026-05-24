@@ -17,6 +17,41 @@ class AppServicesSection extends StatelessWidget {
   final double? mainAxisSpacing;
   final double? crossAxisSpacing;
 
+  static const _dummyServices = [
+    ServiceEntity(
+      id: 1,
+      title: 'خدمة تجريبية طويلة جدا للتجربة',
+      image: '',
+      price: 100,
+      description: 'وصف تجريبي طويل جدا للتجربة وعرض التفاصيل بشكل كامل',
+      isFavorite: false,
+    ),
+    ServiceEntity(
+      id: 2,
+      title: 'خدمة تجريبية طويلة جدا للتجربة',
+      image: '',
+      price: 100,
+      description: 'وصف تجريبي طويل جدا للتجربة وعرض التفاصيل بشكل كامل',
+      isFavorite: false,
+    ),
+    ServiceEntity(
+      id: 3,
+      title: 'خدمة تجريبية طويلة جدا للتجربة',
+      image: '',
+      price: 100,
+      description: 'وصف تجريبي طويل جدا للتجربة وعرض التفاصيل بشكل كامل',
+      isFavorite: false,
+    ),
+    ServiceEntity(
+      id: 4,
+      title: 'خدمة تجريبية طويلة جدا للتجربة',
+      image: '',
+      price: 100,
+      description: 'وصف تجريبي طويل جدا للتجربة وعرض التفاصيل بشكل كامل',
+      isFavorite: false,
+    ),
+  ];
+
   const AppServicesSection({
     super.key,
     required this.services,
@@ -34,20 +69,8 @@ class AppServicesSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final displayServices = isLoading && services.isEmpty
-        ? List.generate(
-            4,
-            (index) => ServiceEntity(
-              id: index,
-              title: 'خدمة تجريبية طويلة جدا للتجربة',
-              image: '',
-              price: 100,
-              description:
-                  'وصف تجريبي طويل جدا للتجربة وعرض التفاصيل بشكل كامل',
-              isFavorite: false,
-            ),
-          )
-        : services;
+    final displayServices =
+        isLoading && services.isEmpty ? _dummyServices : services;
 
     return Skeletonizer.sliver(
       enabled: isLoading,

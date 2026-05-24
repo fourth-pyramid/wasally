@@ -6,6 +6,8 @@ import 'package:wassaly/features/cart/presentation/bloc/cart_state.dart';
 import 'package:wassaly/features/favorite/presentation/bloc/favorite_bloc.dart';
 import 'package:wassaly/features/favorite/presentation/bloc/favorite_event.dart';
 import 'package:wassaly/features/favorite/presentation/bloc/favorite_state.dart';
+import 'package:wassaly/features/main_layout/presentation/widgets/exit_confirm_overlay.dart';
+import 'package:wassaly/features/main_layout/presentation/widgets/nav_bar.dart';
 
 class MainLayoutPage extends StatefulWidget {
   const MainLayoutPage({
@@ -114,7 +116,7 @@ class _MainLayoutPageState extends State<MainLayoutPage> {
         right: 0,
         child: Material(
           color: Colors.transparent,
-          child: _ExitConfirmOverlay(
+          child: ExitConfirmOverlay(
             message: context.l10n.app_exit_confirm,
             duration: overlayDuration,
           ),
@@ -154,246 +156,12 @@ class _MainLayoutPageState extends State<MainLayoutPage> {
         },
         child: Scaffold(
           body: widget.navigationShell,
-          bottomNavigationBar: _NavBar(
+          bottomNavigationBar: MainNavBar(
             currentIndex: widget.navigationShell.currentIndex,
             onTap: _onTap,
             backgroundColor: cs.surface,
             selectedItemColor: cs.primary,
             unselectedItemColor: cs.onSurfaceVariant,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-// ---------------------------------------------------------------------------
-// Bottom navigation bar
-// ---------------------------------------------------------------------------
-
-/// Extracted into its own widget so it owns its own [BlocSelector] for
-/// [avatarUrl] — the outer Scaffold no longer rebuilds when the avatar changes.
-class _NavBar extends StatelessWidget {
-  const _NavBar({
-    required this.currentIndex,
-    required this.onTap,
-    required this.backgroundColor,
-    required this.selectedItemColor,
-    required this.unselectedItemColor,
-  });
-
-  final int currentIndex;
-  final ValueChanged<int> onTap;
-  final Color backgroundColor;
-  final Color selectedItemColor;
-  final Color unselectedItemColor;
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocSelector<SessionBloc, SessionState, String?>(
-      selector: (state) =>
-          state is SessionAuthenticated ? state.user.avatarUrl : null,
-      builder: (context, avatarUrl) {
-        return BottomNavigationBar(
-          currentIndex: currentIndex.clamp(0, 3),
-          onTap: onTap,
-          backgroundColor: backgroundColor,
-          selectedItemColor: selectedItemColor,
-          unselectedItemColor: unselectedItemColor,
-          type: BottomNavigationBarType.fixed,
-          showUnselectedLabels: true,
-          items: [
-            BottomNavigationBarItem(
-              icon: const Icon(Icons.home_outlined),
-              activeIcon: const Icon(Icons.home_rounded),
-              label: context.l10n.nav_nav_home,
-            ),
-            BottomNavigationBarItem(
-              icon: const _CartBadgeIcon(
-                isActive: false,
-                baseIcon: Icons.shopping_cart_outlined,
-              ),
-              activeIcon: const _CartBadgeIcon(
-                isActive: true,
-                baseIcon: Icons.shopping_cart_rounded,
-              ),
-              label: context.l10n.nav_nav_cart,
-            ),
-            BottomNavigationBarItem(
-              icon: const Icon(Icons.favorite_outline),
-              activeIcon: const Icon(Icons.favorite_rounded),
-              label: context.l10n.nav_nav_favorite,
-            ),
-            BottomNavigationBarItem(
-              icon: _ProfileNavIcon(avatarUrl: avatarUrl, isActive: false),
-              activeIcon: _ProfileNavIcon(avatarUrl: avatarUrl, isActive: true),
-              label: context.l10n.nav_nav_profile,
-            ),
-          ],
-        );
-      },
-    );
-  }
-}
-
-// ---------------------------------------------------------------------------
-// Private icon widgets
-// ---------------------------------------------------------------------------
-
-/// Cart icon with a badge — has its own tight [BlocSelector] on [cartCount]
-/// so only the badge rebuilds, not the navigation bar.
-class _CartBadgeIcon extends StatelessWidget {
-  const _CartBadgeIcon({
-    required this.isActive,
-    required this.baseIcon,
-  });
-
-  final bool isActive;
-  final IconData baseIcon;
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocSelector<CartBloc, CartState, int>(
-      selector: (state) => state.cartCount,
-      builder: (context, cartCount) => Badge(
-        label: cartCount > 0
-            ? Text(
-                cartCount.toString(),
-                style: context.textTheme.labelSmall?.copyWith(
-                  color: context.colors.onError,
-                  fontWeight: FontWeight.bold,
-                ),
-              )
-            : null,
-        isLabelVisible: cartCount > 0,
-        child: Icon(baseIcon),
-      ),
-    );
-  }
-}
-
-/// Profile icon — shows the user's avatar when available, falls back to a
-/// person icon. Receives [avatarUrl] from the parent [_NavBar] selector so
-/// no additional bloc subscription is created here.
-class _ProfileNavIcon extends StatelessWidget {
-  const _ProfileNavIcon({
-    required this.avatarUrl,
-    required this.isActive,
-  });
-
-  final String? avatarUrl;
-  final bool isActive;
-
-  @override
-  Widget build(BuildContext context) {
-    if (avatarUrl != null && avatarUrl!.isNotEmpty) {
-      return CommonImage(
-        width: 26,
-        height: 22,
-        memCacheHeight: 22 * 3,
-        imageUrl: avatarUrl!,
-        fit: BoxFit.cover,
-        borderRadius: BorderRadius.circular(16.r),
-      );
-    }
-    return Icon(isActive ? Icons.person_rounded : Icons.person_outline);
-  }
-}
-
-// ---------------------------------------------------------------------------
-// Exit overlay
-// ---------------------------------------------------------------------------
-
-class _ExitConfirmOverlay extends StatefulWidget {
-  const _ExitConfirmOverlay({
-    required this.message,
-    required this.duration,
-  });
-
-  final String message;
-  final Duration duration;
-
-  @override
-  State<_ExitConfirmOverlay> createState() => _ExitConfirmOverlayState();
-}
-
-class _ExitConfirmOverlayState extends State<_ExitConfirmOverlay>
-    with SingleTickerProviderStateMixin {
-  late final AnimationController _controller;
-  late final Animation<double> _scaleAnimation;
-  late final Animation<double> _fadeAnimation;
-
-  static const _animDuration = Duration(milliseconds: 250);
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(vsync: this, duration: _animDuration);
-
-    _scaleAnimation = CurvedAnimation(
-      parent: _controller,
-      curve: Curves.easeOutBack,
-      reverseCurve: Curves.easeInBack,
-    );
-    _fadeAnimation = CurvedAnimation(
-      parent: _controller,
-      curve: Curves.easeIn,
-      reverseCurve: Curves.easeOut,
-    );
-
-    _controller.forward();
-
-    // Begin fade-out slightly before the overlay is removed so the animation
-    // completes before the entry is pulled from the overlay stack.
-    Future.delayed(widget.duration - _animDuration, () {
-      if (mounted) _controller.reverse();
-    });
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final cs = context.theme.colorScheme;
-
-    return FadeTransition(
-      opacity: _fadeAnimation,
-      child: ScaleTransition(
-        scale: _scaleAnimation,
-        child: Center(
-          child: Container(
-            margin: EdgeInsets.symmetric(horizontal: 32.w),
-            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
-            decoration: BoxDecoration(
-              color: cs.inverseSurface.withValues(alpha: 0.95),
-              borderRadius: BorderRadius.circular(12.r),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.2),
-                  blurRadius: 10,
-                  offset: const Offset(0, 4),
-                ),
-              ],
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Flexible(
-                  child: Text(
-                    widget.message,
-                    style: context.theme.textTheme.bodyMedium?.copyWith(
-                      color: cs.onInverseSurface,
-                      fontWeight: FontWeight.w600,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ],
-            ),
           ),
         ),
       ),

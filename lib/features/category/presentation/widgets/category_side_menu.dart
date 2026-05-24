@@ -88,8 +88,8 @@ class CategorySideMenu extends StatelessWidget {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Container(
-                                  height: 54.r,
-                                  width: 54.r,
+                                  height: 48.h,
+                                  width: 54.w,
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     color: cs.surface,

@@ -40,6 +40,34 @@ class OrderEntity extends Equatable {
     this.centerName,
   });
 
+  bool get isCancelled {
+    final normStatus = status.trim().toLowerCase();
+    return normStatus.contains('cancelled') ||
+        normStatus.contains('ملغي') ||
+        normStatus.contains('rejected') ||
+        normStatus.contains('failed');
+  }
+
+  bool get isPending {
+    final normStatus = status.trim().toLowerCase();
+    return normStatus.contains('pending') ||
+        normStatus.contains('قيد الانتظار') ||
+        normStatus.contains('new') ||
+        normStatus.contains('جديد');
+  }
+
+  bool get isDelivered {
+    final normStatus = status.trim().toLowerCase();
+    return normStatus.contains('delivered') ||
+        normStatus.contains('completed') ||
+        normStatus.contains('تم التوصيل') ||
+        normStatus.contains('مكتمل') ||
+        normStatus.contains('success');
+  }
+
+  bool get canDelete => isDelivered || isCancelled;
+  bool get canCancelOrUpdate => isPending;
+
   @override
   List<Object?> get props => [
         id,

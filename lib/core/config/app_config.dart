@@ -4,14 +4,16 @@ import '../imports/imports.dart';
 
 class AppConfig {
   AppConfig._();
-  static late final Dio dio;
 
-  static String get baseUrl => _getBaseUrl();
+  static late final Dio dio;
+  static late final String baseUrl;
 
   static Future<void> init() async {
+    baseUrl = _getBaseUrl();
+
     dio = Dio(
       BaseOptions(
-        baseUrl: _getBaseUrl(),
+        baseUrl: baseUrl,
         connectTimeout: const Duration(seconds: 30),
         receiveTimeout: const Duration(seconds: 30),
         headers: {
@@ -23,47 +25,74 @@ class AppConfig {
       ),
     );
 
-    // Bypass SSL certificate validation for development
-    // WARNING: Remove for production
-    configureDioForDevelopment(dio);
+    // Development configurations
+    if (kDebugMode) {
+      configureDioForDevelopment(dio);
+    }
 
-    // Add auth token interceptor
+    // Interceptors order is important
     _addAuthInterceptor();
-
-    // Add language interceptor
     _addLanguageInterceptor();
+    _addStabilityInterceptor();
 
-    // Add pretty logger for detailed request/response logging
-    dio.interceptors.add(PrettyDioLogger(
-      requestHeader: true,
-      requestBody: true,
-      responseHeader: true,
-      responseBody: true,
-      error: true,
-      compact: true,
-      maxWidth: 120,
-    ));
+    // Logger should be the last interceptor
+    _addLoggerInterceptor();
   }
 
-  /// Adds an interceptor that automatically attaches the Authorization header
-  /// with the Bearer token from secure storage.
+  static void _addLoggerInterceptor() {
+    dio.interceptors.add(
+      PrettyDioLogger(
+        requestHeader: true,
+        requestBody: true,
+        responseHeader: true,
+        responseBody: true,
+        error: true,
+        compact: true,
+        maxWidth: 120,
+      ),
+    );
+  }
+
+  /// Measures latency on every Dio request
+  static void _addStabilityInterceptor() {
+    dio.interceptors.add(
+      InterceptorsWrapper(
+        onRequest: (options, handler) {
+          options.extra['startTime'] = DateTime.now().millisecondsSinceEpoch;
+          return handler.next(options);
+        },
+        onResponse: (response, handler) {
+          _reportLatency(response.requestOptions);
+          return handler.next(response);
+        },
+        onError: (DioException e, handler) {
+          _reportLatency(e.requestOptions);
+          return handler.next(e);
+        },
+      ),
+    );
+  }
+
+  static void _reportLatency(RequestOptions options) {
+    final startTime = options.extra['startTime'] as int?;
+    if (startTime == null) return;
+
+    final latency = DateTime.now().millisecondsSinceEpoch - startTime;
+    sl<InternetConnectionService>().reportLatency(latency);
+  }
+
+  /// Automatically attaches the Authorization Bearer token
   static void _addAuthInterceptor() {
     dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) async {
-          // Skip auth for login and public endpoints
           if (_isPublicEndpoint(options.path)) {
             return handler.next(options);
           }
 
-          // Get token from secure storage
           final tokenResult =
               await SecureStorageService.instance.read('auth_token');
-
-          final token = tokenResult.fold(
-            (failure) => null,
-            (token) => token,
-          );
+          final token = tokenResult.fold((_) => null, (t) => t);
 
           if (token != null && token.isNotEmpty) {
             options.headers['Authorization'] = 'Bearer $token';
@@ -75,9 +104,8 @@ class AppConfig {
     );
   }
 
-  /// Check if the endpoint is public (doesn't require auth)
   static bool _isPublicEndpoint(String path) {
-    final publicPaths = [
+    const publicPaths = [
       '/api/login',
       '/api/register',
       '/api/verify-otp',
@@ -87,10 +115,10 @@ class AppConfig {
       '/api/reset-password',
     ];
 
-    return publicPaths.any((publicPath) => path.contains(publicPath));
+    return publicPaths.any((public) => path.contains(public));
   }
 
-  /// Adds an interceptor to set Accept-Language header based on app language
+  /// Keeps Accept-Language header updated
   static void _addLanguageInterceptor() {
     dio.interceptors.add(
       InterceptorsWrapper(

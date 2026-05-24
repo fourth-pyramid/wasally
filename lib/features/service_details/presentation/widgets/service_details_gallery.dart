@@ -60,7 +60,7 @@ class _ServiceDetailsGalleryState extends State<ServiceDetailsGallery> {
                   imageUrl: widget.gallery[index],
                   fit: BoxFit.cover,
                   width: double.infinity,
-                  height: 280.h,
+                  height: 280,
                   memCacheHeight: 280 * 2,
                 ),
               ),

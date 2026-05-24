@@ -6,130 +6,76 @@ class OrderHeaderCard extends StatelessWidget {
   final OrderEntity order;
   final bool isCancelled;
 
-  const OrderHeaderCard(
-      {super.key, required this.order, required this.isCancelled});
+  const OrderHeaderCard({
+    super.key,
+    required this.order,
+    required this.isCancelled,
+  });
 
   @override
   Widget build(BuildContext context) {
     final cs = context.theme.colorScheme;
     final tt = context.theme.textTheme;
+
     return AppCard(
       showShadow: true,
       padding: EdgeInsets.all(16.r),
       child: Column(
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    context.l10n.order_details_number,
-                    style: tt.bodySmall?.copyWith(color: cs.onSurfaceVariant),
-                  ),
-                  4.verticalSpace,
-                  Text(
-                    '#${order.orderNumber}',
-                    style: tt.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: cs.onSurface,
+              Container(
+                padding: EdgeInsets.all(12.r),
+                decoration: BoxDecoration(
+                  color: isCancelled
+                      ? cs.error.withValues(alpha: 0.1)
+                      : cs.primary.withValues(alpha: 0.1),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  isCancelled
+                      ? Icons.cancel_outlined
+                      : Icons.shopping_bag_outlined,
+                  color: isCancelled ? cs.error : cs.primary,
+                  size: 24.r,
+                ),
+              ),
+              16.horizontalSpace,
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '${context.l10n.order_details_order_no} #${order.orderNumber}',
+                      style: tt.titleMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: cs.onSurface,
+                      ),
                     ),
-                  ),
-                ],
+                    Text(
+                      order.createdAt.to12HourFormat(),
+                      style: tt.bodySmall?.copyWith(color: cs.onSurfaceVariant),
+                    ),
+                  ],
+                ),
               ),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
                 decoration: BoxDecoration(
                   color: isCancelled
-                      ? Colors.red.withValues(alpha: 0.1)
+                      ? cs.error.withValues(alpha: 0.1)
                       : cs.primary.withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(8.r),
+                  borderRadius: BorderRadius.circular(20.r),
                 ),
                 child: Text(
                   order.status,
-                  style: tt.bodyMedium?.copyWith(
-                    color: isCancelled ? Colors.red : cs.primary,
+                  style: tt.labelMedium?.copyWith(
+                    color: isCancelled ? cs.error : cs.primary,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
             ],
-          ),
-          12.verticalSpace,
-          const AppDivider(),
-          12.verticalSpace,
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              _buildHeaderInfoItem(
-                context,
-                icon: Icons.calendar_today_rounded,
-                label: context.l10n.order_date,
-                value: order.createdAt.toDateOnly(),
-              ),
-              _buildHeaderInfoItem(
-                context,
-                icon: Icons.access_time_rounded,
-                label: context.l10n.service_booking_time,
-                value: order.createdAt.to12HourTimeOnly(),
-              ),
-            ],
-          ),
-          12.verticalSpace,
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              _buildHeaderInfoItem(
-                context,
-                icon: Icons.payment_rounded,
-                label: context.l10n.order_payment_method,
-                value: order.paymentMethod.toLowerCase().contains('cash') ||
-                        order.paymentMethod.contains('كاش')
-                    ? context.l10n.order_details_payment_cod
-                    : order.paymentMethod,
-              ),
-              const Expanded(child: SizedBox.shrink()),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildHeaderInfoItem(BuildContext context,
-      {required IconData icon, required String label, required String value}) {
-    final cs = context.theme.colorScheme;
-    final tt = context.theme.textTheme;
-    return Expanded(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Icon(icon, size: 18.r, color: cs.primary),
-          8.horizontalSpace,
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  label,
-                  style: tt.bodySmall?.copyWith(
-                    color: cs.onSurfaceVariant,
-                    fontSize: 10.sp,
-                  ),
-                ),
-                4.verticalSpace,
-                Text(
-                  value,
-                  style: tt.bodyMedium?.copyWith(
-                    fontWeight: FontWeight.w600,
-                    color: cs.onSurface,
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
-            ),
           ),
         ],
       ),
@@ -142,38 +88,27 @@ class OrderCancelledAlert extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cs = context.theme.colorScheme;
+    final tt = context.theme.textTheme;
+
     return Container(
-      padding: EdgeInsets.all(12.r),
+      padding: EdgeInsets.all(16.r),
       decoration: BoxDecoration(
-        color: Colors.red.withValues(alpha: 0.08),
+        color: cs.errorContainer.withValues(alpha: 0.3),
         borderRadius: BorderRadius.circular(12.r),
-        border: Border.all(color: Colors.red.withValues(alpha: 0.3)),
+        border: Border.all(color: cs.error.withValues(alpha: 0.2)),
       ),
       child: Row(
         children: [
-          Icon(Icons.cancel_outlined, color: Colors.red, size: 24.r),
+          Icon(Icons.info_outline, color: cs.error),
           12.horizontalSpace,
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  context.l10n.order_details_cancelled_title,
-                  style: TextStyle(
-                    color: Colors.red,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 13.sp,
-                  ),
-                ),
-                2.verticalSpace,
-                Text(
-                  context.l10n.order_details_cancelled_msg,
-                  style: TextStyle(
-                    color: Colors.red.withValues(alpha: 0.8),
-                    fontSize: 11.sp,
-                  ),
-                ),
-              ],
+            child: Text(
+              context.l10n.order_details_cancelled_msg,
+              style: tt.bodySmall?.copyWith(
+                color: cs.onErrorContainer,
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ),
         ],
@@ -189,16 +124,7 @@ class OrderDeliveryInfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Delivery fields from OrderEntity
-    final customerName = order.customerName ?? '';
-    final customerPhone = order.customerPhone ?? '';
-    final deliveryAddress = order.deliveryAddress ?? '';
-    final governorate = order.governorateName ?? '';
-    final center = order.centerName ?? '';
-
-    final cleanStreet =
-        deliveryAddress.cleanAddress(center: center, governorate: governorate);
-    final fullAddressPath = '$cleanStreet - $center - $governorate';
+    final cs = context.theme.colorScheme;
 
     return AppCard(
       showShadow: true,
@@ -207,39 +133,40 @@ class OrderDeliveryInfoCard extends StatelessWidget {
         children: [
           _buildInfoRow(
             context,
-            icon: Icons.person_outline_rounded,
-            title: context.l10n.order_details_customer_name,
-            content: customerName,
+            Icons.person_outline,
+            context.l10n.order_details_customer,
+            order.customerName ?? '',
           ),
-          12.verticalSpace,
-          const AppDivider(),
-          12.verticalSpace,
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 12.h),
+            child: AppDivider(color: cs.outlineVariant.withValues(alpha: 0.3)),
+          ),
           _buildInfoRow(
             context,
-            icon: Icons.phone_android_rounded,
-            title: context.l10n.order_details_customer_phone,
-            content: customerPhone,
+            Icons.phone_outlined,
+            context.l10n.order_details_phone,
+            order.customerPhone ?? '',
           ),
-          12.verticalSpace,
-          const AppDivider(),
-          12.verticalSpace,
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 12.h),
+            child: AppDivider(color: cs.outlineVariant.withValues(alpha: 0.3)),
+          ),
           _buildInfoRow(
             context,
-            icon: Icons.location_on_outlined,
-            title: context.l10n.order_details_address,
-            content: fullAddressPath,
+            Icons.location_on_outlined,
+            context.l10n.order_details_address,
+            '${order.governorateName}, ${order.centerName}, ${order.deliveryAddress}',
           ),
         ],
       ),
     );
   }
 
-  Widget _buildInfoRow(BuildContext context,
-      {required IconData icon,
-      required String title,
-      required String content}) {
+  Widget _buildInfoRow(
+      BuildContext context, IconData icon, String title, String content) {
     final cs = context.theme.colorScheme;
     final tt = context.theme.textTheme;
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -292,16 +219,8 @@ class OrderItemsCard extends StatelessWidget {
     return AppCard(
       showShadow: true,
       padding: EdgeInsets.all(16.r),
-      child: ListView.separated(
-        padding: EdgeInsets.zero,
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        itemCount: items.length,
-        separatorBuilder: (context, index) => Padding(
-          padding: EdgeInsets.symmetric(vertical: 12.h),
-          child: AppDivider(color: cs.outlineVariant.withValues(alpha: 0.3)),
-        ),
-        itemBuilder: (context, index) {
+      child: Column(
+        children: List.generate(items.length, (index) {
           final item = items[index];
           final product = item.product;
 
@@ -312,82 +231,89 @@ class OrderItemsCard extends StatelessWidget {
           final unitPrice = item.price;
           final totalItemPrice = item.totalPrice;
 
-          return Row(
+          return Column(
             children: [
-
-              // 1. Total Item Price (Far Left in RTL)
-              Container(
-                width: 56.w,
-                height: 56.w,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12.r),
-                  border: Border.all(
-                      color: cs.outlineVariant.withValues(alpha: 0.5)),
-                ),
-                child: AppCachedImage(
-                  imageUrl: productImage,
-                  borderRadius: BorderRadius.circular(12.r),
-                  fit: BoxFit.cover,
-                ),
-              ),
-             const Spacer(),
-
-              Expanded(
-                flex: 4,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      productName,
-                      style: tt.bodyMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: cs.onSurface,
-                      ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
+              Row(
+                children: [
+                  // 1. Image
+                  Container(
+                    width: 56.w,
+                    height: 56.w,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12.r),
+                      border: Border.all(
+                          color: cs.outlineVariant.withValues(alpha: 0.5)),
                     ),
-                    4.verticalSpace,
-                    Row(
+                    child: AppCachedImage(
+                      imageUrl: productImage,
+                      borderRadius: BorderRadius.circular(12.r),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  12.horizontalSpace,
+
+                  Expanded(
+                    flex: 4,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '$quantity',
-                          style: tt.bodySmall?.copyWith(
-                            color: cs.onSurfaceVariant,
+                          productName,
+                          style: tt.bodyMedium?.copyWith(
                             fontWeight: FontWeight.bold,
+                            color: cs.onSurface,
                           ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                         ),
-                        Text(
-                          ' × ',
-                          style: tt.bodySmall?.copyWith(
-                            color: cs.onSurfaceVariant,
-                          ),
-                        ),
-                        Text(
-                          '$unitPrice ${context.l10n.common_currency}',
-                          style: tt.bodySmall?.copyWith(
-                            color: cs.onSurfaceVariant,
-                          ),
+                        4.verticalSpace,
+                        Row(
+                          children: [
+                            Text(
+                              '$quantity',
+                              style: tt.bodySmall?.copyWith(
+                                color: cs.onSurfaceVariant,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              ' × ',
+                              style: tt.bodySmall?.copyWith(
+                                color: cs.onSurfaceVariant,
+                              ),
+                            ),
+                            Text(
+                              '${unitPrice.toStringAsFixed(2)} ${context.l10n.shared_currency_egp}',
+                              style: tt.bodySmall?.copyWith(
+                                color: cs.onSurfaceVariant,
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
-                  ],
-                ),
-              ),
-              // 3. Product Image (Far Right in RTL)
-              const Spacer(),
+                  ),
+                  const Spacer(),
 
-              Text(
-                '$totalItemPrice ${context.l10n.common_currency}',
-                style: tt.titleSmall?.copyWith(
-                  color: cs.primary,
-                  fontWeight: FontWeight.bold,
-                ),
+                  // Total Item Price
+                  Text(
+                    '${totalItemPrice.toStringAsFixed(2)} ${context.l10n.shared_currency_egp}',
+                    style: tt.bodyMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: cs.primary,
+                    ),
+                  ),
+                ],
               ),
-              // 2. Product Details (Middle)
-
+              if (index != items.length - 1)
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 12.h),
+                  child: AppDivider(
+                      color: cs.outlineVariant.withValues(alpha: 0.3)),
+                ),
             ],
           );
-        },
+        }),
       ),
     );
   }
@@ -403,11 +329,6 @@ class OrderReceiptSummaryCard extends StatelessWidget {
     final cs = context.theme.colorScheme;
     final tt = context.theme.textTheme;
 
-    final subTotal = order.subTotal ?? (order.totalPrice - order.deliveryFees);
-    final deliveryFees = order.deliveryFees;
-    final discount = order.discountAmount ?? 0.0;
-    final totalPrice = order.totalPrice;
-
     return AppCard(
       showShadow: true,
       padding: EdgeInsets.all(16.r),
@@ -415,27 +336,28 @@ class OrderReceiptSummaryCard extends StatelessWidget {
         children: [
           _buildReceiptRow(
             context,
-            label: context.l10n.order_details_subtotal,
-            value: '$subTotal ${context.l10n.common_currency}',
+            context.l10n.order_details_subtotal,
+            '${(order.subTotal ?? 0).toStringAsFixed(2)} ${context.l10n.shared_currency_egp}',
           ),
           8.verticalSpace,
           _buildReceiptRow(
             context,
-            label: context.l10n.order_details_delivery_fees,
-            value: '$deliveryFees ${context.l10n.common_currency}',
+            context.l10n.order_details_delivery_fees,
+            '${order.deliveryFees.toStringAsFixed(2)} ${context.l10n.shared_currency_egp}',
           ),
-          if (discount > 0) ...[
+          if ((order.discountAmount ?? 0) > 0) ...[
             8.verticalSpace,
             _buildReceiptRow(
               context,
-              label: context.l10n.order_details_discount,
-              value: '-$discount ${context.l10n.common_currency}',
-              valueColor: Colors.green,
+              context.l10n.order_details_discount,
+              '- ${(order.discountAmount ?? 0).toStringAsFixed(2)} ${context.l10n.shared_currency_egp}',
+              isDiscount: true,
             ),
           ],
-          12.verticalSpace,
-          const AppDivider(),
-          12.verticalSpace,
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 12.h),
+            child: AppDivider(color: cs.outlineVariant.withValues(alpha: 0.3)),
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -447,35 +369,62 @@ class OrderReceiptSummaryCard extends StatelessWidget {
                 ),
               ),
               Text(
-                '$totalPrice ${context.l10n.common_currency}',
-                style: tt.titleLarge?.copyWith(
+                '${order.totalPrice.toStringAsFixed(2)} ${context.l10n.shared_currency_egp}',
+                style: tt.titleMedium?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: cs.primary,
                 ),
               ),
             ],
           ),
+          16.verticalSpace,
+          Container(
+            padding: EdgeInsets.all(12.r),
+            decoration: BoxDecoration(
+              color: cs.surfaceContainerHighest.withValues(alpha: 0.5),
+              borderRadius: BorderRadius.circular(8.r),
+            ),
+            child: Row(
+              children: [
+                Icon(Icons.payment_outlined, size: 20.r, color: cs.primary),
+                12.horizontalSpace,
+                Text(
+                  context.l10n.order_details_payment_method,
+                  style: tt.bodySmall?.copyWith(color: cs.onSurfaceVariant),
+                ),
+                const Spacer(),
+                Text(
+                  order.paymentMethod,
+                  style: tt.bodySmall?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: cs.onSurface,
+                  ),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
   }
 
-  Widget _buildReceiptRow(BuildContext context,
-      {required String label, required String value, Color? valueColor}) {
+  Widget _buildReceiptRow(BuildContext context, String title, String value,
+      {bool isDiscount = false}) {
     final cs = context.theme.colorScheme;
     final tt = context.theme.textTheme;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          label,
+          title,
           style: tt.bodyMedium?.copyWith(color: cs.onSurfaceVariant),
         ),
         Text(
           value,
           style: tt.bodyMedium?.copyWith(
             fontWeight: FontWeight.w600,
-            color: valueColor ?? cs.onSurface,
+            color: isDiscount ? cs.error : cs.onSurface,
           ),
         ),
       ],

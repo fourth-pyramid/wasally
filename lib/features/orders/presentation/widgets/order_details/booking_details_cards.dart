@@ -394,8 +394,9 @@ class BookingServiceInfoCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8.r),
                   child: CommonImage(
                     imageUrl: booking.service.image ?? '',
-                    width: 64.w,
-                    height: 64.w,
+                    width: 64,
+                    height: 64,
+                    memCacheHeight: 64 * 2,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -457,8 +458,9 @@ class BookingServiceInfoCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(25.r),
                   child: CommonImage(
                     imageUrl: booking.provider.avatar ?? '',
-                    width: 50.w,
-                    height: 50.w,
+                    width: 50,
+                    height: 50,
+                    memCacheHeight: 50 * 2,
                     fit: BoxFit.cover,
                   ),
                 ),

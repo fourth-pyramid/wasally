@@ -60,6 +60,9 @@ class SEn extends S {
   String get errors_no_internet_title => 'no_internet';
 
   @override
+  String get errors_unstable_internet => 'Unstable network';
+
+  @override
   String get errors_no_internet_message =>
       'No internet connection. Please check your connection and try again.';
 
@@ -1138,6 +1141,18 @@ class SEn extends S {
 
   @override
   String get order_details_ordered_products => 'Ordered Products';
+
+  @override
+  String get order_details_payment_method => 'Payment Method';
+
+  @override
+  String get order_details_phone => 'Phone Number';
+
+  @override
+  String get order_details_customer => 'Customer';
+
+  @override
+  String get order_details_order_no => 'Order No';
 
   @override
   String get order_details_payment_summary => 'Payment Summary';

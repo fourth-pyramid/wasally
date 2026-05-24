@@ -26,6 +26,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<GetBannersEvent>(_onGetBanners);
     on<GetCategoriesEvent>(_onGetCategories);
     on<GetPopularServicesEvent>(_onGetPopularServices);
+    on<LoadMorePopularServicesEvent>(_onLoadMorePopularServices);
     on<GetProductsEvent>(_onGetProducts);
     on<LoadMoreProductsEvent>(_onLoadMoreProducts);
     on<HomeInitializeEvent>(_onHomeInitialize);
@@ -60,11 +61,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       GetPopularServicesEvent event, Emitter<HomeState> emit) async {
     emit(state.copyWith(
       popularServicesStatus: HomeStatus.loading,
-      popularServices: const <SubCategoryEntity>[],
+      popularServices: const PaginatedResponse(data: []),
       failure: null,
     ));
 
-    final result = await getPopularServicesUseCase();
+    final result = await getPopularServicesUseCase(page: 1);
 
     result.fold(
       (failure) {
@@ -73,10 +74,39 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           failure: failure,
         ));
       },
-      (services) {
+      (paginatedResponse) {
         emit(state.copyWith(
           popularServicesStatus: HomeStatus.success,
-          popularServices: services,
+          popularServices: paginatedResponse,
+        ));
+      },
+    );
+  }
+
+  Future<void> _onLoadMorePopularServices(
+      LoadMorePopularServicesEvent event, Emitter<HomeState> emit) async {
+    if (state.popularServicesStatus == HomeStatus.loading ||
+        state.isPopularServicesLoadingMore ||
+        !state.popularServices.hasMore) {
+      return;
+    }
+
+    emit(state.copyWith(isPopularServicesLoadingMore: true));
+
+    final nextPage = state.popularServices.currentPage + 1;
+
+    final result = await getPopularServicesUseCase(page: nextPage);
+
+    result.fold(
+      (failure) {
+        emit(state.copyWith(isPopularServicesLoadingMore: false));
+      },
+      (paginatedResponse) {
+        emit(state.copyWith(
+          isPopularServicesLoadingMore: false,
+          popularServices: paginatedResponse.copyWith(
+            data: [...state.popularServices.data, ...paginatedResponse.data],
+          ),
         ));
       },
     );
@@ -172,7 +202,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       productsStatus: HomeStatus.loading,
       banners: const [],
       categories: const [],
-      popularServices: const [],
+      popularServices: const PaginatedResponse(data: []),
       products: const PaginatedResponse(data: []),
       failure: null,
     ));
@@ -180,7 +210,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     final results = await Future.wait([
       getBannersUseCase(),
       getCategoriesUseCase(),
-      getPopularServicesUseCase(),
+      getPopularServicesUseCase(page: 1),
       getProductsUseCase(page: 1),
     ]);
 
@@ -188,7 +218,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     final categoriesResult =
         results[1] as Either<Failure, List<CategoryEntity>>;
     final servicesResult =
-        results[2] as Either<Failure, List<SubCategoryEntity>>;
+        results[2] as Either<Failure, PaginatedResponse<SubCategoryEntity>>;
     final productsResult =
         results[3] as Either<Failure, PaginatedResponse<ProductEntity>>;
 
@@ -207,7 +237,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     );
 
     HomeStatus servicesStatus = HomeStatus.success;
-    List<SubCategoryEntity> services = const [];
+    PaginatedResponse<SubCategoryEntity> services =
+        const PaginatedResponse(data: []);
     servicesResult.fold(
       (_) => servicesStatus = HomeStatus.failure,
       (data) => services = data,

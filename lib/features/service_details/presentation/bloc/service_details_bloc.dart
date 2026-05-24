@@ -44,10 +44,22 @@ class ServiceDetailsBloc
         status: ServiceDetailsStatus.failure,
         errorMessage: failure.message,
       )),
-      (service) => emit(state.copyWith(
-        status: ServiceDetailsStatus.success,
-        service: service,
-      )),
+      (service) {
+        final sortedReviews = List<ServiceDetailReviewEntity>.from(service.reviews)
+          ..sort((a, b) {
+            final dateA = a.createdAt.toLocalDateTime();
+            final dateB = b.createdAt.toLocalDateTime();
+            if (dateA != null && dateB != null) {
+              return dateB.compareTo(dateA);
+            }
+            return b.id.compareTo(a.id);
+          });
+
+        emit(state.copyWith(
+          status: ServiceDetailsStatus.success,
+          service: service.copyWith(reviews: sortedReviews),
+        ));
+      },
     );
   }
 

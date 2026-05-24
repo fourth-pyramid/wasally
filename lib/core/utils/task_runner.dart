@@ -21,7 +21,14 @@ FutureEither<T> runTask<T>(
     }
 
     if (requiresNetwork && _isConnectionError(e)) {
-      final hasNetwork = await InternetConnectionService().hasConnection();
+      // Timeout added to prevent blocking when internet_connection_checker_plus
+      // takes too long (5-30s) to confirm no internet via HTTP checks.
+      final hasNetwork = await InternetConnectionService()
+          .hasConnection()
+          .timeout(
+            const Duration(seconds: 5),
+            onTimeout: () => false,
+          );
       if (!hasNetwork) {
         AppLogger.warning('Network unavailable for task');
         // Don't show toast here - let the UI handle the error display

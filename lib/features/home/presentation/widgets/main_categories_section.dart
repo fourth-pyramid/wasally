@@ -7,6 +7,12 @@ import 'package:wassaly/features/home/presentation/widgets/category_card.dart';
 class MainCategoriesSection extends StatelessWidget {
   const MainCategoriesSection({super.key});
 
+  static const _dummyCategories = [
+    CategoryEntity(id: 0, name: 'قسم رئيسي', image: ''),
+    CategoryEntity(id: 0, name: 'قسم رئيسي', image: ''),
+    CategoryEntity(id: 0, name: 'قسم رئيسي', image: ''),
+  ];
+
   // FIX 10: named method — no new lambdas on every BlocSelector rebuild
   void _onCategoryTap(BuildContext context, CategoryEntity category) =>
       context.push(AppRoutes.category, extra: {'category': category});
@@ -24,18 +30,9 @@ class MainCategoriesSection extends StatelessWidget {
 
         if (categoriesStatus == HomeStatus.loading ||
             categoriesStatus == HomeStatus.initial) {
-          final dummyCategories = List.generate(
-            3,
-            (index) => const CategoryEntity(
-              id: 0,
-              name: 'قسم رئيسي',
-              image: '',
-            ),
-          );
-
           return Skeletonizer(
             enabled: true,
-            child: _buildContent(context, cs, tt, dummyCategories),
+            child: _buildContent(context, cs, tt, _dummyCategories),
           );
         } else if (categoriesStatus == HomeStatus.failure) {
           return const SizedBox.shrink();

@@ -114,6 +114,10 @@ class _CartPageState extends State<CartPage> {
                           final item = state.items[index];
                           return CartItemWidget(
                             item: item,
+                            onTap: () => context.push(
+                              AppRoutes.productDetails,
+                              extra: {'productId': item.productId},
+                            ),
                             onRemove: () => context
                                 .read<CartBloc>()
                                 .add(RemoveFromCartEvent(item.id)),

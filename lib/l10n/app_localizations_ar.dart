@@ -60,6 +60,9 @@ class SAr extends S {
   String get errors_no_internet_title => 'لا يوجد اتصال بالإنترنت';
 
   @override
+  String get errors_unstable_internet => 'الشبكة غير مستقرة';
+
+  @override
   String get errors_no_internet_message =>
       'لا يوجد اتصال بالإنترنت. يرجى التحقق من اتصالك والمحاولة مرة أخرى.';
 
@@ -1131,6 +1134,18 @@ class SAr extends S {
 
   @override
   String get order_details_ordered_products => 'المنتجات المطلوبة';
+
+  @override
+  String get order_details_payment_method => 'طريقة الدفع';
+
+  @override
+  String get order_details_phone => 'رقم الهاتف';
+
+  @override
+  String get order_details_customer => 'اسم العميل';
+
+  @override
+  String get order_details_order_no => 'رقم الطلب';
 
   @override
   String get order_details_payment_summary => 'ملخص الدفع';

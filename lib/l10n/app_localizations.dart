@@ -199,6 +199,12 @@ abstract class S {
   /// **'no_internet'**
   String get errors_no_internet_title;
 
+  /// No description provided for @errors_unstable_internet.
+  ///
+  /// In en, this message translates to:
+  /// **'Unstable network'**
+  String get errors_unstable_internet;
+
   /// No description provided for @errors_no_internet_message.
   ///
   /// In en, this message translates to:
@@ -2262,6 +2268,30 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Ordered Products'**
   String get order_details_ordered_products;
+
+  /// No description provided for @order_details_payment_method.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment Method'**
+  String get order_details_payment_method;
+
+  /// No description provided for @order_details_phone.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone Number'**
+  String get order_details_phone;
+
+  /// No description provided for @order_details_customer.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer'**
+  String get order_details_customer;
+
+  /// No description provided for @order_details_order_no.
+  ///
+  /// In en, this message translates to:
+  /// **'Order No'**
+  String get order_details_order_no;
 
   /// No description provided for @order_details_payment_summary.
   ///

@@ -86,8 +86,8 @@ class _BrandDetailsViewState extends State<BrandDetailsView> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
-                  width: 32.r,
-                  height: 32.r,
+                  width: 32.w,
+                  height: 32.h,
                   decoration: BoxDecoration(
                     color: cs.surfaceContainerLow,
                     shape: BoxShape.circle,

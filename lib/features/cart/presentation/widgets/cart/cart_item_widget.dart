@@ -7,6 +7,7 @@ class CartItemWidget extends StatelessWidget {
   final VoidCallback onRemove;
   final VoidCallback onQuantityIncrease;
   final VoidCallback onQuantityDecrease;
+  final VoidCallback? onTap;
 
   const CartItemWidget({
     super.key,
@@ -14,6 +15,7 @@ class CartItemWidget extends StatelessWidget {
     required this.onRemove,
     required this.onQuantityIncrease,
     required this.onQuantityDecrease,
+    this.onTap,
   });
 
   @override
@@ -124,6 +126,7 @@ class CartItemWidget extends StatelessWidget {
   Widget _buildCard(BuildContext context, ColorScheme cs, TextTheme tt) {
     return AppCard(
       showShadow: true,
+      onTap: onTap,
       padding: EdgeInsets.all(12.r),
       child: Row(
         children: [

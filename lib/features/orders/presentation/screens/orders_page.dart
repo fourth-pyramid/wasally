@@ -16,6 +16,7 @@ class OrdersPage extends StatefulWidget {
 class _OrdersPageState extends State<OrdersPage> with TickerProviderStateMixin {
   late final OrdersBloc _ordersBloc;
   late final TabController _tabController;
+  StreamSubscription<void>? _connectivitySub;
 
   @override
   void initState() {
@@ -30,11 +31,20 @@ class _OrdersPageState extends State<OrdersPage> with TickerProviderStateMixin {
       _ordersBloc.add(const GetOrdersEvent());
       _ordersBloc.add(const GetServiceBookingsEvent());
     });
+
+    _connectivitySub =
+        sl<InternetConnectionService>().connectivityRestoredStream.listen((_) {
+      if (mounted) {
+        _ordersBloc.add(const GetOrdersEvent());
+        _ordersBloc.add(const GetServiceBookingsEvent());
+      }
+    });
   }
 
   @override
   void dispose() {
     _tabController.dispose();
+    _connectivitySub?.cancel();
     super.dispose();
   }
 

@@ -86,8 +86,13 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
     if (user != null) {
       // Token is valid → navigate to Home
       emit(SessionAuthenticated(user));
-    } else if (failure is NetworkFailure || failure is NotFoundFailure) {
-      // No internet or API endpoint not found → use cached user and navigate to Home
+    } else if (failure is NetworkFailure ||
+        failure is NotFoundFailure ||
+        failure is ServerFailure) {
+      // No internet, server unreachable, or API error →
+      // try cached user before deciding to logout.
+      // This covers edge cases where hasConnection() returns true
+      // but the server is still unreachable (e.g., slow/unstable network).
       final cachedResult = await _getCachedUserUseCase();
       cachedResult.fold(
         (_) {
@@ -103,7 +108,7 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
         },
       );
     } else {
-      // Token is invalid or server error → clear auth data and navigate to Login
+      // Token is invalid (auth failure e.g. 401) → clear session and go to Login
       _logoutUseCase();
       emit(const SessionUnauthenticated());
     }

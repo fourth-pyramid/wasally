@@ -16,6 +16,49 @@ class AppProductsSection extends StatelessWidget {
   final double? mainAxisSpacing;
   final double? crossAxisSpacing;
 
+  static const _dummyProducts = [
+    ProductEntity(
+      id: 1,
+      name: 'منتج تجريبي طويل جدا للتجربة',
+      image: '',
+      price: '100.00',
+      description: 'وصف تجريبي طويل جدا للتجربة وعرض التفاصيل بشكل كامل',
+      offers: [],
+      reviews: [],
+      isFavorite: false,
+    ),
+    ProductEntity(
+      id: 2,
+      name: 'منتج تجريبي طويل جدا للتجربة',
+      image: '',
+      price: '100.00',
+      description: 'وصف تجريبي طويل جدا للتجربة وعرض التفاصيل بشكل كامل',
+      offers: [],
+      reviews: [],
+      isFavorite: false,
+    ),
+    ProductEntity(
+      id: 3,
+      name: 'منتج تجريبي طويل جدا للتجربة',
+      image: '',
+      price: '100.00',
+      description: 'وصف تجريبي طويل جدا للتجربة وعرض التفاصيل بشكل كامل',
+      offers: [],
+      reviews: [],
+      isFavorite: false,
+    ),
+    ProductEntity(
+      id: 4,
+      name: 'منتج تجريبي طويل جدا للتجربة',
+      image: '',
+      price: '100.00',
+      description: 'وصف تجريبي طويل جدا للتجربة وعرض التفاصيل بشكل كامل',
+      offers: [],
+      reviews: [],
+      isFavorite: false,
+    ),
+  ];
+
   const AppProductsSection({
     super.key,
     required this.products,
@@ -33,22 +76,8 @@ class AppProductsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final displayProducts = isLoading && products.isEmpty
-        ? List.generate(
-            4,
-            (index) => ProductEntity(
-              id: index,
-              name: 'منتج تجريبي طويل جدا للتجربة',
-              image: '',
-              price: '100.00',
-              description:
-                  'وصف تجريبي طويل جدا للتجربة وعرض التفاصيل بشكل كامل',
-              offers: const [],
-              reviews: const [],
-              isFavorite: false,
-            ),
-          )
-        : products;
+    final displayProducts =
+        isLoading && products.isEmpty ? _dummyProducts : products;
 
     return Skeletonizer.sliver(
       enabled: isLoading,

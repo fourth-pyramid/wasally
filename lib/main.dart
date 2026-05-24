@@ -14,6 +14,11 @@ Future<void> main() async {
     ),
   );
 
+  await Future.wait([
+    StorageService.instance.init(),
+    HiveService.init(),
+  ]);
+
   initDependencies();
   runApp(const StateWrapper(
     child: App(),

@@ -36,10 +36,13 @@ class HomeRepositoryImpl implements HomeRepository {
   }
 
   @override
-  Future<Either<Failure, List<SubCategoryEntity>>> getPopularServices() async {
+  Future<Either<Failure, PaginatedResponse<SubCategoryEntity>>>
+      getPopularServices({int page = 1}) async {
     try {
-      final remoteServices = await _remoteDataSource.getPopularServices();
-      return Right(remoteServices.map((e) => e as SubCategoryEntity).toList());
+      final remoteServicesResponse =
+          await _remoteDataSource.getPopularServices(page: page);
+      return Right(
+          remoteServicesResponse.map((model) => model as SubCategoryEntity));
     } on Failure catch (failure) {
       return Left(failure);
     } catch (e) {

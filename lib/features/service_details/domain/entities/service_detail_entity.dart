@@ -157,18 +157,30 @@ class ServiceDetailEntity extends Equatable {
     return reviews.fold<int>(0, (sum, r) => sum + r.rating) / reviews.length;
   }
 
-  ServiceDetailEntity copyWith({bool? isFavorite}) {
+  ServiceDetailEntity copyWith({
+    int? id,
+    String? service,
+    String? description,
+    String? category,
+    String? image,
+    List<String>? images,
+    num? price,
+    ServiceProviderEntity? provider,
+    List<ServiceAvailableDayEntity>? availableDays,
+    List<ServiceDetailReviewEntity>? reviews,
+    bool? isFavorite,
+  }) {
     return ServiceDetailEntity(
-      id: id,
-      service: service,
-      description: description,
-      category: category,
-      image: image,
-      images: images,
-      price: price,
-      provider: provider,
-      availableDays: availableDays,
-      reviews: reviews,
+      id: id ?? this.id,
+      service: service ?? this.service,
+      description: description ?? this.description,
+      category: category ?? this.category,
+      image: image ?? this.image,
+      images: images ?? this.images,
+      price: price ?? this.price,
+      provider: provider ?? this.provider,
+      availableDays: availableDays ?? this.availableDays,
+      reviews: reviews ?? this.reviews,
       isFavorite: isFavorite ?? this.isFavorite,
     );
   }

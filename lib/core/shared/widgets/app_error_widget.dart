@@ -121,9 +121,11 @@ class _AppErrorWidgetState extends State<AppErrorWidget> {
   }
 
   Widget _buildErrorIcon(BuildContext context) {
+    final isIOS = context.isIOS;
+
     if (_isNetworkError(context)) {
       return Icon(
-        Icons.wifi_off_rounded,
+        isIOS ? CupertinoIcons.wifi_exclamationmark : Icons.wifi_off_rounded,
         size: 80.r,
         color: context.appColors.warning, // Semantic warning
       );
@@ -144,23 +146,29 @@ class _AppErrorWidgetState extends State<AppErrorWidget> {
 
     switch (widget.failure.runtimeType) {
       case const (NetworkFailure):
-        iconData = Icons.wifi_off_rounded;
+        iconData = isIOS
+            ? CupertinoIcons.wifi_exclamationmark
+            : Icons.wifi_off_rounded;
         iconColor = context.appColors.warning; // Semantic warning
         break;
       case const (NotFoundFailure):
-        iconData = Icons.search_off_rounded;
+        iconData = isIOS ? CupertinoIcons.search : Icons.search_off_rounded;
         iconColor = context.theme.colorScheme.error; // Theme error
         break;
       case const (ServerFailure):
-        iconData = Icons.error_rounded;
+        iconData = isIOS
+            ? CupertinoIcons.exclamationmark_circle
+            : Icons.error_rounded;
         iconColor = context.theme.colorScheme.error; // Theme error
         break;
       case const (CacheFailure):
-        iconData = Icons.storage_rounded;
+        iconData = isIOS ? CupertinoIcons.doc_text : Icons.storage_rounded;
         iconColor = context.appColors.warning; // Semantic warning
         break;
       default:
-        iconData = Icons.error_outline_rounded;
+        iconData = isIOS
+            ? CupertinoIcons.exclamationmark_triangle
+            : Icons.error_outline_rounded;
         iconColor = context.theme.colorScheme.outline; // Theme outline
     }
 

@@ -1,13 +1,47 @@
 import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/home/domain/entities/sub_category_entity.dart';
 import 'package:wassaly/features/home/presentation/bloc/home_bloc.dart';
+import 'package:wassaly/features/home/presentation/bloc/home_event.dart';
 import 'package:wassaly/features/home/presentation/bloc/home_state.dart';
 import 'package:wassaly/features/home/presentation/widgets/service_item.dart';
 
-class PopularServicesSection extends StatelessWidget {
+class PopularServicesSection extends StatefulWidget {
   const PopularServicesSection({super.key});
 
-  // FIX 10: named method — no new lambdas per item per BlocSelector rebuild
+  static const _dummyServices = [
+    SubCategoryEntity(id: 0, name: 'خدمة', image: ''),
+    SubCategoryEntity(id: 0, name: 'خدمة', image: ''),
+    SubCategoryEntity(id: 0, name: 'خدمة', image: ''),
+    SubCategoryEntity(id: 0, name: 'خدمة', image: ''),
+    SubCategoryEntity(id: 0, name: 'خدمة', image: ''),
+  ];
+
+  @override
+  State<PopularServicesSection> createState() => _PopularServicesSectionState();
+}
+
+class _PopularServicesSectionState extends State<PopularServicesSection> {
+  late final ScrollController _scrollController;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController()..addListener(_onScroll);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    if (_scrollController.position.pixels >=
+        _scrollController.position.maxScrollExtent - 200) {
+      context.read<HomeBloc>().add(LoadMorePopularServicesEvent());
+    }
+  }
+
   void _onServiceTap(BuildContext context, SubCategoryEntity service) =>
       context.push(AppRoutes.subCategory, extra: {'subCategory': service});
 
@@ -17,22 +51,23 @@ class PopularServicesSection extends StatelessWidget {
     final tt = context.theme.textTheme;
 
     return BlocSelector<HomeBloc, HomeState,
-        (HomeStatus, List<SubCategoryEntity>)>(
-      selector: (state) => (state.popularServicesStatus, state.popularServices),
+        (HomeStatus, PaginatedResponse<SubCategoryEntity>, bool)>(
+      selector: (state) => (
+        state.popularServicesStatus,
+        state.popularServices,
+        state.isPopularServicesLoadingMore
+      ),
       builder: (context, data) {
-        final (popularServicesStatus, popularServices) = data;
+        final (
+          popularServicesStatus,
+          popularServicesPaginated,
+          isPopularServicesLoadingMore
+        ) = data;
+
+        final popularServices = popularServicesPaginated.data;
 
         if (popularServicesStatus == HomeStatus.loading ||
             popularServicesStatus == HomeStatus.initial) {
-          final dummyServices = List.generate(
-            5,
-            (index) => const SubCategoryEntity(
-              id: 0,
-              name: 'خدمة',
-              image: '',
-            ),
-          );
-
           return SliverToBoxAdapter(
             child: Skeletonizer(
               enabled: true,
@@ -59,11 +94,11 @@ class PopularServicesSection extends StatelessWidget {
                         SliverPadding(
                           padding: EdgeInsets.symmetric(horizontal: 8.w),
                           sliver: SliverList.builder(
-                            itemCount: dummyServices.length,
+                            itemCount: PopularServicesSection._dummyServices.length,
                             itemBuilder: (context, index) {
                               return ServiceItem(
-                                name: dummyServices[index].name,
-                                imageUrl: dummyServices[index].image,
+                                name: PopularServicesSection._dummyServices[index].name,
+                                imageUrl: PopularServicesSection._dummyServices[index].image,
                               );
                             },
                           ),
@@ -104,14 +139,24 @@ class PopularServicesSection extends StatelessWidget {
               SizedBox(
                 height: 100.h,
                 child: CustomScrollView(
+                  controller: _scrollController,
                   scrollDirection: Axis.horizontal,
                   physics: const BouncingScrollPhysics(),
                   slivers: [
                     SliverPadding(
                       padding: EdgeInsets.symmetric(horizontal: 8.w),
                       sliver: SliverList.builder(
-                        itemCount: popularServices.length,
+                        itemCount: popularServices.length +
+                            (isPopularServicesLoadingMore ? 1 : 0),
                         itemBuilder: (context, index) {
+                          if (index >= popularServices.length) {
+                            return Container(
+                              width: 80.w,
+                              alignment: Alignment.center,
+                              child: const CircularProgressIndicator.adaptive(),
+                            );
+                          }
+
                           final service = popularServices[index];
                           return ServiceItem(
                             name: service.name,

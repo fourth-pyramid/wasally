@@ -2,11 +2,13 @@ import 'package:wassaly/core/imports/imports.dart';
 import '../../domain/entities/order_entity.dart';
 import '../../domain/repositories/orders_repository.dart';
 import '../datasources/orders_remote_datasource.dart';
+import '../datasources/orders_local_datasource.dart';
 
 class OrdersRepositoryImpl implements OrdersRepository {
   final OrdersRemoteDataSource _remoteDataSource;
+  final OrdersLocalDataSource _localDataSource;
 
-  const OrdersRepositoryImpl(this._remoteDataSource);
+  const OrdersRepositoryImpl(this._remoteDataSource, this._localDataSource);
 
   @override
   Future<Either<Failure, PaginatedResponse<OrderEntity>>> getOrders({
@@ -15,11 +17,23 @@ class OrdersRepositoryImpl implements OrdersRepository {
     try {
       final remoteOrdersResponse =
           await _remoteDataSource.getOrders(page: page);
+      
+      await _localDataSource.cacheOrders(remoteOrdersResponse.data, page: page);
 
       return Right(remoteOrdersResponse.map((model) => model as OrderEntity));
     } on Failure catch (failure) {
+      final cached = _localDataSource.getCachedOrders(page: page);
+      if (cached.isNotEmpty) {
+        return Right(PaginatedResponse(
+            data: cached, currentPage: page, lastPage: page, total: cached.length));
+      }
       return Left(failure);
     } catch (e) {
+      final cached = _localDataSource.getCachedOrders(page: page);
+      if (cached.isNotEmpty) {
+        return Right(PaginatedResponse(
+            data: cached, currentPage: page, lastPage: page, total: cached.length));
+      }
       return Left(ServerFailure(e.toString()));
     }
   }

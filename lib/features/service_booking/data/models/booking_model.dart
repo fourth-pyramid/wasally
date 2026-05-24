@@ -1,5 +1,6 @@
 import 'package:intl/intl.dart';
 
+import '../../../../core/imports/imports.dart';
 import '../../domain/entities/booking_entity.dart';
 
 class BookingProviderModel extends BookingProviderEntity {
@@ -72,7 +73,7 @@ class BookingModel extends BookingEntity {
       dayEn = (dayMap['name_en'] ?? '') as String;
     } else if (json['day'] is String) {
       final dayStr = json['day'] as String;
-      final parsedDate = DateTime.tryParse(dayStr);
+      final parsedDate = dayStr.toLocalDateTime();
       if (parsedDate != null) {
         dayAr = DateFormat('EEEE, d MMMM yyyy', 'ar').format(parsedDate);
         dayEn = DateFormat('EEEE, d MMMM yyyy', 'en').format(parsedDate);

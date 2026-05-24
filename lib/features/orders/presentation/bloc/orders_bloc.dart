@@ -38,9 +38,19 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
         ));
       },
       (paginatedResponse) {
+        final sortedData = List<OrderEntity>.from(paginatedResponse.data)
+          ..sort((a, b) {
+            final dateA = a.createdAt.toLocalDateTime();
+            final dateB = b.createdAt.toLocalDateTime();
+            if (dateA != null && dateB != null) {
+              return dateB.compareTo(dateA);
+            }
+            return b.id.compareTo(a.id);
+          });
+
         emit(state.copyWith(
           status: OrdersStatus.success,
-          orders: paginatedResponse,
+          orders: paginatedResponse.copyWith(data: sortedData),
         ));
       },
     );
@@ -64,13 +74,23 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
         ));
       },
       (bookings) {
+        final sortedBookings = List<BookingEntity>.from(bookings)
+          ..sort((a, b) {
+            final dateA = a.createdAt.toLocalDateTime();
+            final dateB = b.createdAt.toLocalDateTime();
+            if (dateA != null && dateB != null) {
+              return dateB.compareTo(dateA);
+            }
+            return b.id.compareTo(a.id);
+          });
+
         emit(state.copyWith(
           serviceStatus: OrdersStatus.success,
           serviceBookings: PaginatedResponse<BookingEntity>(
-            data: bookings,
+            data: sortedBookings,
             currentPage: 1,
             lastPage: 1,
-            total: bookings.length,
+            total: sortedBookings.length,
           ),
         ));
       },
@@ -96,10 +116,20 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
         emit(state.copyWith(status: OrdersStatus.success));
       },
       (paginatedResponse) {
+        final combinedData = [...state.orders.data, ...paginatedResponse.data];
+        combinedData.sort((a, b) {
+          final dateA = a.createdAt.toLocalDateTime();
+          final dateB = b.createdAt.toLocalDateTime();
+          if (dateA != null && dateB != null) {
+            return dateB.compareTo(dateA);
+          }
+          return b.id.compareTo(a.id);
+        });
+
         emit(state.copyWith(
           status: OrdersStatus.success,
           orders: paginatedResponse.copyWith(
-            data: [...state.orders.data, ...paginatedResponse.data],
+            data: combinedData,
           ),
         ));
       },

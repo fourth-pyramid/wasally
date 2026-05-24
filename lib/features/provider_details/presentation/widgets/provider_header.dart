@@ -23,7 +23,7 @@ class ProviderHeader extends StatelessWidget {
           children: [
             CommonImage(
               imageUrl: provider.cover,
-              height: 200.h,
+              height: 200,
               width: double.infinity,
               memCacheHeight: 200 * 2,
               fit: BoxFit.cover,
@@ -50,8 +50,9 @@ class ProviderHeader extends StatelessWidget {
                 child: ClipOval(
                   child: CommonImage(
                     imageUrl: provider.user.avatar ?? '',
-                    width: 100.w,
-                    height: 90.h,
+                    width: 100,
+                    height: 90,
+                    memCacheHeight: 90 * 2,
                     fit: BoxFit.cover,
                     enableFullScreenView: true,
                     heroTag: 'provider_avatar_${provider.id}',

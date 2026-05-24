@@ -39,88 +39,90 @@ class ProductCard extends StatelessWidget {
     final hasDiscount = product.hasOffer;
     final discountedPrice = product.discountedPrice;
 
-    return GestureDetector(
-      onTap: onTap ?? () => _openProductDetails(context),
-      onLongPress: _onLongPress,
-      child: ValueListenableBuilder<int?>(
-        valueListenable: activeMarqueeId,
-        builder: (context, activeId, child) {
-          final isActive = activeId == product.id;
-          return AnimatedContainer(
-            duration: const Duration(milliseconds: 200),
-            decoration: BoxDecoration(
-              color: cs.surface,
-              borderRadius: BorderRadius.circular(12.r),
-              border: Border.all(
-                color: isActive
-                    ? cs.primary.withValues(alpha: 0.6)
-                    : cs.outlineVariant.withValues(alpha: 0.5),
-                width: isActive ? 1.5 : 1.0,
-              ),
-            ),
-            clipBehavior: Clip.antiAlias,
-            child: child,
-          );
-        },
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _ProductImageSection(
-              product: product,
-              onFavoriteTap: onFavoriteTap,
-            ),
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 4.h),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    if (product.description.isNotEmpty)
-                      _ActiveMarqueeText(
-                        productId: product.id,
-                        text: product.description,
-                        style: tt.labelSmall?.copyWith(
-                          color: cs.onSurfaceVariant,
-                        ),
-                      ),
-                    4.verticalSpace,
-                    _ActiveMarqueeText(
-                      productId: product.id,
-                      text: product.name,
-                      style: tt.titleSmall?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: cs.onSurface,
-                      ),
-                    ),
-                    const Spacer(),
-                    if (product.reviewCount > 0)
-                      Row(
-                        children: [
-                          Icon(Icons.star_rounded,
-                              size: 14.r, color: cs.secondary),
-                          2.horizontalSpace,
-                          Text(
-                            '${product.averageRating.toStringAsFixed(1)} (${product.reviewCount})',
-                            style: tt.labelSmall?.copyWith(
-                              fontWeight: FontWeight.w600,
-                              color: cs.onSurface,
-                            ),
-                          ),
-                        ],
-                      ),
-                    _PriceRow(
-                      product: product,
-                      originalPrice: originalPrice,
-                      discountedPrice: discountedPrice,
-                      hasDiscount: hasDiscount,
-                      onOpenProductTap: onOpenProductTap ??
-                          () => _openProductDetails(context),
-                    ),
-                  ],
+    return RepaintBoundary(
+      child: GestureDetector(
+        onTap: onTap ?? () => _openProductDetails(context),
+        onLongPress: _onLongPress,
+        child: ValueListenableBuilder<int?>(
+          valueListenable: activeMarqueeId,
+          builder: (context, activeId, child) {
+            final isActive = activeId == product.id;
+            return AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              decoration: BoxDecoration(
+                color: cs.surface,
+                borderRadius: BorderRadius.circular(12.r),
+                border: Border.all(
+                  color: isActive
+                      ? cs.primary.withValues(alpha: 0.6)
+                      : cs.outlineVariant.withValues(alpha: 0.5),
+                  width: isActive ? 1.5 : 1.0,
                 ),
               ),
-            ),
-          ],
+              clipBehavior: Clip.antiAlias,
+              child: child,
+            );
+          },
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _ProductImageSection(
+                product: product,
+                onFavoriteTap: onFavoriteTap,
+              ),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 4.h),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (product.description.isNotEmpty)
+                        _ActiveMarqueeText(
+                          productId: product.id,
+                          text: product.description,
+                          style: tt.labelSmall?.copyWith(
+                            color: cs.onSurfaceVariant,
+                          ),
+                        ),
+                      4.verticalSpace,
+                      _ActiveMarqueeText(
+                        productId: product.id,
+                        text: product.name,
+                        style: tt.titleSmall?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: cs.onSurface,
+                        ),
+                      ),
+                      const Spacer(),
+                      if (product.reviewCount > 0)
+                        Row(
+                          children: [
+                            Icon(Icons.star_rounded,
+                                size: 14.r, color: cs.secondary),
+                            2.horizontalSpace,
+                            Text(
+                              '${product.averageRating.toStringAsFixed(1)} (${product.reviewCount})',
+                              style: tt.labelSmall?.copyWith(
+                                fontWeight: FontWeight.w600,
+                                color: cs.onSurface,
+                              ),
+                            ),
+                          ],
+                        ),
+                      _PriceRow(
+                        product: product,
+                        originalPrice: originalPrice,
+                        discountedPrice: discountedPrice,
+                        hasDiscount: hasDiscount,
+                        onOpenProductTap: onOpenProductTap ??
+                            () => _openProductDetails(context),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -174,7 +176,7 @@ class _ProductImageSection extends StatelessWidget {
             child: CommonImage(
               memCacheHeight: 140 * 3,
               imageUrl: product.image,
-              fit: BoxFit.contain,
+              fit: BoxFit.cover,
               borderRadius: BorderRadius.vertical(top: Radius.circular(9.r)),
             ),
           ),

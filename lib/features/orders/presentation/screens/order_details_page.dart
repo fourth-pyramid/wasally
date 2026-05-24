@@ -1,5 +1,7 @@
 import 'package:wassaly/core/imports/imports.dart';
+import 'package:wassaly/features/home/domain/entities/product_entity.dart';
 import 'package:wassaly/features/orders/domain/entities/order_entity.dart';
+import 'package:wassaly/features/orders/domain/entities/order_item_entity.dart';
 import 'package:wassaly/features/orders/presentation/bloc/order_detail/order_detail_bloc.dart';
 import 'package:wassaly/features/orders/presentation/bloc/order_detail/order_detail_event.dart';
 import 'package:wassaly/features/orders/presentation/bloc/order_detail/order_detail_state.dart';
@@ -20,6 +22,41 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
   bool _isDeleting = false;
   bool _shouldRefresh = false;
   bool _allowPop = false;
+
+  static const _dummyOrder = OrderEntity(
+    id: 0,
+    orderNumber: '12345678',
+    status: 'pending',
+    totalPrice: 150,
+    paymentMethod: 'cash',
+    deliveryFees: 15,
+    subTotal: 135,
+    discountAmount: 0,
+    createdAt: '2024-01-01T00:00:00Z',
+    customerName: 'اسم العميل التجريبي',
+    customerPhone: '01000000000',
+    deliveryAddress: 'شارع تجريبي، المنطقة التجريبية',
+    governorateName: 'القاهرة',
+    centerName: 'مدينة نصر',
+    items: [
+      OrderItemEntity(
+        id: 1,
+        price: 75,
+        quantity: 2,
+        totalPrice: 150,
+        product: ProductEntity(
+          id: 1,
+          name: 'اسم منتج تجريبي للمعاينة',
+          image: '',
+          price: '75.0',
+          description: 'وصف منتج تجريبي للمعاينة بالكامل وسريع',
+          offers: [],
+          reviews: [],
+          isFavorite: false,
+        ),
+      ),
+    ],
+  );
 
   void _onRetry() {
     context.read<OrderDetailBloc>().add(FetchOrderDetailEvent(widget.orderId));
@@ -210,30 +247,30 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
               );
             }
           },
-          child: CustomScrollView(
-            physics: const BouncingScrollPhysics(),
-            slivers: [
-              AppSliverTopBar(
-                title: context.l10n.order_details_title,
-                onPressed: () => context.pop(_shouldRefresh),
-              ),
-              BlocBuilder<OrderDetailBloc, OrderDetailState>(
-                buildWhen: (previous, current) =>
-                    previous.status != current.status ||
-                    previous.order != current.order ||
-                    previous.errorMessage != current.errorMessage,
-                builder: (context, state) {
-                  // Only show full loading on initial fetch (no order yet)
-                  if (state.status == OrderDetailStatus.loading &&
-                      state.order == null) {
-                    return const SliverFillRemaining(
-                      child: Center(child: AppLoading()),
-                    );
-                  }
-
-                  if (state.status == OrderDetailStatus.failure &&
-                      state.order == null) {
-                    return SliverFillRemaining(
+          child: RefreshIndicator(
+            onRefresh: () async {
+              context
+                  .read<OrderDetailBloc>()
+                  .add(FetchOrderDetailEvent(widget.orderId));
+            },
+            color: context.theme.colorScheme.primary,
+            backgroundColor: context.theme.colorScheme.surface,
+            child: BlocBuilder<OrderDetailBloc, OrderDetailState>(
+            buildWhen: (previous, current) =>
+                previous.status != current.status ||
+                previous.order != current.order ||
+                previous.errorMessage != current.errorMessage,
+            builder: (context, state) {
+              if (state.status == OrderDetailStatus.failure &&
+                  state.order == null) {
+                return CustomScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  slivers: [
+                    AppSliverTopBar(
+                      title: context.l10n.order_details_title,
+                      onPressed: () => context.pop(_shouldRefresh),
+                    ),
+                    SliverFillRemaining(
                       hasScrollBody: false,
                       child: Center(
                         child: AppErrorWidget(
@@ -244,12 +281,24 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                           onRetry: _onRetry,
                         ),
                       ),
-                    );
-                  }
+                    ),
+                  ],
+                );
+              }
 
-                  final order = state.order;
-                  if (order == null) {
-                    return SliverFillRemaining(
+              final showSkeleton = state.status == OrderDetailStatus.loading &&
+                  state.order == null;
+              final order = showSkeleton ? _dummyOrder : state.order;
+
+              if (order == null) {
+                return CustomScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  slivers: [
+                    AppSliverTopBar(
+                      title: context.l10n.order_details_title,
+                      onPressed: () => context.pop(_shouldRefresh),
+                    ),
+                    SliverFillRemaining(
                       hasScrollBody: false,
                       child: Center(
                         child: Text(
@@ -257,157 +306,160 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                           style: tt.bodyLarge,
                         ),
                       ),
-                    );
-                  }
+                    ),
+                  ],
+                );
+              }
 
-                  final normStatus = order.status.trim().toLowerCase();
-                  final isCancelled = normStatus.contains('cancelled') ||
-                      normStatus.contains('ملغي') ||
-                      normStatus.contains('rejected') ||
-                      normStatus.contains('failed');
+              final isCancelled = order.isCancelled;
+              final canDelete = order.canDelete;
+              final canCancelOrUpdate = order.canCancelOrUpdate;
 
-                  final isPending = normStatus.contains('pending') ||
-                      normStatus.contains('قيد الانتظار') ||
-                      normStatus.contains('new') ||
-                      normStatus.contains('جديد');
+              return Skeletonizer(
+                  enabled: showSkeleton,
+                  ignoreContainers: true,
+                  child: CustomScrollView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    slivers: [
+                      AppSliverTopBar(
+                        title: context.l10n.order_details_title,
+                        onPressed: () => context.pop(_shouldRefresh),
+                      ),
+                      SliverPadding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 16.w, vertical: 16.h),
+                        sliver: SliverList(
+                          delegate: SliverChildListDelegate([
+                            // 1. Order Status Summary Header
+                            OrderHeaderCard(
+                                order: order, isCancelled: isCancelled),
+                            16.verticalSpace,
 
-                  final isDelivered = normStatus.contains('delivered') ||
-                      normStatus.contains('completed') ||
-                      normStatus.contains('تم التوصيل') ||
-                      normStatus.contains('مكتمل') ||
-                      normStatus.contains('success');
+                            // 2. Beautiful Cancellation Alert if cancelled
+                            if (isCancelled) ...[
+                              const OrderCancelledAlert(),
+                              16.verticalSpace,
+                            ],
 
-                  final canDelete = isDelivered || isCancelled;
-                  final canCancelOrUpdate = isPending;
-
-                  return SliverPadding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-                    sliver: SliverList(
-                      delegate: SliverChildListDelegate([
-                        // 1. Order Status Summary Header
-                        OrderHeaderCard(order: order, isCancelled: isCancelled),
-                        16.verticalSpace,
-
-                        // 2. Beautiful Cancellation Alert if cancelled
-                        if (isCancelled) ...[
-                          const OrderCancelledAlert(),
-                          16.verticalSpace,
-                        ],
-
-                        // 3. Gorgeous Interactive Status Timeline Card
-                        _buildSectionHeader(
-                            context, context.l10n.order_details_status),
-                        8.verticalSpace,
-                        AppCard(
-                          showShadow: true,
-                          padding: EdgeInsets.all(16.r),
-                          child: OrderTrackerWidget(status: order.status),
-                        ),
-                        16.verticalSpace,
-
-                        // 4. Delivery & Customer Address Card
-                        _buildSectionHeader(
-                            context, context.l10n.order_details_delivery_info),
-                        8.verticalSpace,
-                        OrderDeliveryInfoCard(order: order),
-                        16.verticalSpace,
-
-                        // 5. Order Items / Products Card
-                        _buildSectionHeader(context,
-                            context.l10n.order_details_ordered_products),
-                        8.verticalSpace,
-                        OrderItemsCard(items: order.items),
-                        16.verticalSpace,
-
-                        // 6. Detailed Receipt/Payment Card
-                        _buildSectionHeader(context,
-                            context.l10n.order_details_payment_summary),
-                        8.verticalSpace,
-                        OrderReceiptSummaryCard(order: order),
-                        24.verticalSpace,
-
-                        // 7. Action Buttons
-                        if (canDelete || canCancelOrUpdate) ...[
-                          _buildSectionHeader(
-                              context, context.l10n.order_details_actions),
-                          8.verticalSpace,
-                          if (canCancelOrUpdate) ...[
-                            BlocSelector<OrderDetailBloc, OrderDetailState,
-                                bool>(
-                              selector: (s) =>
-                                  s.actionStatus == OrderActionStatus.loading,
-                              builder: (context, isActionLoading) {
-                                return Row(
-                                  children: [
-                                    Expanded(
-                                      child: AppButton(
-                                        label: context
-                                            .l10n.order_details_cancel_btn,
-                                        onPressed: isActionLoading
-                                            ? null
-                                            : () => _onCancelOrder(order),
-                                        variant: ButtonVariant.danger,
-                                      ),
-                                    ),
-                                    8.horizontalSpace,
-                                    Expanded(
-                                      child: AppButton(
-                                        label: context
-                                            .l10n.order_details_update_btn,
-                                        onPressed: isActionLoading
-                                            ? null
-                                            : () {
-                                                context
-                                                    .showAppBottomSheet<void>(
-                                                  builder: (_) =>
-                                                      BlocProvider.value(
-                                                    value: context.read<
-                                                        OrderDetailBloc>(),
-                                                    child: UpdateOrderSheet(
-                                                        order: order),
-                                                  ),
-                                                );
-                                              },
-                                        variant: ButtonVariant.secondary,
-                                      ),
-                                    ),
-                                  ],
-                                );
-                              },
+                            // 3. Gorgeous Interactive Status Timeline Card
+                            _buildSectionHeader(
+                                context, context.l10n.order_details_status),
+                            8.verticalSpace,
+                            AppCard(
+                              showShadow: true,
+                              padding: EdgeInsets.all(16.r),
+                              child: OrderTrackerWidget(status: order.status),
                             ),
                             16.verticalSpace,
-                          ],
-                          if (canDelete)
-                            BlocSelector<OrderDetailBloc, OrderDetailState,
-                                bool>(
-                              selector: (s) =>
-                                  s.actionStatus == OrderActionStatus.loading,
-                              builder: (context, isActionLoading) {
-                                return AppButton(
-                                  label: context.l10n.order_delete_title,
-                                  isFullWidth: true,
-                                  onPressed: isActionLoading
-                                      ? null
-                                      : () => _onDeleteOrder(order),
-                                  variant: ButtonVariant.outline,
-                                  textColor: context.theme.colorScheme.error,
-                                );
-                              },
-                            ),
-                          24.verticalSpace,
-                        ],
-                      ]),
-                    ),
-                  );
-                },
-              ),
-            ],
+
+                            // 4. Delivery & Customer Address Card
+                            _buildSectionHeader(context,
+                                context.l10n.order_details_delivery_info),
+                            8.verticalSpace,
+                            OrderDeliveryInfoCard(order: order),
+                            16.verticalSpace,
+
+                            // 5. Order Items / Products Card
+                            _buildSectionHeader(context,
+                                context.l10n.order_details_ordered_products),
+                            8.verticalSpace,
+                            OrderItemsCard(items: order.items),
+                            16.verticalSpace,
+
+                            // 6. Detailed Receipt/Payment Card
+                            _buildSectionHeader(context,
+                                context.l10n.order_details_payment_summary),
+                            8.verticalSpace,
+                            OrderReceiptSummaryCard(order: order),
+                            24.verticalSpace,
+
+                            // 7. Action Buttons
+                            if (!showSkeleton &&
+                                (canDelete || canCancelOrUpdate)) ...[
+                              _buildSectionHeader(
+                                  context, context.l10n.order_details_actions),
+                              8.verticalSpace,
+                              if (canCancelOrUpdate) ...[
+                                BlocSelector<OrderDetailBloc, OrderDetailState,
+                                    bool>(
+                                  selector: (s) =>
+                                      s.actionStatus ==
+                                      OrderActionStatus.loading,
+                                  builder: (context, isActionLoading) {
+                                    return Row(
+                                      children: [
+                                        Expanded(
+                                          child: AppButton(
+                                            label: context
+                                                .l10n.order_details_cancel_btn,
+                                            onPressed: isActionLoading
+                                                ? null
+                                                : () => _onCancelOrder(order),
+                                            variant: ButtonVariant.danger,
+                                          ),
+                                        ),
+                                        8.horizontalSpace,
+                                        Expanded(
+                                          child: AppButton(
+                                            label: context
+                                                .l10n.order_details_update_btn,
+                                            onPressed: isActionLoading
+                                                ? null
+                                                : () {
+                                                    context.showAppBottomSheet<
+                                                        void>(
+                                                      builder: (_) =>
+                                                          BlocProvider.value(
+                                                        value: context.read<
+                                                            OrderDetailBloc>(),
+                                                        child: UpdateOrderSheet(
+                                                            order: order),
+                                                      ),
+                                                    );
+                                                  },
+                                            variant: ButtonVariant.secondary,
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                ),
+                                16.verticalSpace,
+                              ],
+                              if (canDelete)
+                                BlocSelector<OrderDetailBloc, OrderDetailState,
+                                    bool>(
+                                  selector: (s) =>
+                                      s.actionStatus ==
+                                      OrderActionStatus.loading,
+                                  builder: (context, isActionLoading) {
+                                    return AppButton(
+                                      label: context.l10n.order_delete_title,
+                                      isFullWidth: true,
+                                      onPressed: isActionLoading
+                                          ? null
+                                          : () => _onDeleteOrder(order),
+                                      variant: ButtonVariant.outline,
+                                      textColor:
+                                          context.theme.colorScheme.error,
+                                    );
+                                  },
+                                ),
+                              24.verticalSpace,
+                            ],
+                          ]),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+            },
           ),
         ),
       ),
-    );
-  }
+    ),
+  );
+}
 
   Widget _buildSectionHeader(BuildContext context, String title) {
     final tt = context.theme.textTheme;

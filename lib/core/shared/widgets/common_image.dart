@@ -58,8 +58,8 @@ class CommonImage extends StatelessWidget {
     if (resolved.startsWith('http')) {
       image = AppCachedImage(
         imageUrl: resolved,
-        width: width,
-        height: height,
+        width: width?.w,
+        height: height?.h,
         memCacheHeight: memCacheHeight,
         memCacheWidth: memCacheWidth,
         fit: fit,
@@ -124,8 +124,8 @@ class CommonImage extends StatelessWidget {
   Widget _buildDefaultErrorWidget(BuildContext context) {
     final cs = context.theme.colorScheme;
     return Container(
-      width: width,
-      height: height,
+      width: width?.w,
+      height: height?.h,
       color: cs.surfaceContainerLow,
       child: Icon(
         Icons.error_outline,

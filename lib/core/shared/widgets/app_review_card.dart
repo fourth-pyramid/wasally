@@ -1,25 +1,8 @@
 import 'package:wassaly/core/imports/imports.dart';
 
-final _timezoneRegExp = RegExp(r'(z|[+-]\d{2}:?\d{2})$', caseSensitive: false);
-
 DateTime? _parseCreatedAt(String? createdAt) {
   if (createdAt == null) return null;
-  final createdDate = DateTime.tryParse(createdAt);
-  if (createdDate == null) return null;
-
-  final hasTimezone = _timezoneRegExp.hasMatch(createdAt.trim());
-  if (hasTimezone) return createdDate.toLocal();
-
-  return DateTime.utc(
-    createdDate.year,
-    createdDate.month,
-    createdDate.day,
-    createdDate.hour,
-    createdDate.minute,
-    createdDate.second,
-    createdDate.millisecond,
-    createdDate.microsecond,
-  ).toLocal();
+  return createdAt.toLocalDateTime();
 }
 
 Duration _calcRemaining(String? createdAt) {

@@ -95,6 +95,31 @@ class CartState extends Equatable {
     );
   }
 
+  // Calculated getters
+  double get totalOriginalPrice => items.fold<double>(
+        0,
+        (sum, item) =>
+            sum + (double.tryParse(item.price) ?? 0.0) * item.quantity,
+      );
+
+  double get totalAfterProductOffers => items.fold<double>(
+        0,
+        (sum, item) {
+          final originalPrice = double.tryParse(item.price) ?? 0.0;
+          final hasOffer = item.offers != null && item.offers!.isNotEmpty;
+          final discountedPrice = hasOffer
+              ? originalPrice *
+                  (1 - (item.offers!.first.discountPercentage / 100))
+              : originalPrice;
+          return sum + (discountedPrice * item.quantity);
+        },
+      );
+
+  double get productOffersDiscount =>
+      totalOriginalPrice - totalAfterProductOffers;
+
+  double get total => totalAfterProductOffers.clamp(0.0, double.infinity);
+
   @override
   List<Object?> get props => [
         status,

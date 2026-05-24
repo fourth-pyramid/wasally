@@ -70,11 +70,15 @@ dependencies:
   system_asset_picker: ^0.0.2
   carousel_slider: ^5.1.2
   marquee: ^2.3.0
+  hive_flutter: ^1.1.0
+  hive: ^2.2.3
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
+  hive_generator: ^2.0.1
+  build_runner: ^2.4.13
 
   # Code Generation
 

@@ -7,6 +7,30 @@ import 'package:wassaly/features/home/presentation/bloc/home_state.dart';
 class HomeBanner extends StatefulWidget {
   const HomeBanner({super.key});
 
+  static const _dummyBanners = [
+    BannerEntity(
+      id: 0,
+      title: 'Loading banner title',
+      description: 'Loading banner description text here',
+      image: '',
+      type: 'loading',
+    ),
+    BannerEntity(
+      id: 0,
+      title: 'Loading banner title',
+      description: 'Loading banner description text here',
+      image: '',
+      type: 'loading',
+    ),
+    BannerEntity(
+      id: 0,
+      title: 'Loading banner title',
+      description: 'Loading banner description text here',
+      image: '',
+      type: 'loading',
+    ),
+  ];
+
   @override
   State<HomeBanner> createState() => _HomeBannerState();
 }
@@ -32,23 +56,12 @@ class _HomeBannerState extends State<HomeBanner> {
 
         if (bannersStatus == HomeStatus.loading ||
             bannersStatus == HomeStatus.initial) {
-          final dummyBanners = List.generate(
-            3,
-            (index) => const BannerEntity(
-              id: 0,
-              title: 'Loading banner title',
-              description: 'Loading banner description text here',
-              image: '',
-              type: 'loading',
-            ),
-          );
-
           return Skeletonizer(
             enabled: true,
             child: Column(
               children: [
                 CarouselSlider.builder(
-                  itemCount: dummyBanners.length,
+                  itemCount: HomeBanner._dummyBanners.length,
                   options: CarouselOptions(
                     height: 160.h,
                     viewportFraction: 0.84,
@@ -56,13 +69,13 @@ class _HomeBannerState extends State<HomeBanner> {
                   ),
                   itemBuilder: (context, index, realIndex) {
                     return _buildBannerItem(
-                        context, cs, tt, dummyBanners[index]);
+                        context, cs, tt, HomeBanner._dummyBanners[index]);
                   },
                 ),
                 12.verticalSpace,
                 AnimatedSmoothIndicator(
                   activeIndex: 0,
-                  count: dummyBanners.length,
+                  count: HomeBanner._dummyBanners.length,
                   effect: ExpandingDotsEffect(
                     dotHeight: 6.h,
                     dotWidth: 6.w,

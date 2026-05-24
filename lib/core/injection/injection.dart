@@ -94,6 +94,7 @@ import '../../features/search/domain/repositories/search_repository.dart';
 import '../../features/search/domain/usecases/search_products_usecase.dart';
 import '../../features/search/presentation/bloc/search_bloc.dart';
 import '../../features/orders/data/datasources/orders_remote_datasource.dart';
+import '../../features/orders/data/datasources/orders_local_datasource.dart';
 import '../../features/orders/data/repositories/orders_repository_impl.dart';
 import '../../features/orders/domain/repositories/orders_repository.dart';
 import '../../features/orders/domain/usecases/get_orders_usecase.dart';
@@ -113,6 +114,7 @@ import '../../features/service_details/domain/usecases/create_service_review_use
 import '../../features/service_details/domain/usecases/update_service_review_usecase.dart';
 import '../../features/service_details/presentation/bloc/service_details_bloc.dart';
 import '../../features/service_booking/data/datasources/booking_remote_datasource.dart';
+import '../../features/service_booking/data/datasources/booking_local_datasource.dart';
 import '../../features/service_booking/data/repositories/booking_repository_impl.dart';
 import '../../features/service_booking/domain/repositories/booking_repository.dart';
 import '../../features/service_booking/domain/usecases/create_booking_usecase.dart';
@@ -434,18 +436,19 @@ void initDependencies() {
       () => CategoryRepositoryImpl(sl()));
   sl.registerLazySingleton<SearchRepository>(() => SearchRepositoryImpl(sl()));
   sl.registerLazySingleton<FavoriteRepository>(
-      () => FavoriteRepositoryImpl(sl()));
+      () => FavoriteRepositoryImpl(sl(), sl()));
   sl.registerLazySingleton<ProductDetailsRepository>(
       () => ProductDetailsRepositoryImpl(sl()));
   sl.registerLazySingleton<CartRepository>(
       () => CartRepositoryImpl(sl(), sl()));
 
-  sl.registerLazySingleton<OrdersRepository>(() => OrdersRepositoryImpl(sl()));
+  sl.registerLazySingleton<OrdersRepository>(
+      () => OrdersRepositoryImpl(sl(), sl()));
 
   sl.registerLazySingleton<ServiceDetailsRepository>(
       () => ServiceDetailsRepositoryImpl(sl()));
   sl.registerLazySingleton<BookingRepository>(
-      () => BookingRepositoryImpl(sl()));
+      () => BookingRepositoryImpl(sl(), sl()));
   sl.registerLazySingleton<ProviderDetailsRepository>(
       () => ProviderDetailsRepositoryImpl(sl()));
   sl.registerLazySingleton<BrandsRepository>(() => BrandsRepositoryImpl(sl()));
@@ -465,8 +468,8 @@ void initDependencies() {
   // DataSources
   sl.registerLazySingleton<AuthRemoteDataSource>(
       () => AuthRemoteDataSourceImpl(DioService.instance));
-  sl.registerLazySingleton<AuthLocalDataSource>(() => AuthLocalDataSourceImpl(
-      SecureStorageService.instance, StorageService.instance));
+  sl.registerLazySingleton<AuthLocalDataSource>(
+      () => AuthLocalDataSourceImpl(SecureStorageService.instance));
   sl.registerLazySingleton<ProfileRemoteDataSource>(
       () => ProfileRemoteDataSourceImpl(DioService.instance));
   sl.registerLazySingleton<HomeRemoteDataSource>(
@@ -484,17 +487,21 @@ void initDependencies() {
   sl.registerLazySingleton<CartRemoteDataSource>(
       () => CartRemoteDataSourceImpl(DioService.instance));
   sl.registerLazySingleton<CartLocalDataSource>(
-      () => CartLocalDataSourceImpl(StorageService.instance));
+      () => CartLocalDataSourceImpl());
   sl.registerLazySingleton<FavoriteLocalDataSource>(
-      () => FavoriteLocalDataSourceImpl(StorageService.instance));
+      () => FavoriteLocalDataSourceImpl());
 
   sl.registerLazySingleton<OrdersRemoteDataSource>(
       () => OrdersRemoteDataSourceImpl(DioService.instance));
+  sl.registerLazySingleton<OrdersLocalDataSource>(
+      () => OrdersLocalDataSourceImpl());
 
   sl.registerLazySingleton<ServiceDetailsRemoteDataSource>(
       () => ServiceDetailsRemoteDataSourceImpl(DioService.instance));
   sl.registerLazySingleton<BookingRemoteDataSource>(
       () => BookingRemoteDataSourceImpl(DioService.instance));
+  sl.registerLazySingleton<BookingLocalDataSource>(
+      () => BookingLocalDataSourceImpl());
   sl.registerLazySingleton<ProviderDetailsRemoteDataSource>(
       () => ProviderDetailsRemoteDataSourceImpl(DioService.instance));
   sl.registerLazySingleton<BrandsRemoteDataSource>(

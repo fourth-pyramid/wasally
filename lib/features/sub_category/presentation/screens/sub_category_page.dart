@@ -123,7 +123,7 @@ class SubCategoryDetailView extends StatelessWidget {
                       crossAxisCount: crossAxisCount,
                       childAspectRatio:
                           serviceChildAspectRatio ?? childAspectRatio ?? 0.50,
-                      mainAxisExtent: serviceMainAxisExtent ?? mainAxisExtent,
+                      mainAxisExtent: 190.h,
                     ),
                   if (isLoading || state.products.data.isNotEmpty)
                     AppProductsSection(

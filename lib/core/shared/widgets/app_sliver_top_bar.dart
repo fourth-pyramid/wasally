@@ -78,9 +78,10 @@ class AppSliverTopBar extends StatelessWidget {
 
     if (showLogo) {
       children.add(
-        CommonImage(
+        const CommonImage(
           imageUrl: AppAssets.logo,
-          height: 45.h,
+          height: 45,
+          memCacheHeight: 45 * 2,
           fit: BoxFit.cover,
         ),
       );
