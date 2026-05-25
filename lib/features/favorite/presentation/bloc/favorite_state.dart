@@ -6,6 +6,7 @@ enum FavoriteStatus { initial, loading, refreshing, success, error }
 
 class FavoriteState extends Equatable {
   final FavoriteStatus status;
+  final FavoriteStatus serviceStatus;
   final PaginatedResponse<ProductEntity> favorites;
   final PaginatedResponse<ServiceEntity> serviceFavorites;
   final Set<int> favoriteIds;
@@ -13,9 +14,11 @@ class FavoriteState extends Equatable {
   final Set<int> serviceFavoriteIds;
   final Set<int> serviceTogglingIds;
   final Failure? failure;
+  final Failure? serviceFailure;
 
   const FavoriteState({
     this.status = FavoriteStatus.initial,
+    this.serviceStatus = FavoriteStatus.initial,
     PaginatedResponse<ProductEntity>? favorites,
     PaginatedResponse<ServiceEntity>? serviceFavorites,
     this.favoriteIds = const {},
@@ -23,6 +26,7 @@ class FavoriteState extends Equatable {
     this.serviceFavoriteIds = const {},
     this.serviceTogglingIds = const {},
     this.failure,
+    this.serviceFailure,
   })  : favorites = favorites ?? const PaginatedResponse(data: []),
         serviceFavorites =
             serviceFavorites ?? const PaginatedResponse(data: []);
@@ -38,6 +42,7 @@ class FavoriteState extends Equatable {
 
   FavoriteState copyWith({
     FavoriteStatus? status,
+    FavoriteStatus? serviceStatus,
     PaginatedResponse<ProductEntity>? favorites,
     PaginatedResponse<ServiceEntity>? serviceFavorites,
     Set<int>? favoriteIds,
@@ -45,9 +50,11 @@ class FavoriteState extends Equatable {
     Set<int>? serviceFavoriteIds,
     Set<int>? serviceTogglingIds,
     Failure? failure,
+    Failure? serviceFailure,
   }) {
     return FavoriteState(
       status: status ?? this.status,
+      serviceStatus: serviceStatus ?? this.serviceStatus,
       favorites: favorites ?? this.favorites,
       serviceFavorites: serviceFavorites ?? this.serviceFavorites,
       favoriteIds: favoriteIds ?? this.favoriteIds,
@@ -55,12 +62,14 @@ class FavoriteState extends Equatable {
       serviceFavoriteIds: serviceFavoriteIds ?? this.serviceFavoriteIds,
       serviceTogglingIds: serviceTogglingIds ?? this.serviceTogglingIds,
       failure: failure,
+      serviceFailure: serviceFailure,
     );
   }
 
   @override
   List<Object?> get props => [
         status,
+        serviceStatus,
         favorites,
         serviceFavorites,
         favoriteIds,
@@ -68,6 +77,7 @@ class FavoriteState extends Equatable {
         serviceFavoriteIds,
         serviceTogglingIds,
         failure,
+        serviceFailure,
       ];
 
   // Backward compatibility getter

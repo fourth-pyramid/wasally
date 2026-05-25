@@ -57,6 +57,7 @@ class _MainLayoutPageState extends State<MainLayoutPage> {
     final favoriteState = context.read<FavoriteBloc>().state;
     if (favoriteState.status == FavoriteStatus.initial) {
       context.read<FavoriteBloc>().add(const GetFavoritesEvent());
+      context.read<FavoriteBloc>().add(const GetServiceFavoritesEvent());
     }
   }
 
@@ -146,6 +147,7 @@ class _MainLayoutPageState extends State<MainLayoutPage> {
           listener: (context, _) {
             context.read<CartBloc>().add(const LoadCartItemsEvent());
             context.read<FavoriteBloc>().add(const GetFavoritesEvent());
+            context.read<FavoriteBloc>().add(const GetServiceFavoritesEvent());
           },
         ),
       ],

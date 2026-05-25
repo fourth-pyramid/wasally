@@ -34,6 +34,8 @@ class _FavoriteViewState extends State<_FavoriteView>
       final bloc = context.read<FavoriteBloc>();
       if (bloc.state.status == FavoriteStatus.initial) {
         bloc.add(const GetFavoritesEvent());
+      }
+      if (bloc.state.serviceStatus == FavoriteStatus.initial) {
         bloc.add(const GetServiceFavoritesEvent());
       }
     });

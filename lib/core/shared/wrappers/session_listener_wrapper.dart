@@ -24,6 +24,7 @@ class SessionListenerWrapper extends StatelessWidget {
           context.read<ProfileBloc>().add(const ProfileFetched());
           context.read<CartBloc>().add(const LoadCartItemsEvent());
           context.read<FavoriteBloc>().add(const GetFavoritesEvent());
+          context.read<FavoriteBloc>().add(const GetServiceFavoritesEvent());
           appRouter.go(AppRoutes.home);
         } else if (state is SessionUnauthenticated) {
           // Clear data when user logs out

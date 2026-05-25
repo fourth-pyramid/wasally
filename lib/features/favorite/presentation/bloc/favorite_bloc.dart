@@ -78,22 +78,22 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
     Emitter<FavoriteState> emit,
   ) async {
     emit(state.copyWith(
-      status: state.status == FavoriteStatus.initial
+      serviceStatus: state.serviceStatus == FavoriteStatus.initial
           ? FavoriteStatus.loading
           : FavoriteStatus.refreshing,
-      failure: null,
+      serviceFailure: null,
     ));
 
     final result = await getServiceFavoritesUseCase();
 
     result.fold(
       (failure) => emit(state.copyWith(
-        status: FavoriteStatus.error,
-        failure: failure,
+        serviceStatus: FavoriteStatus.error,
+        serviceFailure: failure,
       )),
       (favorites) {
         emit(state.copyWith(
-          status: FavoriteStatus.success,
+          serviceStatus: FavoriteStatus.success,
           serviceFavorites: favorites,
           serviceFavoriteIds: favorites.data.map((f) => f.id).toSet(),
         ));

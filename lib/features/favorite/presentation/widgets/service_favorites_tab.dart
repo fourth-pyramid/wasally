@@ -14,7 +14,7 @@ class ServiceFavoritesTab extends StatelessWidget {
     return BlocSelector<FavoriteBloc, FavoriteState,
         (FavoriteStatus, PaginatedResponse<ServiceEntity>, Failure?)>(
       selector: (state) =>
-          (state.status, state.serviceFavorites, state.failure),
+          (state.serviceStatus, state.serviceFavorites, state.serviceFailure),
       builder: (context, data) {
         final (status, serviceFavorites, failure) = data;
         final isLoading = status == FavoriteStatus.loading ||
@@ -28,8 +28,8 @@ class ServiceFavoritesTab extends StatelessWidget {
             bloc.add(const GetServiceFavoritesEvent());
             await bloc.stream.firstWhere(
               (s) =>
-                  s.status == FavoriteStatus.success ||
-                  s.status == FavoriteStatus.error,
+                  s.serviceStatus == FavoriteStatus.success ||
+                  s.serviceStatus == FavoriteStatus.error,
             );
           },
           color: cs.primary,
