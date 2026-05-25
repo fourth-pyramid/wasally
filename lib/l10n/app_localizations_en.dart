@@ -1560,6 +1560,75 @@ class SEn extends S {
   String get booking_details_actions => 'Actions';
 
   @override
+  String get booking_reschedule_title => 'Reschedule Suggestion';
+
+  @override
+  String get booking_reschedule_provider_suggested => 'The provider suggested a new schedule';
+
+  @override
+  String get booking_reschedule_suggested_day => 'Suggested Day';
+
+  @override
+  String get booking_reschedule_suggested_time => 'Suggested Time';
+
+  @override
+  String get booking_reschedule_note => 'Note';
+
+  @override
+  String get booking_reschedule_accept => 'Accept Schedule';
+
+  @override
+  String get booking_reschedule_propose => 'Propose Another';
+
+  @override
+  String get booking_reschedule_accept_title => 'Accept Suggested Schedule';
+
+  @override
+  String get booking_reschedule_accept_confirm => 'Are you sure you want to accept the suggested schedule?';
+
+  @override
+  String get booking_reschedule_accept_success => 'Schedule accepted successfully';
+
+  @override
+  String get booking_reschedule_propose_title => 'Propose Alternative Schedule';
+
+  @override
+  String get booking_reschedule_propose_day_label => 'Suggested Day';
+
+  @override
+  String get booking_reschedule_propose_time_label => 'Suggested Time';
+
+  @override
+  String get booking_reschedule_propose_note_label => 'Note to Provider';
+
+  @override
+  String get booking_reschedule_propose_note_hint => 'Write your reason for proposing a different schedule...';
+
+  @override
+  String get booking_reschedule_propose_submit => 'Send Proposal';
+
+  @override
+  String get booking_reschedule_propose_success => 'Schedule proposal sent successfully';
+
+  @override
+  String get booking_reschedule_select_day => 'Select Day';
+
+  @override
+  String get booking_reschedule_select_time => 'Select Time';
+
+  @override
+  String get booking_reschedule_day_required => 'Please select a day';
+
+  @override
+  String get booking_reschedule_time_required => 'Please select a time';
+
+  @override
+  String get booking_reschedule_note_required => 'Please write a note';
+
+  @override
+  String get order_status_reschedule => 'Reschedule';
+
+  @override
   String get filter_title => 'Filter Products';
 
   @override

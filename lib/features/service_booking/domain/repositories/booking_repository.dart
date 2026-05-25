@@ -8,4 +8,8 @@ abstract class BookingRepository {
       UpdateBookingParams params);
   Future<Either<Failure, void>> cancelBooking(int bookingId);
   Future<Either<Failure, void>> deleteBooking(int bookingId);
+  Future<Either<Failure, void>> acceptReschedule(
+      AcceptRescheduleParams params);
+  Future<Either<Failure, void>> proposeReschedule(
+      ProposeRescheduleParams params);
 }

@@ -2,8 +2,10 @@ import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/orders/presentation/bloc/orders_bloc.dart';
 import 'package:wassaly/features/orders/presentation/bloc/orders_event.dart';
 import 'package:wassaly/features/service_booking/domain/entities/booking_entity.dart';
+import 'package:wassaly/features/service_booking/domain/usecases/accept_reschedule_usecase.dart';
 import 'package:wassaly/features/service_booking/domain/usecases/cancel_booking_usecase.dart';
 import 'package:wassaly/features/service_booking/domain/usecases/delete_booking_usecase.dart';
+import 'package:wassaly/features/service_booking/domain/usecases/propose_reschedule_usecase.dart';
 import 'package:wassaly/features/service_booking/domain/usecases/update_booking_usecase.dart';
 import 'booking_detail_event.dart';
 import 'booking_detail_state.dart';
@@ -12,22 +14,30 @@ class BookingDetailBloc extends Bloc<BookingDetailEvent, BookingDetailState> {
   final CancelBookingUseCase _cancelBookingUseCase;
   final UpdateBookingUseCase _updateBookingUseCase;
   final DeleteBookingUseCase _deleteBookingUseCase;
+  final AcceptRescheduleUseCase _acceptRescheduleUseCase;
+  final ProposeRescheduleUseCase _proposeRescheduleUseCase;
   final OrdersBloc _ordersBloc;
 
   BookingDetailBloc({
     required CancelBookingUseCase cancelBookingUseCase,
     required UpdateBookingUseCase updateBookingUseCase,
     required DeleteBookingUseCase deleteBookingUseCase,
+    required AcceptRescheduleUseCase acceptRescheduleUseCase,
+    required ProposeRescheduleUseCase proposeRescheduleUseCase,
     required OrdersBloc ordersBloc,
   })  : _cancelBookingUseCase = cancelBookingUseCase,
         _updateBookingUseCase = updateBookingUseCase,
         _deleteBookingUseCase = deleteBookingUseCase,
+        _acceptRescheduleUseCase = acceptRescheduleUseCase,
+        _proposeRescheduleUseCase = proposeRescheduleUseCase,
         _ordersBloc = ordersBloc,
         super(const BookingDetailState()) {
     on<InitializeBookingDetailEvent>(_onInitialize);
     on<CancelBookingEvent>(_onCancelBooking);
     on<UpdateBookingEvent>(_onUpdateBooking);
     on<DeleteBookingEvent>(_onDeleteBooking);
+    on<AcceptRescheduleEvent>(_onAcceptReschedule);
+    on<ProposeRescheduleEvent>(_onProposeReschedule);
   }
 
   void _onInitialize(
@@ -138,6 +148,101 @@ class BookingDetailBloc extends Bloc<BookingDetailEvent, BookingDetailState> {
         _ordersBloc.add(const GetServiceBookingsEvent());
 
         emit(state.copyWith(actionStatus: BookingActionStatus.success));
+      },
+    );
+  }
+
+  Future<void> _onAcceptReschedule(
+    AcceptRescheduleEvent event,
+    Emitter<BookingDetailState> emit,
+  ) async {
+    emit(state.copyWith(
+      actionStatus: BookingActionStatus.loading,
+      actionErrorMessage: '',
+    ));
+
+    final result = await _acceptRescheduleUseCase(event.params);
+
+    result.fold(
+      (failure) => emit(state.copyWith(
+        actionStatus: BookingActionStatus.failure,
+        actionErrorMessage: failure.message,
+      )),
+      (_) {
+        _ordersBloc.add(const GetServiceBookingsEvent());
+
+        if (state.booking != null) {
+          final details = state.booking!.rescheduleDetails;
+          final updatedBooking = BookingEntity(
+            id: state.booking!.id,
+            status: 'accepted',
+            problemDescription: state.booking!.problemDescription,
+            service: state.booking!.service,
+            provider: state.booking!.provider,
+            dayAr: details?.suggestedDayAr ?? state.booking!.dayAr,
+            dayEn: details?.suggestedDayEn ?? state.booking!.dayEn,
+            time: details?.suggestedTime ?? state.booking!.time,
+            createdAt: state.booking!.createdAt,
+            customerName: state.booking!.customerName,
+            customerPhone: state.booking!.customerPhone,
+            customerEmail: state.booking!.customerEmail,
+            governorate: state.booking!.governorate,
+            center: state.booking!.center,
+          );
+          emit(state.copyWith(
+            booking: updatedBooking,
+            actionStatus: BookingActionStatus.success,
+          ));
+        } else {
+          emit(state.copyWith(actionStatus: BookingActionStatus.success));
+        }
+      },
+    );
+  }
+
+  Future<void> _onProposeReschedule(
+    ProposeRescheduleEvent event,
+    Emitter<BookingDetailState> emit,
+  ) async {
+    emit(state.copyWith(
+      actionStatus: BookingActionStatus.loading,
+      actionErrorMessage: '',
+    ));
+
+    final result = await _proposeRescheduleUseCase(event.params);
+
+    result.fold(
+      (failure) => emit(state.copyWith(
+        actionStatus: BookingActionStatus.failure,
+        actionErrorMessage: failure.message,
+      )),
+      (_) {
+        _ordersBloc.add(const GetServiceBookingsEvent());
+
+        if (state.booking != null) {
+          final updatedBooking = BookingEntity(
+            id: state.booking!.id,
+            status: 'reschedule_by_customer',
+            problemDescription: state.booking!.problemDescription,
+            service: state.booking!.service,
+            provider: state.booking!.provider,
+            dayAr: state.booking!.dayAr,
+            dayEn: state.booking!.dayEn,
+            time: state.booking!.time,
+            createdAt: state.booking!.createdAt,
+            customerName: state.booking!.customerName,
+            customerPhone: state.booking!.customerPhone,
+            customerEmail: state.booking!.customerEmail,
+            governorate: state.booking!.governorate,
+            center: state.booking!.center,
+          );
+          emit(state.copyWith(
+            booking: updatedBooking,
+            actionStatus: BookingActionStatus.success,
+          ));
+        } else {
+          emit(state.copyWith(actionStatus: BookingActionStatus.success));
+        }
       },
     );
   }

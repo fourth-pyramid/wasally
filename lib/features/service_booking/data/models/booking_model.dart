@@ -45,6 +45,30 @@ class BookingServiceModel extends BookingServiceEntity {
   }
 }
 
+class RescheduleDetailsModel extends RescheduleDetailsEntity {
+  const RescheduleDetailsModel({
+    super.suggestedDayId,
+    super.suggestedDayAr,
+    super.suggestedDayEn,
+    super.suggestedTimeId,
+    super.suggestedTime,
+    super.rescheduleNote,
+  });
+
+  factory RescheduleDetailsModel.fromJson(Map<String, dynamic> json) {
+    final dayMap = json['suggested_day'] as Map<String, dynamic>?;
+    final timeMap = json['suggested_time'] as Map<String, dynamic>?;
+    return RescheduleDetailsModel(
+      suggestedDayId: dayMap?['id'] as int?,
+      suggestedDayAr: dayMap?['name_ar'] as String?,
+      suggestedDayEn: dayMap?['name_en'] as String?,
+      suggestedTimeId: timeMap?['id'] as int?,
+      suggestedTime: timeMap?['time'] as String?,
+      rescheduleNote: json['reschedule_note'] as String?,
+    );
+  }
+}
+
 class BookingModel extends BookingEntity {
   const BookingModel({
     required super.id,
@@ -61,6 +85,7 @@ class BookingModel extends BookingEntity {
     super.customerEmail,
     super.governorate,
     super.center,
+    super.rescheduleDetails,
   });
 
   factory BookingModel.fromJson(Map<String, dynamic> json) {
@@ -126,6 +151,8 @@ class BookingModel extends BookingEntity {
       timeStr = json['time'] as String;
     }
 
+    final rescheduleJson = json['reschedule_details'] as Map<String, dynamic>?;
+
     return BookingModel(
       id: json['id'] as int,
       status: (json['status'] ?? 'pending') as String,
@@ -144,6 +171,9 @@ class BookingModel extends BookingEntity {
       governorate:
           json['governorate'] != null ? json['governorate']['name'] : null,
       center: json['center'] != null ? json['center']['name'] : null,
+      rescheduleDetails: rescheduleJson != null
+          ? RescheduleDetailsModel.fromJson(rescheduleJson)
+          : null,
     );
   }
 }

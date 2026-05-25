@@ -1,6 +1,39 @@
 import 'package:intl/intl.dart';
 import 'package:wassaly/core/imports/imports.dart';
 
+class RescheduleDetailsEntity extends Equatable {
+  final int? suggestedDayId;
+  final String? suggestedDayAr;
+  final String? suggestedDayEn;
+  final int? suggestedTimeId;
+  final String? suggestedTime;
+  final String? rescheduleNote;
+
+  const RescheduleDetailsEntity({
+    this.suggestedDayId,
+    this.suggestedDayAr,
+    this.suggestedDayEn,
+    this.suggestedTimeId,
+    this.suggestedTime,
+    this.rescheduleNote,
+  });
+
+  String get suggestedDay =>
+      Intl.getCurrentLocale() == 'ar'
+          ? (suggestedDayAr ?? '')
+          : (suggestedDayEn ?? '');
+
+  @override
+  List<Object?> get props => [
+        suggestedDayId,
+        suggestedDayAr,
+        suggestedDayEn,
+        suggestedTimeId,
+        suggestedTime,
+        rescheduleNote,
+      ];
+}
+
 class BookingProviderEntity extends Equatable {
   final int id;
   final String name;
@@ -57,6 +90,7 @@ class BookingEntity extends Equatable {
   final String? customerEmail;
   final String? governorate;
   final String? center;
+  final RescheduleDetailsEntity? rescheduleDetails;
 
   const BookingEntity({
     required this.id,
@@ -73,6 +107,7 @@ class BookingEntity extends Equatable {
     this.customerEmail,
     this.governorate,
     this.center,
+    this.rescheduleDetails,
   });
 
   String get day => Intl.getCurrentLocale() == 'ar' ? dayAr : dayEn;
@@ -93,6 +128,7 @@ class BookingEntity extends Equatable {
         customerEmail,
         governorate,
         center,
+        rescheduleDetails,
       ];
 }
 
@@ -164,4 +200,40 @@ class UpdateBookingParams extends Equatable {
 
   @override
   List<Object?> get props => [bookingId, problemDescription, customerPhone];
+}
+
+class AcceptRescheduleParams extends Equatable {
+  final int bookingId;
+
+  const AcceptRescheduleParams({required this.bookingId});
+
+  Map<String, dynamic> toJson() => {'booking_id': bookingId};
+
+  @override
+  List<Object?> get props => [bookingId];
+}
+
+class ProposeRescheduleParams extends Equatable {
+  final int bookingId;
+  final int suggestedDayId;
+  final int suggestedTimeId;
+  final String rescheduleNote;
+
+  const ProposeRescheduleParams({
+    required this.bookingId,
+    required this.suggestedDayId,
+    required this.suggestedTimeId,
+    required this.rescheduleNote,
+  });
+
+  Map<String, dynamic> toJson() => {
+        'booking_id': bookingId,
+        'suggested_day_id': suggestedDayId,
+        'suggested_time': suggestedTimeId,
+        'reschedule_note': rescheduleNote,
+      };
+
+  @override
+  List<Object?> get props =>
+      [bookingId, suggestedDayId, suggestedTimeId, rescheduleNote];
 }

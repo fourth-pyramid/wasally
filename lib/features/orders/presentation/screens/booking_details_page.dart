@@ -5,6 +5,7 @@ import 'package:wassaly/features/service_booking/presentation/bloc/booking_detai
 import 'package:wassaly/features/service_booking/presentation/bloc/booking_detail/booking_detail_state.dart';
 
 import '../widgets/order_details/booking_details_cards.dart';
+import '../widgets/order_details/propose_reschedule_sheet.dart';
 import '../widgets/order_details/update_booking_sheet.dart';
 
 class BookingDetailsPage extends StatefulWidget {
@@ -170,6 +171,80 @@ class _BookingDetailsPageState extends State<BookingDetailsPage> {
     }
   }
 
+  Future<void> _onAcceptReschedule(BookingEntity booking) async {
+    final confirmed = await showAppDialog<bool>(
+      child: Builder(
+        builder: (ctx) => Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16.r),
+          ),
+          child: Padding(
+            padding: EdgeInsets.all(24.w),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  Icons.check_circle_outline,
+                  size: 48.r,
+                  color: Colors.green,
+                ),
+                16.verticalSpace,
+                Text(
+                  context.l10n.booking_reschedule_accept_title,
+                  style: context.theme.textTheme.headlineSmall?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: context.theme.colorScheme.onSurface,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                8.verticalSpace,
+                Text(
+                  context.l10n.booking_reschedule_accept_confirm,
+                  style: context.theme.textTheme.bodyMedium?.copyWith(
+                    color: context.theme.colorScheme.onSurfaceVariant,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                24.verticalSpace,
+                Row(
+                  children: [
+                    Expanded(
+                      child: AppButton(
+                        label: context.l10n.shared_cancel,
+                        variant: ButtonVariant.ghost,
+                        isFullWidth: false,
+                        onPressed: () => Navigator.of(ctx).pop(false),
+                      ),
+                    ),
+                    12.horizontalSpace,
+                    Expanded(
+                      child: AppButton(
+                        isFullWidth: true,
+                        label: context.l10n.booking_reschedule_accept,
+                        variant: ButtonVariant.primary,
+                        onPressed: () => Navigator.of(ctx).pop(true),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+
+    if (!mounted) return;
+
+    if (confirmed ?? false) {
+      context.read<BookingDetailBloc>().add(
+            AcceptRescheduleEvent(
+              AcceptRescheduleParams(bookingId: booking.id),
+            ),
+          );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final tt = context.theme.textTheme;
@@ -281,6 +356,8 @@ class _BookingDetailsPageState extends State<BookingDetailsPage> {
                       normStatus.contains('confirmed') ||
                       normStatus.contains('تم القبول') ||
                       normStatus.contains('مؤكد');
+                  final isRescheduleByProvider =
+                      normStatus == 'reschedule_by_provider';
                   final canCancelOrUpdate = isPending;
 
                   return SliverPadding(
@@ -316,6 +393,74 @@ class _BookingDetailsPageState extends State<BookingDetailsPage> {
                         8.verticalSpace,
                         BookingServiceInfoCard(booking: booking),
                         24.verticalSpace,
+
+                        // 4.5. Reschedule Details Card
+                        if (isRescheduleByProvider &&
+                            booking.rescheduleDetails != null) ...[
+                          _buildSectionHeader(
+                              context,
+                              context
+                                  .l10n.booking_reschedule_title),
+                          8.verticalSpace,
+                          RescheduleDetailsCard(
+                            rescheduleDetails:
+                                booking.rescheduleDetails!,
+                          ),
+                          16.verticalSpace,
+                          BlocSelector<BookingDetailBloc,
+                              BookingDetailState, bool>(
+                            selector: (s) =>
+                                s.actionStatus ==
+                                BookingActionStatus.loading,
+                            builder: (context, isActionLoading) {
+                              return Row(
+                                children: [
+                                  Expanded(
+                                    child: AppButton(
+                                      label: context.l10n
+                                          .booking_reschedule_accept,
+                                      onPressed: isActionLoading
+                                          ? null
+                                          : () => _onAcceptReschedule(
+                                              booking),
+                                      variant:
+                                          ButtonVariant.primary,
+                                    ),
+                                  ),
+                                  8.horizontalSpace,
+                                  Expanded(
+                                    child: AppButton(
+                                      label: context.l10n
+                                          .booking_reschedule_propose,
+                                      onPressed: isActionLoading
+                                          ? null
+                                          : () {
+                                              context
+                                                  .showAppBottomSheet<
+                                                      void>(
+                                                builder: (_) =>
+                                                    BlocProvider
+                                                        .value(
+                                                  value: context.read<
+                                                      BookingDetailBloc>(),
+                                                  child:
+                                                      ProposeRescheduleSheet(
+                                                    bookingId:
+                                                        booking.id,
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                      variant:
+                                          ButtonVariant.secondary,
+                                    ),
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                          24.verticalSpace,
+                        ],
 
                         // 5. Actions Card
                         if (canDelete || canCancelOrUpdate) ...[

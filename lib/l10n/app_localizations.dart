@@ -3043,6 +3043,144 @@ abstract class S {
   /// **'Actions'**
   String get booking_details_actions;
 
+  /// No description provided for @booking_reschedule_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Reschedule Suggestion'**
+  String get booking_reschedule_title;
+
+  /// No description provided for @booking_reschedule_provider_suggested.
+  ///
+  /// In en, this message translates to:
+  /// **'The provider suggested a new schedule'**
+  String get booking_reschedule_provider_suggested;
+
+  /// No description provided for @booking_reschedule_suggested_day.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggested Day'**
+  String get booking_reschedule_suggested_day;
+
+  /// No description provided for @booking_reschedule_suggested_time.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggested Time'**
+  String get booking_reschedule_suggested_time;
+
+  /// No description provided for @booking_reschedule_note.
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get booking_reschedule_note;
+
+  /// No description provided for @booking_reschedule_accept.
+  ///
+  /// In en, this message translates to:
+  /// **'Accept Schedule'**
+  String get booking_reschedule_accept;
+
+  /// No description provided for @booking_reschedule_propose.
+  ///
+  /// In en, this message translates to:
+  /// **'Propose Another'**
+  String get booking_reschedule_propose;
+
+  /// No description provided for @booking_reschedule_accept_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Accept Suggested Schedule'**
+  String get booking_reschedule_accept_title;
+
+  /// No description provided for @booking_reschedule_accept_confirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to accept the suggested schedule?'**
+  String get booking_reschedule_accept_confirm;
+
+  /// No description provided for @booking_reschedule_accept_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Schedule accepted successfully'**
+  String get booking_reschedule_accept_success;
+
+  /// No description provided for @booking_reschedule_propose_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Propose Alternative Schedule'**
+  String get booking_reschedule_propose_title;
+
+  /// No description provided for @booking_reschedule_propose_day_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggested Day'**
+  String get booking_reschedule_propose_day_label;
+
+  /// No description provided for @booking_reschedule_propose_time_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggested Time'**
+  String get booking_reschedule_propose_time_label;
+
+  /// No description provided for @booking_reschedule_propose_note_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Note to Provider'**
+  String get booking_reschedule_propose_note_label;
+
+  /// No description provided for @booking_reschedule_propose_note_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Write your reason for proposing a different schedule...'**
+  String get booking_reschedule_propose_note_hint;
+
+  /// No description provided for @booking_reschedule_propose_submit.
+  ///
+  /// In en, this message translates to:
+  /// **'Send Proposal'**
+  String get booking_reschedule_propose_submit;
+
+  /// No description provided for @booking_reschedule_propose_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Schedule proposal sent successfully'**
+  String get booking_reschedule_propose_success;
+
+  /// No description provided for @booking_reschedule_select_day.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Day'**
+  String get booking_reschedule_select_day;
+
+  /// No description provided for @booking_reschedule_select_time.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Time'**
+  String get booking_reschedule_select_time;
+
+  /// No description provided for @booking_reschedule_day_required.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a day'**
+  String get booking_reschedule_day_required;
+
+  /// No description provided for @booking_reschedule_time_required.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a time'**
+  String get booking_reschedule_time_required;
+
+  /// No description provided for @booking_reschedule_note_required.
+  ///
+  /// In en, this message translates to:
+  /// **'Please write a note'**
+  String get booking_reschedule_note_required;
+
+  /// No description provided for @order_status_reschedule.
+  ///
+  /// In en, this message translates to:
+  /// **'Reschedule'**
+  String get order_status_reschedule;
+
   /// No description provided for @filter_title.
   ///
   /// In en, this message translates to:

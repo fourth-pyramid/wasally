@@ -175,6 +175,10 @@ class _StatusBadge extends StatelessWidget {
       'cancelled':
           _StatusConfig(Colors.red, context.l10n.order_status_cancelled),
       'ملغي': _StatusConfig(Colors.red, context.l10n.order_status_cancelled),
+      'reschedule_by_provider':
+          _StatusConfig(Colors.orange, context.l10n.order_status_reschedule),
+      'reschedule_by_customer':
+          _StatusConfig(Colors.orange, context.l10n.order_status_reschedule),
     };
 
     final config =

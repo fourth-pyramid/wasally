@@ -1551,6 +1551,75 @@ class SAr extends S {
   String get booking_details_actions => 'الإجراءات';
 
   @override
+  String get booking_reschedule_title => 'اقتراح موعد جديد';
+
+  @override
+  String get booking_reschedule_provider_suggested => 'مقدم الخدمة اقترح موعداً جديداً';
+
+  @override
+  String get booking_reschedule_suggested_day => 'اليوم المقترح';
+
+  @override
+  String get booking_reschedule_suggested_time => 'الوقت المقترح';
+
+  @override
+  String get booking_reschedule_note => 'ملاحظة';
+
+  @override
+  String get booking_reschedule_accept => 'قبول الموعد';
+
+  @override
+  String get booking_reschedule_propose => 'اقتراح موعد آخر';
+
+  @override
+  String get booking_reschedule_accept_title => 'قبول الموعد المقترح';
+
+  @override
+  String get booking_reschedule_accept_confirm => 'هل أنت متأكد من قبول الموعد المقترح؟';
+
+  @override
+  String get booking_reschedule_accept_success => 'تم قبول الموعد بنجاح';
+
+  @override
+  String get booking_reschedule_propose_title => 'اقتراح موعد بديل';
+
+  @override
+  String get booking_reschedule_propose_day_label => 'اليوم المقترح';
+
+  @override
+  String get booking_reschedule_propose_time_label => 'الوقت المقترح';
+
+  @override
+  String get booking_reschedule_propose_note_label => 'ملاحظة للمزود';
+
+  @override
+  String get booking_reschedule_propose_note_hint => 'اكتب سبب اقتراح موعد آخر...';
+
+  @override
+  String get booking_reschedule_propose_submit => 'إرسال الاقتراح';
+
+  @override
+  String get booking_reschedule_propose_success => 'تم إرسال اقتراح الموعد بنجاح';
+
+  @override
+  String get booking_reschedule_select_day => 'اختر اليوم';
+
+  @override
+  String get booking_reschedule_select_time => 'اختر الوقت';
+
+  @override
+  String get booking_reschedule_day_required => 'يرجى اختيار اليوم';
+
+  @override
+  String get booking_reschedule_time_required => 'يرجى اختيار الوقت';
+
+  @override
+  String get booking_reschedule_note_required => 'يرجى كتابة ملاحظة';
+
+  @override
+  String get order_status_reschedule => 'إعادة جدولة';
+
+  @override
   String get filter_title => 'تصفية المنتجات';
 
   @override

@@ -76,4 +76,30 @@ class BookingRepositoryImpl implements BookingRepository {
       return Left(ServerFailure(e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, void>> acceptReschedule(
+      AcceptRescheduleParams params) async {
+    try {
+      await _remoteDataSource.acceptReschedule(params);
+      return const Right(null);
+    } on Failure catch (failure) {
+      return Left(failure);
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> proposeReschedule(
+      ProposeRescheduleParams params) async {
+    try {
+      await _remoteDataSource.proposeReschedule(params);
+      return const Right(null);
+    } on Failure catch (failure) {
+      return Left(failure);
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
 }

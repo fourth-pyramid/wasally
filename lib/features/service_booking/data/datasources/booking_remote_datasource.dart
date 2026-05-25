@@ -9,6 +9,8 @@ abstract class BookingRemoteDataSource {
   Future<BookingModel> updateBooking(UpdateBookingParams params);
   Future<void> cancelBooking(int bookingId);
   Future<void> deleteBooking(int bookingId);
+  Future<void> acceptReschedule(AcceptRescheduleParams params);
+  Future<void> proposeReschedule(ProposeRescheduleParams params);
 }
 
 class BookingRemoteDataSourceImpl implements BookingRemoteDataSource {
@@ -113,6 +115,48 @@ class BookingRemoteDataSourceImpl implements BookingRemoteDataSource {
     final result = await _dioService.delete(
       '/api/booking/delete',
       data: {'booking_id': bookingId},
+    );
+
+    return result.fold(
+      (failure) => throw failure,
+      (response) {
+        final responseData = response.data as Map<String, dynamic>;
+        final status = responseData['status'] as bool? ?? false;
+        final message = responseData['message'] as String? ?? '';
+
+        if (!status) {
+          throw ServerFailure(message);
+        }
+      },
+    );
+  }
+
+  @override
+  Future<void> acceptReschedule(AcceptRescheduleParams params) async {
+    final result = await _dioService.post(
+      '/api/customer/booking/reschedule/accept',
+      data: params.toJson(),
+    );
+
+    return result.fold(
+      (failure) => throw failure,
+      (response) {
+        final responseData = response.data as Map<String, dynamic>;
+        final status = responseData['status'] as bool? ?? false;
+        final message = responseData['message'] as String? ?? '';
+
+        if (!status) {
+          throw ServerFailure(message);
+        }
+      },
+    );
+  }
+
+  @override
+  Future<void> proposeReschedule(ProposeRescheduleParams params) async {
+    final result = await _dioService.post(
+      '/api/customer/booking/reschedule/propose',
+      data: params.toJson(),
     );
 
     return result.fold(

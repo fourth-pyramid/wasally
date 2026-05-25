@@ -43,3 +43,21 @@ class DeleteBookingEvent extends BookingDetailEvent {
   @override
   List<Object?> get props => [bookingId];
 }
+
+class AcceptRescheduleEvent extends BookingDetailEvent {
+  final AcceptRescheduleParams params;
+
+  const AcceptRescheduleEvent(this.params);
+
+  @override
+  List<Object?> get props => [params];
+}
+
+class ProposeRescheduleEvent extends BookingDetailEvent {
+  final ProposeRescheduleParams params;
+
+  const ProposeRescheduleEvent(this.params);
+
+  @override
+  List<Object?> get props => [params];
+}

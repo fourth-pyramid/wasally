@@ -122,6 +122,8 @@ import '../../features/service_booking/domain/usecases/get_my_bookings_usecase.d
 import '../../features/service_booking/domain/usecases/update_booking_usecase.dart';
 import '../../features/service_booking/domain/usecases/cancel_booking_usecase.dart';
 import '../../features/service_booking/domain/usecases/delete_booking_usecase.dart';
+import '../../features/service_booking/domain/usecases/accept_reschedule_usecase.dart';
+import '../../features/service_booking/domain/usecases/propose_reschedule_usecase.dart';
 import '../../features/service_booking/presentation/bloc/service_booking_bloc.dart';
 import '../../features/service_booking/presentation/bloc/booking_detail/booking_detail_bloc.dart';
 import '../../features/provider_details/data/datasources/provider_details_remote_datasource.dart';
@@ -290,6 +292,8 @@ void initDependencies() {
         cancelBookingUseCase: sl(),
         updateBookingUseCase: sl(),
         deleteBookingUseCase: sl(),
+        acceptRescheduleUseCase: sl(),
+        proposeRescheduleUseCase: sl(),
         ordersBloc: sl(),
       ));
 
@@ -405,6 +409,8 @@ void initDependencies() {
   sl.registerLazySingleton(() => UpdateBookingUseCase(sl()));
   sl.registerLazySingleton(() => CancelBookingUseCase(sl()));
   sl.registerLazySingleton(() => DeleteBookingUseCase(sl()));
+  sl.registerLazySingleton(() => AcceptRescheduleUseCase(sl()));
+  sl.registerLazySingleton(() => ProposeRescheduleUseCase(sl()));
 
   // UseCases - Provider Details
   sl.registerLazySingleton(() => GetProviderDetailsUseCase(sl()));
