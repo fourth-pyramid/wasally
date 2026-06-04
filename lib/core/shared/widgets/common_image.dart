@@ -78,10 +78,17 @@ class CommonImage extends StatelessWidget {
             color != null ? ColorFilter.mode(color!, BlendMode.srcIn) : null,
       );
     } else {
+      // FIX: Automatic cache calculation for local assets.
+      final dpr = MediaQuery.devicePixelRatioOf(context);
+      final calculatedCacheWidth = memCacheWidth ??
+          (width != null && width!.isFinite ? (width! * dpr).round() : null);
+      final calculatedCacheHeight = memCacheHeight ??
+          (height != null && height!.isFinite ? (height! * dpr).round() : null);
+
       image = Image.asset(
         resolved,
-        cacheHeight: memCacheHeight,
-        cacheWidth: memCacheWidth,
+        cacheHeight: calculatedCacheHeight,
+        cacheWidth: calculatedCacheWidth,
         width: width?.w,
         height: height?.h,
         fit: fit,

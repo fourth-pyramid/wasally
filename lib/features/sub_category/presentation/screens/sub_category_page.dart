@@ -1,32 +1,37 @@
 import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/home/domain/entities/product_entity.dart';
 import 'package:wassaly/features/home/domain/entities/sub_category_entity.dart';
+import 'package:wassaly/features/sub_category/domain/entities/service_entity.dart';
 import 'package:wassaly/features/sub_category/domain/entities/sub_category_detail_entity.dart';
 import 'package:wassaly/features/sub_category/presentation/bloc/sub_category_bloc.dart';
 import 'package:wassaly/features/sub_category/presentation/bloc/sub_category_event.dart';
 import 'package:wassaly/features/sub_category/presentation/bloc/sub_category_state.dart';
 
+final _activeMarqueeId = ValueNotifier<int?>(null);
+
 class SubCategoryPage extends StatelessWidget {
   const SubCategoryPage({
-    required this.subCategory, super.key,
+    required this.subCategory,
+    super.key,
   });
 
   final SubCategoryEntity subCategory;
 
   @override
   Widget build(BuildContext context) => BlocProvider(
-      create: (context) => sl<SubCategoryBloc>()
-        ..add(FetchSubCategoryDetailEvent(subCategory.id)),
-      child: Scaffold(
-        backgroundColor: context.theme.colorScheme.surface,
-        body: SubCategoryDetailView(subCategory: subCategory),
-      ),
-    );
+        create: (context) => sl<SubCategoryBloc>()
+          ..add(FetchSubCategoryDetailEvent(subCategory.id)),
+        child: Scaffold(
+          backgroundColor: context.theme.colorScheme.surface,
+          body: SubCategoryDetailView(subCategory: subCategory),
+        ),
+      );
 }
 
 class SubCategoryDetailView extends StatelessWidget {
   const SubCategoryDetailView({
-    required this.subCategory, super.key,
+    required this.subCategory,
+    super.key,
     this.showAppBar = true,
     this.crossAxisCount = 2,
     this.childAspectRatio,
@@ -134,18 +139,63 @@ class SubCategoryDetailView extends StatelessWidget {
                 slivers: [
                   if (isLoading ||
                       (detail != null && detail.services.isNotEmpty))
-                    AppServicesSection(
+                    AppUnifiedSection<ServiceEntity>(
                       isLoading: isLoading,
-                      services: isLoading ? const [] : detail!.services,
+                      items: isLoading ? const [] : detail!.services,
+                      dummyItems: const [
+                        ServiceEntity(
+                          id: 1,
+                          title: 'خدمة',
+                          description: '',
+                          price: 0,
+                          isFavorite: false,
+                        ),
+                        ServiceEntity(
+                          id: 2,
+                          title: 'خدمة',
+                          description: '',
+                          price: 0,
+                          isFavorite: false,
+                        ),
+                      ],
                       crossAxisCount: crossAxisCount,
                       childAspectRatio:
                           serviceChildAspectRatio ?? childAspectRatio ?? 0.50,
                       mainAxisExtent: 190.h,
+                      itemBuilder: (context, service, index, wrapAnimation) =>
+                          wrapAnimation(
+                        AppUnifiedCard(
+                          id: service.id,
+                          type: UnifiedItemType.service,
+                          title: service.title,
+                          description: service.description,
+                          image: service.image,
+                          price: service.price.toString(),
+                          isFavorite: service.isFavorite,
+                          activeIdNotifier: _activeMarqueeId,
+                          onTap: () => context.push(
+                            AppRoutes.serviceDetails,
+                            extra: {'serviceId': service.id},
+                          ),
+                        ),
+                      ),
                     ),
                   if (isLoading || products.data.isNotEmpty)
-                    AppProductsSection(
+                    AppUnifiedSection<ProductEntity>(
                       isLoading: isLoading,
-                      products: isLoading ? const [] : products.data,
+                      items: isLoading ? const [] : products.data,
+                      dummyItems: const [
+                        ProductEntity(
+                          id: 1,
+                          name: 'منتج',
+                          image: '',
+                          price: '0',
+                          description: '',
+                          offers: [],
+                          reviews: [],
+                          isFavorite: false,
+                        ),
+                      ],
                       hasMore: !isLoading && hasMoreProducts,
                       isLoadingMore: !isLoading && isLoadingMore,
                       crossAxisCount: crossAxisCount,
@@ -153,6 +203,31 @@ class SubCategoryDetailView extends StatelessWidget {
                           productChildAspectRatio ?? childAspectRatio ?? 0.65,
                       mainAxisExtent: productMainAxisExtent ?? mainAxisExtent,
                       onLoadMore: isLoading ? null : () => _onLoadMore(context),
+                      itemBuilder: (context, product, index, wrapAnimation) =>
+                          wrapAnimation(
+                        AppUnifiedCard(
+                          id: product.id,
+                          title: product.name,
+                          description: product.description,
+                          image: product.image,
+                          price: product.discountedPrice.toStringAsFixed(0),
+                          originalPrice: product.hasOffer
+                              ? (double.tryParse(product.price) ?? 0)
+                                  .toStringAsFixed(0)
+                              : null,
+                          discountPercentage: product.hasOffer
+                              ? product.discountPercentage
+                              : null,
+                          rating: product.averageRating,
+                          reviewCount: product.reviewCount,
+                          isFavorite: product.isFavorite,
+                          activeIdNotifier: _activeMarqueeId,
+                          onTap: () => context.push(
+                            AppRoutes.productDetails,
+                            extra: {'productId': product.id},
+                          ),
+                        ),
+                      ),
                     ),
                   if (!isLoading &&
                       detail != null &&

@@ -201,7 +201,7 @@ class _AppReviewCardState extends State<AppReviewCard> {
                   : Icons.star_outline_rounded,
               size: 15.r,
               color: index < widget.rating
-                  ? const Color(0xFFEF9F27)
+                  ? context.appColors.starRating
                   : cs.outlineVariant,
             ),
           ),

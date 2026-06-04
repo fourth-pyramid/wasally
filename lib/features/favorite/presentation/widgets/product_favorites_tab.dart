@@ -4,6 +4,8 @@ import 'package:wassaly/features/favorite/presentation/bloc/favorite_event.dart'
 import 'package:wassaly/features/favorite/presentation/bloc/favorite_state.dart';
 import 'package:wassaly/features/home/domain/entities/product_entity.dart';
 
+final _activeMarqueeId = ValueNotifier<int?>(null);
+
 class ProductFavoritesTab extends StatelessWidget {
   const ProductFavoritesTab({super.key});
   // Manual ScrollController removed in favor of AppSliverGrid's built-in pagination
@@ -39,15 +41,51 @@ class ProductFavoritesTab extends StatelessWidget {
             physics: const AlwaysScrollableScrollPhysics(),
             slivers: [
               if (isLoading || favorites.data.isNotEmpty)
-                AppProductsSection(
+                AppUnifiedSection<ProductEntity>(
                   isLoading: isLoading,
-                  products: isLoading ? const [] : favorites.data,
+                  items: isLoading ? const [] : favorites.data,
+                  dummyItems: const [
+                    ProductEntity(
+                      id: 1,
+                      name: 'منتج',
+                      image: '',
+                      price: '0',
+                      description: '',
+                      offers: [],
+                      reviews: [],
+                      isFavorite: false,
+                    ),
+                  ],
                   hasMore: favorites.hasMore,
                   isLoadingMore: isLoadingMore,
                   onLoadMore: () => bloc.add(const LoadMoreFavoritesEvent()),
                   padding:
                       EdgeInsets.symmetric(horizontal: 6.w, vertical: 10.h),
                   mainAxisExtent: 230.h,
+                  itemBuilder: (context, product, index, wrapAnimation) =>
+                      wrapAnimation(
+                    AppUnifiedCard(
+                      id: product.id,
+                      title: product.name,
+                      description: product.description,
+                      image: product.image,
+                      price: product.discountedPrice.toStringAsFixed(0),
+                      originalPrice: product.hasOffer
+                          ? (double.tryParse(product.price) ?? 0)
+                              .toStringAsFixed(0)
+                          : null,
+                      discountPercentage:
+                          product.hasOffer ? product.discountPercentage : null,
+                      rating: product.averageRating,
+                      reviewCount: product.reviewCount,
+                      isFavorite: product.isFavorite,
+                      activeIdNotifier: _activeMarqueeId,
+                      onTap: () => context.push(
+                        AppRoutes.productDetails,
+                        extra: {'productId': product.id},
+                      ),
+                    ),
+                  ),
                 )
               else if (isError && favorites.data.isEmpty)
                 SliverFillRemaining(

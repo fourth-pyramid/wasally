@@ -4,6 +4,8 @@ import 'package:wassaly/features/home/presentation/bloc/home_bloc.dart';
 import 'package:wassaly/features/home/presentation/bloc/home_event.dart';
 import 'package:wassaly/features/home/presentation/bloc/home_state.dart';
 
+final _activeMarqueeId = ValueNotifier<int?>(null);
+
 class ProductsSection extends StatelessWidget {
   const ProductsSection({super.key});
 
@@ -57,16 +59,61 @@ class ProductsSection extends StatelessWidget {
             ),
 
             // Grid
-            AppProductsSection(
+            AppUnifiedSection<ProductEntity>(
               padding: EdgeInsets.symmetric(horizontal: 4.w),
               mainAxisExtent: 230.h,
               isLoading: isLoading,
-              products: productsList,
+              items: productsList,
+              dummyItems: const [
+                ProductEntity(
+                  id: 1,
+                  name: 'منتج تجريبي',
+                  image: '',
+                  price: '100',
+                  description: 'وصف تجريبي',
+                  offers: [],
+                  reviews: [],
+                  isFavorite: false,
+                ),
+                ProductEntity(
+                  id: 2,
+                  name: 'منتج تجريبي',
+                  image: '',
+                  price: '100',
+                  description: 'وصف تجريبي',
+                  offers: [],
+                  reviews: [],
+                  isFavorite: false,
+                ),
+              ],
               hasMore: products.hasMore,
               isLoadingMore: isProductsLoadingMore,
               onLoadMore: () {
                 context.read<HomeBloc>().add(LoadMoreProductsEvent());
               },
+              itemBuilder: (context, product, index, wrapAnimation) =>
+                  wrapAnimation(
+                AppUnifiedCard(
+                  id: product.id,
+                  title: product.name,
+                  description: product.description,
+                  image: product.image,
+                  price: product.discountedPrice.toStringAsFixed(0),
+                  originalPrice: product.hasOffer
+                      ? (double.tryParse(product.price) ?? 0).toStringAsFixed(0)
+                      : null,
+                  discountPercentage:
+                      product.hasOffer ? product.discountPercentage : null,
+                  rating: product.averageRating,
+                  reviewCount: product.reviewCount,
+                  isFavorite: product.isFavorite,
+                  activeIdNotifier: _activeMarqueeId,
+                  onTap: () => context.push(
+                    AppRoutes.productDetails,
+                    extra: {'productId': product.id},
+                  ),
+                ),
+              ),
             ),
           ],
         );

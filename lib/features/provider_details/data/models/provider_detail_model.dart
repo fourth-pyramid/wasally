@@ -86,7 +86,8 @@ class ProviderDetailModel extends ProviderDetailEntity {
         reviews: (json['reviews'] as List<dynamic>?)
                 ?.map(
                   (e) => ProviderDetailReviewModel.fromJson(
-                      e as Map<String, dynamic>),
+                    e as Map<String, dynamic>,
+                  ),
                 )
                 .toList() ??
             [],

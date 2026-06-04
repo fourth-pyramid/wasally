@@ -10,6 +10,7 @@ class AppColorsExtension extends ThemeExtension<AppColorsExtension> {
     required this.onWarning,
     required this.info,
     required this.onInfo,
+    required this.starRating,
     this.successContainer,
     this.onSuccessContainer,
     this.warningContainer,
@@ -30,6 +31,7 @@ class AppColorsExtension extends ThemeExtension<AppColorsExtension> {
   final Color? onWarningContainer;
   final Color? infoContainer;
   final Color? onInfoContainer;
+  final Color starRating;
 
   @override
   ThemeExtension<AppColorsExtension> copyWith({
@@ -45,20 +47,23 @@ class AppColorsExtension extends ThemeExtension<AppColorsExtension> {
     Color? onWarningContainer,
     Color? infoContainer,
     Color? onInfoContainer,
-  }) => AppColorsExtension(
-      success: success ?? this.success,
-      onSuccess: onSuccess ?? this.onSuccess,
-      warning: warning ?? this.warning,
-      onWarning: onWarning ?? this.onWarning,
-      info: info ?? this.info,
-      onInfo: onInfo ?? this.onInfo,
-      successContainer: successContainer ?? this.successContainer,
-      onSuccessContainer: onSuccessContainer ?? this.onSuccessContainer,
-      warningContainer: warningContainer ?? this.warningContainer,
-      onWarningContainer: onWarningContainer ?? this.onWarningContainer,
-      infoContainer: infoContainer ?? this.infoContainer,
-      onInfoContainer: onInfoContainer ?? this.onInfoContainer,
-    );
+    Color? starRating,
+  }) =>
+      AppColorsExtension(
+        success: success ?? this.success,
+        onSuccess: onSuccess ?? this.onSuccess,
+        warning: warning ?? this.warning,
+        onWarning: onWarning ?? this.onWarning,
+        info: info ?? this.info,
+        onInfo: onInfo ?? this.onInfo,
+        successContainer: successContainer ?? this.successContainer,
+        onSuccessContainer: onSuccessContainer ?? this.onSuccessContainer,
+        warningContainer: warningContainer ?? this.warningContainer,
+        onWarningContainer: onWarningContainer ?? this.onWarningContainer,
+        infoContainer: infoContainer ?? this.infoContainer,
+        onInfoContainer: onInfoContainer ?? this.onInfoContainer,
+        starRating: starRating ?? this.starRating,
+      );
 
   @override
   ThemeExtension<AppColorsExtension> lerp(
@@ -83,6 +88,7 @@ class AppColorsExtension extends ThemeExtension<AppColorsExtension> {
           Color.lerp(onWarningContainer, other.onWarningContainer, t),
       infoContainer: Color.lerp(infoContainer, other.infoContainer, t),
       onInfoContainer: Color.lerp(onInfoContainer, other.onInfoContainer, t),
+      starRating: Color.lerp(starRating, other.starRating, t)!,
     );
   }
 }
@@ -104,6 +110,7 @@ class AppPalettes {
     onInfo: Colors.white,
     infoContainer: Color(0xFF81D4FA),
     onInfoContainer: Color(0xFF01579B),
+    starRating: Color(0xFFEF9F27),
   );
 
   static const dark = AppColorsExtension(
@@ -119,6 +126,7 @@ class AppPalettes {
     onInfo: Color(0xFF01579B),
     infoContainer: Color(0xFF0277BD),
     onInfoContainer: Color(0xFFE1F5FE),
+    starRating: Color(0xFFEF9F27),
   );
 }
 

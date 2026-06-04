@@ -4,6 +4,8 @@ import 'package:wassaly/features/favorite/presentation/bloc/favorite_event.dart'
 import 'package:wassaly/features/favorite/presentation/bloc/favorite_state.dart';
 import 'package:wassaly/features/sub_category/domain/entities/service_entity.dart';
 
+final _activeMarqueeId = ValueNotifier<int?>(null);
+
 class ServiceFavoritesTab extends StatelessWidget {
   const ServiceFavoritesTab({super.key});
   // Manual ScrollController removed in favor of AppSliverGrid's built-in pagination
@@ -44,9 +46,18 @@ class ServiceFavoritesTab extends StatelessWidget {
             physics: const AlwaysScrollableScrollPhysics(),
             slivers: [
               if (isLoading || serviceFavorites.data.isNotEmpty)
-                AppServicesSection(
+                AppUnifiedSection<ServiceEntity>(
                   isLoading: isLoading,
-                  services: isLoading ? const [] : serviceFavorites.data,
+                  items: isLoading ? const [] : serviceFavorites.data,
+                  dummyItems: const [
+                    ServiceEntity(
+                      id: 1,
+                      title: 'خدمة',
+                      description: '',
+                      price: 0,
+                      isFavorite: false,
+                    ),
+                  ],
                   hasMore: serviceFavorites.hasMore,
                   isLoadingMore: isLoadingMore,
                   onLoadMore: () =>
@@ -54,6 +65,23 @@ class ServiceFavoritesTab extends StatelessWidget {
                   padding:
                       EdgeInsets.symmetric(horizontal: 6.w, vertical: 10.h),
                   mainAxisExtent: 190.h,
+                  itemBuilder: (context, service, index, wrapAnimation) =>
+                      wrapAnimation(
+                    AppUnifiedCard(
+                      id: service.id,
+                      type: UnifiedItemType.service,
+                      title: service.title,
+                      description: service.description,
+                      image: service.image,
+                      price: service.price.toString(),
+                      isFavorite: service.isFavorite,
+                      activeIdNotifier: _activeMarqueeId,
+                      onTap: () => context.push(
+                        AppRoutes.serviceDetails,
+                        extra: {'serviceId': service.id},
+                      ),
+                    ),
+                  ),
                 )
               else if (isError && serviceFavorites.data.isEmpty)
                 SliverFillRemaining(

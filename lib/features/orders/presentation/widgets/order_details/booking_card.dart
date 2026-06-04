@@ -1,4 +1,5 @@
 import 'package:wassaly/core/imports/imports.dart';
+import 'package:wassaly/features/orders/presentation/widgets/order_status_config.dart';
 import 'package:wassaly/features/service_booking/domain/entities/booking_entity.dart';
 
 class BookingCard extends StatelessWidget {
@@ -199,43 +200,7 @@ class _StatusBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cs = context.theme.colorScheme;
-
-    final normalizedStatus = status.trim().toLowerCase();
-
-    final statusConfig = {
-      'pending': _StatusConfig(
-        const Color(0xFFF59E0B),
-        context.l10n.order_status_pending,
-      ),
-      'waiting': _StatusConfig(
-        const Color(0xFFF59E0B),
-        context.l10n.order_status_pending,
-      ),
-      'قيد الانتظار': _StatusConfig(
-        const Color(0xFFF59E0B),
-        context.l10n.order_status_pending,
-      ),
-      'accepted':
-          _StatusConfig(Colors.blue, context.l10n.order_status_accepted),
-      'تم القبول':
-          _StatusConfig(Colors.blue, context.l10n.order_status_accepted),
-      'confirmed':
-          _StatusConfig(Colors.indigo, context.l10n.order_status_confirmed),
-      'completed':
-          _StatusConfig(Colors.green, context.l10n.order_status_completed),
-      'مكتمل': _StatusConfig(Colors.green, context.l10n.order_status_completed),
-      'cancelled':
-          _StatusConfig(Colors.red, context.l10n.order_status_cancelled),
-      'ملغي': _StatusConfig(Colors.red, context.l10n.order_status_cancelled),
-      'reschedule_by_provider':
-          _StatusConfig(Colors.orange, context.l10n.order_status_reschedule),
-      'reschedule_by_customer':
-          _StatusConfig(Colors.orange, context.l10n.order_status_reschedule),
-    };
-
-    final config =
-        statusConfig[normalizedStatus] ?? _StatusConfig(cs.primary, status);
+    final config = OrderStatusConfig.getConfig(context, status);
 
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 6.h),
@@ -267,12 +232,6 @@ bool _isRescheduleStatus(String status) {
   final normalizedStatus = status.trim().toLowerCase();
   return normalizedStatus == 'reschedule_by_provider' ||
       normalizedStatus == 'reschedule_by_customer';
-}
-
-class _StatusConfig {
-  final Color color;
-  final String label;
-  _StatusConfig(this.color, this.label);
 }
 
 class _InfoItem extends StatelessWidget {

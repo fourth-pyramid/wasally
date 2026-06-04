@@ -74,13 +74,25 @@ class AppCachedImage extends StatelessWidget {
     final adjustedWidth = width?.w;
     final adjustedHeight = height?.h;
 
+    // FIX: Automatic memCache calculation if not provided.
+    // This prevents decoding massive images at native size when shown in small widgets.
+    final dpr = MediaQuery.devicePixelRatioOf(context);
+    final calculatedMemCacheWidth = memCacheWidth ??
+        (adjustedWidth != null && adjustedWidth.isFinite
+            ? (adjustedWidth * dpr).round()
+            : null);
+    final calculatedMemCacheHeight = memCacheHeight ??
+        (adjustedHeight != null && adjustedHeight.isFinite
+            ? (adjustedHeight * dpr).round()
+            : null);
+
     Widget imageContent = CachedNetworkImage(
       imageUrl: imageUrl,
       cacheKey: cacheKey,
       width: adjustedWidth,
       height: adjustedHeight,
-      memCacheHeight: memCacheHeight,
-      memCacheWidth: memCacheWidth,
+      memCacheHeight: calculatedMemCacheHeight,
+      memCacheWidth: calculatedMemCacheWidth,
       fit: fit,
       color: color,
       colorBlendMode: colorBlendMode,

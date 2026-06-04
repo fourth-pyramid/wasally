@@ -3,7 +3,8 @@ import 'package:wassaly/features/auth/presentation/bloc/otp_verification/otp_ver
 
 class ResendOtpWidget extends StatelessWidget {
   const ResendOtpWidget({
-    required this.onResend, super.key,
+    required this.onResend,
+    super.key,
   });
 
   final VoidCallback onResend;
@@ -44,14 +45,7 @@ class ResendOtpWidget extends StatelessWidget {
                     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),
                   child: resendStatus == ResendOtpStatus.loading
-                      ? SizedBox(
-                          width: 16.w,
-                          height: 16.w,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                            color: cs.primary,
-                          ),
-                        )
+                      ? const AppLoading(size: 16, strokeWidth: 2)
                       : Text(
                           context.l10n.otp_resend_code,
                           style: tt.bodyMedium?.copyWith(

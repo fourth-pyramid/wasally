@@ -4,14 +4,16 @@ import 'package:wassaly/features/offers/presentation/bloc/offers_bloc.dart';
 import 'package:wassaly/features/offers/presentation/bloc/offers_event.dart';
 import 'package:wassaly/features/offers/presentation/bloc/offers_state.dart';
 
+final _activeMarqueeId = ValueNotifier<int?>(null);
+
 class OffersPage extends StatelessWidget {
   const OffersPage({super.key});
 
   @override
   Widget build(BuildContext context) => BlocProvider(
-      create: (context) => sl<OffersBloc>()..add(GetOffersEvent()),
-      child: const OffersView(),
-    );
+        create: (context) => sl<OffersBloc>()..add(GetOffersEvent()),
+        child: const OffersView(),
+      );
 }
 
 class OffersView extends StatelessWidget {
@@ -55,17 +57,52 @@ class OffersView extends StatelessWidget {
               final isLoading = status == AppStatus.loading && products.isEmpty;
 
               if (isLoading || products.isNotEmpty) {
-                return AppProductsSection(
+                return AppUnifiedSection<ProductEntity>(
                   isLoading: isLoading,
-                  products: isLoading ? const [] : products,
+                  items: isLoading ? const [] : products,
+                  dummyItems: const [
+                    ProductEntity(
+                      id: 1,
+                      name: 'منتج',
+                      image: '',
+                      price: '0',
+                      description: '',
+                      offers: [],
+                      reviews: [],
+                      isFavorite: false,
+                    ),
+                  ],
                   padding:
                       EdgeInsets.symmetric(vertical: 16.h, horizontal: 8.w),
                   hasMore: !isLoading && !hasReachedMax,
-                  isLoadingMore:
-                      !isLoading && (status == AppStatus.loading),
+                  isLoadingMore: !isLoading && (status == AppStatus.loading),
                   mainAxisExtent: 240.h,
                   onLoadMore:
                       isLoading ? null : () => _onLoadMore(context, status),
+                  itemBuilder: (context, product, index, wrapAnimation) =>
+                      wrapAnimation(
+                    AppUnifiedCard(
+                      id: product.id,
+                      title: product.name,
+                      description: product.description,
+                      image: product.image,
+                      price: product.discountedPrice.toStringAsFixed(0),
+                      originalPrice: product.hasOffer
+                          ? (double.tryParse(product.price) ?? 0)
+                              .toStringAsFixed(0)
+                          : null,
+                      discountPercentage:
+                          product.hasOffer ? product.discountPercentage : null,
+                      rating: product.averageRating,
+                      reviewCount: product.reviewCount,
+                      isFavorite: product.isFavorite,
+                      activeIdNotifier: _activeMarqueeId,
+                      onTap: () => context.push(
+                        AppRoutes.productDetails,
+                        extra: {'productId': product.id},
+                      ),
+                    ),
+                  ),
                 );
               }
 

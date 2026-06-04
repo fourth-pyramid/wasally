@@ -7,6 +7,8 @@ import 'package:wassaly/features/products_filter/presentation/bloc/products_filt
 import 'package:wassaly/features/products_filter/presentation/bloc/products_filter_state.dart';
 import 'package:wassaly/features/products_filter/presentation/screens/filter_options_sheet.dart';
 
+final _activeMarqueeId = ValueNotifier<int?>(null);
+
 class ProductsFilterPage extends StatelessWidget {
   final ProductFilterParams? initialParams;
 
@@ -296,7 +298,29 @@ class ProductsFilterPage extends StatelessWidget {
                             itemBuilder:
                                 (context, product, index, wrapAnimation) =>
                                     wrapAnimation(
-                              ProductCard(product: product),
+                              AppUnifiedCard(
+                                id: product.id,
+                                title: product.name,
+                                description: product.description,
+                                image: product.image,
+                                price:
+                                    product.discountedPrice.toStringAsFixed(0),
+                                originalPrice: product.hasOffer
+                                    ? (double.tryParse(product.price) ?? 0)
+                                        .toStringAsFixed(0)
+                                    : null,
+                                discountPercentage: product.hasOffer
+                                    ? product.discountPercentage
+                                    : null,
+                                rating: product.averageRating,
+                                reviewCount: product.reviewCount,
+                                isFavorite: product.isFavorite,
+                                activeIdNotifier: _activeMarqueeId,
+                                onTap: () => context.push(
+                                  AppRoutes.productDetails,
+                                  extra: {'productId': product.id},
+                                ),
+                              ),
                             ),
                           ),
                           if (isLoadMoreLoading)

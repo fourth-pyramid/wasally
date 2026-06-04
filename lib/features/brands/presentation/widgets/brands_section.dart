@@ -40,40 +40,42 @@ class _BrandsSectionView extends StatelessWidget {
 
         if (status == BrandsStatus.loading || status == BrandsStatus.initial) {
           return SliverToBoxAdapter(
-            child: Skeletonizer(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 12.w),
-                    child: Text(
-                      l10n.brands,
-                      style: tt.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: cs.primary,
+            child: RepaintBoundary(
+              child: Skeletonizer(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 12.w),
+                      child: Text(
+                        l10n.brands,
+                        style: tt.titleMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: cs.primary,
+                        ),
                       ),
                     ),
-                  ),
-                  12.verticalSpace,
-                  SizedBox(
-                    height: 100.h,
-                    child: CustomScrollView(
-                      scrollDirection: Axis.horizontal,
-                      physics: const NeverScrollableScrollPhysics(),
-                      slivers: [
-                        SliverPadding(
-                          padding: EdgeInsets.symmetric(horizontal: 8.w),
-                          sliver: SliverList.builder(
-                            itemCount: _dummyBrands.length,
-                            itemBuilder: (context, index) => BrandCard(
-                              brand: _dummyBrands[index],
+                    12.verticalSpace,
+                    SizedBox(
+                      height: 100.h,
+                      child: CustomScrollView(
+                        scrollDirection: Axis.horizontal,
+                        physics: const NeverScrollableScrollPhysics(),
+                        slivers: [
+                          SliverPadding(
+                            padding: EdgeInsets.symmetric(horizontal: 8.w),
+                            sliver: SliverList.builder(
+                              itemCount: _dummyBrands.length,
+                              itemBuilder: (context, index) => BrandCard(
+                                brand: _dummyBrands[index],
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           );
@@ -88,58 +90,60 @@ class _BrandsSectionView extends StatelessWidget {
         }
 
         return SliverToBoxAdapter(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 12.w),
-                child: Text(
-                  l10n.brands,
-                  style: tt.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: cs.primary,
+          child: RepaintBoundary(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 12.w),
+                  child: Text(
+                    l10n.brands,
+                    style: tt.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: cs.primary,
+                    ),
                   ),
                 ),
-              ),
-              // 4.verticalSpace,
-              SizedBox(
-                height: 100.h,
-                child: CustomScrollView(
-                  scrollDirection: Axis.horizontal,
-                  physics: const BouncingScrollPhysics(),
-                  slivers: [
-                    SliverPadding(
-                      padding: EdgeInsets.symmetric(horizontal: 8.w),
-                      sliver: SliverList.builder(
-                        itemCount: brands.length,
-                        itemBuilder: (context, index) {
-                          final brand = brands[index];
-                          return BrandCard(
-                            brand: brand,
-                            onTap: () {
-                              unawaited(
-                                context.push(
-                                  AppRoutes.brandDetails,
-                                  extra: {
-                                    'brandId': brand.id,
-                                    'brandName': brand.name,
-                                    'brandImage': brand.image,
-                                  },
-                                ),
-                              );
-                            },
-                          );
-                        },
+                // 4.verticalSpace,
+                SizedBox(
+                  height: 100.h,
+                  child: CustomScrollView(
+                    scrollDirection: Axis.horizontal,
+                    physics: const BouncingScrollPhysics(),
+                    slivers: [
+                      SliverPadding(
+                        padding: EdgeInsets.symmetric(horizontal: 8.w),
+                        sliver: SliverList.builder(
+                          itemCount: brands.length,
+                          itemBuilder: (context, index) {
+                            final brand = brands[index];
+                            return BrandCard(
+                              brand: brand,
+                              onTap: () {
+                                unawaited(
+                                  context.push(
+                                    AppRoutes.brandDetails,
+                                    extra: {
+                                      'brandId': brand.id,
+                                      'brandName': brand.name,
+                                      'brandImage': brand.image,
+                                    },
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ).animate().fadeIn(
-                delay: const Duration(milliseconds: 200),
-                duration: const Duration(milliseconds: 400),
-              ),
+              ],
+            ).animate().fadeIn(
+                  delay: const Duration(milliseconds: 200),
+                  duration: const Duration(milliseconds: 400),
+                ),
+          ),
         );
       },
     );

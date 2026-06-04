@@ -192,8 +192,8 @@ class _SplashViewState extends State<_SplashView>
                   bottom: 110.h,
                   left: 0,
                   right: 0,
-                  child: Opacity(
-                    opacity: _contentFade.value,
+                  child: FadeTransition(
+                    opacity: _contentFade,
                     child: Transform.translate(
                       offset: Offset(0, _contentSlide.value),
                       child: Text(
@@ -211,8 +211,8 @@ class _SplashViewState extends State<_SplashView>
                   bottom: 60.h,
                   left: 0,
                   right: 0,
-                  child: Opacity(
-                    opacity: _contentFade.value,
+                  child: FadeTransition(
+                    opacity: _contentFade,
                     child: _PulsingDots(isDeviceDark: isDeviceDark),
                   ),
                 ),

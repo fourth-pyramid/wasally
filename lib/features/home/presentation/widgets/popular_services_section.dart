@@ -78,44 +78,46 @@ class _PopularServicesSectionState extends State<PopularServicesSection> {
         if (popularServicesStatus == HomeStatus.loading ||
             popularServicesStatus == HomeStatus.initial) {
           return SliverToBoxAdapter(
-            child: Skeletonizer(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 12.w),
-                    child: Text(
-                      context.l10n.home_popular_services,
-                      style: tt.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: cs.primary,
+            child: RepaintBoundary(
+              child: Skeletonizer(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 12.w),
+                      child: Text(
+                        context.l10n.home_popular_services,
+                        style: tt.titleMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: cs.primary,
+                        ),
                       ),
                     ),
-                  ),
-                  12.verticalSpace,
-                  SizedBox(
-                    height: 100.h,
-                    child: CustomScrollView(
-                      scrollDirection: Axis.horizontal,
-                      physics: const NeverScrollableScrollPhysics(),
-                      slivers: [
-                        SliverPadding(
-                          padding: EdgeInsets.symmetric(horizontal: 8.w),
-                          sliver: SliverList.builder(
-                            itemCount:
-                                PopularServicesSection._dummyServices.length,
-                            itemBuilder: (context, index) => ServiceItem(
-                              name: PopularServicesSection
-                                  ._dummyServices[index].name,
-                              imageUrl: PopularServicesSection
-                                  ._dummyServices[index].image,
+                    12.verticalSpace,
+                    SizedBox(
+                      height: 100.h,
+                      child: CustomScrollView(
+                        scrollDirection: Axis.horizontal,
+                        physics: const NeverScrollableScrollPhysics(),
+                        slivers: [
+                          SliverPadding(
+                            padding: EdgeInsets.symmetric(horizontal: 8.w),
+                            sliver: SliverList.builder(
+                              itemCount:
+                                  PopularServicesSection._dummyServices.length,
+                              itemBuilder: (context, index) => ServiceItem(
+                                name: PopularServicesSection
+                                    ._dummyServices[index].name,
+                                imageUrl: PopularServicesSection
+                                    ._dummyServices[index].image,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           );
@@ -131,58 +133,59 @@ class _PopularServicesSectionState extends State<PopularServicesSection> {
         }
 
         return SliverToBoxAdapter(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 12.w),
-                child: Text(
-                  context.l10n.home_popular_services,
-                  style: tt.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: cs.primary,
+          child: RepaintBoundary(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 12.w),
+                  child: Text(
+                    context.l10n.home_popular_services,
+                    style: tt.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: cs.primary,
+                    ),
                   ),
                 ),
-              ),
-              12.verticalSpace,
-              SizedBox(
-                height: 100.h,
-                child: CustomScrollView(
-                  controller: _scrollController,
-                  scrollDirection: Axis.horizontal,
-                  physics: const BouncingScrollPhysics(),
-                  slivers: [
-                    SliverPadding(
-                      padding: EdgeInsets.symmetric(horizontal: 8.w),
-                      sliver: SliverList.builder(
-                        itemCount: popularServices.length +
-                            (isPopularServicesLoadingMore ? 1 : 0),
-                        itemBuilder: (context, index) {
-                          if (index >= popularServices.length) {
-                            return Container(
-                              width: 80.w,
-                              alignment: Alignment.center,
-                              child: const CircularProgressIndicator.adaptive(),
-                            );
-                          }
+                12.verticalSpace,
+                SizedBox(
+                  height: 100.h,
+                  child: CustomScrollView(
+                    controller: _scrollController,
+                    scrollDirection: Axis.horizontal,
+                    physics: const BouncingScrollPhysics(),
+                    slivers: [
+                      SliverPadding(
+                        padding: EdgeInsets.symmetric(horizontal: 8.w),
+                        sliver: SliverList.builder(
+                          itemCount: popularServices.length +
+                              (isPopularServicesLoadingMore ? 1 : 0),
+                          itemBuilder: (context, index) {
+                            if (index >= popularServices.length) {
+                              return SizedBox(
+                                width: 80.w,
+                                child: const AppLoading(size: 20),
+                              );
+                            }
 
-                          final service = popularServices[index];
-                          return ServiceItem(
-                            name: service.name,
-                            imageUrl: service.image,
-                            onTap: () => _onServiceTap(context, service),
-                          );
-                        },
+                            final service = popularServices[index];
+                            return ServiceItem(
+                              name: service.name,
+                              imageUrl: service.image,
+                              onTap: () => _onServiceTap(context, service),
+                            );
+                          },
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ).animate().fadeIn(
-                delay: const Duration(milliseconds: 200),
-                duration: const Duration(milliseconds: 400),
-              ),
+              ],
+            ).animate().fadeIn(
+                  delay: const Duration(milliseconds: 200),
+                  duration: const Duration(milliseconds: 400),
+                ),
+          ),
         );
       },
     );

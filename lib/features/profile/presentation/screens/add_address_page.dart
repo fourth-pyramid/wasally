@@ -236,14 +236,7 @@ class _AddAddressViewState extends State<_AddAddressView> {
                   v == null ? context.l10n.profile_select_governorate : null,
               enabled: !governorateStatus.isLoading,
               suffixIcon: governorateStatus.isLoading
-                  ? SizedBox(
-                      width: 12.w,
-                      height: 12.h,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                        color: context.theme.colorScheme.primary,
-                      ),
-                    )
+                  ? const AppLoading(size: 12, strokeWidth: 2)
                   : null,
             ),
           );
@@ -288,14 +281,7 @@ class _AddAddressViewState extends State<_AddAddressView> {
                   validator: (v) =>
                       v == null ? context.l10n.profile_select_center : null,
                   suffixIcon: isLoading
-                      ? SizedBox(
-                          width: 12.w,
-                          height: 12.h,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                            color: context.theme.colorScheme.primary,
-                          ),
-                        )
+                      ? const AppLoading(size: 12, strokeWidth: 2)
                       : null,
                 ),
               );

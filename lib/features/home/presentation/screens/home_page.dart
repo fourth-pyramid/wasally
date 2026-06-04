@@ -184,7 +184,7 @@ class _HomeViewState extends State<_HomeView> {
 
                     // Main Categories
                     const SliverToBoxAdapter(
-                      child: MainCategoriesSection(),
+                      child: RepaintBoundary(child: MainCategoriesSection()),
                     ),
 
                     // Spacing
@@ -201,11 +201,13 @@ class _HomeViewState extends State<_HomeView> {
                               unawaited(context.push(AppRoutes.offers)),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(12.r),
-                            child: const CommonImage(
-                              imageUrl: 'assets/images/offers.png',
-                              width: double.infinity,
-                              height: 150,
-                              memCacheHeight: 150 * 3,
+                            child: const RepaintBoundary(
+                              child: CommonImage(
+                                imageUrl: 'assets/images/offers.png',
+                                width: double.infinity,
+                                height: 150,
+                                memCacheHeight: 150 * 3,
+                              ),
                             ),
                           ),
                         ),

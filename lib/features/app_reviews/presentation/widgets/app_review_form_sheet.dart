@@ -74,8 +74,9 @@ class _AppReviewFormSheetState extends State<AppReviewFormSheet> {
                       star <= rating
                           ? Icons.star_rounded
                           : Icons.star_outline_rounded,
-                      color:
-                          star <= rating ? const Color(0xFFEF9F27) : cs.outline,
+                      color: star <= rating
+                          ? context.appColors.starRating
+                          : cs.outline,
                     ),
                   );
                 },

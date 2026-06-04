@@ -82,27 +82,7 @@ class _AuthCallbackPageState extends State<AuthCallbackPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    final cs = context.theme.colorScheme;
-
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CircularProgressIndicator(
-              color: cs.primary,
-            ),
-            20.verticalSpace,
-            Text(
-              context.l10n.auth_logging_in,
-              style: context.theme.textTheme.bodyLarge?.copyWith(
-                color: cs.onSurface,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  Widget build(BuildContext context) => Scaffold(
+        body: AppLoading(message: context.l10n.auth_logging_in),
+      );
 }

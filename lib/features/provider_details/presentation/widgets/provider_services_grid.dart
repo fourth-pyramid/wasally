@@ -1,13 +1,14 @@
 import 'package:wassaly/core/imports/imports.dart';
-import 'package:wassaly/core/shared/widgets/service_card.dart';
-
 import 'package:wassaly/features/sub_category/domain/entities/service_entity.dart';
+
+final _activeMarqueeId = ValueNotifier<int?>(null);
 
 class ProviderServicesGrid extends StatelessWidget {
   final List<ServiceEntity> services;
 
   const ProviderServicesGrid({
-    required this.services, super.key,
+    required this.services,
+    super.key,
   });
 
   @override
@@ -32,9 +33,23 @@ class ProviderServicesGrid extends StatelessWidget {
           items: services,
           padding: EdgeInsets.zero,
           childAspectRatio: 0.74,
-          itemBuilder: (context, service, index, wrapAnimation) => wrapAnimation(
-              ServiceCard(service: service),
+          itemBuilder: (context, service, index, wrapAnimation) =>
+              wrapAnimation(
+            AppUnifiedCard(
+              id: service.id,
+              type: UnifiedItemType.service,
+              title: service.title,
+              description: service.description,
+              image: service.image,
+              price: service.price.toString(),
+              isFavorite: service.isFavorite,
+              activeIdNotifier: _activeMarqueeId,
+              onTap: () => context.push(
+                AppRoutes.serviceDetails,
+                extra: {'serviceId': service.id},
+              ),
             ),
+          ),
         ),
       ],
     );
