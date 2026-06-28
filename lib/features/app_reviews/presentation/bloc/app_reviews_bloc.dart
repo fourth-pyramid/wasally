@@ -5,19 +5,19 @@ import 'package:wassaly/features/app_reviews/domain/usecases/get_app_reviews_use
 import 'package:wassaly/features/app_reviews/domain/usecases/update_app_review_usecase.dart';
 import 'package:wassaly/features/app_reviews/presentation/bloc/app_reviews_event.dart';
 import 'package:wassaly/features/app_reviews/presentation/bloc/app_reviews_state.dart';
-import 'package:wassaly/features/auth/data/datasources/auth_local_datasource.dart';
+import 'package:wassaly/features/auth/domain/usecases/get_cached_user_usecase.dart';
 
 class AppReviewsBloc extends Bloc<AppReviewsEvent, AppReviewsState> {
   final GetAppReviewsUseCase _getAppReviewsUseCase;
   final AddAppReviewUseCase _addAppReviewUseCase;
   final UpdateAppReviewUseCase _updateAppReviewUseCase;
-  final AuthLocalDataSource _authLocalDataSource;
+  final GetCachedUserUseCase _getCachedUserUseCase;
 
   AppReviewsBloc(
     this._getAppReviewsUseCase,
     this._addAppReviewUseCase,
     this._updateAppReviewUseCase,
-    this._authLocalDataSource,
+    this._getCachedUserUseCase,
   ) : super(const AppReviewsState()) {
     on<GetAppReviewsEvent>(_onGetAppReviews);
     on<AddAppReviewEvent>(_onAddAppReview);
@@ -32,7 +32,8 @@ class AppReviewsBloc extends Bloc<AppReviewsEvent, AppReviewsState> {
       emit(state.copyWith(status: AppStatus.loading));
     }
 
-    final user = await _authLocalDataSource.getCachedUser();
+    final userResult = await _getCachedUserUseCase();
+    final user = userResult.fold((_) => null, (u) => u);
     final result = await _getAppReviewsUseCase();
 
     result.fold(

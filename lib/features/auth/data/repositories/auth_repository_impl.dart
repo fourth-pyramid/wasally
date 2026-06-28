@@ -6,11 +6,11 @@ import 'package:wassaly/core/utils/failure.dart';
 import 'package:wassaly/core/utils/typedefs.dart';
 import 'package:wassaly/features/auth/data/datasources/auth_local_datasource.dart';
 import 'package:wassaly/features/auth/data/datasources/auth_remote_datasource.dart';
-import 'package:wassaly/features/auth/data/models/forget_send_otp_response_model.dart';
-import 'package:wassaly/features/auth/data/models/forget_verify_otp_response_model.dart';
 import 'package:wassaly/features/auth/data/models/user_model.dart';
-import 'package:wassaly/features/auth/data/models/verify_otp_response_model.dart';
+import 'package:wassaly/features/auth/domain/entities/forget_send_otp_response_entity.dart';
+import 'package:wassaly/features/auth/domain/entities/forget_verify_otp_response_entity.dart';
 import 'package:wassaly/features/auth/domain/entities/user_entity.dart';
+import 'package:wassaly/features/auth/domain/entities/verify_otp_response_entity.dart';
 import 'package:wassaly/features/auth/domain/repositories/auth_repository.dart';
 import 'package:wassaly/features/cart/data/datasources/cart_local_datasource.dart';
 import 'package:wassaly/features/favorite/data/datasources/favorite_local_datasource.dart';
@@ -212,7 +212,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  FutureEither<VerifyOtpResponseModel> verifyOtp({
+  FutureEither<VerifyOtpResponseEntity> verifyOtp({
     required String email,
     required String otp,
   }) async {
@@ -241,7 +241,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  FutureEither<ForgetSendOtpResponseModel> forgetSendOtp({
+  FutureEither<ForgetSendOtpResponseEntity> forgetSendOtp({
     required String email,
   }) async {
     try {
@@ -255,7 +255,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  FutureEither<ForgetVerifyOtpResponseModel> forgetVerifyOtp({
+  FutureEither<ForgetVerifyOtpResponseEntity> forgetVerifyOtp({
     required String email,
     required String otp,
   }) async {

@@ -1,5 +1,5 @@
 import 'package:wassaly/core/utils/typedefs.dart';
-import 'package:wassaly/features/auth/data/models/verify_otp_response_model.dart';
+import 'package:wassaly/features/auth/domain/entities/verify_otp_response_entity.dart';
 import 'package:wassaly/features/auth/domain/repositories/auth_repository.dart';
 
 class VerifyOtpUseCase {
@@ -7,7 +7,7 @@ class VerifyOtpUseCase {
 
   const VerifyOtpUseCase(this._repository);
 
-  FutureEither<VerifyOtpResponseModel> call(VerifyOtpParams params) => _repository.verifyOtp(
+  FutureEither<VerifyOtpResponseEntity> call(VerifyOtpParams params) => _repository.verifyOtp(
       email: params.email,
       otp: params.otp,
     );

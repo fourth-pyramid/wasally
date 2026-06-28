@@ -1,5 +1,5 @@
 import 'package:wassaly/core/imports/imports.dart';
-import 'package:wassaly/features/auth/data/models/verify_otp_response_model.dart';
+import 'package:wassaly/features/auth/domain/entities/verify_otp_response_entity.dart';
 import 'package:wassaly/features/auth/domain/usecases/forget_verify_otp_usecase.dart';
 import 'package:wassaly/features/auth/domain/usecases/resend_otp_usecase.dart';
 import 'package:wassaly/features/auth/domain/usecases/verify_otp_usecase.dart';

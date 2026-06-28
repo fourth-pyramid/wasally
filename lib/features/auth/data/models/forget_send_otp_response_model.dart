@@ -1,12 +1,9 @@
-import 'package:wassaly/core/imports/imports.dart';
+import 'package:wassaly/features/auth/domain/entities/forget_send_otp_response_entity.dart';
 
-class ForgetSendOtpResponseModel extends Equatable {
-  final bool status;
-  final String message;
-
+class ForgetSendOtpResponseModel extends ForgetSendOtpResponseEntity {
   const ForgetSendOtpResponseModel({
-    required this.status,
-    required this.message,
+    required super.status,
+    required super.message,
   });
 
   factory ForgetSendOtpResponseModel.fromJson(Map<String, dynamic> json) => ForgetSendOtpResponseModel(
@@ -18,7 +15,4 @@ class ForgetSendOtpResponseModel extends Equatable {
       'status': status,
       'message': message,
     };
-
-  @override
-  List<Object?> get props => [status, message];
 }

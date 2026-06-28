@@ -1,15 +1,11 @@
-import 'package:wassaly/core/imports/imports.dart';
+import 'package:wassaly/features/auth/domain/entities/verify_otp_response_entity.dart';
 
 /// Model for OTP verification API response
-class VerifyOtpResponseModel extends Equatable {
-  final bool status;
-  final String message;
-  final VerifyOtpDataModel? data;
-
+class VerifyOtpResponseModel extends VerifyOtpResponseEntity {
   const VerifyOtpResponseModel({
-    required this.status,
-    required this.message,
-    this.data,
+    required super.status,
+    required super.message,
+    super.data,
   });
 
   factory VerifyOtpResponseModel.fromJson(Map<String, dynamic> json) => VerifyOtpResponseModel(
@@ -23,29 +19,19 @@ class VerifyOtpResponseModel extends Equatable {
   Map<String, dynamic> toJson() => {
       'status': status,
       'message': message,
-      'data': data?.toJson(),
+      'data': (data as VerifyOtpDataModel?)?.toJson(),
     };
-
-  @override
-  List<Object?> get props => [status, message, data];
 }
 
 /// Inner data model for OTP verification response
-class VerifyOtpDataModel extends Equatable {
-  final int id;
-  final String name;
-  final String email;
-  final String? phone;
-  final String? avatar;
-  final String? type;
-
+class VerifyOtpDataModel extends VerifyOtpUserDataEntity {
   const VerifyOtpDataModel({
-    required this.id,
-    required this.name,
-    required this.email,
-    this.phone,
-    this.avatar,
-    this.type,
+    required super.id,
+    required super.name,
+    required super.email,
+    super.phone,
+    super.avatar,
+    super.type,
   });
 
   factory VerifyOtpDataModel.fromJson(Map<String, dynamic> json) => VerifyOtpDataModel(
@@ -65,7 +51,4 @@ class VerifyOtpDataModel extends Equatable {
       'avatar': avatar,
       'type': type,
     };
-
-  @override
-  List<Object?> get props => [id, name, email, phone, avatar, type];
 }

@@ -25,7 +25,7 @@ class OtpVerificationState extends Equatable {
   final String? errorMessage;
   final int timerSeconds;
   final bool isTimerRunning;
-  final VerifyOtpResponseModel? verifyOtpResponse;
+  final VerifyOtpResponseEntity? verifyOtpResponse;
   final String? resetToken;
 
   const OtpVerificationState({
@@ -62,7 +62,7 @@ class OtpVerificationState extends Equatable {
     bool clearError = false,
     int? timerSeconds,
     bool? isTimerRunning,
-    VerifyOtpResponseModel? verifyOtpResponse,
+    VerifyOtpResponseEntity? verifyOtpResponse,
     String? resetToken,
   }) => OtpVerificationState(
       otp: otp ?? this.otp,

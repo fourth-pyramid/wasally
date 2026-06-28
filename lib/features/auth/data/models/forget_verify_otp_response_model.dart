@@ -1,14 +1,10 @@
-import 'package:wassaly/core/imports/imports.dart';
+import 'package:wassaly/features/auth/domain/entities/forget_verify_otp_response_entity.dart';
 
-class ForgetVerifyOtpResponseModel extends Equatable {
-  final bool status;
-  final String message;
-  final String? token;
-
+class ForgetVerifyOtpResponseModel extends ForgetVerifyOtpResponseEntity {
   const ForgetVerifyOtpResponseModel({
-    required this.status,
-    required this.message,
-    this.token,
+    required super.status,
+    required super.message,
+    super.token,
   });
 
   factory ForgetVerifyOtpResponseModel.fromJson(Map<String, dynamic> json) {
@@ -25,7 +21,4 @@ class ForgetVerifyOtpResponseModel extends Equatable {
       'message': message,
       'token': token,
     };
-
-  @override
-  List<Object?> get props => [status, message, token];
 }

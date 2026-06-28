@@ -1,5 +1,5 @@
 import 'package:wassaly/core/utils/typedefs.dart';
-import 'package:wassaly/features/auth/data/models/forget_send_otp_response_model.dart';
+import 'package:wassaly/features/auth/domain/entities/forget_send_otp_response_entity.dart';
 import 'package:wassaly/features/auth/domain/repositories/auth_repository.dart';
 
 class ForgetSendOtpUseCase {
@@ -7,7 +7,7 @@ class ForgetSendOtpUseCase {
 
   const ForgetSendOtpUseCase(this._repository);
 
-  FutureEither<ForgetSendOtpResponseModel> call(ForgetSendOtpParams params) => _repository.forgetSendOtp(
+  FutureEither<ForgetSendOtpResponseEntity> call(ForgetSendOtpParams params) => _repository.forgetSendOtp(
       email: params.email,
     );
 }

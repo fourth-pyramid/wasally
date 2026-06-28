@@ -1,10 +1,10 @@
 import 'dart:io';
 
 import 'package:wassaly/core/utils/typedefs.dart';
-import 'package:wassaly/features/auth/data/models/forget_send_otp_response_model.dart';
-import 'package:wassaly/features/auth/data/models/forget_verify_otp_response_model.dart';
-import 'package:wassaly/features/auth/data/models/verify_otp_response_model.dart';
+import 'package:wassaly/features/auth/domain/entities/forget_send_otp_response_entity.dart';
+import 'package:wassaly/features/auth/domain/entities/forget_verify_otp_response_entity.dart';
 import 'package:wassaly/features/auth/domain/entities/user_entity.dart';
+import 'package:wassaly/features/auth/domain/entities/verify_otp_response_entity.dart';
 
 abstract class AuthRepository {
   FutureEither<UserEntity> login({
@@ -45,7 +45,7 @@ abstract class AuthRepository {
     File? avatarFile,
   });
 
-  FutureEither<VerifyOtpResponseModel> verifyOtp({
+  FutureEither<VerifyOtpResponseEntity> verifyOtp({
     required String email,
     required String otp,
   });
@@ -54,11 +54,11 @@ abstract class AuthRepository {
     required String email,
   });
 
-  FutureEither<ForgetSendOtpResponseModel> forgetSendOtp({
+  FutureEither<ForgetSendOtpResponseEntity> forgetSendOtp({
     required String email,
   });
 
-  FutureEither<ForgetVerifyOtpResponseModel> forgetVerifyOtp({
+  FutureEither<ForgetVerifyOtpResponseEntity> forgetVerifyOtp({
     required String email,
     required String otp,
   });

@@ -1,5 +1,5 @@
 import 'package:wassaly/core/utils/typedefs.dart';
-import 'package:wassaly/features/auth/data/models/forget_verify_otp_response_model.dart';
+import 'package:wassaly/features/auth/domain/entities/forget_verify_otp_response_entity.dart';
 import 'package:wassaly/features/auth/domain/repositories/auth_repository.dart';
 
 class ForgetVerifyOtpUseCase {
@@ -7,7 +7,7 @@ class ForgetVerifyOtpUseCase {
 
   const ForgetVerifyOtpUseCase(this._repository);
 
-  FutureEither<ForgetVerifyOtpResponseModel> call(
+  FutureEither<ForgetVerifyOtpResponseEntity> call(
       ForgetVerifyOtpParams params,) => _repository.forgetVerifyOtp(
       email: params.email,
       otp: params.otp,
