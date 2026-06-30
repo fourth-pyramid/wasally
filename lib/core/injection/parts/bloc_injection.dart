@@ -198,6 +198,7 @@ void initBlocDependencies() {
         deleteBookingUseCase: sl(),
         acceptRescheduleUseCase: sl(),
         proposeRescheduleUseCase: sl(),
+        getServiceDetailsUseCase: sl(),
         ordersBloc: sl(),
       ),
     )

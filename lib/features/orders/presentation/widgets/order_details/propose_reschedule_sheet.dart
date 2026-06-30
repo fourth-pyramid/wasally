@@ -4,7 +4,6 @@ import 'package:wassaly/features/service_booking/presentation/bloc/booking_detai
 import 'package:wassaly/features/service_booking/presentation/bloc/booking_detail/booking_detail_event.dart';
 import 'package:wassaly/features/service_booking/presentation/bloc/booking_detail/booking_detail_state.dart';
 import 'package:wassaly/features/service_details/domain/entities/service_detail_entity.dart';
-import 'package:wassaly/features/service_details/domain/usecases/get_service_details_usecase.dart';
 
 class ProposeRescheduleSheet extends StatefulWidget {
   final int bookingId;
@@ -19,50 +18,23 @@ class _ProposeRescheduleSheetState extends State<ProposeRescheduleSheet> {
   final _noteController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
-  List<ServiceAvailableDayEntity> _availableDays = [];
-  bool _isLoadingDays = true;
-  String? _loadError;
-
   ServiceAvailableDayEntity? _selectedDay;
   ServiceAvailableTimeEntity? _selectedTime;
 
   @override
   void initState() {
     super.initState();
-    unawaited(_loadAvailableDays());
+    final bloc = context.read<BookingDetailBloc>();
+    final serviceId = bloc.state.booking?.service.id;
+    if (serviceId != null) {
+      bloc.add(LoadAvailableDaysEvent(serviceId));
+    }
   }
 
   @override
   void dispose() {
     _noteController.dispose();
     super.dispose();
-  }
-
-  Future<void> _loadAvailableDays() async {
-    final bloc = context.read<BookingDetailBloc>();
-    final serviceId = bloc.state.booking?.service.id;
-    if (serviceId == null) {
-      setState(() {
-        _isLoadingDays = false;
-        _loadError = 'Service not found';
-      });
-      return;
-    }
-
-    final useCase = sl<GetServiceDetailsUseCase>();
-    final result = await useCase(serviceId);
-    if (!mounted) return;
-
-    result.fold(
-      (failure) => setState(() {
-        _isLoadingDays = false;
-        _loadError = failure.message;
-      }),
-      (serviceDetail) => setState(() {
-        _availableDays = serviceDetail.availableDays;
-        _isLoadingDays = false;
-      }),
-    );
   }
 
   @override
@@ -72,7 +44,10 @@ class _ProposeRescheduleSheetState extends State<ProposeRescheduleSheet> {
 
     return BlocConsumer<BookingDetailBloc, BookingDetailState>(
       listenWhen: (previous, current) =>
-          previous.actionStatus != current.actionStatus,
+          previous.actionStatus != current.actionStatus ||
+          previous.isLoadingDays != current.isLoadingDays ||
+          previous.loadDaysError != current.loadDaysError ||
+          previous.availableDays != current.availableDays,
       listener: (context, state) {
         if (state.actionStatus == BookingActionStatus.success) {
           context.pop();
@@ -103,12 +78,12 @@ class _ProposeRescheduleSheetState extends State<ProposeRescheduleSheet> {
                     textAlign: TextAlign.center,
                   ),
                   24.verticalSpace,
-                  if (_isLoadingDays) ...[
+                  if (state.isLoadingDays) ...[
                     const Center(child: AppLoading()),
                     24.verticalSpace,
-                  ] else if (_loadError != null) ...[
+                  ] else if (state.loadDaysError.isNotEmpty) ...[
                     Text(
-                      _loadError!,
+                      state.loadDaysError,
                       style: tt.bodyMedium?.copyWith(color: cs.error),
                       textAlign: TextAlign.center,
                     ),
@@ -124,7 +99,7 @@ class _ProposeRescheduleSheetState extends State<ProposeRescheduleSheet> {
                     SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Row(
-                        children: _availableDays.map((day) {
+                        children: state.availableDays.map((day) {
                           final isSelected = _selectedDay?.id == day.id;
                           return Padding(
                             padding: EdgeInsetsDirectional.only(end: 8.w),

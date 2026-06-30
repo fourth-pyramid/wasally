@@ -9,6 +9,7 @@ import 'package:wassaly/features/service_booking/domain/usecases/propose_resched
 import 'package:wassaly/features/service_booking/domain/usecases/update_booking_usecase.dart';
 import 'package:wassaly/features/service_booking/presentation/bloc/booking_detail/booking_detail_event.dart';
 import 'package:wassaly/features/service_booking/presentation/bloc/booking_detail/booking_detail_state.dart';
+import 'package:wassaly/features/service_details/domain/usecases/get_service_details_usecase.dart';
 
 class BookingDetailBloc extends Bloc<BookingDetailEvent, BookingDetailState> {
   final CancelBookingUseCase _cancelBookingUseCase;
@@ -16,6 +17,7 @@ class BookingDetailBloc extends Bloc<BookingDetailEvent, BookingDetailState> {
   final DeleteBookingUseCase _deleteBookingUseCase;
   final AcceptRescheduleUseCase _acceptRescheduleUseCase;
   final ProposeRescheduleUseCase _proposeRescheduleUseCase;
+  final GetServiceDetailsUseCase _getServiceDetailsUseCase;
   final OrdersBloc _ordersBloc;
 
   BookingDetailBloc({
@@ -24,12 +26,14 @@ class BookingDetailBloc extends Bloc<BookingDetailEvent, BookingDetailState> {
     required DeleteBookingUseCase deleteBookingUseCase,
     required AcceptRescheduleUseCase acceptRescheduleUseCase,
     required ProposeRescheduleUseCase proposeRescheduleUseCase,
+    required GetServiceDetailsUseCase getServiceDetailsUseCase,
     required OrdersBloc ordersBloc,
   })  : _cancelBookingUseCase = cancelBookingUseCase,
         _updateBookingUseCase = updateBookingUseCase,
         _deleteBookingUseCase = deleteBookingUseCase,
         _acceptRescheduleUseCase = acceptRescheduleUseCase,
         _proposeRescheduleUseCase = proposeRescheduleUseCase,
+        _getServiceDetailsUseCase = getServiceDetailsUseCase,
         _ordersBloc = ordersBloc,
         super(const BookingDetailState()) {
     on<InitializeBookingDetailEvent>(_onInitialize);
@@ -38,6 +42,7 @@ class BookingDetailBloc extends Bloc<BookingDetailEvent, BookingDetailState> {
     on<DeleteBookingEvent>(_onDeleteBooking);
     on<AcceptRescheduleEvent>(_onAcceptReschedule);
     on<ProposeRescheduleEvent>(_onProposeReschedule);
+    on<LoadAvailableDaysEvent>(_onLoadAvailableDays);
   }
 
   void _onInitialize(
@@ -244,6 +249,35 @@ class BookingDetailBloc extends Bloc<BookingDetailEvent, BookingDetailState> {
           emit(state.copyWith(actionStatus: BookingActionStatus.success));
         }
       },
+    );
+  }
+
+  Future<void> _onLoadAvailableDays(
+    LoadAvailableDaysEvent event,
+    Emitter<BookingDetailState> emit,
+  ) async {
+    emit(
+      state.copyWith(
+        isLoadingDays: true,
+        loadDaysError: '',
+      ),
+    );
+
+    final result = await _getServiceDetailsUseCase(event.serviceId);
+
+    result.fold(
+      (failure) => emit(
+        state.copyWith(
+          isLoadingDays: false,
+          loadDaysError: failure.message,
+        ),
+      ),
+      (serviceDetail) => emit(
+        state.copyWith(
+          isLoadingDays: false,
+          availableDays: serviceDetail.availableDays,
+        ),
+      ),
     );
   }
 }

@@ -117,7 +117,6 @@ class _EditProfileAvatarPickerState extends State<EditProfileAvatarPicker> {
                         if (avatarUrl != null) {
                           return CommonImage(
                             imageUrl: avatarUrl,
-                            width: 120,
                             height: 120,
                             memCacheHeight: 120 * 3,
                             borderRadius:

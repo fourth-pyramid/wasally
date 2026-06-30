@@ -61,3 +61,12 @@ class ProposeRescheduleEvent extends BookingDetailEvent {
   @override
   List<Object?> get props => [params];
 }
+
+class LoadAvailableDaysEvent extends BookingDetailEvent {
+  final int serviceId;
+
+  const LoadAvailableDaysEvent(this.serviceId);
+
+  @override
+  List<Object?> get props => [serviceId];
+}

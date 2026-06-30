@@ -95,10 +95,10 @@ class ProductOrdersTab extends StatelessWidget {
                             : displayOrders.length,
                         itemBuilder: (context, index) {
                           if (index >= displayOrders.length) {
-                            return const Center(
+                            return Center(
                               child: Padding(
-                                padding: EdgeInsets.all(8),
-                                child: AppLoading(),
+                                padding: EdgeInsets.all(8.r),
+                                child: const AppLoading(),
                               ),
                             );
                           }
