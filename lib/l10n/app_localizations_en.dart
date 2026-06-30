@@ -1877,4 +1877,26 @@ class SEn extends S {
 
   @override
   String get profile_help_phone_number => '+1 800 123 4567';
+
+  @override
+  String get search_initial_title => 'What are you looking for today?';
+
+  @override
+  String get search_initial_subtitle =>
+      'Search for products, services, and special offers easily';
+
+  @override
+  String get search_popular_searches => 'Popular Searches';
+
+  @override
+  String get search_tag_offers => 'Offers';
+
+  @override
+  String get search_tag_delivery => 'Delivery';
+
+  @override
+  String get search_tag_services => 'Services';
+
+  @override
+  String get search_tag_products => 'Products';
 }

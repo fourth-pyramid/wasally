@@ -71,12 +71,27 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     );
 
     result.fold(
-      (failure) => emit(
-        state.copyWith(
-          status: SearchStatus.failure,
-          errorMessage: failure.message,
-        ),
-      ),
+      (failure) {
+        // ponytail: Treat "not found" or empty-related failures as empty state
+        final isNoResults =
+            failure is NotFoundFailure || _isNoResults(failure.message);
+
+        if (isNoResults) {
+          emit(
+            state.copyWith(
+              status: SearchStatus.success,
+              products: const PaginatedResponse(data: []),
+            ),
+          );
+        } else {
+          emit(
+            state.copyWith(
+              status: SearchStatus.failure,
+              errorMessage: failure.message,
+            ),
+          );
+        }
+      },
       (paginatedResponse) => emit(
         state.copyWith(
           status: SearchStatus.success,
@@ -123,6 +138,18 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   void _onSearchCleared(SearchCleared event, Emitter<SearchState> emit) {
     _debounceTimer?.cancel();
     emit(const SearchState());
+  }
+
+  bool _isNoResults(String message) {
+    final lower = message.toLowerCase();
+    return lower.contains('not found') ||
+        lower.contains('no products') ||
+        lower.contains('no results') ||
+        lower.contains('empty') ||
+        lower.contains('لا توجد') ||
+        lower.contains('لم يتم') ||
+        lower.contains('لايوجد') ||
+        lower.contains('غير موجود');
   }
 
   @override

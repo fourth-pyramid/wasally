@@ -10,9 +10,9 @@ class SearchPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => BlocProvider(
-      create: (_) => sl<SearchBloc>(),
-      child: const _SearchPageContent(),
-    );
+        create: (_) => sl<SearchBloc>(),
+        child: const _SearchPageContent(),
+      );
 }
 
 class _SearchPageContent extends StatelessWidget {
@@ -85,29 +85,75 @@ class _SearchPageContent extends StatelessWidget {
     final cs = context.theme.colorScheme;
 
     return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.search,
-            size: 64.r,
-            color: cs.outline,
-          ),
-          SizedBox(height: 16.h),
-          Text(
-            context.l10n.search_search_hint,
-            style: tt.bodyLarge?.copyWith(
-              color: cs.onSurfaceVariant,
-            ),
-          ),
-        ],
+      child: SingleChildScrollView(
+        padding: EdgeInsets.symmetric(
+          horizontal: context.w(24),
+          vertical: context.h(40),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Icon with soft glowing background
+            Container(
+              padding: EdgeInsets.all(context.r(28)),
+              decoration: BoxDecoration(
+                color: cs.primary.withValues(alpha: 0.05),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(
+                Icons.search_rounded,
+                size: context.r(72),
+                color: cs.primary,
+              ),
+            )
+                .animate()
+                .scale(
+                  duration: const Duration(milliseconds: 500),
+                  curve: Curves.easeOutBack,
+                )
+                .fadeIn(),
+
+            context.vS(32),
+
+            // Welcoming Title
+            Text(
+              context.l10n.search_initial_title,
+              style: tt.titleLarge?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: cs.onSurface,
+              ),
+              textAlign: TextAlign.center,
+            )
+                .animate()
+                .slideY(begin: 0.2, duration: const Duration(milliseconds: 400))
+                .fadeIn(),
+
+            context.vS(8),
+
+            // Subtitle
+            Text(
+              context.l10n.search_initial_subtitle,
+              style: tt.bodyMedium?.copyWith(
+                color: cs.onSurfaceVariant.withValues(alpha: 0.7),
+              ),
+              textAlign: TextAlign.center,
+            )
+                .animate()
+                .slideY(
+                  begin: 0.3,
+                  delay: const Duration(milliseconds: 100),
+                  duration: const Duration(milliseconds: 400),
+                )
+                .fadeIn(),
+          ],
+        ),
       ),
     );
   }
 
   Widget _buildEmptyState(BuildContext context) => AppEmptyState(
-      title: context.l10n.search_no_results_found,
-      subtitle: context.l10n.search_try_different_search,
-      icon: Icons.search_off,
-    );
+        title: context.l10n.search_no_results_found,
+        subtitle: context.l10n.search_try_different_search,
+        icon: Icons.search_off,
+      );
 }

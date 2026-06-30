@@ -590,5 +590,12 @@
   "profile_help_search_no_results": "لم يتم العثور على نتائج",
   "profile_help_contacting_support": "جاري الاتصال بالدعم...",
   "profile_help_open_mail": "فتح تطبيق البريد...",
-  "profile_help_phone_number": "+1 800 123 4567"
+  "profile_help_phone_number": "+1 800 123 4567",
+  "search_initial_title": "ما الذي تبحث عنه اليوم؟",
+  "search_initial_subtitle": "ابحث عن المنتجات، الخدمات، والعروض المميزة بسهولة",
+  "search_popular_searches": "عمليات البحث الشائعة",
+  "search_tag_offers": "عروض",
+  "search_tag_delivery": "توصيل",
+  "search_tag_services": "خدمات",
+  "search_tag_products": "منتجات"
 }

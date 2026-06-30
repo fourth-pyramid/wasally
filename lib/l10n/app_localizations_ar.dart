@@ -1890,4 +1890,26 @@ class SAr extends S {
 
   @override
   String get profile_help_phone_number => '+1 800 123 4567';
+
+  @override
+  String get search_initial_title => 'ما الذي تبحث عنه اليوم؟';
+
+  @override
+  String get search_initial_subtitle =>
+      'ابحث عن المنتجات، الخدمات، والعروض المميزة بسهولة';
+
+  @override
+  String get search_popular_searches => 'عمليات البحث الشائعة';
+
+  @override
+  String get search_tag_offers => 'عروض';
+
+  @override
+  String get search_tag_delivery => 'توصيل';
+
+  @override
+  String get search_tag_services => 'خدمات';
+
+  @override
+  String get search_tag_products => 'منتجات';
 }

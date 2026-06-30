@@ -3552,6 +3552,48 @@ abstract class S {
   /// In en, this message translates to:
   /// **'+1 800 123 4567'**
   String get profile_help_phone_number;
+
+  /// No description provided for @search_initial_title.
+  ///
+  /// In en, this message translates to:
+  /// **'What are you looking for today?'**
+  String get search_initial_title;
+
+  /// No description provided for @search_initial_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Search for products, services, and special offers easily'**
+  String get search_initial_subtitle;
+
+  /// No description provided for @search_popular_searches.
+  ///
+  /// In en, this message translates to:
+  /// **'Popular Searches'**
+  String get search_popular_searches;
+
+  /// No description provided for @search_tag_offers.
+  ///
+  /// In en, this message translates to:
+  /// **'Offers'**
+  String get search_tag_offers;
+
+  /// No description provided for @search_tag_delivery.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivery'**
+  String get search_tag_delivery;
+
+  /// No description provided for @search_tag_services.
+  ///
+  /// In en, this message translates to:
+  /// **'Services'**
+  String get search_tag_services;
+
+  /// No description provided for @search_tag_products.
+  ///
+  /// In en, this message translates to:
+  /// **'Products'**
+  String get search_tag_products;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

@@ -590,5 +590,12 @@
   "profile_help_search_no_results": "No results found",
   "profile_help_contacting_support": "Contacting support...",
   "profile_help_open_mail": "Opening mail client...",
-  "profile_help_phone_number": "+1 800 123 4567"
+  "profile_help_phone_number": "+1 800 123 4567",
+  "search_initial_title": "What are you looking for today?",
+  "search_initial_subtitle": "Search for products, services, and special offers easily",
+  "search_popular_searches": "Popular Searches",
+  "search_tag_offers": "Offers",
+  "search_tag_delivery": "Delivery",
+  "search_tag_services": "Services",
+  "search_tag_products": "Products"
 }
