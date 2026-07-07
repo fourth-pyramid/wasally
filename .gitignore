@@ -56,3 +56,7 @@ app.*.map.json
 *.keystore
 /key.properties
 /upload-keystore.jks
+
+# Local agent and GitHub tooling
+.agent/
+.github/
