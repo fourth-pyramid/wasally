@@ -365,7 +365,6 @@ class _BookingDetailsBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cs = context.theme.colorScheme;
     final normStatus = booking.status.trim().toLowerCase();
 
     final isCancelled = normStatus.contains('cancelled') ||
@@ -511,8 +510,8 @@ class _BookingDetailsBody extends StatelessWidget {
                   label: context.l10n.booking_delete_title,
                   isFullWidth: true,
                   onPressed: isActionLoading ? null : onDelete,
-                  variant: ButtonVariant.outline,
-                  textColor: cs.error,
+                  // ponytail: danger variant for consistent red delete buttons
+                  variant: ButtonVariant.danger,
                 ),
               ),
             24.verticalSpace,

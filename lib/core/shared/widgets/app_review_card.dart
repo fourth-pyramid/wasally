@@ -309,7 +309,6 @@ class _AppReviewCardState extends State<AppReviewCard> {
         ),
         child: ClipOval(
           child: CommonImage(
-            width: 40,
             height: 40,
             memCacheHeight: 40 * 3,
             imageUrl: widget.userAvatar!,

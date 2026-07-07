@@ -460,8 +460,8 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                                     onPressed: isActionLoading
                                         ? null
                                         : () => _onDeleteOrder(order),
-                                    variant: ButtonVariant.outline,
-                                    textColor: context.theme.colorScheme.error,
+                                    // ponytail: danger variant for consistent red delete buttons
+                                    variant: ButtonVariant.danger,
                                   ),
                                 ),
                               24.verticalSpace,

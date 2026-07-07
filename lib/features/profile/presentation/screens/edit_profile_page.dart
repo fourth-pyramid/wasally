@@ -240,7 +240,11 @@ class _EditProfileViewState extends State<_EditProfileView> {
                           onPressed: _showDeleteAccountBottomSheet,
                           variant: ButtonVariant.danger,
                           isFullWidth: true,
-                          prefixIcon: const Icon(Icons.delete_forever),
+                          prefixIcon: Icon(
+                            Icons.delete_forever,
+                            // ponytail: explicit color to match danger variant
+                            color: context.theme.colorScheme.onError,
+                          ),
                         ),
                       ],
                     ),

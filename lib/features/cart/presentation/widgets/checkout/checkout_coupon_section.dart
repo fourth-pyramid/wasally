@@ -72,19 +72,24 @@ class _CheckoutCouponSectionState extends State<CheckoutCouponSection> {
                 ),
                 8.horizontalSpace,
                 if (!hasCoupon)
-                  AppButton(
-                    label: context.l10n.checkout_apply_coupon,
-                    isLoading: state.isApplyingCoupon,
-                    onPressed: isSubmitting || state.isApplyingCoupon
-                        ? null
-                        : () {
-                            final code = _couponController.text.trim();
-                            if (code.isNotEmpty) {
-                              context
-                                  .read<CheckoutBloc>()
-                                  .add(CheckoutCouponApplied(code));
-                            }
-                          },
+                  // ponytail: ValueListenableBuilder avoids extra state fields
+                  ValueListenableBuilder<TextEditingValue>(
+                    valueListenable: _couponController,
+                    builder: (context, value, _) {
+                      final isEmpty = value.text.trim().isEmpty;
+                      return AppButton(
+                        label: context.l10n.checkout_apply_coupon,
+                        isLoading: state.isApplyingCoupon,
+                        onPressed:
+                            isSubmitting || state.isApplyingCoupon || isEmpty
+                                ? null
+                                : () => context.read<CheckoutBloc>().add(
+                                      CheckoutCouponApplied(
+                                        value.text.trim(),
+                                      ),
+                                    ),
+                      );
+                    },
                   )
                 else
                   AppButton(
@@ -105,8 +110,11 @@ class _CheckoutCouponSectionState extends State<CheckoutCouponSection> {
               8.verticalSpace,
               Row(
                 children: [
-                  Icon(Icons.check_circle_outline,
-                      color: cs.primary, size: 16.r,),
+                  Icon(
+                    Icons.check_circle_outline,
+                    color: cs.primary,
+                    size: 16.r,
+                  ),
                   6.horizontalSpace,
                   Text(
                     state.appliedCoupon!.title,
