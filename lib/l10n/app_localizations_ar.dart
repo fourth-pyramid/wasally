@@ -399,9 +399,6 @@ class SAr extends S {
   String get profile_privacy_policy => 'سياسة الخصوصية';
 
   @override
-  String get profile_help_center => 'مركز المساعدة';
-
-  @override
   String get notifications => 'الإشعارات';
 
   @override
@@ -1823,6 +1820,9 @@ class SAr extends S {
 
   @override
   String get app_exit_confirm => 'برجاء الضغط مرة أخرى للخروج من التطبيق';
+
+  @override
+  String get profile_help_center => 'مركز المساعدة';
 
   @override
   String get profile_help_center_description =>

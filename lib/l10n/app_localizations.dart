@@ -859,12 +859,6 @@ abstract class S {
   /// **'Privacy Policy'**
   String get profile_privacy_policy;
 
-  /// No description provided for @profile_help_center.
-  ///
-  /// In en, this message translates to:
-  /// **'Help Center'**
-  String get profile_help_center;
-
   /// No description provided for @notifications.
   ///
   /// In en, this message translates to:
@@ -3426,6 +3420,12 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Please press back again to exit the app'**
   String get app_exit_confirm;
+
+  /// No description provided for @profile_help_center.
+  ///
+  /// In en, this message translates to:
+  /// **'Help Center'**
+  String get profile_help_center;
 
   /// No description provided for @profile_help_center_description.
   ///

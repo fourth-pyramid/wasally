@@ -402,9 +402,6 @@ class SEn extends S {
   String get profile_privacy_policy => 'Privacy Policy';
 
   @override
-  String get profile_help_center => 'Help Center';
-
-  @override
   String get notifications => 'Notifications';
 
   @override
@@ -1810,6 +1807,9 @@ class SEn extends S {
 
   @override
   String get app_exit_confirm => 'Please press back again to exit the app';
+
+  @override
+  String get profile_help_center => 'Help Center';
 
   @override
   String get profile_help_center_description =>
