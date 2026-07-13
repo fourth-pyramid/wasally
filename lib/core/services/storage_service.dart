@@ -65,6 +65,33 @@ class StorageService {
   double? getDouble(String key) => _prefs.getDouble(key);
   List<String>? getStringList(String key) => _prefs.getStringList(key);
 
+  // ponytail: Check if user has seen showcase, and immediately mark as seen
+  // so the tutorial runs only the very first time the page is loaded and never again,
+  // even if they skip or close the screen.
+  bool hasSeenShowcase(String id) {
+    final seen = getBool('showcase_seen_$id') ?? false;
+    if (!seen) {
+      unawaited(setHasSeenShowcase(id, value: true));
+    }
+    return seen;
+  }
+
+  FutureEither<bool> setHasSeenShowcase(String id, {required bool value}) async =>
+      setBool('showcase_seen_$id', value: value);
+
+  FutureEither<bool> clearShowcaseSeenFlags() async {
+    await setBool('showcase_seen_home_v1', value: false);
+    await setBool('showcase_seen_product_v1', value: false);
+    await setBool('showcase_seen_cart_v1', value: false);
+    await setBool('showcase_seen_favorite_v1', value: false);
+    await setBool('showcase_seen_profile_v1', value: false);
+    await setBool('showcase_seen_search_v1', value: false);
+    await setBool('showcase_seen_filter_v1', value: false);
+    await setBool('showcase_seen_checkout_v1', value: false);
+    await setBool('showcase_seen_orders_v1', value: false);
+    return right(true);
+  }
+
   // --- COMMON ---
 
   bool containsKey(String key) => _prefs.containsKey(key);

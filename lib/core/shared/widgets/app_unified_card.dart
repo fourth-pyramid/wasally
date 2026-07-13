@@ -295,8 +295,12 @@ class _ImageSection extends StatelessWidget {
                 return GestureDetector(
                   onTap: isToggling
                       ? null
-                      : onFavoriteTap ??
-                          () {
+                      : () async {
+                          final bloc = context.read<FavoriteBloc>();
+                          await HapticFeedback.lightImpact();
+                          if (onFavoriteTap != null) {
+                            onFavoriteTap!();
+                          } else {
                             final event = type == UnifiedItemType.product
                                 ? ToggleFavoriteEvent(
                                     id,
@@ -306,8 +310,9 @@ class _ImageSection extends StatelessWidget {
                                     id,
                                     expectedIsFavorite: isFav,
                                   );
-                            context.read<FavoriteBloc>().add(event);
-                          },
+                            bloc.add(event);
+                          }
+                        },
                   child: Container(
                     margin: EdgeInsetsDirectional.symmetric(
                       horizontal: context.w(6),

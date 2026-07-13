@@ -1,3 +1,5 @@
+import 'package:showcase_tutorial/showcase_tutorial.dart';
+import 'package:wassaly/core/constants/showcase_keys.dart';
 import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/profile/domain/entities/address_entity.dart';
 import 'package:wassaly/features/profile/domain/entities/center_entity.dart';
@@ -10,7 +12,18 @@ class AddAddressPage extends StatelessWidget {
   const AddAddressPage({this.address, super.key});
 
   @override
-  Widget build(BuildContext context) => _AddAddressView(address: address);
+  Widget build(BuildContext context) => ShowCaseWidget(
+        showcaseId: 'add_address_v1',
+        enableAutoScroll: true,
+        disableBarrierInteraction: true,
+        onShouldStartShowcase: (id) async => !StorageService.instance.hasSeenShowcase(id!),
+        onFinish: () {
+          unawaited(StorageService.instance.setHasSeenShowcase('add_address_v1', value: true));
+        },
+        builder: Builder(
+          builder: (context) => _AddAddressView(address: address),
+        ),
+      );
 }
 
 class _AddAddressView extends StatefulWidget {
@@ -44,6 +57,14 @@ class _AddAddressViewState extends State<_AddAddressView> {
       _selectedCenterId.value = widget.address!.centerId;
       bloc.add(CentersFetched(widget.address!.governorateId));
     }
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        ShowCaseWidget.of(context).startShowCase([
+          AppShowcaseKeys.addAddressForm,
+        ]);
+      }
+    });
   }
 
   @override
@@ -112,7 +133,6 @@ class _AddAddressViewState extends State<_AddAddressView> {
                         : context.l10n.profile_address_added,
                     type: SnackBarType.success,
                   )
-                  // Return true to indicate successful address creation
                   ..pop(true);
               } else if (state.addressStatus.isFailure &&
                   state.addressError != null) {
@@ -132,19 +152,24 @@ class _AddAddressViewState extends State<_AddAddressView> {
                 SliverPadding(
                   padding: EdgeInsets.all(16.w),
                   sliver: SliverToBoxAdapter(
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                        children: [
-                          AppTextField(
-                            label: context.l10n.profile_address_title,
-                            hint: context.l10n.profile_address_title_hint,
-                            controller: _titleController,
-                            prefixIcon: const Icon(Icons.label_outline),
-                            validator: (v) => v!.isEmpty
-                                ? context.l10n.profile_title_required
-                                : null,
-                          ),
+                    child: AppShowcase(
+                      showcaseKey: AppShowcaseKeys.addAddressForm,
+                      title: context.l10n.showcase_add_address_form_title,
+                      description: context.l10n.showcase_add_address_form_desc,
+                      isLast: true,
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                          children: [
+                            AppTextField(
+                              label: context.l10n.profile_address_title,
+                              hint: context.l10n.profile_address_title_hint,
+                              controller: _titleController,
+                              prefixIcon: const Icon(Icons.label_outline),
+                              validator: (v) => v!.isEmpty
+                                  ? context.l10n.profile_title_required
+                                  : null,
+                            ),
                           16.verticalSpace,
                           AppTextField(
                             label: context.l10n.profile_address_details,
@@ -175,7 +200,8 @@ class _AddAddressViewState extends State<_AddAddressView> {
                     ),
                   ),
                 ),
-              ],
+              ),
+            ],
             ),
           ),
         ),

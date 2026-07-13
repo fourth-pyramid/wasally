@@ -1,3 +1,5 @@
+import 'package:showcase_tutorial/showcase_tutorial.dart';
+import 'package:wassaly/core/constants/showcase_keys.dart';
 import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/orders/presentation/widgets/order_details/booking_details_cards.dart';
 import 'package:wassaly/features/orders/presentation/widgets/order_details/propose_reschedule_sheet.dart';
@@ -17,14 +19,75 @@ class BookingDetailsPage extends StatefulWidget {
 }
 
 class _BookingDetailsPageState extends State<BookingDetailsPage> {
+  late final ScrollController _scrollController;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => ShowCaseWidget(
+        showcaseId: 'booking_details_v1',
+        enableAutoScroll: true,
+        disableBarrierInteraction: true,
+        onShouldStartShowcase: (id) async => !StorageService.instance.hasSeenShowcase(id!),
+        onFinish: () {
+          unawaited(
+            StorageService.instance.setHasSeenShowcase('booking_details_v1', value: true),
+          );
+        },
+        builder: Builder(
+          builder: (context) => _BookingDetailsView(
+            booking: widget.booking,
+            scrollController: _scrollController,
+          ),
+        ),
+      );
+}
+
+class _BookingDetailsView extends StatefulWidget {
+  final BookingEntity booking;
+  final ScrollController scrollController;
+
+  const _BookingDetailsView({
+    required this.booking,
+    required this.scrollController,
+  });
+
+  @override
+  State<_BookingDetailsView> createState() => _BookingDetailsViewState();
+}
+
+class _BookingDetailsViewState extends State<_BookingDetailsView> {
   bool _isDeleting = false;
   bool _shouldRefresh = false;
   bool _allowPop = false;
 
+  bool _showcaseStarted = false;
+
+  void _maybeStartShowcase(BuildContext ctx) {
+    if (_showcaseStarted) return;
+    _showcaseStarted = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (ctx.mounted) {
+        ShowCaseWidget.of(ctx).startShowCase([
+          AppShowcaseKeys.bookingDetailsStatus,
+          AppShowcaseKeys.bookingDetailsProvider,
+        ]);
+      }
+    });
+  }
+
   void _onRetry() {
-    context
-        .read<BookingDetailBloc>()
-        .add(InitializeBookingDetailEvent(widget.booking));
+    context.read<BookingDetailBloc>().add(InitializeBookingDetailEvent(widget.booking));
   }
 
   Future<void> _onCancelBooking(BookingEntity booking) async {
@@ -255,14 +318,11 @@ class _BookingDetailsPageState extends State<BookingDetailsPage> {
       },
       child: Scaffold(
         body: BlocListener<BookingDetailBloc, BookingDetailState>(
-          listenWhen: (previous, current) =>
-              previous.actionStatus != current.actionStatus,
+          listenWhen: (previous, current) => previous.actionStatus != current.actionStatus,
           listener: (context, state) {
             if (state.actionStatus == BookingActionStatus.success) {
               context.showTypedSnackBar(
-                _isDeleting
-                    ? context.l10n.booking_delete_success
-                    : context.l10n.booking_details_action_success,
+                _isDeleting ? context.l10n.booking_delete_success : context.l10n.booking_details_action_success,
                 type: SnackBarType.success,
               );
               if (_isDeleting) {
@@ -283,14 +343,14 @@ class _BookingDetailsPageState extends State<BookingDetailsPage> {
             }
           },
           child: CustomScrollView(
+            controller: widget.scrollController,
             physics: const BouncingScrollPhysics(),
             slivers: [
               AppSliverTopBar(
                 title: context.l10n.booking_details_title,
                 onPressed: () => context.pop(_shouldRefresh),
               ),
-              BlocSelector<BookingDetailBloc, BookingDetailState,
-                  (BookingDetailStatus, BookingEntity?, String)>(
+              BlocSelector<BookingDetailBloc, BookingDetailState, (BookingDetailStatus, BookingEntity?, String)>(
                 selector: (state) => (
                   state.status,
                   state.booking,
@@ -299,23 +359,19 @@ class _BookingDetailsPageState extends State<BookingDetailsPage> {
                 builder: (context, data) {
                   final (status, booking, errorMessage) = data;
 
-                  if (status == BookingDetailStatus.loading &&
-                      booking == null) {
+                  if (status == BookingDetailStatus.loading && booking == null) {
                     return const SliverFillRemaining(
                       child: Center(child: AppLoading()),
                     );
                   }
 
-                  if (status == BookingDetailStatus.failure &&
-                      booking == null) {
+                  if (status == BookingDetailStatus.failure && booking == null) {
                     return SliverFillRemaining(
                       hasScrollBody: false,
                       child: Center(
                         child: AppErrorWidget(
                           title: context.l10n.errors_error_occurred_title,
-                          message: errorMessage.isNotEmpty
-                              ? errorMessage
-                              : context.l10n.errors_error_occurred_message,
+                          message: errorMessage.isNotEmpty ? errorMessage : context.l10n.errors_error_occurred_message,
                           onRetry: _onRetry,
                         ),
                       ),
@@ -333,6 +389,8 @@ class _BookingDetailsPageState extends State<BookingDetailsPage> {
                       ),
                     );
                   }
+
+                  _maybeStartShowcase(context);
 
                   return _BookingDetailsBody(
                     booking: booking,
@@ -372,13 +430,11 @@ class _BookingDetailsBody extends StatelessWidget {
         normStatus.contains('rejected') ||
         normStatus.contains('failed');
 
-    final isPending = normStatus.contains('pending') ||
-        normStatus.contains('waiting') ||
-        normStatus.contains('قيد الانتظار');
+    final isPending =
+        normStatus.contains('pending') || normStatus.contains('waiting') || normStatus.contains('قيد الانتظار');
 
-    final isCompleted = normStatus.contains('completed') ||
-        normStatus.contains('مكتمل') ||
-        normStatus.contains('success');
+    final isCompleted =
+        normStatus.contains('completed') || normStatus.contains('مكتمل') || normStatus.contains('success');
 
     final canDelete = isCompleted || isCancelled;
     final isRescheduleByProvider = normStatus == 'reschedule_by_provider';
@@ -389,7 +445,12 @@ class _BookingDetailsBody extends StatelessWidget {
       sliver: SliverList(
         delegate: SliverChildListDelegate([
           // 1. Booking Status Summary Header
-          BookingHeaderCard(booking: booking, isCancelled: isCancelled),
+          AppShowcase(
+            showcaseKey: AppShowcaseKeys.bookingDetailsStatus,
+            title: context.l10n.showcase_booking_details_status_title,
+            description: context.l10n.showcase_booking_details_status_desc,
+            child: BookingHeaderCard(booking: booking, isCancelled: isCancelled),
+          ),
           16.verticalSpace,
 
           // 2. Cancellation Alert if cancelled
@@ -411,7 +472,10 @@ class _BookingDetailsBody extends StatelessWidget {
           // 4. Booking Info Details Card
           _buildSectionHeader(context, context.l10n.booking_details_info),
           8.verticalSpace,
-          BookingServiceInfoCard(booking: booking),
+          BookingServiceInfoCard(
+            booking: booking,
+            providerShowcaseKey: AppShowcaseKeys.bookingDetailsProvider,
+          ),
           24.verticalSpace,
 
           // 4.5. Reschedule Details Card
@@ -489,8 +553,7 @@ class _BookingDetailsBody extends StatelessWidget {
                                   context.showAppBottomSheet<void>(
                                     builder: (_) => BlocProvider.value(
                                       value: context.read<BookingDetailBloc>(),
-                                      child:
-                                          UpdateBookingSheet(booking: booking),
+                                      child: UpdateBookingSheet(booking: booking),
                                     ),
                                   ),
                                 );

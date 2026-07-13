@@ -7,6 +7,7 @@ export 'app_empty_state.dart';
 export 'app_error_widget.dart';
 export 'app_loading.dart';
 export 'app_review_card.dart';
+export 'app_showcase.dart';
 export 'app_sliver_grid.dart';
 export 'app_sliver_top_bar.dart';
 export 'app_text_field.dart';

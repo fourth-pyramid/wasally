@@ -1,3 +1,4 @@
+import 'package:wassaly/core/constants/showcase_keys.dart';
 import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/auth/presentation/bloc/session/session_bloc.dart';
 import 'package:wassaly/features/cart/presentation/bloc/cart_bloc.dart';
@@ -164,12 +165,19 @@ class _MainLayoutPageState extends State<MainLayoutPage> {
         },
         child: Scaffold(
           body: widget.navigationShell,
-          bottomNavigationBar: MainNavBar(
-            currentIndex: widget.navigationShell.currentIndex,
-            onTap: _onTap,
-            backgroundColor: cs.surface,
-            selectedItemColor: cs.primary,
-            unselectedItemColor: cs.onSurfaceVariant,
+          bottomNavigationBar: AppShowcase(
+            // ponytail: Global key to reference the main layout navigation bar in the home tour
+            showcaseKey: AppShowcaseKeys.homeNavBar,
+            title: context.l10n.showcase_home_nav_title,
+            description: context.l10n.showcase_home_nav_desc,
+            isLast: true,
+            child: MainNavBar(
+              currentIndex: widget.navigationShell.currentIndex,
+              onTap: _onTap,
+              backgroundColor: cs.surface,
+              selectedItemColor: cs.primary,
+              unselectedItemColor: cs.onSurfaceVariant,
+            ),
           ),
         ),
       ),

@@ -1,3 +1,4 @@
+import 'package:wassaly/core/constants/showcase_keys.dart';
 import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/sub_category/domain/entities/service_entity.dart';
 
@@ -24,8 +25,7 @@ class ProviderServicesGrid extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 16.h),
             child: Text(
               context.l10n.provider_details_services,
-              style: context.theme.textTheme.titleMedium
-                  ?.copyWith(fontWeight: FontWeight.bold),
+              style: context.theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
             ),
           ),
         ),
@@ -33,9 +33,8 @@ class ProviderServicesGrid extends StatelessWidget {
           items: services,
           padding: EdgeInsets.zero,
           childAspectRatio: 0.74,
-          itemBuilder: (context, service, index, wrapAnimation) =>
-              wrapAnimation(
-            AppUnifiedCard(
+          itemBuilder: (context, service, index, wrapAnimation) {
+            final card = AppUnifiedCard(
               id: service.id,
               type: UnifiedItemType.service,
               title: service.title,
@@ -48,8 +47,19 @@ class ProviderServicesGrid extends StatelessWidget {
                 AppRoutes.serviceDetails,
                 extra: {'serviceId': service.id},
               ),
-            ),
-          ),
+            );
+            if (index == 0) {
+              return wrapAnimation(
+                AppShowcase(
+                  showcaseKey: AppShowcaseKeys.providerServicesList,
+                  title: context.l10n.showcase_provider_services_list_title,
+                  description: context.l10n.showcase_provider_services_list_desc,
+                  child: card,
+                ),
+              );
+            }
+            return wrapAnimation(card);
+          },
         ),
       ],
     );

@@ -1,3 +1,5 @@
+import 'package:showcase_tutorial/showcase_tutorial.dart';
+import 'package:wassaly/core/constants/showcase_keys.dart';
 import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/home/domain/entities/product_entity.dart';
 import 'package:wassaly/features/orders/domain/entities/order_entity.dart';
@@ -19,6 +21,54 @@ class OrderDetailsPage extends StatefulWidget {
 }
 
 class _OrderDetailsPageState extends State<OrderDetailsPage> {
+  late final ScrollController _scrollController;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => ShowCaseWidget(
+        showcaseId: 'order_details_v1',
+        enableAutoScroll: true,
+        disableBarrierInteraction: true,
+        onShouldStartShowcase: (id) async => !StorageService.instance.hasSeenShowcase(id!),
+        onFinish: () {
+          unawaited(
+            StorageService.instance.setHasSeenShowcase('order_details_v1', value: true),
+          );
+        },
+        builder: Builder(
+          builder: (context) => _OrderDetailsView(
+            orderId: widget.orderId,
+            scrollController: _scrollController,
+          ),
+        ),
+      );
+}
+
+class _OrderDetailsView extends StatefulWidget {
+  final int orderId;
+  final ScrollController scrollController;
+
+  const _OrderDetailsView({
+    required this.orderId,
+    required this.scrollController,
+  });
+
+  @override
+  State<_OrderDetailsView> createState() => _OrderDetailsViewState();
+}
+
+class _OrderDetailsViewState extends State<_OrderDetailsView> {
   bool _isDeleting = false;
   bool _shouldRefresh = false;
   bool _allowPop = false;
@@ -60,6 +110,21 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
 
   void _onRetry() {
     context.read<OrderDetailBloc>().add(FetchOrderDetailEvent(widget.orderId));
+  }
+
+  bool _showcaseStarted = false;
+
+  void _maybeStartShowcase(BuildContext ctx) {
+    if (_showcaseStarted) return;
+    _showcaseStarted = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (ctx.mounted) {
+        ShowCaseWidget.of(ctx).startShowCase([
+          AppShowcaseKeys.orderDetailsStatus,
+          AppShowcaseKeys.orderDetailsItems,
+        ]);
+      }
+    });
   }
 
   Future<void> _onCancelOrder(OrderEntity order) async {
@@ -218,14 +283,11 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
       },
       child: Scaffold(
         body: BlocListener<OrderDetailBloc, OrderDetailState>(
-          listenWhen: (previous, current) =>
-              previous.actionStatus != current.actionStatus,
+          listenWhen: (previous, current) => previous.actionStatus != current.actionStatus,
           listener: (context, state) {
             if (state.actionStatus == OrderActionStatus.success) {
               context.showTypedSnackBar(
-                _isDeleting
-                    ? context.l10n.order_delete_success
-                    : context.l10n.order_details_action_success,
+                _isDeleting ? context.l10n.order_delete_success : context.l10n.order_details_action_success,
                 type: SnackBarType.success,
               );
               if (_isDeleting) {
@@ -247,14 +309,11 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
           },
           child: RefreshIndicator(
             onRefresh: () async {
-              context
-                  .read<OrderDetailBloc>()
-                  .add(FetchOrderDetailEvent(widget.orderId));
+              context.read<OrderDetailBloc>().add(FetchOrderDetailEvent(widget.orderId));
             },
             color: context.theme.colorScheme.primary,
             backgroundColor: context.theme.colorScheme.surface,
-            child: BlocSelector<OrderDetailBloc, OrderDetailState,
-                (OrderDetailStatus, OrderEntity?, String, bool)>(
+            child: BlocSelector<OrderDetailBloc, OrderDetailState, (OrderDetailStatus, OrderEntity?, String, bool)>(
               selector: (state) => (
                 state.status,
                 state.order,
@@ -278,12 +337,10 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                           child: isNotFound
                               ? _buildNotFoundState(context)
                               : AppErrorWidget(
-                                  title:
-                                      context.l10n.errors_error_occurred_title,
+                                  title: context.l10n.errors_error_occurred_title,
                                   message: errorMessage.isNotEmpty
                                       ? errorMessage
-                                      : context
-                                          .l10n.errors_error_occurred_message,
+                                      : context.l10n.errors_error_occurred_message,
                                   onRetry: _onRetry,
                                 ),
                         ),
@@ -292,12 +349,12 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                   );
                 }
 
-                final showSkeleton =
-                    status == OrderDetailStatus.loading && stateOrder == null;
+                final showSkeleton = status == OrderDetailStatus.loading && stateOrder == null;
                 final order = showSkeleton ? _dummyOrder : stateOrder;
 
                 if (order == null) {
                   return CustomScrollView(
+                    controller: widget.scrollController,
                     physics: const AlwaysScrollableScrollPhysics(),
                     slivers: [
                       AppSliverTopBar(
@@ -321,10 +378,13 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                 final canDelete = order.canDelete;
                 final canCancelOrUpdate = order.canCancelOrUpdate;
 
+                if (!showSkeleton) _maybeStartShowcase(context);
+
                 return Skeletonizer(
                   enabled: showSkeleton,
                   ignoreContainers: true,
                   child: CustomScrollView(
+                    controller: widget.scrollController,
                     physics: const AlwaysScrollableScrollPhysics(),
                     slivers: [
                       AppSliverTopBar(
@@ -339,9 +399,14 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                         sliver: SliverList(
                           delegate: SliverChildListDelegate([
                             // 1. Order Status Summary Header
-                            OrderHeaderCard(
-                              order: order,
-                              isCancelled: isCancelled,
+                            AppShowcase(
+                              showcaseKey: AppShowcaseKeys.orderDetailsStatus,
+                              title: context.l10n.showcase_order_details_status_title,
+                              description: context.l10n.showcase_order_details_status_desc,
+                              child: OrderHeaderCard(
+                                order: order,
+                                isCancelled: isCancelled,
+                              ),
                             ),
                             16.verticalSpace,
 
@@ -379,7 +444,13 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                               context.l10n.order_details_ordered_products,
                             ),
                             8.verticalSpace,
-                            OrderItemsCard(items: order.items),
+                            AppShowcase(
+                              showcaseKey: AppShowcaseKeys.orderDetailsItems,
+                              title: context.l10n.showcase_order_details_items_title,
+                              description: context.l10n.showcase_order_details_items_desc,
+                              isLast: true,
+                              child: OrderItemsCard(items: order.items),
+                            ),
                             16.verticalSpace,
 
                             // 6. Detailed Receipt/Payment Card
@@ -392,46 +463,35 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                             24.verticalSpace,
 
                             // 7. Action Buttons
-                            if (!showSkeleton &&
-                                (canDelete || canCancelOrUpdate)) ...[
+                            if (!showSkeleton && (canDelete || canCancelOrUpdate)) ...[
                               _buildSectionHeader(
                                 context,
                                 context.l10n.order_details_actions,
                               ),
                               8.verticalSpace,
                               if (canCancelOrUpdate) ...[
-                                BlocSelector<OrderDetailBloc, OrderDetailState,
-                                    bool>(
-                                  selector: (s) =>
-                                      s.actionStatus ==
-                                      OrderActionStatus.loading,
+                                BlocSelector<OrderDetailBloc, OrderDetailState, bool>(
+                                  selector: (s) => s.actionStatus == OrderActionStatus.loading,
                                   builder: (context, isActionLoading) => Row(
                                     children: [
                                       Expanded(
                                         child: AppButton(
-                                          label: context
-                                              .l10n.order_details_cancel_btn,
-                                          onPressed: isActionLoading
-                                              ? null
-                                              : () => _onCancelOrder(order),
+                                          label: context.l10n.order_details_cancel_btn,
+                                          onPressed: isActionLoading ? null : () => _onCancelOrder(order),
                                           variant: ButtonVariant.danger,
                                         ),
                                       ),
                                       8.horizontalSpace,
                                       Expanded(
                                         child: AppButton(
-                                          label: context
-                                              .l10n.order_details_update_btn,
+                                          label: context.l10n.order_details_update_btn,
                                           onPressed: isActionLoading
                                               ? null
                                               : () {
                                                   unawaited(
-                                                    context.showAppBottomSheet<
-                                                        void>(
-                                                      builder: (_) =>
-                                                          BlocProvider.value(
-                                                        value: context.read<
-                                                            OrderDetailBloc>(),
+                                                    context.showAppBottomSheet<void>(
+                                                      builder: (_) => BlocProvider.value(
+                                                        value: context.read<OrderDetailBloc>(),
                                                         child: UpdateOrderSheet(
                                                           order: order,
                                                         ),
@@ -448,18 +508,12 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                                 16.verticalSpace,
                               ],
                               if (canDelete)
-                                BlocSelector<OrderDetailBloc, OrderDetailState,
-                                    bool>(
-                                  selector: (s) =>
-                                      s.actionStatus ==
-                                      OrderActionStatus.loading,
-                                  builder: (context, isActionLoading) =>
-                                      AppButton(
+                                BlocSelector<OrderDetailBloc, OrderDetailState, bool>(
+                                  selector: (s) => s.actionStatus == OrderActionStatus.loading,
+                                  builder: (context, isActionLoading) => AppButton(
                                     label: context.l10n.order_delete_title,
                                     isFullWidth: true,
-                                    onPressed: isActionLoading
-                                        ? null
-                                        : () => _onDeleteOrder(order),
+                                    onPressed: isActionLoading ? null : () => _onDeleteOrder(order),
                                     // ponytail: danger variant for consistent red delete buttons
                                     variant: ButtonVariant.danger,
                                   ),

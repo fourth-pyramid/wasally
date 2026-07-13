@@ -1,3 +1,5 @@
+import 'package:showcase_tutorial/showcase_tutorial.dart';
+import 'package:wassaly/core/constants/showcase_keys.dart';
 import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/orders/presentation/bloc/orders_bloc.dart';
 import 'package:wassaly/features/orders/presentation/bloc/orders_event.dart';
@@ -31,11 +33,21 @@ class _ProfileView extends StatelessWidget {
   Widget build(BuildContext context) {
     final cs = context.theme.colorScheme;
 
+    // ponytail: Trigger profile showcase
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (context.mounted) {
+        ShowCaseWidget.of(context).startShowCase([
+          AppShowcaseKeys.profileStats,
+          AppShowcaseKeys.profileSettings,
+          AppShowcaseKeys.profileSupport,
+        ]);
+      }
+    });
+
     return Scaffold(
       backgroundColor: cs.surface,
       body: BlocListener<ProfileBloc, ProfileState>(
-        listenWhen: (prev, curr) =>
-            prev.actionStatus != curr.actionStatus && curr.actionStatus.isDone,
+        listenWhen: (prev, curr) => prev.actionStatus != curr.actionStatus && curr.actionStatus.isDone,
         listener: (context, state) {
           if (state.actionStatus.isSuccess) {
             // Navigation for logout/delete is handled by SessionListenerWrapper.
@@ -46,8 +58,7 @@ class _ProfileView extends StatelessWidget {
                 type: SnackBarType.success,
               );
             }
-          } else if (state.actionStatus.isFailure &&
-              state.actionError != null) {
+          } else if (state.actionStatus.isFailure && state.actionError != null) {
             context.showTypedSnackBar(
               state.actionError!,
               type: SnackBarType.error,
@@ -61,8 +72,7 @@ class _ProfileView extends StatelessWidget {
               title: context.l10n.profile_my_account,
               actions: [
                 IconButton(
-                  onPressed: () =>
-                      unawaited(context.push(AppRoutes.editProfile)),
+                  onPressed: () => unawaited(context.push(AppRoutes.editProfile)),
                   icon: Icon(Icons.edit_outlined, color: cs.primary),
                   style: IconButton.styleFrom(
                     backgroundColor: cs.primaryContainer.withValues(alpha: 0.3),
@@ -80,16 +90,30 @@ class _ProfileView extends StatelessWidget {
                   16.verticalSpace,
                   const ProfileHeader(),
                   16.verticalSpace,
-                  const ProfileStatsCard(),
+                  AppShowcase(
+                    showcaseKey: AppShowcaseKeys.profileStats,
+                    title: context.l10n.showcase_profile_stats_title,
+                    description: context.l10n.showcase_profile_stats_desc,
+                    child: const ProfileStatsCard(),
+                  ),
                   16.verticalSpace,
-                  const ProfileSettingsSection(),
+                  AppShowcase(
+                    showcaseKey: AppShowcaseKeys.profileSettings,
+                    title: context.l10n.showcase_profile_settings_title,
+                    description: context.l10n.showcase_profile_settings_desc,
+                    child: const ProfileSettingsSection(),
+                  ),
                   16.verticalSpace,
-                  const ProfileSupportSection(),
+                  AppShowcase(
+                    showcaseKey: AppShowcaseKeys.profileSupport,
+                    title: context.l10n.showcase_profile_support_title,
+                    description: context.l10n.showcase_profile_support_desc,
+                    isLast: true,
+                    child: const ProfileSupportSection(),
+                  ),
                   16.verticalSpace,
                   ProfileLogoutButton(
-                    onLogoutAllDevices: () => context
-                        .read<ProfileBloc>()
-                        .add(const ProfileLoggedOutAllDevices()),
+                    onLogoutAllDevices: () => context.read<ProfileBloc>().add(const ProfileLoggedOutAllDevices()),
                   ),
                   16.verticalSpace,
                 ],

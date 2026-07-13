@@ -1,3 +1,4 @@
+import 'package:showcase_tutorial/showcase_tutorial.dart';
 import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/home/domain/entities/product_entity.dart';
 import 'package:wassaly/features/product_details/domain/entities/product_detail_entity.dart';
@@ -10,14 +11,28 @@ class ProductDetailsPage extends StatelessWidget {
   final int productId;
 
   const ProductDetailsPage({
-    required this.productId, super.key,
+    required this.productId,
+    super.key,
   });
 
   @override
   Widget build(BuildContext context) => BlocProvider(
         create: (_) =>
             sl<ProductDetailsBloc>()..add(FetchProductDetailsEvent(productId)),
-        child: _ProductDetailsView(productId: productId),
+        child: ShowCaseWidget(
+          showcaseId: 'product_v1',
+          enableAutoScroll: true,
+          disableBarrierInteraction: true,
+          onShouldStartShowcase: (id) async =>
+              !StorageService.instance.hasSeenShowcase(id!),
+          onFinish: () async {
+            await StorageService.instance
+                .setHasSeenShowcase('product_v1', value: true);
+          },
+          builder: Builder(
+            builder: (context) => _ProductDetailsView(productId: productId),
+          ),
+        ),
       );
 }
 

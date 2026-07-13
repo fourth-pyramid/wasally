@@ -3,8 +3,13 @@ import 'package:wassaly/features/service_booking/domain/entities/booking_entity.
 
 class BookingServiceInfoCard extends StatelessWidget {
   final BookingEntity booking;
+  final GlobalKey? providerShowcaseKey;
 
-  const BookingServiceInfoCard({required this.booking, super.key});
+  const BookingServiceInfoCard({
+    required this.booking,
+    this.providerShowcaseKey,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -92,75 +97,152 @@ class BookingServiceInfoCard extends StatelessWidget {
         16.verticalSpace,
 
         // 2. Provider Card
-        AppCard(
-          showShadow: true,
-          padding: EdgeInsets.all(16.r),
-          child: Row(
-            children: [
-              Container(
-                width: 50.w,
-                height: 50.w,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(25.r),
-                  color: cs.primaryContainer,
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(25.r),
-                  child: CommonImage(
-                    imageUrl: booking.provider.avatar ?? '',
-                    width: 50,
-                    height: 50,
-                    memCacheHeight: 50 * 2,
+        if (providerShowcaseKey != null)
+          AppShowcase(
+            showcaseKey: providerShowcaseKey!,
+            title: context.l10n.showcase_booking_details_provider_title,
+            description: context.l10n.showcase_booking_details_provider_desc,
+            isLast: true,
+            child: AppCard(
+              showShadow: true,
+              padding: EdgeInsets.all(16.r),
+              child: Row(
+                children: [
+                  Container(
+                    width: 50.w,
+                    height: 50.w,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(25.r),
+                      color: cs.primaryContainer,
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(25.r),
+                      child: CommonImage(
+                        imageUrl: booking.provider.avatar ?? '',
+                        width: 50,
+                        height: 50,
+                        memCacheHeight: 50 * 2,
+                      ),
+                    ),
+                  ),
+                  12.horizontalSpace,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          providerName,
+                          style: tt.bodyMedium?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: cs.onSurface,
+                          ),
+                        ),
+                        if (booking.provider.description != null &&
+                            booking.provider.description!.isNotEmpty) ...[
+                          4.verticalSpace,
+                          Text(
+                            booking.provider.description!,
+                            style: tt.bodySmall?.copyWith(
+                              color: cs.onSurfaceVariant,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ],
+                    ),
+                  ),
+                  if (booking.provider.rating != null) ...[
+                    12.horizontalSpace,
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.star_rounded, color: Colors.amber, size: 18.r),
+                        4.horizontalSpace,
+                        Text(
+                          booking.provider.rating!.toStringAsFixed(1),
+                          style: tt.bodyMedium?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: cs.onSurface,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ],
+              ),
+            ),
+          )
+        else
+          AppCard(
+            showShadow: true,
+            padding: EdgeInsets.all(16.r),
+            child: Row(
+              children: [
+                Container(
+                  width: 50.w,
+                  height: 50.w,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(25.r),
+                    color: cs.primaryContainer,
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(25.r),
+                    child: CommonImage(
+                      imageUrl: booking.provider.avatar ?? '',
+                      width: 50,
+                      height: 50,
+                      memCacheHeight: 50 * 2,
+                    ),
                   ),
                 ),
-              ),
-              12.horizontalSpace,
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      providerName,
-                      style: tt.bodyMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: cs.onSurface,
-                      ),
-                    ),
-                    if (booking.provider.description != null &&
-                        booking.provider.description!.isNotEmpty) ...[
-                      4.verticalSpace,
+                12.horizontalSpace,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
                       Text(
-                        booking.provider.description!,
-                        style: tt.bodySmall?.copyWith(
-                          color: cs.onSurfaceVariant,
+                        providerName,
+                        style: tt.bodyMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: cs.onSurface,
                         ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
+                      ),
+                      if (booking.provider.description != null &&
+                          booking.provider.description!.isNotEmpty) ...[
+                        4.verticalSpace,
+                        Text(
+                          booking.provider.description!,
+                          style: tt.bodySmall?.copyWith(
+                            color: cs.onSurfaceVariant,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
+                if (booking.provider.rating != null) ...[
+                  12.horizontalSpace,
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.star_rounded, color: Colors.amber, size: 18.r),
+                      4.horizontalSpace,
+                      Text(
+                        booking.provider.rating!.toStringAsFixed(1),
+                        style: tt.bodyMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: cs.onSurface,
+                        ),
                       ),
                     ],
-                  ],
-                ),
-              ),
-              if (booking.provider.rating != null) ...[
-                12.horizontalSpace,
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(Icons.star_rounded, color: Colors.amber, size: 18.r),
-                    4.horizontalSpace,
-                    Text(
-                      booking.provider.rating!.toStringAsFixed(1),
-                      style: tt.bodyMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: cs.onSurface,
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ],
-            ],
+            ),
           ),
-        ),
         16.verticalSpace,
 
         // 3. Appointment & Customer Details Card

@@ -1,3 +1,5 @@
+import 'package:showcase_tutorial/showcase_tutorial.dart';
+import 'package:wassaly/core/constants/showcase_keys.dart';
 import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/search/presentation/bloc/search_bloc.dart';
 import 'package:wassaly/features/search/presentation/bloc/search_event.dart';
@@ -11,7 +13,19 @@ class SearchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => BlocProvider(
         create: (_) => sl<SearchBloc>(),
-        child: const _SearchPageContent(),
+        child: ShowCaseWidget(
+          showcaseId: 'search_v1',
+          enableAutoScroll: true,
+          disableBarrierInteraction: true,
+          onShouldStartShowcase: (id) async => !StorageService.instance.hasSeenShowcase(id!),
+          onFinish: () {
+            // ponytail: Persist search tour completion
+            unawaited(StorageService.instance.setHasSeenShowcase('search_v1', value: true));
+          },
+          builder: Builder(
+            builder: (context) => const _SearchPageContent(),
+          ),
+        ),
       );
 }
 
@@ -19,12 +33,20 @@ class _SearchPageContent extends StatelessWidget {
   const _SearchPageContent();
 
   // FIX 10: named method — no inline lambda in build()
-  void _onRetry(BuildContext context) =>
-      context.read<SearchBloc>().add(const SearchSubmitted());
+  void _onRetry(BuildContext context) => context.read<SearchBloc>().add(const SearchSubmitted());
 
   @override
   Widget build(BuildContext context) {
     final cs = context.theme.colorScheme;
+
+    // ponytail: Trigger search showcase
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (context.mounted) {
+        ShowCaseWidget.of(context).startShowCase([
+          AppShowcaseKeys.searchField,
+        ]);
+      }
+    });
 
     // FIX 4: Scaffold + CustomScrollView + SearchAppBar (const) are OUTSIDE
     // BlocBuilder — they never change with search state.
@@ -59,9 +81,8 @@ class _SearchPageContent extends StatelessWidget {
                   hasScrollBody: false,
                   child: AppErrorWidget(
                     title: context.l10n.errors_error_occurred_title,
-                    message: state.errorMessage.isNotEmpty
-                        ? state.errorMessage
-                        : context.l10n.errors_error_occurred_message,
+                    message:
+                        state.errorMessage.isNotEmpty ? state.errorMessage : context.l10n.errors_error_occurred_message,
                     onRetry: () => _onRetry(context), // FIX 10
                   ),
                 );
@@ -123,10 +144,7 @@ class _SearchPageContent extends StatelessWidget {
                 color: cs.onSurface,
               ),
               textAlign: TextAlign.center,
-            )
-                .animate()
-                .slideY(begin: 0.2, duration: const Duration(milliseconds: 400))
-                .fadeIn(),
+            ).animate().slideY(begin: 0.2, duration: const Duration(milliseconds: 400)).fadeIn(),
 
             context.vS(8),
 

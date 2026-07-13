@@ -1,5 +1,6 @@
+import 'package:showcase_tutorial/showcase_tutorial.dart';
+import 'package:wassaly/core/constants/showcase_keys.dart';
 import 'package:wassaly/core/imports/imports.dart';
-
 import 'package:wassaly/features/home/domain/entities/product_entity.dart';
 import 'package:wassaly/features/product_details/domain/entities/product_detail_entity.dart';
 import 'package:wassaly/features/product_details/presentation/bloc/product_details_state.dart';
@@ -18,6 +19,14 @@ class ProductDetailsContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (context.mounted) {
+        ShowCaseWidget.of(context).startShowCase([
+          AppShowcaseKeys.productAddToCart,
+        ]);
+      }
+    });
+
     final gallery = _resolveGallery(product);
 
     final price = double.tryParse(product.price) ?? 0;

@@ -1,3 +1,5 @@
+import 'package:showcase_tutorial/showcase_tutorial.dart';
+import 'package:wassaly/core/constants/showcase_keys.dart';
 import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/orders/presentation/bloc/orders_bloc.dart';
 import 'package:wassaly/features/orders/presentation/bloc/orders_event.dart';
@@ -33,8 +35,7 @@ class _OrdersPageState extends State<OrdersPage> with TickerProviderStateMixin {
         ..add(const GetServiceBookingsEvent());
     });
 
-    _connectivitySub =
-        sl<InternetConnectionService>().connectivityRestoredStream.listen((_) {
+    _connectivitySub = sl<InternetConnectionService>().connectivityRestoredStream.listen((_) {
       if (mounted) {
         _ordersBloc
           ..add(const GetOrdersEvent())
@@ -53,14 +54,44 @@ class _OrdersPageState extends State<OrdersPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) => BlocProvider.value(
         value: _ordersBloc,
-        child: _OrdersView(tabController: _tabController),
+        child: ShowCaseWidget(
+          showcaseId: 'orders_v1',
+          enableAutoScroll: true,
+          disableBarrierInteraction: true,
+          onShouldStartShowcase: (id) async => !StorageService.instance.hasSeenShowcase(id!),
+          onFinish: () {
+            // ponytail: Persist orders tour completion
+            unawaited(StorageService.instance.setHasSeenShowcase('orders_v1', value: true));
+          },
+          builder: Builder(
+            builder: (context) => _OrdersView(tabController: _tabController),
+          ),
+        ),
       );
 }
 
-class _OrdersView extends StatelessWidget {
+class _OrdersView extends StatefulWidget {
   final TabController tabController;
 
   const _OrdersView({required this.tabController});
+
+  @override
+  State<_OrdersView> createState() => _OrdersViewState();
+}
+
+class _OrdersViewState extends State<_OrdersView> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // ponytail: Trigger orders page showcase using inner context
+      if (mounted) {
+        ShowCaseWidget.of(context).startShowCase([
+          AppShowcaseKeys.ordersTabs,
+        ]);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,22 +105,31 @@ class _OrdersView extends StatelessWidget {
             sliver: AppSliverTopBar(
               title: context.l10n.profile_my_orders,
               pinned: true,
-              bottom: TabBar(
-                controller: tabController,
-                labelColor: cs.primary,
-                unselectedLabelColor: cs.onSurfaceVariant,
-                indicatorColor: cs.primary,
-                indicatorSize: TabBarIndicatorSize.label,
-                tabs: [
-                  Tab(text: context.l10n.order_products),
-                  Tab(text: context.l10n.order_services),
-                ],
+              bottom: PreferredSize(
+                preferredSize: const Size.fromHeight(48),
+                child: AppShowcase(
+                  showcaseKey: AppShowcaseKeys.ordersTabs,
+                  title: context.l10n.showcase_orders_tabs_title,
+                  description: context.l10n.showcase_orders_tabs_desc,
+                  isLast: true,
+                  child: TabBar(
+                    controller: widget.tabController,
+                    labelColor: cs.primary,
+                    unselectedLabelColor: cs.onSurfaceVariant,
+                    indicatorColor: cs.primary,
+                    indicatorSize: TabBarIndicatorSize.label,
+                    tabs: [
+                      Tab(text: context.l10n.order_products),
+                      Tab(text: context.l10n.order_services),
+                    ],
+                  ),
+                ),
               ),
             ),
           ),
         ],
         body: TabBarView(
-          controller: tabController,
+          controller: widget.tabController,
           children: const [
             ProductOrdersTab(),
             ServiceBookingsTab(),

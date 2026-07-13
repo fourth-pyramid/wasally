@@ -1,3 +1,5 @@
+import 'package:showcase_tutorial/showcase_tutorial.dart';
+import 'package:wassaly/core/constants/showcase_keys.dart';
 import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/brands/presentation/bloc/brands_bloc.dart';
 import 'package:wassaly/features/brands/presentation/bloc/brands_event.dart';
@@ -19,13 +21,23 @@ class BrandDetailsPage extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) => BlocProvider(
-        create: (context) =>
-            sl<BrandsBloc>()..add(GetBrandProductsEvent(brandId: brandId)),
-        child: BrandDetailsView(
-          brandId: brandId,
-          brandName: brandName,
-          brandImage: brandImage,
+  Widget build(BuildContext context) => ShowCaseWidget(
+        showcaseId: 'brand_details_v1',
+        enableAutoScroll: true,
+        disableBarrierInteraction: true,
+        onShouldStartShowcase: (id) async => !StorageService.instance.hasSeenShowcase(id!),
+        onFinish: () {
+          unawaited(StorageService.instance.setHasSeenShowcase('brand_details_v1', value: true));
+        },
+        builder: Builder(
+          builder: (context) => BlocProvider(
+            create: (context) => sl<BrandsBloc>()..add(GetBrandProductsEvent(brandId: brandId)),
+            child: BrandDetailsView(
+              brandId: brandId,
+              brandName: brandName,
+              brandImage: brandImage,
+            ),
+          ),
         ),
       );
 }
@@ -44,9 +56,7 @@ class BrandDetailsView extends StatelessWidget {
 
   void _onLoadMore(BuildContext context, BrandProductsStatus status) {
     if (status != BrandProductsStatus.loading) {
-      context
-          .read<BrandsBloc>()
-          .add(LoadMoreBrandProductsEvent(brandId: brandId));
+      context.read<BrandsBloc>().add(LoadMoreBrandProductsEvent(brandId: brandId));
     }
   }
 
@@ -92,8 +102,7 @@ class BrandDetailsView extends StatelessWidget {
               ],
             ),
           ),
-          BlocSelector<BrandsBloc, BrandsState,
-              (BrandProductsStatus, List<ProductEntity>, bool, String)>(
+          BlocSelector<BrandsBloc, BrandsState, (BrandProductsStatus, List<ProductEntity>, bool, String)>(
             selector: (state) => (
               state.productsStatus,
               state.products,
@@ -101,15 +110,19 @@ class BrandDetailsView extends StatelessWidget {
               state.productsErrorMessage,
             ),
             builder: (context, data) {
-              final (
-                productsStatus,
-                products,
-                hasReachedMax,
-                productsErrorMessage
-              ) = data;
+              final (productsStatus, products, hasReachedMax, productsErrorMessage) = data;
 
-              final isLoading = productsStatus == BrandProductsStatus.loading &&
-                  products.isEmpty;
+              final isLoading = productsStatus == BrandProductsStatus.loading && products.isEmpty;
+
+              if (productsStatus == BrandProductsStatus.success && products.isNotEmpty) {
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  if (context.mounted) {
+                    ShowCaseWidget.of(context).startShowCase([
+                      AppShowcaseKeys.brandProducts,
+                    ]);
+                  }
+                });
+              }
 
               if (isLoading || products.isNotEmpty) {
                 return AppUnifiedSection<ProductEntity>(
@@ -129,26 +142,18 @@ class BrandDetailsView extends StatelessWidget {
                   ],
                   padding: EdgeInsets.symmetric(vertical: 16.h),
                   hasMore: !isLoading && !hasReachedMax,
-                  isLoadingMore: !isLoading &&
-                      (productsStatus == BrandProductsStatus.loading),
+                  isLoadingMore: !isLoading && (productsStatus == BrandProductsStatus.loading),
                   mainAxisExtent: 240.h,
-                  onLoadMore: isLoading
-                      ? null
-                      : () => _onLoadMore(context, productsStatus),
-                  itemBuilder: (context, product, index, wrapAnimation) =>
-                      wrapAnimation(
-                    AppUnifiedCard(
+                  onLoadMore: isLoading ? null : () => _onLoadMore(context, productsStatus),
+                  itemBuilder: (context, product, index, wrapAnimation) {
+                    final card = AppUnifiedCard(
                       id: product.id,
                       title: product.name,
                       description: product.description,
                       image: product.image,
                       price: product.discountedPrice.toStringAsFixed(0),
-                      originalPrice: product.hasOffer
-                          ? (double.tryParse(product.price) ?? 0)
-                              .toStringAsFixed(0)
-                          : null,
-                      discountPercentage:
-                          product.hasOffer ? product.discountPercentage : null,
+                      originalPrice: product.hasOffer ? (double.tryParse(product.price) ?? 0).toStringAsFixed(0) : null,
+                      discountPercentage: product.hasOffer ? product.discountPercentage : null,
                       rating: product.averageRating,
                       reviewCount: product.reviewCount,
                       isFavorite: product.isFavorite,
@@ -157,8 +162,20 @@ class BrandDetailsView extends StatelessWidget {
                         AppRoutes.productDetails,
                         extra: {'productId': product.id},
                       ),
-                    ),
-                  ),
+                    );
+                    if (index == 0) {
+                      return wrapAnimation(
+                        AppShowcase(
+                          showcaseKey: AppShowcaseKeys.brandProducts,
+                          title: context.l10n.showcase_brand_products_title,
+                          description: context.l10n.showcase_brand_products_desc,
+                          isLast: true,
+                          child: card,
+                        ),
+                      );
+                    }
+                    return wrapAnimation(card);
+                  },
                 );
               }
 
@@ -166,9 +183,7 @@ class BrandDetailsView extends StatelessWidget {
                 return SliverFillRemaining(
                   child: AppErrorWidget(
                     message: productsErrorMessage,
-                    onRetry: () => context
-                        .read<BrandsBloc>()
-                        .add(GetBrandProductsEvent(brandId: brandId)),
+                    onRetry: () => context.read<BrandsBloc>().add(GetBrandProductsEvent(brandId: brandId)),
                   ),
                 );
               }

@@ -3594,6 +3594,504 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Products'**
   String get search_tag_products;
+
+  /// No description provided for @showcase_home_search_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get showcase_home_search_title;
+
+  /// No description provided for @showcase_home_search_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Search for products and services easily.'**
+  String get showcase_home_search_desc;
+
+  /// No description provided for @showcase_home_filter_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter'**
+  String get showcase_home_filter_title;
+
+  /// No description provided for @showcase_home_filter_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter products and services by category, price, and brands.'**
+  String get showcase_home_filter_desc;
+
+  /// No description provided for @showcase_home_categories_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Categories'**
+  String get showcase_home_categories_title;
+
+  /// No description provided for @showcase_home_categories_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Browse products and services grouped by categories.'**
+  String get showcase_home_categories_desc;
+
+  /// No description provided for @showcase_home_nav_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Navigation'**
+  String get showcase_home_nav_title;
+
+  /// No description provided for @showcase_home_nav_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch between Home, Cart, Favorites, and Profile pages.'**
+  String get showcase_home_nav_desc;
+
+  /// No description provided for @showcase_product_details_add_to_cart_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to Cart'**
+  String get showcase_product_details_add_to_cart_title;
+
+  /// No description provided for @showcase_product_details_add_to_cart_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Select the desired quantity and add products to your cart.'**
+  String get showcase_product_details_add_to_cart_desc;
+
+  /// No description provided for @showcase_cart_swipe_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove Item'**
+  String get showcase_cart_swipe_title;
+
+  /// No description provided for @showcase_cart_swipe_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Swipe left on any item to delete it from your cart.'**
+  String get showcase_cart_swipe_desc;
+
+  /// No description provided for @showcase_cart_summary_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Order Summary'**
+  String get showcase_cart_summary_title;
+
+  /// No description provided for @showcase_cart_summary_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify your subtotal, discounts, delivery fee and tap Checkout to proceed.'**
+  String get showcase_cart_summary_desc;
+
+  /// No description provided for @profile_restart_tour.
+  ///
+  /// In en, this message translates to:
+  /// **'Restart App Tour'**
+  String get profile_restart_tour;
+
+  /// No description provided for @profile_restart_tour_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Tours reset! Open any main page to view the tour again.'**
+  String get profile_restart_tour_success;
+
+  /// No description provided for @showcase_favorite_tabs_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorites Selection'**
+  String get showcase_favorite_tabs_title;
+
+  /// No description provided for @showcase_favorite_tabs_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch between your favorite products and service bookmarks.'**
+  String get showcase_favorite_tabs_desc;
+
+  /// No description provided for @showcase_profile_stats_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Activity Stats'**
+  String get showcase_profile_stats_title;
+
+  /// No description provided for @showcase_profile_stats_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Check your total orders and active service bookings.'**
+  String get showcase_profile_stats_desc;
+
+  /// No description provided for @showcase_profile_settings_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Account Settings'**
+  String get showcase_profile_settings_title;
+
+  /// No description provided for @showcase_profile_settings_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage your profile details, shipping addresses, and language preference.'**
+  String get showcase_profile_settings_desc;
+
+  /// No description provided for @showcase_profile_support_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Support Center'**
+  String get showcase_profile_support_title;
+
+  /// No description provided for @showcase_profile_support_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Access help docs, give feedback, or restart the app product tours.'**
+  String get showcase_profile_support_desc;
+
+  /// No description provided for @showcase_search_field_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Search Field'**
+  String get showcase_search_field_title;
+
+  /// No description provided for @showcase_search_field_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Type keywords here to look up products or services instantly.'**
+  String get showcase_search_field_desc;
+
+  /// No description provided for @showcase_filter_fab_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Advanced Filters'**
+  String get showcase_filter_fab_title;
+
+  /// No description provided for @showcase_filter_fab_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Click here to set categories, price ranges, and ratings filters.'**
+  String get showcase_filter_fab_desc;
+
+  /// No description provided for @showcase_checkout_form_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Shipping Info'**
+  String get showcase_checkout_form_title;
+
+  /// No description provided for @showcase_checkout_form_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Fill in your delivery address, phone, and governorate details.'**
+  String get showcase_checkout_form_desc;
+
+  /// No description provided for @showcase_checkout_summary_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit Order'**
+  String get showcase_checkout_summary_title;
+
+  /// No description provided for @showcase_checkout_summary_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Review order amounts and click here to place your order.'**
+  String get showcase_checkout_summary_desc;
+
+  /// No description provided for @showcase_orders_tabs_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Orders Tracker'**
+  String get showcase_orders_tabs_title;
+
+  /// No description provided for @showcase_orders_tabs_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Track your physical product orders or digital service bookings.'**
+  String get showcase_orders_tabs_desc;
+
+  /// No description provided for @shared_next.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get shared_next;
+
+  /// No description provided for @shared_skip.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get shared_skip;
+
+  /// No description provided for @shared_finish.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish'**
+  String get shared_finish;
+
+  /// No description provided for @showcase_all_categories_grid_title.
+  ///
+  /// In en, this message translates to:
+  /// **'All Categories'**
+  String get showcase_all_categories_grid_title;
+
+  /// No description provided for @showcase_all_categories_grid_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Explore all our product and service categories in one place.'**
+  String get showcase_all_categories_grid_desc;
+
+  /// No description provided for @showcase_category_subcategories_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Subcategories'**
+  String get showcase_category_subcategories_title;
+
+  /// No description provided for @showcase_category_subcategories_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Swipe horizontally to explore more specific subcategories.'**
+  String get showcase_category_subcategories_desc;
+
+  /// No description provided for @showcase_subcategory_products_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Products List'**
+  String get showcase_subcategory_products_title;
+
+  /// No description provided for @showcase_subcategory_products_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Browse products and filter them to find exactly what you need.'**
+  String get showcase_subcategory_products_desc;
+
+  /// No description provided for @showcase_brands_grid_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Featured Brands'**
+  String get showcase_brands_grid_title;
+
+  /// No description provided for @showcase_brands_grid_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Browse and shop from your favorite verified brands.'**
+  String get showcase_brands_grid_desc;
+
+  /// No description provided for @showcase_brand_products_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Brand Products'**
+  String get showcase_brand_products_title;
+
+  /// No description provided for @showcase_brand_products_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'See all available products offered by this brand.'**
+  String get showcase_brand_products_desc;
+
+  /// No description provided for @showcase_service_provider_card_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Provider Info'**
+  String get showcase_service_provider_card_title;
+
+  /// No description provided for @showcase_service_provider_card_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Check verified details, contact details, and location of this service provider.'**
+  String get showcase_service_provider_card_desc;
+
+  /// No description provided for @showcase_service_reviews_btn_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Reviews'**
+  String get showcase_service_reviews_btn_title;
+
+  /// No description provided for @showcase_service_reviews_btn_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Read what other customers say about this service and check its ratings.'**
+  String get showcase_service_reviews_btn_desc;
+
+  /// No description provided for @showcase_service_booking_address_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking Address'**
+  String get showcase_service_booking_address_title;
+
+  /// No description provided for @showcase_service_booking_address_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Select or add your shipping address to receive the service.'**
+  String get showcase_service_booking_address_desc;
+
+  /// No description provided for @showcase_service_booking_confirm_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Booking'**
+  String get showcase_service_booking_confirm_title;
+
+  /// No description provided for @showcase_service_booking_confirm_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap here to submit your booking request to the service provider.'**
+  String get showcase_service_booking_confirm_desc;
+
+  /// No description provided for @showcase_provider_services_list_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Services List'**
+  String get showcase_provider_services_list_title;
+
+  /// No description provided for @showcase_provider_services_list_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Check out all services offered by this provider and book directly.'**
+  String get showcase_provider_services_list_desc;
+
+  /// No description provided for @showcase_provider_contact_info_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact Provider'**
+  String get showcase_provider_contact_info_title;
+
+  /// No description provided for @showcase_provider_contact_info_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Get in touch with the provider via call, message or find their location.'**
+  String get showcase_provider_contact_info_desc;
+
+  /// No description provided for @showcase_addresses_list_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved Addresses'**
+  String get showcase_addresses_list_title;
+
+  /// No description provided for @showcase_addresses_list_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage your shipping addresses or select a default delivery address.'**
+  String get showcase_addresses_list_desc;
+
+  /// No description provided for @showcase_add_address_button_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Add New Address'**
+  String get showcase_add_address_button_title;
+
+  /// No description provided for @showcase_add_address_button_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Click here to add a new delivery address.'**
+  String get showcase_add_address_button_desc;
+
+  /// No description provided for @showcase_add_address_form_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Address Details'**
+  String get showcase_add_address_form_title;
+
+  /// No description provided for @showcase_add_address_form_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Fill in the address details, label it (Home/Work), and save it.'**
+  String get showcase_add_address_form_desc;
+
+  /// No description provided for @showcase_edit_profile_form_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Information'**
+  String get showcase_edit_profile_form_title;
+
+  /// No description provided for @showcase_edit_profile_form_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Update your name, email, phone number, and profile picture here.'**
+  String get showcase_edit_profile_form_desc;
+
+  /// No description provided for @showcase_help_center_faq_title.
+  ///
+  /// In en, this message translates to:
+  /// **'FAQs Section'**
+  String get showcase_help_center_faq_title;
+
+  /// No description provided for @showcase_help_center_faq_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Find answers to frequently asked questions about orders and services.'**
+  String get showcase_help_center_faq_desc;
+
+  /// No description provided for @showcase_help_center_contact_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact Support'**
+  String get showcase_help_center_contact_title;
+
+  /// No description provided for @showcase_help_center_contact_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Reach out to our customer support team directly for any issues.'**
+  String get showcase_help_center_contact_desc;
+
+  /// No description provided for @showcase_order_details_status_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Order Status'**
+  String get showcase_order_details_status_title;
+
+  /// No description provided for @showcase_order_details_status_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Track the status of your package from placement to delivery.'**
+  String get showcase_order_details_status_desc;
+
+  /// No description provided for @showcase_order_details_items_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Order Details'**
+  String get showcase_order_details_items_title;
+
+  /// No description provided for @showcase_order_details_items_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Check items, summary of costs, and delivery address.'**
+  String get showcase_order_details_items_desc;
+
+  /// No description provided for @showcase_booking_details_status_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking Status'**
+  String get showcase_booking_details_status_title;
+
+  /// No description provided for @showcase_booking_details_status_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Check your service booking status (Pending, Accepted, Completed).'**
+  String get showcase_booking_details_status_desc;
+
+  /// No description provided for @showcase_booking_details_provider_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Provider Details'**
+  String get showcase_booking_details_provider_title;
+
+  /// No description provided for @showcase_booking_details_provider_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'See service provider details and contact them directly.'**
+  String get showcase_booking_details_provider_desc;
+
+  /// No description provided for @showcase_offers_promotions_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Offers & Banners'**
+  String get showcase_offers_promotions_title;
+
+  /// No description provided for @showcase_offers_promotions_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Discover active promotions, discount codes, and best deals.'**
+  String get showcase_offers_promotions_desc;
+
+  /// No description provided for @showcase_notifications_list_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications List'**
+  String get showcase_notifications_list_title;
+
+  /// No description provided for @showcase_notifications_list_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep track of status updates, promotions, and alerts.'**
+  String get showcase_notifications_list_desc;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

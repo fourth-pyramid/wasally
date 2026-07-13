@@ -45,6 +45,20 @@ class ProfileSupportSection extends StatelessWidget {
                     GoRouter.of(context).push(AppRoutes.privacyPolicy),
                   ),
                 ),
+                ProfileMenuTile(
+                  icon: Icons.play_circle_outline,
+                  title: context.l10n.profile_restart_tour,
+                  onTap: () async {
+                    // ponytail: Clear tour flags and show confirmation snackbar
+                    await StorageService.instance.clearShowcaseSeenFlags();
+                    if (context.mounted) {
+                      context.showTypedSnackBar(
+                        context.l10n.profile_restart_tour_success,
+                        type: SnackBarType.success,
+                      );
+                    }
+                  },
+                ),
               ],
             ),
           ),

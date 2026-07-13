@@ -1,3 +1,5 @@
+import 'package:showcase_tutorial/showcase_tutorial.dart';
+import 'package:wassaly/core/constants/showcase_keys.dart';
 import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/category/presentation/bloc/category_bloc.dart';
 import 'package:wassaly/features/category/presentation/bloc/category_event.dart';
@@ -11,17 +13,28 @@ import 'package:wassaly/features/sub_category/presentation/screens/sub_category_
 
 class CategoryPage extends StatelessWidget {
   const CategoryPage({
-    required this.category, super.key,
+    required this.category,
+    super.key,
   });
 
   final CategoryEntity category;
 
   @override
-  Widget build(BuildContext context) => BlocProvider(
-      create: (context) =>
-          sl<CategoryBloc>()..add(FetchCategoryDetailEvent(category.id)),
-      child: _CategoryView(category: category),
-    );
+  Widget build(BuildContext context) => ShowCaseWidget(
+        showcaseId: 'category_v1',
+        enableAutoScroll: true,
+        disableBarrierInteraction: true,
+        onShouldStartShowcase: (id) async => !StorageService.instance.hasSeenShowcase(id!),
+        onFinish: () {
+          unawaited(StorageService.instance.setHasSeenShowcase('category_v1', value: true));
+        },
+        builder: Builder(
+          builder: (context) => BlocProvider(
+            create: (context) => sl<CategoryBloc>()..add(FetchCategoryDetailEvent(category.id)),
+            child: _CategoryView(category: category),
+          ),
+        ),
+      );
 }
 
 class _CategoryView extends StatelessWidget {
@@ -30,8 +43,7 @@ class _CategoryView extends StatelessWidget {
   final CategoryEntity category;
 
   // FIX 10: named method — لا closure جديدة في كل rebuild
-  void _onRetry(BuildContext context) =>
-      context.read<CategoryBloc>().add(FetchCategoryDetailEvent(category.id));
+  void _onRetry(BuildContext context) => context.read<CategoryBloc>().add(FetchCategoryDetailEvent(category.id));
 
   @override
   Widget build(BuildContext context) {
@@ -46,15 +58,8 @@ class _CategoryView extends StatelessWidget {
           AppSliverTopBar(title: category.name),
 
           // FIX 2: BlocBuilder بس على الـ sliver اللي بيتغير فعلاً
-          BlocSelector<
-              CategoryBloc,
-              CategoryState,
-              (
-                CategoryStatus,
-                String,
-                List<SubCategoryEntity>,
-                SubCategoryEntity?
-              )>(
+          BlocSelector<CategoryBloc, CategoryState,
+              (CategoryStatus, String, List<SubCategoryEntity>, SubCategoryEntity?)>(
             selector: (state) => (
               state.status,
               state.errorMessage,
@@ -62,24 +67,20 @@ class _CategoryView extends StatelessWidget {
               state.selectedSubCategory,
             ),
             builder: (context, data) {
-              final (status, errorMessage, subCategories, selectedSubCategory) =
-                  data;
+              final (status, errorMessage, subCategories, selectedSubCategory) = data;
 
               if (status == CategoryStatus.failure) {
                 return SliverFillRemaining(
                   hasScrollBody: false,
                   child: AppErrorWidget(
                     title: context.l10n.errors_error_occurred_title,
-                    message: errorMessage.isNotEmpty
-                        ? errorMessage
-                        : context.l10n.errors_error_occurred_message,
+                    message: errorMessage.isNotEmpty ? errorMessage : context.l10n.errors_error_occurred_message,
                     onRetry: () => _onRetry(context),
                   ),
                 );
               }
 
-              final isLoading = status == CategoryStatus.loading ||
-                  status == CategoryStatus.initial;
+              final isLoading = status == CategoryStatus.loading || status == CategoryStatus.initial;
 
               if (!isLoading && subCategories.isEmpty) {
                 return SliverFillRemaining(
@@ -104,8 +105,21 @@ class _CategoryView extends StatelessWidget {
 
               final currentSubCategory = isLoading
                   ? const SubCategoryEntity(
-                      id: -1, name: 'تصنيف تجريبي', image: '',)
+                      id: -1,
+                      name: 'تصنيف تجريبي',
+                      image: '',
+                    )
                   : selectedSubCategory;
+
+              if (status == CategoryStatus.success && subCategories.isNotEmpty) {
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  if (context.mounted) {
+                    ShowCaseWidget.of(context).startShowCase([
+                      AppShowcaseKeys.categorySubCategories,
+                    ]);
+                  }
+                });
+              }
 
               return SliverFillRemaining(
                 child: Skeletonizer(
@@ -113,10 +127,16 @@ class _CategoryView extends StatelessWidget {
                   ignoreContainers: true,
                   child: Row(
                     children: [
-                      CategorySideMenu(
-                        isLoading: isLoading,
-                        subCategories: displaySubCategories,
-                        selectedSubCategoryId: selectedSubCategory?.id,
+                      AppShowcase(
+                        showcaseKey: AppShowcaseKeys.categorySubCategories,
+                        title: context.l10n.showcase_category_subcategories_title,
+                        description: context.l10n.showcase_category_subcategories_desc,
+                        isLast: true,
+                        child: CategorySideMenu(
+                          isLoading: isLoading,
+                          subCategories: displaySubCategories,
+                          selectedSubCategoryId: selectedSubCategory?.id,
+                        ),
                       ),
                       Expanded(
                         child: currentSubCategory == null
@@ -127,8 +147,11 @@ class _CategoryView extends StatelessWidget {
                                   create: (context) {
                                     final bloc = sl<SubCategoryBloc>();
                                     if (!isLoading) {
-                                      bloc.add(FetchSubCategoryDetailEvent(
-                                          currentSubCategory.id,),);
+                                      bloc.add(
+                                        FetchSubCategoryDetailEvent(
+                                          currentSubCategory.id,
+                                        ),
+                                      );
                                     }
                                     return bloc;
                                   },

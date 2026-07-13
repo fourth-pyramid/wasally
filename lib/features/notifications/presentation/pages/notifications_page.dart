@@ -1,3 +1,5 @@
+import 'package:showcase_tutorial/showcase_tutorial.dart';
+import 'package:wassaly/core/constants/showcase_keys.dart';
 import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/notifications/domain/entities/notification_entity.dart';
 import 'package:wassaly/features/notifications/presentation/bloc/notifications_bloc.dart';
@@ -7,6 +9,26 @@ import 'package:wassaly/features/notifications/presentation/widgets/notification
 
 class NotificationsPage extends StatelessWidget {
   const NotificationsPage({super.key});
+
+  @override
+  Widget build(BuildContext context) => ShowCaseWidget(
+        showcaseId: 'notifications_v1',
+        enableAutoScroll: true,
+        disableBarrierInteraction: true,
+        onShouldStartShowcase: (id) async => !StorageService.instance.hasSeenShowcase(id!),
+        onFinish: () {
+          unawaited(
+            StorageService.instance.setHasSeenShowcase('notifications_v1', value: true),
+          );
+        },
+        builder: Builder(
+          builder: (context) => const _NotificationsView(),
+        ),
+      );
+}
+
+class _NotificationsView extends StatelessWidget {
+  const _NotificationsView();
 
   void _onLoadMore(BuildContext context, bool hasMore, bool isLoadingMore) {
     if (hasMore && !isLoadingMore) {
@@ -19,8 +41,7 @@ class NotificationsPage extends StatelessWidget {
     final cs = context.theme.colorScheme;
 
     return BlocListener<NotificationsBloc, NotificationsState>(
-      listenWhen: (prev, curr) =>
-          prev.actionStatus != curr.actionStatus && curr.actionStatus.isFailure,
+      listenWhen: (prev, curr) => prev.actionStatus != curr.actionStatus && curr.actionStatus.isFailure,
       listener: (context, state) {
         context.showTypedSnackBar(
           state.errorMessage ?? '',
@@ -31,9 +52,7 @@ class NotificationsPage extends StatelessWidget {
         backgroundColor: cs.surface,
         body: RefreshIndicator(
           onRefresh: () async {
-            context
-                .read<NotificationsBloc>()
-                .add(const GetNotificationsEvent(isRefresh: true));
+            context.read<NotificationsBloc>().add(const GetNotificationsEvent(isRefresh: true));
           },
           child: CustomScrollView(
             physics: const AlwaysScrollableScrollPhysics(),
@@ -50,9 +69,7 @@ class NotificationsPage extends StatelessWidget {
                         children: [
                           IconButton(
                             icon: Icon(Icons.done_all, color: cs.primary),
-                            onPressed: () => context
-                                .read<NotificationsBloc>()
-                                .add(const ReadAllNotificationsEvent()),
+                            onPressed: () => context.read<NotificationsBloc>().add(const ReadAllNotificationsEvent()),
                           ),
                           IconButton(
                             icon: Icon(
@@ -79,14 +96,11 @@ class NotificationsPage extends StatelessWidget {
                   }
                   if (status.isFailure) {
                     return SliverFillRemaining(
-                      child: BlocSelector<NotificationsBloc, NotificationsState,
-                          String?>(
+                      child: BlocSelector<NotificationsBloc, NotificationsState, String?>(
                         selector: (s) => s.errorMessage,
                         builder: (context, msg) => AppErrorWidget.failure(
                           failure: UnknownFailure(msg ?? ''),
-                          onRetry: () => context
-                              .read<NotificationsBloc>()
-                              .add(const GetNotificationsEvent()),
+                          onRetry: () => context.read<NotificationsBloc>().add(const GetNotificationsEvent()),
                         ),
                       ),
                     );
@@ -96,8 +110,7 @@ class NotificationsPage extends StatelessWidget {
               ),
 
               // ── Notification list ──
-              BlocSelector<NotificationsBloc, NotificationsState,
-                  _ListSelectorData>(
+              BlocSelector<NotificationsBloc, NotificationsState, _ListSelectorData>(
                 selector: (state) => _ListSelectorData(
                   notifications: state.notifications,
                   isSuccess: state.status.isSuccess,
@@ -109,10 +122,19 @@ class NotificationsPage extends StatelessWidget {
                       child: AppEmptyState(
                         icon: Icons.notifications_none_outlined,
                         title: context.l10n.notification_no_notifications,
-                        subtitle:
-                            context.l10n.notification_no_notifications_desc,
+                        subtitle: context.l10n.notification_no_notifications_desc,
                       ),
                     );
+                  }
+
+                  if (data.isSuccess && data.notifications.isNotEmpty) {
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      if (context.mounted) {
+                        ShowCaseWidget.of(context).startShowCase([
+                          AppShowcaseKeys.notificationsList,
+                        ]);
+                      }
+                    });
                   }
 
                   if (data.notifications.isEmpty) {
@@ -125,23 +147,31 @@ class NotificationsPage extends StatelessWidget {
                       delegate: SliverChildBuilderDelegate(
                         (context, index) {
                           final notification = data.notifications[index];
-                          return NotificationCard(
+                          final card = NotificationCard(
                             notification: notification,
                             onTap: () {
                               if (!notification.isRead) {
-                                context
-                                    .read<NotificationsBloc>()
-                                    .add(MarkAsReadEvent(notification.id));
+                                context.read<NotificationsBloc>().add(MarkAsReadEvent(notification.id));
                               }
                               _handleNotificationNavigation(
                                 context,
                                 notification,
                               );
                             },
-                            onDelete: () => context
-                                .read<NotificationsBloc>()
-                                .add(DeleteNotificationEvent(notification.id)),
+                            onDelete: () =>
+                                context.read<NotificationsBloc>().add(DeleteNotificationEvent(notification.id)),
                           );
+
+                          if (index == 0) {
+                            return AppShowcase(
+                              showcaseKey: AppShowcaseKeys.notificationsList,
+                              title: context.l10n.showcase_notifications_list_title,
+                              description: context.l10n.showcase_notifications_list_desc,
+                              isLast: true,
+                              child: card,
+                            );
+                          }
+                          return card;
                         },
                         childCount: data.notifications.length,
                       ),
@@ -151,15 +181,13 @@ class NotificationsPage extends StatelessWidget {
               ),
 
               // ── Load-more indicator at the bottom (Standardized & Redundant Trigger) ──
-              BlocSelector<NotificationsBloc, NotificationsState,
-                  _PaginationSelectorData>(
+              BlocSelector<NotificationsBloc, NotificationsState, _PaginationSelectorData>(
                 selector: (state) => _PaginationSelectorData(
                   isLoadingMore: state.isLoadingMore,
                   hasMore: state.hasMore,
                 ),
                 builder: (context, data) {
-                  final (isLoadingMore, hasMore) =
-                      (data.isLoadingMore, data.hasMore);
+                  final (isLoadingMore, hasMore) = (data.isLoadingMore, data.hasMore);
 
                   return SliverToBoxAdapter(
                     child: Builder(
@@ -183,8 +211,7 @@ class NotificationsPage extends StatelessWidget {
                             child: Center(
                               child: Text(
                                 context.l10n.noMoreNotifications,
-                                style:
-                                    context.theme.textTheme.bodySmall?.copyWith(
+                                style: context.theme.textTheme.bodySmall?.copyWith(
                                   color: context.theme.colorScheme.outline,
                                 ),
                               ),
@@ -349,9 +376,7 @@ class _DeleteAllDialog extends StatelessWidget {
                     isFullWidth: true,
                     onPressed: () {
                       Navigator.of(context).pop();
-                      context
-                          .read<NotificationsBloc>()
-                          .add(const DeleteAllNotificationsEvent());
+                      context.read<NotificationsBloc>().add(const DeleteAllNotificationsEvent());
                     },
                   ),
                 ),

@@ -1,3 +1,5 @@
+import 'package:showcase_tutorial/showcase_tutorial.dart';
+import 'package:wassaly/core/constants/showcase_keys.dart';
 import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/favorite/presentation/bloc/favorite_bloc.dart';
 import 'package:wassaly/features/favorite/presentation/bloc/favorite_event.dart';
@@ -19,8 +21,7 @@ class _FavoriteView extends StatefulWidget {
   State<_FavoriteView> createState() => _FavoriteViewState();
 }
 
-class _FavoriteViewState extends State<_FavoriteView>
-    with SingleTickerProviderStateMixin {
+class _FavoriteViewState extends State<_FavoriteView> with SingleTickerProviderStateMixin {
   late final TabController _tabController;
 
   @override
@@ -36,6 +37,11 @@ class _FavoriteViewState extends State<_FavoriteView>
       if (bloc.state.serviceStatus == FavoriteStatus.initial) {
         bloc.add(const GetServiceFavoritesEvent());
       }
+
+      // ponytail: Trigger favorite page showcase
+      ShowCaseWidget.of(context).startShowCase([
+        AppShowcaseKeys.favoriteTabs,
+      ]);
     });
   }
 
@@ -52,23 +58,32 @@ class _FavoriteViewState extends State<_FavoriteView>
     return Scaffold(
       body: NestedScrollView(
         headerSliverBuilder: (context, innerBoxIsScrolled) => [
-            AppSliverTopBar(
-              automaticallyImplyLeading: false,
-              title: context.l10n.favorite_favorite_title,
-              pinned: true,
-              bottom: TabBar(
-                controller: _tabController,
-                labelColor: cs.primary,
-                unselectedLabelColor: cs.onSurfaceVariant,
-                indicatorColor: cs.primary,
-                indicatorSize: TabBarIndicatorSize.label,
-                tabs: [
-                  Tab(text: context.l10n.favorite_products),
-                  Tab(text: context.l10n.favorite_services),
-                ],
+          AppSliverTopBar(
+            automaticallyImplyLeading: false,
+            title: context.l10n.favorite_favorite_title,
+            pinned: true,
+            bottom: PreferredSize(
+              preferredSize: const Size.fromHeight(48),
+              child: AppShowcase(
+                showcaseKey: AppShowcaseKeys.favoriteTabs,
+                title: context.l10n.showcase_favorite_tabs_title,
+                description: context.l10n.showcase_favorite_tabs_desc,
+                isLast: true,
+                child: TabBar(
+                  controller: _tabController,
+                  labelColor: cs.primary,
+                  unselectedLabelColor: cs.onSurfaceVariant,
+                  indicatorColor: cs.primary,
+                  indicatorSize: TabBarIndicatorSize.label,
+                  tabs: [
+                    Tab(text: context.l10n.favorite_products),
+                    Tab(text: context.l10n.favorite_services),
+                  ],
+                ),
               ),
             ),
-          ],
+          ),
+        ],
         body: TabBarView(
           controller: _tabController,
           children: const [

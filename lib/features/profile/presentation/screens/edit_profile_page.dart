@@ -1,3 +1,5 @@
+import 'package:showcase_tutorial/showcase_tutorial.dart';
+import 'package:wassaly/core/constants/showcase_keys.dart';
 import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/auth/domain/entities/user_entity.dart';
 import 'package:wassaly/features/profile/presentation/bloc/profile/profile_bloc.dart';
@@ -7,7 +9,20 @@ class EditProfilePage extends StatelessWidget {
   const EditProfilePage({super.key});
 
   @override
-  Widget build(BuildContext context) => const _EditProfileView();
+  Widget build(BuildContext context) => ShowCaseWidget(
+        showcaseId: 'edit_profile_v1',
+        enableAutoScroll: true,
+        disableBarrierInteraction: true,
+        onShouldStartShowcase: (id) async => !StorageService.instance.hasSeenShowcase(id!),
+        onFinish: () {
+          unawaited(
+            StorageService.instance.setHasSeenShowcase('edit_profile_v1', value: true),
+          );
+        },
+        builder: Builder(
+          builder: (context) => const _EditProfileView(),
+        ),
+      );
 }
 
 class _EditProfileView extends StatefulWidget {
@@ -48,6 +63,14 @@ class _EditProfileViewState extends State<_EditProfileView> {
     } else {
       bloc.add(const ProfileFetched());
     }
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        ShowCaseWidget.of(context).startShowCase([
+          AppShowcaseKeys.editProfileForm,
+        ]);
+      }
+    });
   }
 
   @override
@@ -85,13 +108,11 @@ class _EditProfileViewState extends State<_EditProfileView> {
             phone: _phoneController.text.trim(),
             avatar: _avatarFileNotifier.value,
             password: password.isNotEmpty ? password : null,
-            currentPassword: _currentPasswordController.text.trim().isNotEmpty
-                ? _currentPasswordController.text.trim()
+            currentPassword:
+                _currentPasswordController.text.trim().isNotEmpty ? _currentPasswordController.text.trim() : null,
+            passwordConfirmation: _passwordConfirmationController.text.trim().isNotEmpty
+                ? _passwordConfirmationController.text.trim()
                 : null,
-            passwordConfirmation:
-                _passwordConfirmationController.text.trim().isNotEmpty
-                    ? _passwordConfirmationController.text.trim()
-                    : null,
           ),
         );
   }
@@ -162,8 +183,7 @@ class _EditProfileViewState extends State<_EditProfileView> {
         body: BlocListener<ProfileBloc, ProfileState>(
           listenWhen: (prev, curr) =>
               (prev.user != curr.user && curr.user != null) ||
-              (prev.actionStatus != curr.actionStatus &&
-                  curr.actionStatus.isDone),
+              (prev.actionStatus != curr.actionStatus && curr.actionStatus.isDone),
           listener: (context, state) {
             if (_previousUser != state.user && state.user != null) {
               _nameController.text = state.user!.name ?? '';
@@ -171,8 +191,7 @@ class _EditProfileViewState extends State<_EditProfileView> {
             }
             _previousUser = state.user;
 
-            if (_previousActionStatus != state.actionStatus &&
-                state.actionStatus.isDone) {
+            if (_previousActionStatus != state.actionStatus && state.actionStatus.isDone) {
               if (state.actionStatus.isSuccess) {
                 if (state.user == null) {
                   // Account deleted or logged out — navigation is handled by
@@ -189,8 +208,7 @@ class _EditProfileViewState extends State<_EditProfileView> {
                     }
                   } on Exception catch (_) {}
                 }
-              } else if (state.actionStatus.isFailure &&
-                  state.actionError != null) {
+              } else if (state.actionStatus.isFailure && state.actionError != null) {
                 context.showTypedSnackBar(
                   state.actionError!,
                   type: SnackBarType.error,
@@ -209,44 +227,48 @@ class _EditProfileViewState extends State<_EditProfileView> {
                   bottom: 16.h,
                 ),
                 sliver: SliverToBoxAdapter(
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                      children: [
-                        ValueListenableBuilder<File?>(
-                          valueListenable: _avatarFileNotifier,
-                          builder: (context, avatarFile, child) =>
-                              EditProfileAvatarPicker(
-                            avatarFile: avatarFile,
-                            onAvatarPicked: _onAvatarPicked,
+                  child: AppShowcase(
+                    showcaseKey: AppShowcaseKeys.editProfileForm,
+                    title: context.l10n.showcase_edit_profile_form_title,
+                    description: context.l10n.showcase_edit_profile_form_desc,
+                    isLast: true,
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        children: [
+                          ValueListenableBuilder<File?>(
+                            valueListenable: _avatarFileNotifier,
+                            builder: (context, avatarFile, child) => EditProfileAvatarPicker(
+                              avatarFile: avatarFile,
+                              onAvatarPicked: _onAvatarPicked,
+                            ),
                           ),
-                        ),
-                        8.verticalSpace,
-                        EditProfileNameField(controller: _nameController),
-                        8.verticalSpace,
-                        EditProfilePhoneField(controller: _phoneController),
-                        16.verticalSpace,
-                        EditProfilePasswordSection(
-                          currentPasswordController: _currentPasswordController,
-                          passwordController: _passwordController,
-                          passwordConfirmationController:
-                              _passwordConfirmationController,
-                        ),
-                        16.verticalSpace,
-                        EditProfileSaveButton(onPressed: _submit),
-                        8.verticalSpace,
-                        AppButton(
-                          label: context.l10n.profile_delete_account,
-                          onPressed: _showDeleteAccountBottomSheet,
-                          variant: ButtonVariant.danger,
-                          isFullWidth: true,
-                          prefixIcon: Icon(
-                            Icons.delete_forever,
-                            // ponytail: explicit color to match danger variant
-                            color: context.theme.colorScheme.onError,
+                          8.verticalSpace,
+                          EditProfileNameField(controller: _nameController),
+                          8.verticalSpace,
+                          EditProfilePhoneField(controller: _phoneController),
+                          16.verticalSpace,
+                          EditProfilePasswordSection(
+                            currentPasswordController: _currentPasswordController,
+                            passwordController: _passwordController,
+                            passwordConfirmationController: _passwordConfirmationController,
                           ),
-                        ),
-                      ],
+                          16.verticalSpace,
+                          EditProfileSaveButton(onPressed: _submit),
+                          8.verticalSpace,
+                          AppButton(
+                            label: context.l10n.profile_delete_account,
+                            onPressed: _showDeleteAccountBottomSheet,
+                            variant: ButtonVariant.danger,
+                            isFullWidth: true,
+                            prefixIcon: Icon(
+                              Icons.delete_forever,
+                              // ponytail: explicit color to match danger variant
+                              color: context.theme.colorScheme.onError,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

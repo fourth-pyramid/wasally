@@ -1,3 +1,4 @@
+import 'package:wassaly/core/constants/showcase_keys.dart';
 import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/cart/presentation/bloc/cart_bloc.dart';
 import 'package:wassaly/features/cart/presentation/bloc/cart_event.dart';
@@ -121,37 +122,43 @@ class _AddToCartBottomBarState extends State<AddToCartBottomBar> {
                       final isInCart = state.isInCart(widget.productId);
                       final isAdding = state.isAdding(widget.productId);
 
-                      return AppButton(
-                        label: isInCart
-                            ? context.l10n.cart_already_added
-                            : context.l10n.cart_add_to_cart,
-                        onPressed: (isAdding || isInCart)
-                            ? null
-                            : () {
-                                // Add to cart only - cannot remove from here
-                                context.read<CartBloc>().add(
-                                      AddToCartEvent(
-                                        widget.productId,
-                                        quantity: quantity,
-                                      ),
-                                    );
-                              },
-                        isLoading: isAdding,
-                        isFullWidth: true,
-                        prefixIcon: Icon(
-                          isInCart
-                              ? Icons.check_circle_outline
-                              : Icons.shopping_cart_outlined,
-                          size: 20.r,
+                      return AppShowcase(
+                        showcaseKey: AppShowcaseKeys.productAddToCart,
+                        title: context.l10n.showcase_product_details_add_to_cart_title,
+                        description: context.l10n.showcase_product_details_add_to_cart_desc,
+                        isLast: true,
+                        child: AppButton(
+                          label: isInCart
+                              ? context.l10n.cart_already_added
+                              : context.l10n.cart_add_to_cart,
+                          onPressed: (isAdding || isInCart)
+                              ? null
+                              : () {
+                                  // Add to cart only - cannot remove from here
+                                  context.read<CartBloc>().add(
+                                        AddToCartEvent(
+                                          widget.productId,
+                                          quantity: quantity,
+                                        ),
+                                      );
+                                },
+                          isLoading: isAdding,
+                          isFullWidth: true,
+                          prefixIcon: Icon(
+                            isInCart
+                                ? Icons.check_circle_outline
+                                : Icons.shopping_cart_outlined,
+                            size: 20.r,
+                          ),
+                          suffixIcon: !isInCart && !isAdding
+                              ? Text(
+                                  '• ${price.toStringAsFixed(0)} ${context.l10n.shared_currency_egp}',
+                                  style: tt.bodySmall?.copyWith(
+                                    color: cs.onPrimary,
+                                  ),
+                                )
+                              : null,
                         ),
-                        suffixIcon: !isInCart && !isAdding
-                            ? Text(
-                                '• ${price.toStringAsFixed(0)} ${context.l10n.shared_currency_egp}',
-                                style: tt.bodySmall?.copyWith(
-                                  color: cs.onPrimary,
-                                ),
-                              )
-                            : null,
                       );
                     },
                   );

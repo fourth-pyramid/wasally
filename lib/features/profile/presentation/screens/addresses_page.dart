@@ -1,16 +1,50 @@
+import 'package:showcase_tutorial/showcase_tutorial.dart';
+import 'package:wassaly/core/constants/showcase_keys.dart';
 import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/profile/domain/entities/address_entity.dart';
 import 'package:wassaly/features/profile/presentation/bloc/profile/profile_bloc.dart';
 
-class AddressesPage extends StatelessWidget {
+class AddressesPage extends StatefulWidget {
   const AddressesPage({super.key});
 
   @override
-  Widget build(BuildContext context) => const _AddressesView();
+  State<AddressesPage> createState() => _AddressesPageState();
+}
+
+class _AddressesPageState extends State<AddressesPage> {
+  late final ScrollController _scrollController;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => ShowCaseWidget(
+        showcaseId: 'addresses_v1',
+        enableAutoScroll: true,
+        disableBarrierInteraction: true,
+        onShouldStartShowcase: (id) async => !StorageService.instance.hasSeenShowcase(id!),
+        onFinish: () {
+          unawaited(StorageService.instance.setHasSeenShowcase('addresses_v1', value: true));
+        },
+        builder: Builder(
+          builder: (context) => _AddressesView(scrollController: _scrollController),
+        ),
+      );
 }
 
 class _AddressesView extends StatefulWidget {
-  const _AddressesView();
+  final ScrollController scrollController;
+
+  const _AddressesView({required this.scrollController});
 
   @override
   State<_AddressesView> createState() => _AddressesViewState();
@@ -28,14 +62,24 @@ class _AddressesViewState extends State<_AddressesView> {
     final cs = context.theme.colorScheme;
 
     return Scaffold(
-      body: BlocSelector<ProfileBloc, ProfileState,
-          (AppStatus, List<AddressEntity>, String?)>(
-        selector: (state) =>
-            (state.addressStatus, state.addresses, state.addressError),
+      body: BlocSelector<ProfileBloc, ProfileState, (AppStatus, List<AddressEntity>, String?)>(
+        selector: (state) => (state.addressStatus, state.addresses, state.addressError),
         builder: (context, data) {
           final (addressStatus, addresses, addressError) = data;
 
+          if (addressStatus.isSuccess) {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              if (context.mounted) {
+                ShowCaseWidget.of(context).startShowCase([
+                  AppShowcaseKeys.addressesList,
+                  AppShowcaseKeys.addAddressButton,
+                ]);
+              }
+            });
+          }
+
           return CustomScrollView(
+            controller: widget.scrollController,
             slivers: [
               AppSliverTopBar(
                 title: context.l10n.profile_saved_addresses,
@@ -61,12 +105,8 @@ class _AddressesViewState extends State<_AddressesView> {
                   child: Center(
                     child: AppErrorWidget(
                       title: context.l10n.errors_error_occurred_title,
-                      message: addressError.isNotEmpty
-                          ? addressError
-                          : context.l10n.errors_error_occurred_message,
-                      onRetry: () => context
-                          .read<ProfileBloc>()
-                          .add(const AddressesFetched()),
+                      message: addressError.isNotEmpty ? addressError : context.l10n.errors_error_occurred_message,
+                      onRetry: () => context.read<ProfileBloc>().add(const AddressesFetched()),
                     ),
                   ),
                 )
@@ -78,8 +118,7 @@ class _AddressesViewState extends State<_AddressesView> {
                     title: context.l10n.profile_no_addresses,
                     subtitle: context.l10n.profile_add_address_hint,
                     actionLabel: context.l10n.profile_add_address,
-                    onAction: () =>
-                        unawaited(context.push(AppRoutes.addAddress)),
+                    onAction: () => unawaited(context.push(AppRoutes.addAddress)),
                   ),
                 )
               else ...[
@@ -90,7 +129,16 @@ class _AddressesViewState extends State<_AddressesView> {
                       (context, index) {
                         if (index.isOdd) return 16.verticalSpace;
                         final address = addresses[index ~/ 2];
-                        return _AddressCard(address: address);
+                        final card = _AddressCard(address: address);
+                        if (index ~/ 2 == 0) {
+                          return AppShowcase(
+                            showcaseKey: AppShowcaseKeys.addressesList,
+                            title: context.l10n.showcase_addresses_list_title,
+                            description: context.l10n.showcase_addresses_list_desc,
+                            child: card,
+                          );
+                        }
+                        return card;
                       },
                       childCount: addresses.length * 2 - 1,
                     ),
@@ -101,16 +149,21 @@ class _AddressesViewState extends State<_AddressesView> {
                     padding: EdgeInsets.all(16.w),
                     child: SizedBox(
                       width: double.infinity,
-                      child: AppButton(
-                        label: context.l10n.profile_add_new_address,
-                        isFullWidth: true,
-                        prefixIcon: Icon(
-                          Icons.add_location_alt_outlined,
-                          color: cs.onPrimary,
-                          size: 20.r,
+                      child: AppShowcase(
+                        showcaseKey: AppShowcaseKeys.addAddressButton,
+                        title: context.l10n.showcase_add_address_button_title,
+                        description: context.l10n.showcase_add_address_button_desc,
+                        isLast: true,
+                        child: AppButton(
+                          label: context.l10n.profile_add_new_address,
+                          isFullWidth: true,
+                          prefixIcon: Icon(
+                            Icons.add_location_alt_outlined,
+                            color: cs.onPrimary,
+                            size: 20.r,
+                          ),
+                          onPressed: () => unawaited(context.push(AppRoutes.addAddress)),
                         ),
-                        onPressed: () =>
-                            unawaited(context.push(AppRoutes.addAddress)),
                       ),
                     ),
                   ),
@@ -135,10 +188,8 @@ class _AddressCard extends StatelessWidget {
     final tt = context.theme.textTheme;
 
     // Determine icon and colors based on address type
-    final isHome = address.title.toLowerCase().contains('home') ||
-        address.title.toLowerCase().contains('منزل');
-    final isWork = address.title.toLowerCase().contains('work') ||
-        address.title.toLowerCase().contains('عمل');
+    final isHome = address.title.toLowerCase().contains('home') || address.title.toLowerCase().contains('منزل');
+    final isWork = address.title.toLowerCase().contains('work') || address.title.toLowerCase().contains('عمل');
 
     final iconData = isHome
         ? Icons.home_outlined
@@ -193,8 +244,7 @@ class _AddressCard extends StatelessWidget {
                   textColor: cs.error,
                   height: ButtonSize.small,
                   isFullWidth: true,
-                  prefixIcon:
-                      Icon(Icons.delete_outline, color: cs.error, size: 18.r),
+                  prefixIcon: Icon(Icons.delete_outline, color: cs.error, size: 18.r),
                   onPressed: () async {
                     final confirmed = await showAppDialog<bool>(
                       child: _DeleteAddressDialog(addressTitle: address.title),
@@ -217,8 +267,7 @@ class _AddressCard extends StatelessWidget {
                   variant: ButtonVariant.secondary,
                   height: ButtonSize.small,
                   isFullWidth: true,
-                  prefixIcon:
-                      Icon(Icons.edit_outlined, color: cs.primary, size: 18.r),
+                  prefixIcon: Icon(Icons.edit_outlined, color: cs.primary, size: 18.r),
                   onPressed: () {
                     unawaited(
                       context.push(

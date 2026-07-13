@@ -1,15 +1,50 @@
+import 'package:showcase_tutorial/showcase_tutorial.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:wassaly/core/constants/showcase_keys.dart';
 import 'package:wassaly/core/imports/imports.dart';
 
-class HelpCenterPage extends StatefulWidget {
+class HelpCenterPage extends StatelessWidget {
   const HelpCenterPage({super.key});
 
   @override
-  State<HelpCenterPage> createState() => _HelpCenterPageState();
+  Widget build(BuildContext context) => ShowCaseWidget(
+        showcaseId: 'help_center_v1',
+        enableAutoScroll: true,
+        disableBarrierInteraction: true,
+        onShouldStartShowcase: (id) async => !StorageService.instance.hasSeenShowcase(id!),
+        onFinish: () {
+          unawaited(
+            StorageService.instance.setHasSeenShowcase('help_center_v1', value: true),
+          );
+        },
+        builder: Builder(
+          builder: (context) => const _HelpCenterView(),
+        ),
+      );
 }
 
-class _HelpCenterPageState extends State<HelpCenterPage> {
+class _HelpCenterView extends StatefulWidget {
+  const _HelpCenterView();
+
+  @override
+  State<_HelpCenterView> createState() => _HelpCenterViewState();
+}
+
+class _HelpCenterViewState extends State<_HelpCenterView> {
   int? _expandedIndex;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        ShowCaseWidget.of(context).startShowCase([
+          AppShowcaseKeys.helpCenterContact,
+          AppShowcaseKeys.helpCenterFaq,
+        ]);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +86,12 @@ class _HelpCenterPageState extends State<HelpCenterPage> {
                     cs: cs,
                   ),
                   8.verticalSpace,
-                  _ContactCard(cs: cs, tt: tt),
+                  AppShowcase(
+                    showcaseKey: AppShowcaseKeys.helpCenterContact,
+                    title: context.l10n.showcase_help_center_contact_title,
+                    description: context.l10n.showcase_help_center_contact_desc,
+                    child: _ContactCard(cs: cs, tt: tt),
+                  ),
                   24.verticalSpace,
                   _SectionLabel(
                     label: context.l10n.profile_help_faqs,
@@ -59,14 +99,19 @@ class _HelpCenterPageState extends State<HelpCenterPage> {
                     cs: cs,
                   ),
                   8.verticalSpace,
-                  _FaqCard(
-                    faqs: faqs,
-                    cs: cs,
-                    tt: tt,
-                    expandedIndex: _expandedIndex,
-                    onExpand: (index) => setState(
-                      () => _expandedIndex =
-                          _expandedIndex == index ? null : index,
+                  AppShowcase(
+                    showcaseKey: AppShowcaseKeys.helpCenterFaq,
+                    title: context.l10n.showcase_help_center_faq_title,
+                    description: context.l10n.showcase_help_center_faq_desc,
+                    isLast: true,
+                    child: _FaqCard(
+                      faqs: faqs,
+                      cs: cs,
+                      tt: tt,
+                      expandedIndex: _expandedIndex,
+                      onExpand: (index) => setState(
+                        () => _expandedIndex = _expandedIndex == index ? null : index,
+                      ),
                     ),
                   ),
                   24.verticalSpace,
@@ -141,8 +186,7 @@ class _HeroBanner extends StatelessWidget {
                   ),
                   10.verticalSpace,
                   Container(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
+                    padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
                     decoration: BoxDecoration(
                       color: cs.onPrimary.withValues(alpha: 0.15),
                       borderRadius: BorderRadius.circular(20.r),
@@ -233,8 +277,7 @@ class _ContactCard extends StatelessWidget {
                 onTap: () => _makeCall(context.l10n.profile_help_phone_number),
                 borderRadius: BorderRadius.circular(8.r),
                 child: Container(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.h),
+                  padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.h),
                   decoration: BoxDecoration(
                     color: cs.surfaceContainerLowest,
                     borderRadius: BorderRadius.circular(8.r),
@@ -320,9 +363,7 @@ class _FaqCard extends StatelessWidget {
                     onTap: () => onExpand(index),
                     borderRadius: BorderRadius.vertical(
                       top: index == 0 ? Radius.circular(12.r) : Radius.zero,
-                      bottom: isLast && !isOpen
-                          ? Radius.circular(12.r)
-                          : Radius.zero,
+                      bottom: isLast && !isOpen ? Radius.circular(12.r) : Radius.zero,
                     ),
                     child: Padding(
                       padding: EdgeInsets.symmetric(

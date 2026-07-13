@@ -98,12 +98,16 @@ class ProductDetailsInfo extends StatelessWidget {
                   return IconButton(
                     onPressed: isToggling
                         ? null
-                        : () => context.read<FavoriteBloc>().add(
-                              ToggleFavoriteEvent(
-                                product.id,
-                                expectedIsFavorite: isFavorite,
-                              ),
-                            ),
+                        : () async {
+                            final bloc = context.read<FavoriteBloc>();
+                            await HapticFeedback.lightImpact(); // ponytail: native light haptic impact on favorite button tap
+                            bloc.add(
+                                  ToggleFavoriteEvent(
+                                    product.id,
+                                    expectedIsFavorite: isFavorite,
+                                  ),
+                                );
+                          },
                     icon: Icon(
                       isFavorite
                           ? Icons.favorite_rounded

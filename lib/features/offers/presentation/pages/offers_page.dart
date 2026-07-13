@@ -1,3 +1,5 @@
+import 'package:showcase_tutorial/showcase_tutorial.dart';
+import 'package:wassaly/core/constants/showcase_keys.dart';
 import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/home/domain/entities/product_entity.dart';
 import 'package:wassaly/features/offers/presentation/bloc/offers_bloc.dart';
@@ -10,9 +12,24 @@ class OffersPage extends StatelessWidget {
   const OffersPage({super.key});
 
   @override
-  Widget build(BuildContext context) => BlocProvider(
-        create: (context) => sl<OffersBloc>()..add(GetOffersEvent()),
-        child: const OffersView(),
+  Widget build(BuildContext context) => ShowCaseWidget(
+        showcaseId: 'offers_v1',
+        enableAutoScroll: true,
+        disableBarrierInteraction: true,
+        onShouldStartShowcase: (id) async =>
+            !StorageService.instance.hasSeenShowcase(id!),
+        onFinish: () {
+          unawaited(
+            StorageService.instance
+                .setHasSeenShowcase('offers_v1', value: true),
+          );
+        },
+        builder: Builder(
+          builder: (context) => BlocProvider(
+            create: (context) => sl<OffersBloc>()..add(GetOffersEvent()),
+            child: const OffersView(),
+          ),
+        ),
       );
 }
 
@@ -54,6 +71,16 @@ class OffersView extends StatelessWidget {
             builder: (context, data) {
               final (status, products, hasReachedMax, errorMessage) = data;
 
+              if (status.isSuccess && products.isNotEmpty) {
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  if (context.mounted) {
+                    ShowCaseWidget.of(context).startShowCase([
+                      AppShowcaseKeys.offersPromotions,
+                    ]);
+                  }
+                });
+              }
+
               final isLoading = status == AppStatus.loading && products.isEmpty;
 
               if (isLoading || products.isNotEmpty) {
@@ -79,9 +106,8 @@ class OffersView extends StatelessWidget {
                   mainAxisExtent: 240.h,
                   onLoadMore:
                       isLoading ? null : () => _onLoadMore(context, status),
-                  itemBuilder: (context, product, index, wrapAnimation) =>
-                      wrapAnimation(
-                    AppUnifiedCard(
+                  itemBuilder: (context, product, index, wrapAnimation) {
+                    final card = AppUnifiedCard(
                       id: product.id,
                       title: product.name,
                       description: product.description,
@@ -101,8 +127,21 @@ class OffersView extends StatelessWidget {
                         AppRoutes.productDetails,
                         extra: {'productId': product.id},
                       ),
-                    ),
-                  ),
+                    );
+
+                    final wrappedCard = wrapAnimation(card);
+
+                    if (index == 0) {
+                      return AppShowcase(
+                        showcaseKey: AppShowcaseKeys.offersPromotions,
+                        title: context.l10n.showcase_offers_promotions_title,
+                        description: context.l10n.showcase_offers_promotions_desc,
+                        isLast: true,
+                        child: wrappedCard,
+                      );
+                    }
+                    return wrappedCard;
+                  },
                 );
               }
 

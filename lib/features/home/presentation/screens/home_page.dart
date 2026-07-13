@@ -1,3 +1,5 @@
+import 'package:showcase_tutorial/showcase_tutorial.dart';
+import 'package:wassaly/core/constants/showcase_keys.dart';
 import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/brands/presentation/widgets/brands_section.dart';
 import 'package:wassaly/features/home/presentation/bloc/home_bloc.dart';
@@ -41,6 +43,21 @@ class _HomeViewState extends State<_HomeView> {
         sl<InternetConnectionService>().connectivityRestoredStream.listen((_) {
       if (mounted) {
         unawaited(_refreshAllSections(context));
+      }
+    });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        final state = context.read<HomeBloc>().state;
+        if (state.categoriesStatus == HomeStatus.success &&
+            state.productsStatus == HomeStatus.success) {
+          ShowCaseWidget.of(context).startShowCase([
+            AppShowcaseKeys.homeSearch,
+            AppShowcaseKeys.homeFilter,
+            AppShowcaseKeys.homeCategories,
+            AppShowcaseKeys.homeNavBar,
+          ]);
+        }
       }
     });
   }
@@ -90,39 +107,70 @@ class _HomeViewState extends State<_HomeView> {
     // Only the slivers that actually react to state are inside BlocSelector.
     return Scaffold(
       backgroundColor: cs.surface,
-      body: RefreshIndicator(
-        key: _refreshIndicatorKey,
-        onRefresh: () => _refreshAllSections(context),
-        color: cs.primary,
-        backgroundColor: cs.surface,
-        child: CustomScrollView(
-          controller: _scrollController,
-          slivers: [
-            // Static AppBar — never changes
-            AppSliverTopBar(
-              automaticallyImplyLeading: false,
-              showLogo: true,
-              leading: IconButton(
-                icon: Icon(
-                  Icons.filter_list_rounded,
-                  color: cs.primary,
-                  size: 28.r,
-                ),
-                onPressed: () =>
-                    unawaited(context.push(AppRoutes.productsFilter)),
-              ),
-              actions: [
-                const AppNotificationBadgeIcon(),
-                IconButton(
-                  icon: Icon(
-                    Icons.search,
-                    color: cs.primary,
-                    size: 28.r,
+      body: BlocListener<HomeBloc, HomeState>(
+        listenWhen: (prev, curr) {
+          // ponytail: Trigger show case once when home categories/products are loaded successfully
+          final prevLoaded = prev.categoriesStatus == HomeStatus.success &&
+              prev.productsStatus == HomeStatus.success;
+          final currLoaded = curr.categoriesStatus == HomeStatus.success &&
+              curr.productsStatus == HomeStatus.success;
+          return !prevLoaded && currLoaded;
+        },
+        listener: (context, state) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (mounted) {
+              ShowCaseWidget.of(context).startShowCase([
+                AppShowcaseKeys.homeSearch,
+                AppShowcaseKeys.homeFilter,
+                AppShowcaseKeys.homeCategories,
+                AppShowcaseKeys.homeNavBar,
+              ]);
+            }
+          });
+        },
+        child: RefreshIndicator(
+          key: _refreshIndicatorKey,
+          onRefresh: () => _refreshAllSections(context),
+          color: cs.primary,
+          backgroundColor: cs.surface,
+          child: CustomScrollView(
+            controller: _scrollController,
+            slivers: [
+              // Static AppBar — never changes
+              AppSliverTopBar(
+                automaticallyImplyLeading: false,
+                showLogo: true,
+                leading: AppShowcase(
+                  showcaseKey: AppShowcaseKeys.homeFilter,
+                  title: context.l10n.showcase_home_filter_title,
+                  description: context.l10n.showcase_home_filter_desc,
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.filter_list_rounded,
+                      color: cs.primary,
+                      size: 28.r,
+                    ),
+                    onPressed: () =>
+                        unawaited(context.push(AppRoutes.productsFilter)),
                   ),
-                  onPressed: () => _onSearchTap(context), // FIX 10
                 ),
-              ],
-            ),
+                actions: [
+                  const AppNotificationBadgeIcon(),
+                  AppShowcase(
+                    showcaseKey: AppShowcaseKeys.homeSearch,
+                    title: context.l10n.showcase_home_search_title,
+                    description: context.l10n.showcase_home_search_desc,
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.search,
+                        color: cs.primary,
+                        size: 28.r,
+                      ),
+                      onPressed: () => _onSearchTap(context), // FIX 10
+                    ),
+                  ),
+                ],
+              ),
 
             // Dynamic slivers — scoped BlocSelector
             BlocSelector<HomeBloc, HomeState, (bool, bool, Failure?, String)>(
@@ -183,8 +231,15 @@ class _HomeViewState extends State<_HomeView> {
                     const PopularServicesSection(),
 
                     // Main Categories
-                    const SliverToBoxAdapter(
-                      child: RepaintBoundary(child: MainCategoriesSection()),
+                    SliverToBoxAdapter(
+                      child: RepaintBoundary(
+                        child: AppShowcase(
+                          showcaseKey: AppShowcaseKeys.homeCategories,
+                          title: context.l10n.showcase_home_categories_title,
+                          description: context.l10n.showcase_home_categories_desc,
+                          child: const MainCategoriesSection(),
+                        ),
+                      ),
                     ),
 
                     // Spacing
@@ -235,6 +290,7 @@ class _HomeViewState extends State<_HomeView> {
           ],
         ),
       ),
-    );
+    ),
+  );
   }
 }

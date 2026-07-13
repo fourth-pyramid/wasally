@@ -1,3 +1,4 @@
+import 'package:wassaly/core/constants/showcase_keys.dart';
 import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/search/presentation/bloc/search_bloc.dart';
 import 'package:wassaly/features/search/presentation/bloc/search_event.dart';
@@ -46,42 +47,48 @@ class _SearchAppBarState extends State<SearchAppBar> {
           padding: EdgeInsets.symmetric(
             vertical: 6.h,
           ),
-          child: AppTextField(
-            controller: _controller,
-            autofocus: true,
-            textInputAction: TextInputAction.search,
-            onFieldSubmitted: (value) {
-              context.read<SearchBloc>().add(const SearchSubmitted());
-            },
-            onChanged: (value) {
-              context.read<SearchBloc>().add(SearchQueryChanged(value));
-            },
-            hint: context.l10n.search_search_hint,
-            prefixIcon: Icon(
-              Icons.search,
-              color: cs.onSurfaceVariant.withValues(alpha: 0.7),
-              size: 22.r,
-            ),
-            suffixIcon: ValueListenableBuilder<TextEditingValue>(
-              valueListenable: _controller,
-              builder: (context, value, child) {
-                if (value.text.isEmpty) return const SizedBox.shrink();
-                return GestureDetector(
-                  onTap: () {
-                    _controller.clear();
-                    context.read<SearchBloc>().add(const SearchCleared());
-                  },
-                  child: Icon(
-                    Icons.clear,
-                    color: cs.onSurfaceVariant.withValues(alpha: 0.7),
-                    size: 20.r,
-                  ),
-                );
+          child: AppShowcase(
+            showcaseKey: AppShowcaseKeys.searchField,
+            title: context.l10n.showcase_search_field_title,
+            description: context.l10n.showcase_search_field_desc,
+            isLast: true,
+            child: AppTextField(
+              controller: _controller,
+              autofocus: true,
+              textInputAction: TextInputAction.search,
+              onFieldSubmitted: (value) {
+                context.read<SearchBloc>().add(const SearchSubmitted());
               },
-            ),
-            contentPadding: EdgeInsets.symmetric(
-              horizontal: 12.w,
-              vertical: 8.h,
+              onChanged: (value) {
+                context.read<SearchBloc>().add(SearchQueryChanged(value));
+              },
+              hint: context.l10n.search_search_hint,
+              prefixIcon: Icon(
+                Icons.search,
+                color: cs.onSurfaceVariant.withValues(alpha: 0.7),
+                size: 22.r,
+              ),
+              suffixIcon: ValueListenableBuilder<TextEditingValue>(
+                valueListenable: _controller,
+                builder: (context, value, child) {
+                  if (value.text.isEmpty) return const SizedBox.shrink();
+                  return GestureDetector(
+                    onTap: () {
+                      _controller.clear();
+                      context.read<SearchBloc>().add(const SearchCleared());
+                    },
+                    child: Icon(
+                      Icons.clear,
+                      color: cs.onSurfaceVariant.withValues(alpha: 0.7),
+                      size: 20.r,
+                    ),
+                  );
+                },
+              ),
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: 12.w,
+                vertical: 8.h,
+              ),
             ),
           ),
         ),

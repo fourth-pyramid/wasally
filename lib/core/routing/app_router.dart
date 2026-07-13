@@ -1,3 +1,4 @@
+import 'package:showcase_tutorial/showcase_tutorial.dart';
 import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/app_reviews/presentation/bloc/app_reviews_bloc.dart';
 import 'package:wassaly/features/app_reviews/presentation/bloc/app_reviews_event.dart';
@@ -11,8 +12,7 @@ import 'package:wassaly/features/auth/presentation/screens/signup_page.dart';
 import 'package:wassaly/features/auth/presentation/screens/splash_page.dart';
 import 'package:wassaly/features/brands/presentation/pages/brand_details_page.dart';
 import 'package:wassaly/features/brands/presentation/pages/brands_page.dart';
-import 'package:wassaly/features/cart/domain/entities/order_entity.dart'
-    as cart_order;
+import 'package:wassaly/features/cart/domain/entities/order_entity.dart' as cart_order;
 import 'package:wassaly/features/cart/presentation/bloc/cart_state.dart';
 import 'package:wassaly/features/cart/presentation/bloc/checkout/checkout_bloc.dart';
 import 'package:wassaly/features/cart/presentation/screens/cart_page.dart';
@@ -63,8 +63,7 @@ final GoRouter appRouter = GoRouter(
   initialLocation: AppRoutes.splash,
   observers: [RequestRouteObserver()],
   // Handle deep links for Google OAuth callbacks
-  redirect: (context, state) =>
-      DeepLinkService.instance.getRouteForDeepLink(state.uri),
+  redirect: (context, state) => DeepLinkService.instance.getRouteForDeepLink(state.uri),
   routes: <RouteBase>[
     GoRoute(
       path: AppRoutes.splash,
@@ -72,9 +71,33 @@ final GoRouter appRouter = GoRouter(
       builder: (context, state) => const SplashPage(),
     ),
     StatefulShellRoute.indexedStack(
-      builder: (context, state, navigationShell) => MainLayoutPage(
-        navigationShell: navigationShell,
-      ),
+      builder: (context, state, navigationShell) {
+        final index = navigationShell.currentIndex;
+        // ponytail: map navigation shell tab index to dynamic tab showcaseId
+        final showcaseId = switch (index) {
+          0 => 'home_v1',
+          1 => 'cart_v1',
+          2 => 'favorite_v1',
+          3 => 'profile_v1',
+          _ => 'home_v1',
+        };
+
+        return ShowCaseWidget(
+          showcaseId: showcaseId,
+          enableAutoScroll: true,
+          disableBarrierInteraction: true,
+          onShouldStartShowcase: (id) async => !StorageService.instance.hasSeenShowcase(id!),
+          onFinish: () {
+            // ponytail: Persist dynamic seen completion state
+            unawaited(StorageService.instance.setHasSeenShowcase(showcaseId, value: true));
+          },
+          builder: Builder(
+            builder: (context) => MainLayoutPage(
+              navigationShell: navigationShell,
+            ),
+          ),
+        );
+      },
       branches: [
         StatefulShellBranch(
           routes: [
@@ -140,8 +163,7 @@ final GoRouter appRouter = GoRouter(
                     final extra = state.extra as Map<String, dynamic>?;
                     final orderId = extra?['orderId'] as int? ?? 0;
                     return BlocProvider(
-                      create: (_) => sl<OrderDetailBloc>()
-                        ..add(FetchOrderDetailEvent(orderId)),
+                      create: (_) => sl<OrderDetailBloc>()..add(FetchOrderDetailEvent(orderId)),
                       child: OrderDetailsPage(orderId: orderId),
                     );
                   },
@@ -156,13 +178,12 @@ final GoRouter appRouter = GoRouter(
                     if (booking == null) {
                       return Scaffold(
                         body: Center(
-                            child:
-                                Text(context.l10n.errors_something_went_wrong),),
+                          child: Text(context.l10n.errors_something_went_wrong),
+                        ),
                       );
                     }
                     return BlocProvider(
-                      create: (_) => sl<BookingDetailBloc>()
-                        ..add(InitializeBookingDetailEvent(booking)),
+                      create: (_) => sl<BookingDetailBloc>()..add(InitializeBookingDetailEvent(booking)),
                       child: BookingDetailsPage(booking: booking),
                     );
                   },
@@ -200,8 +221,7 @@ final GoRouter appRouter = GoRouter(
                   name: 'appReviews',
                   parentNavigatorKey: rootNavigatorKey,
                   builder: (context, state) => BlocProvider(
-                    create: (_) =>
-                        sl<AppReviewsBloc>()..add(const GetAppReviewsEvent()),
+                    create: (_) => sl<AppReviewsBloc>()..add(const GetAppReviewsEvent()),
                     child: const AppReviewsPage(),
                   ),
                 ),
@@ -260,9 +280,7 @@ final GoRouter appRouter = GoRouter(
       builder: (context, state) {
         final extra = state.extra as Map<String, dynamic>?;
         final email = extra?['email'] as String? ?? '';
-        final verificationType =
-            extra?['verificationType'] as VerificationType? ??
-                VerificationType.register;
+        final verificationType = extra?['verificationType'] as VerificationType? ?? VerificationType.register;
         return OtpVerificationPage(
           email: email,
           verificationType: verificationType,
@@ -379,8 +397,7 @@ final GoRouter appRouter = GoRouter(
           );
         }
         return BlocProvider(
-          create: (_) => sl<CheckoutBloc>()
-            ..add(CheckoutInitialized(cartState: cartState)),
+          create: (_) => sl<CheckoutBloc>()..add(CheckoutInitialized(cartState: cartState)),
           child: const CheckoutPage(),
         );
       },
@@ -419,8 +436,7 @@ final GoRouter appRouter = GoRouter(
         final extra = state.extra as Map<String, dynamic>?;
         final service = extra?['service'] as ServiceDetailEntity?;
         final selectedDay = extra?['selectedDay'] as ServiceAvailableDayEntity?;
-        final selectedTime =
-            extra?['selectedTime'] as ServiceAvailableTimeEntity?;
+        final selectedTime = extra?['selectedTime'] as ServiceAvailableTimeEntity?;
 
         if (service == null) {
           return Scaffold(

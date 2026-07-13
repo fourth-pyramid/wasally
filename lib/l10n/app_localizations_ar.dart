@@ -1912,4 +1912,292 @@ class SAr extends S {
 
   @override
   String get search_tag_products => 'منتجات';
+
+  @override
+  String get showcase_home_search_title => 'البحث';
+
+  @override
+  String get showcase_home_search_desc =>
+      'ابحث عن المنتجات والخدمات التي تحتاجها بسهولة.';
+
+  @override
+  String get showcase_home_filter_title => 'التصفية';
+
+  @override
+  String get showcase_home_filter_desc =>
+      'قم بتصفية المنتجات والخدمات حسب الأقسام، الأسعار، والماركات.';
+
+  @override
+  String get showcase_home_categories_title => 'الأقسام';
+
+  @override
+  String get showcase_home_categories_desc =>
+      'تصفح المنتجات والخدمات المصنفة حسب الأقسام.';
+
+  @override
+  String get showcase_home_nav_title => 'شريط التنقل';
+
+  @override
+  String get showcase_home_nav_desc =>
+      'تنقل بسهولة بين الرئيسية، السلة، المفضلة، وحسابك الشخصي.';
+
+  @override
+  String get showcase_product_details_add_to_cart_title => 'أضف إلى السلة';
+
+  @override
+  String get showcase_product_details_add_to_cart_desc =>
+      'اختر الكمية المطلوبة وأضف المنتجات إلى سلة المشتريات الخاصة بك.';
+
+  @override
+  String get showcase_cart_swipe_title => 'حذف المنتج';
+
+  @override
+  String get showcase_cart_swipe_desc => 'اسحب المنتج لليسار لحذفه من السلة.';
+
+  @override
+  String get showcase_cart_summary_title => 'ملخص الطلب';
+
+  @override
+  String get showcase_cart_summary_desc =>
+      'تحقق من المجموع الفرعي، الخصومات، رسوم التوصيل واضغط على إتمام الطلب للمتابعة.';
+
+  @override
+  String get profile_restart_tour => 'إعادة جولة التطبيق';
+
+  @override
+  String get profile_restart_tour_success =>
+      'تمت إعادة جولة التطبيق بنجاح! افتح أي صفحة لمشاهدتها مجدداً.';
+
+  @override
+  String get showcase_favorite_tabs_title => 'المفضلة';
+
+  @override
+  String get showcase_favorite_tabs_desc =>
+      'تنقل بين قائمة المنتجات وقائمة الخدمات المفضلة لديك.';
+
+  @override
+  String get showcase_profile_stats_title => 'إحصائيات النشاط';
+
+  @override
+  String get showcase_profile_stats_desc =>
+      'تابع عدد طلبات المنتجات وحجوزات الخدمات النشطة الخاصة بك.';
+
+  @override
+  String get showcase_profile_settings_title => 'إعدادات الحساب';
+
+  @override
+  String get showcase_profile_settings_desc =>
+      'تعديل بيانات الحساب، العناوين المحفوظة، وتغيير اللغة.';
+
+  @override
+  String get showcase_profile_support_title => 'مركز الدعم';
+
+  @override
+  String get showcase_profile_support_desc =>
+      'تواصل مع خدمة العملاء، واقرأ الأسئلة الشائعة أو أعد جولة التطبيق.';
+
+  @override
+  String get showcase_search_field_title => 'صندوق البحث';
+
+  @override
+  String get showcase_search_field_desc =>
+      'اكتب كلمات البحث هنا للبحث عن المنتجات أو الخدمات بشكل فوري.';
+
+  @override
+  String get showcase_filter_fab_title => 'تصفية متقدمة';
+
+  @override
+  String get showcase_filter_fab_desc =>
+      'اضغط هنا لتحديد الأقسام، النطاق السعري، والتقييم لتصفية المنتجات.';
+
+  @override
+  String get showcase_checkout_form_title => 'بيانات الشحن';
+
+  @override
+  String get showcase_checkout_form_desc =>
+      'أدخل عنوان الشحن، رقم الهاتف، والمحافظة للتوصيل.';
+
+  @override
+  String get showcase_checkout_summary_title => 'تأكيد الطلب';
+
+  @override
+  String get showcase_checkout_summary_desc =>
+      'راجع تفاصيل التكاليف واضغط لتأكيد وإرسال طلبك.';
+
+  @override
+  String get showcase_orders_tabs_title => 'متابعة الطلبات';
+
+  @override
+  String get showcase_orders_tabs_desc =>
+      'تابع حالة طلبات المنتجات أو حجوزات الخدمات الخاصة بك.';
+
+  @override
+  String get shared_next => 'التالي';
+
+  @override
+  String get shared_skip => 'تخطي';
+
+  @override
+  String get shared_finish => 'إنهاء';
+
+  @override
+  String get showcase_all_categories_grid_title => 'كل الأقسام';
+
+  @override
+  String get showcase_all_categories_grid_desc =>
+      'تصفح كل أقسام المنتجات والخدمات المتاحة في مكان واحد.';
+
+  @override
+  String get showcase_category_subcategories_title => 'الأقسام الفرعية';
+
+  @override
+  String get showcase_category_subcategories_desc =>
+      'اسحب أفقياً لتصفح الأقسام الفرعية الأكثر تخصصاً.';
+
+  @override
+  String get showcase_subcategory_products_title => 'قائمة المنتجات';
+
+  @override
+  String get showcase_subcategory_products_desc =>
+      'تصفح المنتجات وقم بتصفيتها لتجد ما تبحث عنه بدقة.';
+
+  @override
+  String get showcase_brands_grid_title => 'الماركات المميزة';
+
+  @override
+  String get showcase_brands_grid_desc =>
+      'تصفح وتسوق من الماركات الموثوقة والمفضلة لديك.';
+
+  @override
+  String get showcase_brand_products_title => 'منتجات الماركة';
+
+  @override
+  String get showcase_brand_products_desc =>
+      'شاهد كافة المنتجات والخدمات المعروضة تحت هذه الماركة.';
+
+  @override
+  String get showcase_service_provider_card_title => 'بيانات المزود';
+
+  @override
+  String get showcase_service_provider_card_desc =>
+      'تحقق من بيانات مزود الخدمة المعتمدة، وسائل الاتصال وموقعه.';
+
+  @override
+  String get showcase_service_reviews_btn_title => 'آراء العملاء';
+
+  @override
+  String get showcase_service_reviews_btn_desc =>
+      'اقرأ تقييمات وآراء العملاء الآخرين حول هذه الخدمة.';
+
+  @override
+  String get showcase_service_booking_address_title => 'عنوان الحجز';
+
+  @override
+  String get showcase_service_booking_address_desc =>
+      'حدد أو أضف عنوان الشحن الخاص بك لتلقي الخدمة فيه.';
+
+  @override
+  String get showcase_service_booking_confirm_title => 'تأكيد الحجز';
+
+  @override
+  String get showcase_service_booking_confirm_desc =>
+      'اضغط هنا لإرسال طلب الحجز الخاص بك إلى مزود الخدمة مباشرة.';
+
+  @override
+  String get showcase_provider_services_list_title => 'قائمة الخدمات';
+
+  @override
+  String get showcase_provider_services_list_desc =>
+      'تصفح كافة الخدمات المتاحة لدى هذا المزود واحجز ما يناسبك.';
+
+  @override
+  String get showcase_provider_contact_info_title => 'اتصل بالمزود';
+
+  @override
+  String get showcase_provider_contact_info_desc =>
+      'تواصل مع مزود الخدمة هاتفياً أو عبر الرسائل أو اعرف مكانه على الخريطة.';
+
+  @override
+  String get showcase_addresses_list_title => 'العناوين المحفوظة';
+
+  @override
+  String get showcase_addresses_list_desc =>
+      'أدر عناوين الشحن الخاصة بك أو حدد عنواناً افتراضياً للتوصيل.';
+
+  @override
+  String get showcase_add_address_button_title => 'إضافة عنوان جديد';
+
+  @override
+  String get showcase_add_address_button_desc =>
+      'اضغط هنا لإضافة عنوان توصيل جديد لحسابك.';
+
+  @override
+  String get showcase_add_address_form_title => 'تفاصيل العنوان';
+
+  @override
+  String get showcase_add_address_form_desc =>
+      'أدخل تفاصيل العنوان، قم بتسميته (المنزل/العمل) ثم احفظه.';
+
+  @override
+  String get showcase_edit_profile_form_title => 'تعديل البيانات';
+
+  @override
+  String get showcase_edit_profile_form_desc =>
+      'حدث اسمك، بريدك الإلكتروني، رقم هاتفك وصورتك الشخصية من هنا.';
+
+  @override
+  String get showcase_help_center_faq_title => 'الأسئلة الشائعة';
+
+  @override
+  String get showcase_help_center_faq_desc =>
+      'ابحث عن إجابات سريعة للأسئلة الشائعة حول الطلبات والخدمات.';
+
+  @override
+  String get showcase_help_center_contact_title => 'الدعم الفني';
+
+  @override
+  String get showcase_help_center_contact_desc =>
+      'تواصل مباشرة مع فريق الدعم الفني لحل أي مشكلة تواجهك.';
+
+  @override
+  String get showcase_order_details_status_title => 'حالة الطلب';
+
+  @override
+  String get showcase_order_details_status_desc =>
+      'تابع حالة شحنتك خطوة بخطوة من التجهيز وحتى التوصيل.';
+
+  @override
+  String get showcase_order_details_items_title => 'تفاصيل المنتجات';
+
+  @override
+  String get showcase_order_details_items_desc =>
+      'تحقق من المنتجات المطلوبة، ملخص التكاليف وعنوان التوصيل.';
+
+  @override
+  String get showcase_booking_details_status_title => 'حالة الحجز';
+
+  @override
+  String get showcase_booking_details_status_desc =>
+      'راجع حالة حجز الخدمة الخاص بك (قيد الانتظار، مقبول، مكتمل).';
+
+  @override
+  String get showcase_booking_details_provider_title => 'تفاصيل المزود';
+
+  @override
+  String get showcase_booking_details_provider_desc =>
+      'راجع معلومات مزود الخدمة وتواصل معه مباشرة.';
+
+  @override
+  String get showcase_offers_promotions_title => 'العروض والخصومات';
+
+  @override
+  String get showcase_offers_promotions_desc =>
+      'اكتشف العروض الترويجية النشطة، أكواد الخصم وأفضل الأسعار.';
+
+  @override
+  String get showcase_notifications_list_title => 'قائمة التنبيهات';
+
+  @override
+  String get showcase_notifications_list_desc =>
+      'تابع جميع التنبيهات، تحديثات الطلبات والعروض الحصرية أولاً بأول.';
 }

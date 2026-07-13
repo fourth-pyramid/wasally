@@ -1899,4 +1899,293 @@ class SEn extends S {
 
   @override
   String get search_tag_products => 'Products';
+
+  @override
+  String get showcase_home_search_title => 'Search';
+
+  @override
+  String get showcase_home_search_desc =>
+      'Search for products and services easily.';
+
+  @override
+  String get showcase_home_filter_title => 'Filter';
+
+  @override
+  String get showcase_home_filter_desc =>
+      'Filter products and services by category, price, and brands.';
+
+  @override
+  String get showcase_home_categories_title => 'Categories';
+
+  @override
+  String get showcase_home_categories_desc =>
+      'Browse products and services grouped by categories.';
+
+  @override
+  String get showcase_home_nav_title => 'Navigation';
+
+  @override
+  String get showcase_home_nav_desc =>
+      'Switch between Home, Cart, Favorites, and Profile pages.';
+
+  @override
+  String get showcase_product_details_add_to_cart_title => 'Add to Cart';
+
+  @override
+  String get showcase_product_details_add_to_cart_desc =>
+      'Select the desired quantity and add products to your cart.';
+
+  @override
+  String get showcase_cart_swipe_title => 'Remove Item';
+
+  @override
+  String get showcase_cart_swipe_desc =>
+      'Swipe left on any item to delete it from your cart.';
+
+  @override
+  String get showcase_cart_summary_title => 'Order Summary';
+
+  @override
+  String get showcase_cart_summary_desc =>
+      'Verify your subtotal, discounts, delivery fee and tap Checkout to proceed.';
+
+  @override
+  String get profile_restart_tour => 'Restart App Tour';
+
+  @override
+  String get profile_restart_tour_success =>
+      'Tours reset! Open any main page to view the tour again.';
+
+  @override
+  String get showcase_favorite_tabs_title => 'Favorites Selection';
+
+  @override
+  String get showcase_favorite_tabs_desc =>
+      'Switch between your favorite products and service bookmarks.';
+
+  @override
+  String get showcase_profile_stats_title => 'Activity Stats';
+
+  @override
+  String get showcase_profile_stats_desc =>
+      'Check your total orders and active service bookings.';
+
+  @override
+  String get showcase_profile_settings_title => 'Account Settings';
+
+  @override
+  String get showcase_profile_settings_desc =>
+      'Manage your profile details, shipping addresses, and language preference.';
+
+  @override
+  String get showcase_profile_support_title => 'Support Center';
+
+  @override
+  String get showcase_profile_support_desc =>
+      'Access help docs, give feedback, or restart the app product tours.';
+
+  @override
+  String get showcase_search_field_title => 'Search Field';
+
+  @override
+  String get showcase_search_field_desc =>
+      'Type keywords here to look up products or services instantly.';
+
+  @override
+  String get showcase_filter_fab_title => 'Advanced Filters';
+
+  @override
+  String get showcase_filter_fab_desc =>
+      'Click here to set categories, price ranges, and ratings filters.';
+
+  @override
+  String get showcase_checkout_form_title => 'Shipping Info';
+
+  @override
+  String get showcase_checkout_form_desc =>
+      'Fill in your delivery address, phone, and governorate details.';
+
+  @override
+  String get showcase_checkout_summary_title => 'Submit Order';
+
+  @override
+  String get showcase_checkout_summary_desc =>
+      'Review order amounts and click here to place your order.';
+
+  @override
+  String get showcase_orders_tabs_title => 'Orders Tracker';
+
+  @override
+  String get showcase_orders_tabs_desc =>
+      'Track your physical product orders or digital service bookings.';
+
+  @override
+  String get shared_next => 'Next';
+
+  @override
+  String get shared_skip => 'Skip';
+
+  @override
+  String get shared_finish => 'Finish';
+
+  @override
+  String get showcase_all_categories_grid_title => 'All Categories';
+
+  @override
+  String get showcase_all_categories_grid_desc =>
+      'Explore all our product and service categories in one place.';
+
+  @override
+  String get showcase_category_subcategories_title => 'Subcategories';
+
+  @override
+  String get showcase_category_subcategories_desc =>
+      'Swipe horizontally to explore more specific subcategories.';
+
+  @override
+  String get showcase_subcategory_products_title => 'Products List';
+
+  @override
+  String get showcase_subcategory_products_desc =>
+      'Browse products and filter them to find exactly what you need.';
+
+  @override
+  String get showcase_brands_grid_title => 'Featured Brands';
+
+  @override
+  String get showcase_brands_grid_desc =>
+      'Browse and shop from your favorite verified brands.';
+
+  @override
+  String get showcase_brand_products_title => 'Brand Products';
+
+  @override
+  String get showcase_brand_products_desc =>
+      'See all available products offered by this brand.';
+
+  @override
+  String get showcase_service_provider_card_title => 'Provider Info';
+
+  @override
+  String get showcase_service_provider_card_desc =>
+      'Check verified details, contact details, and location of this service provider.';
+
+  @override
+  String get showcase_service_reviews_btn_title => 'Customer Reviews';
+
+  @override
+  String get showcase_service_reviews_btn_desc =>
+      'Read what other customers say about this service and check its ratings.';
+
+  @override
+  String get showcase_service_booking_address_title => 'Booking Address';
+
+  @override
+  String get showcase_service_booking_address_desc =>
+      'Select or add your shipping address to receive the service.';
+
+  @override
+  String get showcase_service_booking_confirm_title => 'Confirm Booking';
+
+  @override
+  String get showcase_service_booking_confirm_desc =>
+      'Tap here to submit your booking request to the service provider.';
+
+  @override
+  String get showcase_provider_services_list_title => 'Services List';
+
+  @override
+  String get showcase_provider_services_list_desc =>
+      'Check out all services offered by this provider and book directly.';
+
+  @override
+  String get showcase_provider_contact_info_title => 'Contact Provider';
+
+  @override
+  String get showcase_provider_contact_info_desc =>
+      'Get in touch with the provider via call, message or find their location.';
+
+  @override
+  String get showcase_addresses_list_title => 'Saved Addresses';
+
+  @override
+  String get showcase_addresses_list_desc =>
+      'Manage your shipping addresses or select a default delivery address.';
+
+  @override
+  String get showcase_add_address_button_title => 'Add New Address';
+
+  @override
+  String get showcase_add_address_button_desc =>
+      'Click here to add a new delivery address.';
+
+  @override
+  String get showcase_add_address_form_title => 'Address Details';
+
+  @override
+  String get showcase_add_address_form_desc =>
+      'Fill in the address details, label it (Home/Work), and save it.';
+
+  @override
+  String get showcase_edit_profile_form_title => 'Edit Information';
+
+  @override
+  String get showcase_edit_profile_form_desc =>
+      'Update your name, email, phone number, and profile picture here.';
+
+  @override
+  String get showcase_help_center_faq_title => 'FAQs Section';
+
+  @override
+  String get showcase_help_center_faq_desc =>
+      'Find answers to frequently asked questions about orders and services.';
+
+  @override
+  String get showcase_help_center_contact_title => 'Contact Support';
+
+  @override
+  String get showcase_help_center_contact_desc =>
+      'Reach out to our customer support team directly for any issues.';
+
+  @override
+  String get showcase_order_details_status_title => 'Order Status';
+
+  @override
+  String get showcase_order_details_status_desc =>
+      'Track the status of your package from placement to delivery.';
+
+  @override
+  String get showcase_order_details_items_title => 'Order Details';
+
+  @override
+  String get showcase_order_details_items_desc =>
+      'Check items, summary of costs, and delivery address.';
+
+  @override
+  String get showcase_booking_details_status_title => 'Booking Status';
+
+  @override
+  String get showcase_booking_details_status_desc =>
+      'Check your service booking status (Pending, Accepted, Completed).';
+
+  @override
+  String get showcase_booking_details_provider_title => 'Provider Details';
+
+  @override
+  String get showcase_booking_details_provider_desc =>
+      'See service provider details and contact them directly.';
+
+  @override
+  String get showcase_offers_promotions_title => 'Offers & Banners';
+
+  @override
+  String get showcase_offers_promotions_desc =>
+      'Discover active promotions, discount codes, and best deals.';
+
+  @override
+  String get showcase_notifications_list_title => 'Notifications List';
+
+  @override
+  String get showcase_notifications_list_desc =>
+      'Keep track of status updates, promotions, and alerts.';
 }

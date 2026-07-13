@@ -1,3 +1,5 @@
+import 'package:showcase_tutorial/showcase_tutorial.dart';
+import 'package:wassaly/core/constants/showcase_keys.dart';
 import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/home/domain/entities/product_entity.dart';
 import 'package:wassaly/features/home/domain/entities/sub_category_entity.dart';
@@ -18,12 +20,22 @@ class SubCategoryPage extends StatelessWidget {
   final SubCategoryEntity subCategory;
 
   @override
-  Widget build(BuildContext context) => BlocProvider(
-        create: (context) => sl<SubCategoryBloc>()
-          ..add(FetchSubCategoryDetailEvent(subCategory.id)),
-        child: Scaffold(
-          backgroundColor: context.theme.colorScheme.surface,
-          body: SubCategoryDetailView(subCategory: subCategory),
+  Widget build(BuildContext context) => ShowCaseWidget(
+        showcaseId: 'subcategory_v1',
+        enableAutoScroll: true,
+        disableBarrierInteraction: true,
+        onShouldStartShowcase: (id) async => !StorageService.instance.hasSeenShowcase(id!),
+        onFinish: () {
+          unawaited(StorageService.instance.setHasSeenShowcase('subcategory_v1', value: true));
+        },
+        builder: Builder(
+          builder: (context) => BlocProvider(
+            create: (context) => sl<SubCategoryBloc>()..add(FetchSubCategoryDetailEvent(subCategory.id)),
+            child: Scaffold(
+              backgroundColor: context.theme.colorScheme.surface,
+              body: SubCategoryDetailView(subCategory: subCategory),
+            ),
+          ),
         ),
       );
 }
@@ -69,9 +81,7 @@ class SubCategoryDetailView extends StatelessWidget {
   }
 
   // FIX 10: named method بدل lambda inline في build — مش بتتعمل instance جديدة في كل rebuild
-  void _onLoadMore(BuildContext context) => context
-      .read<SubCategoryBloc>()
-      .add(LoadMoreProductsEvent(subCategory.id));
+  void _onLoadMore(BuildContext context) => context.read<SubCategoryBloc>().add(LoadMoreProductsEvent(subCategory.id));
 
   @override
   Widget build(BuildContext context) {
@@ -88,17 +98,8 @@ class SubCategoryDetailView extends StatelessWidget {
           if (showAppBar) AppSliverTopBar(title: subCategory.name),
 
           // FIX 2: BlocBuilder بس على الـ slivers اللي بتتغير
-          BlocSelector<
-              SubCategoryBloc,
-              SubCategoryState,
-              (
-                SubCategoryStatus,
-                String,
-                SubCategoryDetailEntity?,
-                PaginatedResponse<ProductEntity>,
-                bool,
-                bool
-              )>(
+          BlocSelector<SubCategoryBloc, SubCategoryState,
+              (SubCategoryStatus, String, SubCategoryDetailEntity?, PaginatedResponse<ProductEntity>, bool, bool)>(
             selector: (state) => (
               state.status,
               state.errorMessage,
@@ -108,37 +109,35 @@ class SubCategoryDetailView extends StatelessWidget {
               state.isLoadingMore,
             ),
             builder: (context, data) {
-              final (
-                status,
-                errorMessage,
-                detail,
-                products,
-                hasMoreProducts,
-                isLoadingMore
-              ) = data;
+              final (status, errorMessage, detail, products, hasMoreProducts, isLoadingMore) = data;
 
               if (status == SubCategoryStatus.failure) {
                 return SliverFillRemaining(
                   hasScrollBody: false,
                   child: AppErrorWidget(
                     title: context.l10n.errors_error_occurred_title,
-                    message: errorMessage.isNotEmpty
-                        ? errorMessage
-                        : context.l10n.errors_error_occurred_message,
-                    onRetry: () => context
-                        .read<SubCategoryBloc>()
-                        .add(FetchSubCategoryDetailEvent(subCategory.id)),
+                    message: errorMessage.isNotEmpty ? errorMessage : context.l10n.errors_error_occurred_message,
+                    onRetry: () => context.read<SubCategoryBloc>().add(FetchSubCategoryDetailEvent(subCategory.id)),
                   ),
                 );
               }
 
-              final isLoading = status == SubCategoryStatus.loading ||
-                  status == SubCategoryStatus.initial;
+              final isLoading = status == SubCategoryStatus.loading || status == SubCategoryStatus.initial;
+
+              if (status == SubCategoryStatus.success &&
+                  (products.data.isNotEmpty || (detail != null && detail.services.isNotEmpty))) {
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  if (context.mounted) {
+                    ShowCaseWidget.of(context).startShowCase([
+                      AppShowcaseKeys.subCategoryProducts,
+                    ]);
+                  }
+                });
+              }
 
               return SliverMainAxisGroup(
                 slivers: [
-                  if (isLoading ||
-                      (detail != null && detail.services.isNotEmpty))
+                  if (isLoading || (detail != null && detail.services.isNotEmpty))
                     AppUnifiedSection<ServiceEntity>(
                       isLoading: isLoading,
                       items: isLoading ? const [] : detail!.services,
@@ -159,12 +158,10 @@ class SubCategoryDetailView extends StatelessWidget {
                         ),
                       ],
                       crossAxisCount: crossAxisCount,
-                      childAspectRatio:
-                          serviceChildAspectRatio ?? childAspectRatio ?? 0.50,
+                      childAspectRatio: serviceChildAspectRatio ?? childAspectRatio ?? 0.50,
                       mainAxisExtent: 190.h,
-                      itemBuilder: (context, service, index, wrapAnimation) =>
-                          wrapAnimation(
-                        AppUnifiedCard(
+                      itemBuilder: (context, service, index, wrapAnimation) {
+                        final card = AppUnifiedCard(
                           id: service.id,
                           type: UnifiedItemType.service,
                           title: service.title,
@@ -177,8 +174,20 @@ class SubCategoryDetailView extends StatelessWidget {
                             AppRoutes.serviceDetails,
                             extra: {'serviceId': service.id},
                           ),
-                        ),
-                      ),
+                        );
+                        if (index == 0 && products.data.isEmpty) {
+                          return wrapAnimation(
+                            AppShowcase(
+                              showcaseKey: AppShowcaseKeys.subCategoryProducts,
+                              title: context.l10n.showcase_subcategory_products_title,
+                              description: context.l10n.showcase_subcategory_products_desc,
+                              isLast: true,
+                              child: card,
+                            ),
+                          );
+                        }
+                        return wrapAnimation(card);
+                      },
                     ),
                   if (isLoading || products.data.isNotEmpty)
                     AppUnifiedSection<ProductEntity>(
@@ -199,25 +208,19 @@ class SubCategoryDetailView extends StatelessWidget {
                       hasMore: !isLoading && hasMoreProducts,
                       isLoadingMore: !isLoading && isLoadingMore,
                       crossAxisCount: crossAxisCount,
-                      childAspectRatio:
-                          productChildAspectRatio ?? childAspectRatio ?? 0.65,
+                      childAspectRatio: productChildAspectRatio ?? childAspectRatio ?? 0.65,
                       mainAxisExtent: productMainAxisExtent ?? mainAxisExtent,
                       onLoadMore: isLoading ? null : () => _onLoadMore(context),
-                      itemBuilder: (context, product, index, wrapAnimation) =>
-                          wrapAnimation(
-                        AppUnifiedCard(
+                      itemBuilder: (context, product, index, wrapAnimation) {
+                        final card = AppUnifiedCard(
                           id: product.id,
                           title: product.name,
                           description: product.description,
                           image: product.image,
                           price: product.discountedPrice.toStringAsFixed(0),
-                          originalPrice: product.hasOffer
-                              ? (double.tryParse(product.price) ?? 0)
-                                  .toStringAsFixed(0)
-                              : null,
-                          discountPercentage: product.hasOffer
-                              ? product.discountPercentage
-                              : null,
+                          originalPrice:
+                              product.hasOffer ? (double.tryParse(product.price) ?? 0).toStringAsFixed(0) : null,
+                          discountPercentage: product.hasOffer ? product.discountPercentage : null,
                           rating: product.averageRating,
                           reviewCount: product.reviewCount,
                           isFavorite: product.isFavorite,
@@ -226,13 +229,22 @@ class SubCategoryDetailView extends StatelessWidget {
                             AppRoutes.productDetails,
                             extra: {'productId': product.id},
                           ),
-                        ),
-                      ),
+                        );
+                        if (index == 0) {
+                          return wrapAnimation(
+                            AppShowcase(
+                              showcaseKey: AppShowcaseKeys.subCategoryProducts,
+                              title: context.l10n.showcase_subcategory_products_title,
+                              description: context.l10n.showcase_subcategory_products_desc,
+                              isLast: true,
+                              child: card,
+                            ),
+                          );
+                        }
+                        return wrapAnimation(card);
+                      },
                     ),
-                  if (!isLoading &&
-                      detail != null &&
-                      detail.services.isEmpty &&
-                      products.data.isEmpty)
+                  if (!isLoading && detail != null && detail.services.isEmpty && products.data.isEmpty)
                     SliverFillRemaining(
                       hasScrollBody: false,
                       child: AppEmptyState(

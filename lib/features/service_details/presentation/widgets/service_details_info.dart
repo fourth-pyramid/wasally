@@ -1,8 +1,8 @@
+import 'package:wassaly/core/constants/showcase_keys.dart';
 import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/auth/presentation/bloc/session/session_bloc.dart';
 import 'package:wassaly/features/favorite/presentation/bloc/favorite_bloc.dart';
-import 'package:wassaly/features/favorite/presentation/bloc/favorite_event.dart'
-    as fav_event;
+import 'package:wassaly/features/favorite/presentation/bloc/favorite_event.dart' as fav_event;
 import 'package:wassaly/features/favorite/presentation/bloc/favorite_state.dart';
 import 'package:wassaly/features/orders/presentation/bloc/orders_bloc.dart';
 import 'package:wassaly/features/service_details/domain/entities/service_detail_entity.dart';
@@ -14,11 +14,12 @@ import 'package:wassaly/features/service_details/presentation/widgets/service_re
 
 class ServiceDetailsInfo extends StatelessWidget {
   final ServiceDetailEntity service;
-  final void Function(ServiceAvailableDayEntity?, ServiceAvailableTimeEntity?)
-      onSelectionChanged;
+  final void Function(ServiceAvailableDayEntity?, ServiceAvailableTimeEntity?) onSelectionChanged;
 
   const ServiceDetailsInfo({
-    required this.service, required this.onSelectionChanged, super.key,
+    required this.service,
+    required this.onSelectionChanged,
+    super.key,
   });
 
   @override
@@ -27,22 +28,17 @@ class ServiceDetailsInfo extends StatelessWidget {
     final tt = context.theme.textTheme;
 
     final sessionState = context.watch<SessionBloc>().state;
-    final currentUserId =
-        sessionState is SessionAuthenticated ? sessionState.user.id : null;
+    final currentUserId = sessionState is SessionAuthenticated ? sessionState.user.id : null;
 
     final bookingsState = context.watch<OrdersBloc>().state;
     final bookings = bookingsState.serviceBookings.data;
 
     final hasCompletedBooking = bookings.any(
-      (b) =>
-          b.service.id == service.id &&
-          (b.status.trim().toLowerCase() == 'completed' ||
-              b.status.trim() == 'مكتمل'),
+      (b) => b.service.id == service.id && (b.status.trim().toLowerCase() == 'completed' || b.status.trim() == 'مكتمل'),
     );
 
-    final hasCurrentUserReview = currentUserId != null &&
-        service.reviews
-            .any((review) => review.user.id.toString() == currentUserId);
+    final hasCurrentUserReview =
+        currentUserId != null && service.reviews.any((review) => review.user.id.toString() == currentUserId);
 
     return SliverPadding(
       padding: EdgeInsets.all(16.r),
@@ -79,8 +75,7 @@ class ServiceDetailsInfo extends StatelessWidget {
                               ),
                               child: Text(
                                 service.category!,
-                                style: tt.labelMedium
-                                    ?.copyWith(color: cs.onPrimaryContainer),
+                                style: tt.labelMedium?.copyWith(color: cs.onPrimaryContainer),
                               ),
                             ),
                         ],
@@ -89,8 +84,7 @@ class ServiceDetailsInfo extends StatelessWidget {
                     BlocSelector<FavoriteBloc, FavoriteState, (bool, bool)>(
                       selector: (state) => (
                         state.serviceFavoriteIds.contains(service.id) ||
-                            (state.status == FavoriteStatus.initial &&
-                                service.isFavorite),
+                            (state.status == FavoriteStatus.initial && service.isFavorite),
                         state.serviceTogglingIds.contains(service.id),
                       ),
                       builder: (context, status) {
@@ -99,16 +93,19 @@ class ServiceDetailsInfo extends StatelessWidget {
                         return IconButton(
                           onPressed: isToggling
                               ? null
-                              : () => context.read<FavoriteBloc>().add(
+                              : () async {
+                                  final bloc = context.read<FavoriteBloc>();
+                                  await HapticFeedback
+                                      .lightImpact(); // ponytail: native light haptic impact on favorite button tap
+                                  bloc.add(
                                     fav_event.ToggleServiceFavoriteEvent(
                                       service.id,
                                       expectedIsFavorite: isFavorite,
                                     ),
-                                  ),
+                                  );
+                                },
                           icon: Icon(
-                            isFavorite
-                                ? Icons.favorite_rounded
-                                : Icons.favorite_border_rounded,
+                            isFavorite ? Icons.favorite_rounded : Icons.favorite_border_rounded,
                             color: isFavorite ? cs.error : cs.outline,
                             size: 28.r,
                           ),
@@ -125,8 +122,7 @@ class ServiceDetailsInfo extends StatelessWidget {
                 12.verticalSpace,
                 Text(
                   service.description,
-                  style: tt.bodyMedium
-                      ?.copyWith(height: 1.5, color: cs.onSurfaceVariant),
+                  style: tt.bodyMedium?.copyWith(height: 1.5, color: cs.onSurfaceVariant),
                 ),
                 24.verticalSpace,
                 Text(
@@ -134,7 +130,12 @@ class ServiceDetailsInfo extends StatelessWidget {
                   style: tt.titleMedium?.copyWith(fontWeight: FontWeight.bold),
                 ),
                 12.verticalSpace,
-                ServiceProviderCard(provider: service.provider),
+                AppShowcase(
+                  showcaseKey: AppShowcaseKeys.serviceProviderCard,
+                  title: context.l10n.showcase_service_provider_card_title,
+                  description: context.l10n.showcase_service_provider_card_desc,
+                  child: ServiceProviderCard(provider: service.provider),
+                ),
                 24.verticalSpace,
                 ServiceAvailableDaysSection(
                   availableDays: service.availableDays,
@@ -143,43 +144,45 @@ class ServiceDetailsInfo extends StatelessWidget {
                 24.verticalSpace,
                 (() {
                   final reviews = service.reviews;
-                  final averageRating = reviews.isEmpty
-                      ? 0.0
-                      : reviews.fold<int>(0, (sum, r) => sum + r.rating) /
-                          reviews.length;
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        '${context.l10n.product_details_reviews} (${reviews.length})',
-                        style: tt.titleLarge?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: cs.primary,
-                        ),
-                      ),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.star_rounded,
-                            size: 18.r,
-                            color: cs.secondary,
+                  final averageRating =
+                      reviews.isEmpty ? 0.0 : reviews.fold<int>(0, (sum, r) => sum + r.rating) / reviews.length;
+                  return AppShowcase(
+                    showcaseKey: AppShowcaseKeys.serviceReviewsBtn,
+                    title: context.l10n.showcase_service_reviews_btn_title,
+                    description: context.l10n.showcase_service_reviews_btn_desc,
+                    isLast: true,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '${context.l10n.product_details_reviews} (${reviews.length})',
+                          style: tt.titleLarge?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: cs.primary,
                           ),
-                          3.horizontalSpace,
-                          Text(
-                            averageRating.toStringAsFixed(1),
-                            style: tt.titleMedium?.copyWith(
-                              fontWeight: FontWeight.bold,
+                        ),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.star_rounded,
+                              size: 18.r,
                               color: cs.secondary,
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                            3.horizontalSpace,
+                            Text(
+                              averageRating.toStringAsFixed(1),
+                              style: tt.titleMedium?.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: cs.secondary,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   );
                 })(),
-                if (currentUserId != null &&
-                    hasCompletedBooking &&
-                    !hasCurrentUserReview) ...[
+                if (currentUserId != null && hasCompletedBooking && !hasCurrentUserReview) ...[
                   12.verticalSpace,
                   OutlinedButton.icon(
                     onPressed: () => _showReviewSheet(context),
@@ -201,12 +204,10 @@ class ServiceDetailsInfo extends StatelessWidget {
           ),
           if (service.reviews.isNotEmpty)
             SliverList.builder(
-              itemCount:
-                  service.reviews.length > 3 ? 3 : service.reviews.length,
+              itemCount: service.reviews.length > 3 ? 3 : service.reviews.length,
               itemBuilder: (context, index) {
                 final review = service.reviews[index];
-                final isMine = currentUserId != null &&
-                    review.user.id.toString() == currentUserId;
+                final isMine = currentUserId != null && review.user.id.toString() == currentUserId;
 
                 return AppReviewCard(
                   rating: review.rating,
@@ -214,9 +215,7 @@ class ServiceDetailsInfo extends StatelessWidget {
                   userName: review.user.name,
                   userAvatar: review.user.avatar,
                   isCurrentUserReview: isMine,
-                  canEdit: isMine &&
-                      ReviewHelper.canEditReview(review.createdAt) &&
-                      hasCompletedBooking,
+                  canEdit: isMine && ReviewHelper.canEditReview(review.createdAt) && hasCompletedBooking,
                   createdAt: review.createdAt,
                   onEdit: () => _showReviewSheet(context, review: review),
                 );
