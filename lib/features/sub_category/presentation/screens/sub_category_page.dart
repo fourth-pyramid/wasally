@@ -21,12 +21,12 @@ class SubCategoryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ShowCaseWidget(
-        showcaseId: 'subcategory_v1',
+        showcaseId: 'subcategory_v2',
         enableAutoScroll: true,
         disableBarrierInteraction: true,
         onShouldStartShowcase: (id) async => !StorageService.instance.hasSeenShowcase(id!),
         onFinish: () {
-          unawaited(StorageService.instance.setHasSeenShowcase('subcategory_v1', value: true));
+          unawaited(StorageService.instance.setHasSeenShowcase('subcategory_v2', value: true));
         },
         builder: Builder(
           builder: (context) => BlocProvider(

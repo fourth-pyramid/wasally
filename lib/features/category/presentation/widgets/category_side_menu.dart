@@ -1,3 +1,4 @@
+import 'package:wassaly/core/constants/showcase_keys.dart';
 import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/category/presentation/bloc/category_bloc.dart';
 import 'package:wassaly/features/category/presentation/bloc/category_event.dart';
@@ -41,7 +42,7 @@ class CategorySideMenu extends StatelessWidget {
                 final isSelected =
                     !isLoading && selectedSubCategoryId == item.id;
 
-                return Column(
+                final card = Column(
                   children: [
                     if (index > 0) 8.verticalSpace,
                     GestureDetector(
@@ -149,6 +150,16 @@ class CategorySideMenu extends StatelessWidget {
                     ),
                   ],
                 );
+                if (index == 0) {
+                  return AppShowcase(
+                    showcaseKey: AppShowcaseKeys.categorySubCategories,
+                    title: context.l10n.showcase_category_subcategories_title,
+                    description: context.l10n.showcase_category_subcategories_desc,
+                    isLast: true,
+                    child: card,
+                  );
+                }
+                return card;
               },
             ),
           ),

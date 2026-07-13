@@ -20,6 +20,12 @@ class AppShowcase extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // ponytail: Avoid registering global keys inside Skeletonizer to prevent duplicate key errors during loading state cloning.
+    final skeletonizer = Skeletonizer.maybeOf(context);
+    if (skeletonizer != null && skeletonizer.enabled) {
+      return child;
+    }
+
     // ponytail: Only register the global key if this route is currently active/topmost.
     // This prevents duplicate GlobalKey exceptions when the same screen class is pushed multiple times.
     final route = ModalRoute.of(context);

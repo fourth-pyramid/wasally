@@ -89,6 +89,8 @@ class StorageService {
     await setBool('showcase_seen_filter_v1', value: false);
     await setBool('showcase_seen_checkout_v1', value: false);
     await setBool('showcase_seen_orders_v1', value: false);
+    await setBool('showcase_seen_category_v3', value: false);
+    await setBool('showcase_seen_subcategory_v2', value: false);
     return right(true);
   }
 

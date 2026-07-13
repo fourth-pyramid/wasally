@@ -21,12 +21,12 @@ class CategoryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ShowCaseWidget(
-        showcaseId: 'category_v1',
+        showcaseId: 'category_v3',
         enableAutoScroll: true,
         disableBarrierInteraction: true,
         onShouldStartShowcase: (id) async => !StorageService.instance.hasSeenShowcase(id!),
         onFinish: () {
-          unawaited(StorageService.instance.setHasSeenShowcase('category_v1', value: true));
+          unawaited(StorageService.instance.setHasSeenShowcase('category_v3', value: true));
         },
         builder: Builder(
           builder: (context) => BlocProvider(
@@ -37,13 +37,19 @@ class CategoryPage extends StatelessWidget {
       );
 }
 
-class _CategoryView extends StatelessWidget {
+class _CategoryView extends StatefulWidget {
   const _CategoryView({required this.category});
 
   final CategoryEntity category;
 
-  // FIX 10: named method — لا closure جديدة في كل rebuild
-  void _onRetry(BuildContext context) => context.read<CategoryBloc>().add(FetchCategoryDetailEvent(category.id));
+  @override
+  State<_CategoryView> createState() => _CategoryViewState();
+}
+
+class _CategoryViewState extends State<_CategoryView> {
+  bool _showcaseStarted = false;
+
+  void _onRetry() => context.read<CategoryBloc>().add(FetchCategoryDetailEvent(widget.category.id));
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +61,7 @@ class _CategoryView extends StatelessWidget {
         slivers: [
           // FIX 1: AppSliverTopBar مش بتتغير مع الـ state
           // فأخرجناها بره الـ BlocBuilder تماماً
-          AppSliverTopBar(title: category.name),
+          AppSliverTopBar(title: widget.category.name),
 
           // FIX 2: BlocBuilder بس على الـ sliver اللي بيتغير فعلاً
           BlocSelector<CategoryBloc, CategoryState,
@@ -75,7 +81,7 @@ class _CategoryView extends StatelessWidget {
                   child: AppErrorWidget(
                     title: context.l10n.errors_error_occurred_title,
                     message: errorMessage.isNotEmpty ? errorMessage : context.l10n.errors_error_occurred_message,
-                    onRetry: () => _onRetry(context),
+                    onRetry: _onRetry,
                   ),
                 );
               }
@@ -111,7 +117,9 @@ class _CategoryView extends StatelessWidget {
                     )
                   : selectedSubCategory;
 
-              if (status == CategoryStatus.success && subCategories.isNotEmpty) {
+              if (status == CategoryStatus.success && subCategories.isNotEmpty && !_showcaseStarted) {
+                _showcaseStarted = true;
+                // ponytail: start showcase directly without redundant seen check since ShowCaseWidget handles it
                 WidgetsBinding.instance.addPostFrameCallback((_) {
                   if (context.mounted) {
                     ShowCaseWidget.of(context).startShowCase([
@@ -127,16 +135,10 @@ class _CategoryView extends StatelessWidget {
                   ignoreContainers: true,
                   child: Row(
                     children: [
-                      AppShowcase(
-                        showcaseKey: AppShowcaseKeys.categorySubCategories,
-                        title: context.l10n.showcase_category_subcategories_title,
-                        description: context.l10n.showcase_category_subcategories_desc,
-                        isLast: true,
-                        child: CategorySideMenu(
-                          isLoading: isLoading,
-                          subCategories: displaySubCategories,
-                          selectedSubCategoryId: selectedSubCategory?.id,
-                        ),
+                      CategorySideMenu(
+                        isLoading: isLoading,
+                        subCategories: displaySubCategories,
+                        selectedSubCategoryId: selectedSubCategory?.id,
                       ),
                       Expanded(
                         child: currentSubCategory == null
