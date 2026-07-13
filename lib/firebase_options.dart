@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -28,15 +25,9 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return windows;
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -48,6 +39,16 @@ class DefaultFirebaseOptions {
         );
     }
   }
+
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyDFPe0npRX-nU62Li5NG8PxB2nwvybeQbo',
+    appId: '1:994745554804:web:c27b3e94fa93e4866bfe21',
+    messagingSenderId: '994745554804',
+    projectId: 'waslynotify',
+    authDomain: 'waslynotify.firebaseapp.com',
+    storageBucket: 'waslynotify.firebasestorage.app',
+    measurementId: 'G-P7YRWDLB4E',
+  );
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyCWX0tumAPRuq_EbzprKsD3Ae-OEl0eRu8',
@@ -65,4 +66,24 @@ class DefaultFirebaseOptions {
     storageBucket: 'waslynotify.firebasestorage.app',
     iosBundleId: 'com.fourthpyramid.wassaly',
   );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyB4JQJpEio1uGNhOb3-PjFBblIXkh0E6QQ',
+    appId: '1:994745554804:ios:558a0a8efdd7bf816bfe21',
+    messagingSenderId: '994745554804',
+    projectId: 'waslynotify',
+    storageBucket: 'waslynotify.firebasestorage.app',
+    iosBundleId: 'com.fourthpyramid.wassaly',
+  );
+
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyDFPe0npRX-nU62Li5NG8PxB2nwvybeQbo',
+    appId: '1:994745554804:web:ec7fe4c290904cfc6bfe21',
+    messagingSenderId: '994745554804',
+    projectId: 'waslynotify',
+    authDomain: 'waslynotify.firebaseapp.com',
+    storageBucket: 'waslynotify.firebasestorage.app',
+    measurementId: 'G-W0E5J4PM3Q',
+  );
+
 }
