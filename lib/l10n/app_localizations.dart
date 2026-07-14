@@ -160,20 +160,32 @@ abstract class S {
   /// No description provided for @shared_show_more.
   ///
   /// In en, this message translates to:
-  /// **'Show more'**
+  /// **'Show More'**
   String get shared_show_more;
 
   /// No description provided for @shared_show_less.
   ///
   /// In en, this message translates to:
-  /// **'Show less'**
+  /// **'Show Less'**
   String get shared_show_less;
 
-  /// No description provided for @common_currency.
+  /// No description provided for @shared_next.
   ///
   /// In en, this message translates to:
-  /// **'EGP'**
-  String get common_currency;
+  /// **'Next'**
+  String get shared_next;
+
+  /// No description provided for @shared_skip.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get shared_skip;
+
+  /// No description provided for @shared_finish.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish'**
+  String get shared_finish;
 
   /// No description provided for @done.
   ///
@@ -187,6 +199,12 @@ abstract class S {
   /// **'Retry'**
   String get retry;
 
+  /// No description provided for @common_currency.
+  ///
+  /// In en, this message translates to:
+  /// **'EGP'**
+  String get common_currency;
+
   /// No description provided for @errors_something_went_wrong.
   ///
   /// In en, this message translates to:
@@ -196,13 +214,13 @@ abstract class S {
   /// No description provided for @errors_no_internet_title.
   ///
   /// In en, this message translates to:
-  /// **'no_internet'**
+  /// **'No Internet Connection'**
   String get errors_no_internet_title;
 
   /// No description provided for @errors_unstable_internet.
   ///
   /// In en, this message translates to:
-  /// **'Unstable network'**
+  /// **'Unstable Network'**
   String get errors_unstable_internet;
 
   /// No description provided for @errors_no_internet_message.
@@ -214,19 +232,19 @@ abstract class S {
   /// No description provided for @errors_not_found_title.
   ///
   /// In en, this message translates to:
-  /// **'not_found'**
+  /// **'Not Found'**
   String get errors_not_found_title;
 
   /// No description provided for @errors_not_found_message.
   ///
   /// In en, this message translates to:
-  /// **'The service is currently unavailable, please try again later.'**
+  /// **'This service is currently unavailable, please try again later.'**
   String get errors_not_found_message;
 
   /// No description provided for @errors_server_error_title.
   ///
   /// In en, this message translates to:
-  /// **'server_error'**
+  /// **'Server Error'**
   String get errors_server_error_title;
 
   /// No description provided for @errors_server_error_message.
@@ -238,7 +256,7 @@ abstract class S {
   /// No description provided for @errors_cache_error_title.
   ///
   /// In en, this message translates to:
-  /// **'cache_error'**
+  /// **'Cache Error'**
   String get errors_cache_error_title;
 
   /// No description provided for @errors_cache_error_message.
@@ -250,7 +268,7 @@ abstract class S {
   /// No description provided for @errors_error_occurred_title.
   ///
   /// In en, this message translates to:
-  /// **'error_occurred'**
+  /// **'An Error Occurred'**
   String get errors_error_occurred_title;
 
   /// No description provided for @errors_error_occurred_message.
@@ -262,13 +280,13 @@ abstract class S {
   /// No description provided for @errors_error_title.
   ///
   /// In en, this message translates to:
-  /// **'error_occurred'**
+  /// **'An Error Occurred'**
   String get errors_error_title;
 
   /// No description provided for @errors_unknown_error.
   ///
   /// In en, this message translates to:
-  /// **'An unknown error occurred'**
+  /// **'Unknown error occurred'**
   String get errors_unknown_error;
 
   /// No description provided for @errors_try_again.
@@ -280,19 +298,19 @@ abstract class S {
   /// No description provided for @errors_no_internet.
   ///
   /// In en, this message translates to:
-  /// **'No internet connection'**
+  /// **'No Internet Connection'**
   String get errors_no_internet;
 
   /// No description provided for @errors_invalid_category.
   ///
   /// In en, this message translates to:
-  /// **'Invalid category'**
+  /// **'Invalid Category'**
   String get errors_invalid_category;
 
   /// No description provided for @errors_invalid_sub_category.
   ///
   /// In en, this message translates to:
-  /// **'Invalid sub-category'**
+  /// **'Invalid Subcategory'**
   String get errors_invalid_sub_category;
 
   /// No description provided for @nav_nav_home.
@@ -322,7 +340,7 @@ abstract class S {
   /// No description provided for @nav_nav_profile.
   ///
   /// In en, this message translates to:
-  /// **'Profile'**
+  /// **'Account'**
   String get nav_nav_profile;
 
   /// No description provided for @home_home_title.
@@ -340,7 +358,7 @@ abstract class S {
   /// No description provided for @home_home_subtitle.
   ///
   /// In en, this message translates to:
-  /// **'Welcome to Wasally App'**
+  /// **'Welcome to Wassaly App'**
   String get home_home_subtitle;
 
   /// No description provided for @home_popular_services.
@@ -376,13 +394,13 @@ abstract class S {
   /// No description provided for @home_no_services_products.
   ///
   /// In en, this message translates to:
-  /// **'No services or products'**
+  /// **'No services or products available'**
   String get home_no_services_products;
 
   /// No description provided for @home_no_sub_categories.
   ///
   /// In en, this message translates to:
-  /// **'No sub-categories'**
+  /// **'No subcategories available'**
   String get home_no_sub_categories;
 
   /// No description provided for @search_search_hint.
@@ -402,6 +420,48 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Try searching with different keywords'**
   String get search_try_different_search;
+
+  /// No description provided for @search_initial_title.
+  ///
+  /// In en, this message translates to:
+  /// **'What are you looking for today?'**
+  String get search_initial_title;
+
+  /// No description provided for @search_initial_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Easily search for products, services, and special offers'**
+  String get search_initial_subtitle;
+
+  /// No description provided for @search_popular_searches.
+  ///
+  /// In en, this message translates to:
+  /// **'Popular Searches'**
+  String get search_popular_searches;
+
+  /// No description provided for @search_tag_offers.
+  ///
+  /// In en, this message translates to:
+  /// **'Offers'**
+  String get search_tag_offers;
+
+  /// No description provided for @search_tag_delivery.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivery'**
+  String get search_tag_delivery;
+
+  /// No description provided for @search_tag_services.
+  ///
+  /// In en, this message translates to:
+  /// **'Services'**
+  String get search_tag_services;
+
+  /// No description provided for @search_tag_products.
+  ///
+  /// In en, this message translates to:
+  /// **'Products'**
+  String get search_tag_products;
 
   /// No description provided for @category_category_title.
   ///
@@ -442,7 +502,7 @@ abstract class S {
   /// No description provided for @product_details_sub_category.
   ///
   /// In en, this message translates to:
-  /// **'Sub-category'**
+  /// **'Subcategory'**
   String get product_details_sub_category;
 
   /// No description provided for @product_details_offer.
@@ -460,37 +520,37 @@ abstract class S {
   /// No description provided for @product_details_related_products.
   ///
   /// In en, this message translates to:
-  /// **'Similar Products'**
+  /// **'Related Products'**
   String get product_details_related_products;
 
   /// No description provided for @product_details_no_related_products.
   ///
   /// In en, this message translates to:
-  /// **'No similar products found'**
+  /// **'No related products found'**
   String get product_details_no_related_products;
 
   /// No description provided for @product_details_show_more.
   ///
   /// In en, this message translates to:
-  /// **'Show more'**
+  /// **'Show More'**
   String get product_details_show_more;
 
   /// No description provided for @product_details_all_reviews.
   ///
   /// In en, this message translates to:
-  /// **'All reviews'**
+  /// **'All Reviews'**
   String get product_details_all_reviews;
 
   /// No description provided for @product_details_add_review.
   ///
   /// In en, this message translates to:
-  /// **'Add review'**
+  /// **'Add a Review'**
   String get product_details_add_review;
 
   /// No description provided for @product_details_edit_review.
   ///
   /// In en, this message translates to:
-  /// **'Edit review'**
+  /// **'Edit Review'**
   String get product_details_edit_review;
 
   /// No description provided for @product_details_review_comment_hint.
@@ -520,13 +580,13 @@ abstract class S {
   /// No description provided for @product_details_review_options.
   ///
   /// In en, this message translates to:
-  /// **'Review options'**
+  /// **'Review Options'**
   String get product_details_review_options;
 
   /// No description provided for @product_details_edit_time_expired.
   ///
   /// In en, this message translates to:
-  /// **'Edit time expired'**
+  /// **'Edit time has expired'**
   String get product_details_edit_time_expired;
 
   /// No description provided for @product_details_review_edit_window.
@@ -556,7 +616,7 @@ abstract class S {
   /// No description provided for @cart_already_added.
   ///
   /// In en, this message translates to:
-  /// **'Added'**
+  /// **'Already Added'**
   String get cart_already_added;
 
   /// No description provided for @cart_add_to_cart.
@@ -610,7 +670,7 @@ abstract class S {
   /// No description provided for @cart_remove_item_message.
   ///
   /// In en, this message translates to:
-  /// **'Are you sure you want to remove this product from cart?'**
+  /// **'Are you sure you want to remove this product from the cart?'**
   String get cart_remove_item_message;
 
   /// No description provided for @cart_error_loading_cart.
@@ -628,7 +688,7 @@ abstract class S {
   /// No description provided for @cart_total_after_discount.
   ///
   /// In en, this message translates to:
-  /// **'Total after discount'**
+  /// **'Total After Discount'**
   String get cart_total_after_discount;
 
   /// No description provided for @cart_subtotal.
@@ -658,7 +718,7 @@ abstract class S {
   /// No description provided for @cart_delivery.
   ///
   /// In en, this message translates to:
-  /// **'Delivery Fee'**
+  /// **'Delivery Fees'**
   String get cart_delivery;
 
   /// No description provided for @cart_total.
@@ -676,7 +736,7 @@ abstract class S {
   /// No description provided for @cart_items.
   ///
   /// In en, this message translates to:
-  /// **'items'**
+  /// **'Items'**
   String get cart_items;
 
   /// No description provided for @cart_user_info.
@@ -700,7 +760,7 @@ abstract class S {
   /// No description provided for @cart_phone.
   ///
   /// In en, this message translates to:
-  /// **'Phone'**
+  /// **'Phone Number'**
   String get cart_phone;
 
   /// No description provided for @cart_phone_hint.
@@ -718,7 +778,7 @@ abstract class S {
   /// No description provided for @cart_phone_required.
   ///
   /// In en, this message translates to:
-  /// **'Phone is required'**
+  /// **'Phone number is required'**
   String get cart_phone_required;
 
   /// No description provided for @cart_delivery_address.
@@ -763,6 +823,198 @@ abstract class S {
   /// **'Save'**
   String get cart_save;
 
+  /// No description provided for @checkout_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Checkout'**
+  String get checkout_title;
+
+  /// No description provided for @checkout_shipping_address.
+  ///
+  /// In en, this message translates to:
+  /// **'Shipping Address'**
+  String get checkout_shipping_address;
+
+  /// No description provided for @checkout_contact_info.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact Information'**
+  String get checkout_contact_info;
+
+  /// No description provided for @checkout_saved_addresses.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved Addresses'**
+  String get checkout_saved_addresses;
+
+  /// No description provided for @checkout_customer_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Name'**
+  String get checkout_customer_name;
+
+  /// No description provided for @checkout_customer_name_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter customer name'**
+  String get checkout_customer_name_hint;
+
+  /// No description provided for @checkout_customer_phone.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone Number'**
+  String get checkout_customer_phone;
+
+  /// No description provided for @checkout_customer_phone_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter phone number'**
+  String get checkout_customer_phone_hint;
+
+  /// No description provided for @checkout_customer_address.
+  ///
+  /// In en, this message translates to:
+  /// **'Address'**
+  String get checkout_customer_address;
+
+  /// No description provided for @checkout_governorate.
+  ///
+  /// In en, this message translates to:
+  /// **'Governorate'**
+  String get checkout_governorate;
+
+  /// No description provided for @checkout_region.
+  ///
+  /// In en, this message translates to:
+  /// **'Region'**
+  String get checkout_region;
+
+  /// No description provided for @checkout_center.
+  ///
+  /// In en, this message translates to:
+  /// **'City/Center'**
+  String get checkout_center;
+
+  /// No description provided for @checkout_coupon_code.
+  ///
+  /// In en, this message translates to:
+  /// **'Discount Coupon'**
+  String get checkout_coupon_code;
+
+  /// No description provided for @checkout_order_summary.
+  ///
+  /// In en, this message translates to:
+  /// **'Order Summary'**
+  String get checkout_order_summary;
+
+  /// No description provided for @checkout_complete_order.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete Order'**
+  String get checkout_complete_order;
+
+  /// No description provided for @checkout_subtotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Subtotal'**
+  String get checkout_subtotal;
+
+  /// No description provided for @checkout_shipping.
+  ///
+  /// In en, this message translates to:
+  /// **'Shipping'**
+  String get checkout_shipping;
+
+  /// No description provided for @checkout_discount.
+  ///
+  /// In en, this message translates to:
+  /// **'Discount'**
+  String get checkout_discount;
+
+  /// No description provided for @checkout_total.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Amount'**
+  String get checkout_total;
+
+  /// No description provided for @checkout_order_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Order placed successfully!'**
+  String get checkout_order_success;
+
+  /// No description provided for @checkout_success_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Order placed successfully!'**
+  String get checkout_success_title;
+
+  /// No description provided for @checkout_success_msg.
+  ///
+  /// In en, this message translates to:
+  /// **'Your order has been received successfully and is being processed.'**
+  String get checkout_success_msg;
+
+  /// No description provided for @checkout_order_id.
+  ///
+  /// In en, this message translates to:
+  /// **'Order Number'**
+  String get checkout_order_id;
+
+  /// No description provided for @checkout_go_home.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to Home'**
+  String get checkout_go_home;
+
+  /// No description provided for @checkout_view_orders.
+  ///
+  /// In en, this message translates to:
+  /// **'View My Orders'**
+  String get checkout_view_orders;
+
+  /// No description provided for @checkout_validation_name_required.
+  ///
+  /// In en, this message translates to:
+  /// **'Name is required'**
+  String get checkout_validation_name_required;
+
+  /// No description provided for @checkout_validation_phone_required.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number is required'**
+  String get checkout_validation_phone_required;
+
+  /// No description provided for @checkout_validation_address_required.
+  ///
+  /// In en, this message translates to:
+  /// **'Address is required'**
+  String get checkout_validation_address_required;
+
+  /// No description provided for @checkout_validation_governorate_required.
+  ///
+  /// In en, this message translates to:
+  /// **'Governorate is required'**
+  String get checkout_validation_governorate_required;
+
+  /// No description provided for @checkout_validation_center_required.
+  ///
+  /// In en, this message translates to:
+  /// **'City is required'**
+  String get checkout_validation_center_required;
+
+  /// No description provided for @checkout_apply_coupon.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply'**
+  String get checkout_apply_coupon;
+
+  /// No description provided for @checkout_remove_coupon.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get checkout_remove_coupon;
+
   /// No description provided for @favorite_favorite_title.
   ///
   /// In en, this message translates to:
@@ -772,7 +1024,7 @@ abstract class S {
   /// No description provided for @favorite_favorite_subtitle.
   ///
   /// In en, this message translates to:
-  /// **'Your favorite items will appear here'**
+  /// **'Favorite items will appear here'**
   String get favorite_favorite_subtitle;
 
   /// No description provided for @favorite_no_favorites.
@@ -859,59 +1111,11 @@ abstract class S {
   /// **'Privacy Policy'**
   String get profile_privacy_policy;
 
-  /// No description provided for @notifications.
+  /// No description provided for @profile_help_center.
   ///
   /// In en, this message translates to:
-  /// **'Notifications'**
-  String get notifications;
-
-  /// No description provided for @deleteAllNotifications.
-  ///
-  /// In en, this message translates to:
-  /// **'Delete All Notifications'**
-  String get deleteAllNotifications;
-
-  /// No description provided for @deleteAllNotificationsConfirm.
-  ///
-  /// In en, this message translates to:
-  /// **'Are you sure you want to delete all notifications? This action cannot be undone.'**
-  String get deleteAllNotificationsConfirm;
-
-  /// No description provided for @markAllAsRead.
-  ///
-  /// In en, this message translates to:
-  /// **'Mark all as read'**
-  String get markAllAsRead;
-
-  /// No description provided for @notification_remove_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Remove Notification'**
-  String get notification_remove_title;
-
-  /// No description provided for @notification_remove_confirm.
-  ///
-  /// In en, this message translates to:
-  /// **'Are you sure you want to remove this notification?'**
-  String get notification_remove_confirm;
-
-  /// No description provided for @notification_no_notifications.
-  ///
-  /// In en, this message translates to:
-  /// **'No notifications yet'**
-  String get notification_no_notifications;
-
-  /// No description provided for @notification_no_notifications_desc.
-  ///
-  /// In en, this message translates to:
-  /// **'When you receive notifications, they will appear here.'**
-  String get notification_no_notifications_desc;
-
-  /// No description provided for @noMoreNotifications.
-  ///
-  /// In en, this message translates to:
-  /// **'No more notifications'**
-  String get noMoreNotifications;
+  /// **'Help Center'**
+  String get profile_help_center;
 
   /// No description provided for @profile_personal_info.
   ///
@@ -934,7 +1138,7 @@ abstract class S {
   /// No description provided for @profile_orders_count.
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =0{No orders} =1{1 order} =2{2 orders} few{{count} orders} many{{count} orders} other{{count} orders} }'**
+  /// **'{count, plural, =0{No orders} =1{One order} =2{Two orders} few{{count} orders} many{{count} order} other{{count} orders}}'**
   String profile_orders_count(num count);
 
   /// No description provided for @profile_manage.
@@ -967,48 +1171,6 @@ abstract class S {
   /// **'Theme'**
   String get profile_theme;
 
-  /// No description provided for @time_ago_years.
-  ///
-  /// In en, this message translates to:
-  /// **'{count, plural, =1{1 year ago} other{{count} years ago}}'**
-  String time_ago_years(num count);
-
-  /// No description provided for @time_ago_months.
-  ///
-  /// In en, this message translates to:
-  /// **'{count, plural, =1{1 month ago} other{{count} months ago}}'**
-  String time_ago_months(num count);
-
-  /// No description provided for @time_ago_weeks.
-  ///
-  /// In en, this message translates to:
-  /// **'{count, plural, =1{1 week ago} other{{count} weeks ago}}'**
-  String time_ago_weeks(num count);
-
-  /// No description provided for @time_ago_days.
-  ///
-  /// In en, this message translates to:
-  /// **'{count, plural, =1{1 day ago} other{{count} days ago}}'**
-  String time_ago_days(num count);
-
-  /// No description provided for @time_ago_hours.
-  ///
-  /// In en, this message translates to:
-  /// **'{count, plural, =1{1 hour ago} other{{count} hours ago}}'**
-  String time_ago_hours(num count);
-
-  /// No description provided for @time_ago_minutes.
-  ///
-  /// In en, this message translates to:
-  /// **'{count, plural, =1{1 minute ago} other{{count} minutes ago}}'**
-  String time_ago_minutes(num count);
-
-  /// No description provided for @time_ago_just_now.
-  ///
-  /// In en, this message translates to:
-  /// **'just now'**
-  String get time_ago_just_now;
-
   /// No description provided for @profile_dark.
   ///
   /// In en, this message translates to:
@@ -1018,7 +1180,7 @@ abstract class S {
   /// No description provided for @profile_dark_theme_subtitle.
   ///
   /// In en, this message translates to:
-  /// **'Always use dark mode'**
+  /// **'Always use dark theme'**
   String get profile_dark_theme_subtitle;
 
   /// No description provided for @profile_light.
@@ -1030,7 +1192,7 @@ abstract class S {
   /// No description provided for @profile_light_theme_subtitle.
   ///
   /// In en, this message translates to:
-  /// **'Always use light mode'**
+  /// **'Always use light theme'**
   String get profile_light_theme_subtitle;
 
   /// No description provided for @profile_system.
@@ -1042,7 +1204,7 @@ abstract class S {
   /// No description provided for @profile_system_description.
   ///
   /// In en, this message translates to:
-  /// **'Follow the device theme'**
+  /// **'Follow device theme settings'**
   String get profile_system_description;
 
   /// No description provided for @profile_app_reviews.
@@ -1102,13 +1264,13 @@ abstract class S {
   /// No description provided for @profile_logout.
   ///
   /// In en, this message translates to:
-  /// **'Logout'**
+  /// **'Log Out'**
   String get profile_logout;
 
   /// No description provided for @profile_logout_all_devices.
   ///
   /// In en, this message translates to:
-  /// **'Logout from All Devices'**
+  /// **'Log Out from All Devices'**
   String get profile_logout_all_devices;
 
   /// No description provided for @profile_delete_account.
@@ -1150,31 +1312,31 @@ abstract class S {
   /// No description provided for @profile_logout_title.
   ///
   /// In en, this message translates to:
-  /// **'Logout'**
+  /// **'Log Out'**
   String get profile_logout_title;
 
   /// No description provided for @profile_logout_message.
   ///
   /// In en, this message translates to:
-  /// **'Are you sure you want to logout?'**
+  /// **'Are you sure you want to log out?'**
   String get profile_logout_message;
 
   /// No description provided for @profile_logout_choice_message.
   ///
   /// In en, this message translates to:
-  /// **'Choose how you want to logout:'**
+  /// **'Choose logout method:'**
   String get profile_logout_choice_message;
 
   /// No description provided for @profile_logout_this_device.
   ///
   /// In en, this message translates to:
-  /// **'Logout from This Device'**
+  /// **'Log out from this device'**
   String get profile_logout_this_device;
 
   /// No description provided for @profile_logout_all_title.
   ///
   /// In en, this message translates to:
-  /// **'Logout from All Devices'**
+  /// **'Log Out from All Devices'**
   String get profile_logout_all_title;
 
   /// No description provided for @profile_logout_all_message.
@@ -1210,7 +1372,7 @@ abstract class S {
   /// No description provided for @profile_delete_address_message.
   ///
   /// In en, this message translates to:
-  /// **'Are you sure you want to delete address {address}?'**
+  /// **'Are you sure you want to delete the address {address}?'**
   String profile_delete_address_message(Object address);
 
   /// No description provided for @profile_add_address.
@@ -1246,13 +1408,13 @@ abstract class S {
   /// No description provided for @profile_address_title.
   ///
   /// In en, this message translates to:
-  /// **'Address Title'**
+  /// **'Address Name'**
   String get profile_address_title;
 
   /// No description provided for @profile_address_title_hint.
   ///
   /// In en, this message translates to:
-  /// **'Home, Work, etc'**
+  /// **'Home, Work, etc.'**
   String get profile_address_title_hint;
 
   /// No description provided for @profile_address_details.
@@ -1294,7 +1456,7 @@ abstract class S {
   /// No description provided for @profile_title_required.
   ///
   /// In en, this message translates to:
-  /// **'Title is required'**
+  /// **'Name is required'**
   String get profile_title_required;
 
   /// No description provided for @profile_address_required.
@@ -1375,22 +1537,88 @@ abstract class S {
   /// **'Data updated successfully'**
   String get profile_update_success;
 
+  /// No description provided for @profile_restart_tour.
+  ///
+  /// In en, this message translates to:
+  /// **'Restart App Tour'**
+  String get profile_restart_tour;
+
+  /// No description provided for @profile_restart_tour_success.
+  ///
+  /// In en, this message translates to:
+  /// **'App tour restarted successfully! Open any page to see it again.'**
+  String get profile_restart_tour_success;
+
+  /// No description provided for @notifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get notifications;
+
+  /// No description provided for @deleteAllNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete All Notifications'**
+  String get deleteAllNotifications;
+
+  /// No description provided for @deleteAllNotificationsConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete all notifications? This action cannot be undone.'**
+  String get deleteAllNotificationsConfirm;
+
+  /// No description provided for @markAllAsRead.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark All as Read'**
+  String get markAllAsRead;
+
+  /// No description provided for @notification_remove_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Notification'**
+  String get notification_remove_title;
+
+  /// No description provided for @notification_remove_confirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this notification?'**
+  String get notification_remove_confirm;
+
+  /// No description provided for @notification_no_notifications.
+  ///
+  /// In en, this message translates to:
+  /// **'No notifications yet'**
+  String get notification_no_notifications;
+
+  /// No description provided for @notification_no_notifications_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'When you receive notifications, they will appear here.'**
+  String get notification_no_notifications_desc;
+
+  /// No description provided for @noMoreNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'No more notifications'**
+  String get noMoreNotifications;
+
   /// No description provided for @auth_log_in.
   ///
   /// In en, this message translates to:
-  /// **'Login'**
+  /// **'Log In'**
   String get auth_log_in;
 
   /// No description provided for @auth_log_in_subtitle.
   ///
   /// In en, this message translates to:
-  /// **'Welcome back to Wasally'**
+  /// **'Welcome back to Wassaly'**
   String get auth_log_in_subtitle;
 
   /// No description provided for @auth_email_or_phone.
   ///
   /// In en, this message translates to:
-  /// **'Email or Phone'**
+  /// **'Email or Phone Number'**
   String get auth_email_or_phone;
 
   /// No description provided for @auth_email.
@@ -1438,19 +1666,19 @@ abstract class S {
   /// No description provided for @auth_forgot_password.
   ///
   /// In en, this message translates to:
-  /// **'Forgot password?'**
+  /// **'Forgot Password?'**
   String get auth_forgot_password;
 
   /// No description provided for @auth_remember_me.
   ///
   /// In en, this message translates to:
-  /// **'Remember me'**
+  /// **'Remember Me'**
   String get auth_remember_me;
 
   /// No description provided for @auth_login_button.
   ///
   /// In en, this message translates to:
-  /// **'Login'**
+  /// **'Log In'**
   String get auth_login_button;
 
   /// No description provided for @auth_dont_have_account.
@@ -1462,31 +1690,31 @@ abstract class S {
   /// No description provided for @auth_sign_up.
   ///
   /// In en, this message translates to:
-  /// **'Sign up'**
+  /// **'Sign Up'**
   String get auth_sign_up;
 
   /// No description provided for @auth_sign_up_google.
   ///
   /// In en, this message translates to:
-  /// **'Continue with google'**
+  /// **'Continue with Google'**
   String get auth_sign_up_google;
 
   /// No description provided for @auth_sign_up_facebook.
   ///
   /// In en, this message translates to:
-  /// **'Continue with facebook'**
+  /// **'Continue with Facebook'**
   String get auth_sign_up_facebook;
 
   /// No description provided for @auth_or_login_with.
   ///
   /// In en, this message translates to:
-  /// **'Or login with'**
+  /// **'Or log in with'**
   String get auth_or_login_with;
 
   /// No description provided for @auth_login_with_google.
   ///
   /// In en, this message translates to:
-  /// **'Continue with google'**
+  /// **'Continue with Google'**
   String get auth_login_with_google;
 
   /// No description provided for @auth_create_account.
@@ -1552,7 +1780,7 @@ abstract class S {
   /// No description provided for @auth_sign_in.
   ///
   /// In en, this message translates to:
-  /// **'Sign in'**
+  /// **'Sign In'**
   String get auth_sign_in;
 
   /// No description provided for @auth_phone.
@@ -1612,7 +1840,7 @@ abstract class S {
   /// No description provided for @auth_forgot_password_subtitle.
   ///
   /// In en, this message translates to:
-  /// **'Enter your email or phone and we’ll send a reset code'**
+  /// **'Enter your email or phone and we\'ll send you a reset code'**
   String get auth_forgot_password_subtitle;
 
   /// No description provided for @auth_send_code.
@@ -1630,7 +1858,7 @@ abstract class S {
   /// No description provided for @auth_reset_link_sent.
   ///
   /// In en, this message translates to:
-  /// **'Reset link sent to your email'**
+  /// **'Reset link has been sent to your email'**
   String get auth_reset_link_sent;
 
   /// No description provided for @auth_otp_verification_title.
@@ -1648,19 +1876,19 @@ abstract class S {
   /// No description provided for @auth_add_avatar.
   ///
   /// In en, this message translates to:
-  /// **'Add Avatar'**
+  /// **'Add Profile Picture'**
   String get auth_add_avatar;
 
   /// No description provided for @auth_change_avatar.
   ///
   /// In en, this message translates to:
-  /// **'Change Avatar'**
+  /// **'Change Profile Picture'**
   String get auth_change_avatar;
 
   /// No description provided for @auth_select_image_source.
   ///
   /// In en, this message translates to:
-  /// **'Select image source'**
+  /// **'Choose Image Source'**
   String get auth_select_image_source;
 
   /// No description provided for @auth_camera.
@@ -1720,7 +1948,7 @@ abstract class S {
   /// No description provided for @auth_account_not_active.
   ///
   /// In en, this message translates to:
-  /// **'not active'**
+  /// **'Inactive'**
   String get auth_account_not_active;
 
   /// No description provided for @auth_reset_password_title.
@@ -1780,13 +2008,13 @@ abstract class S {
   /// No description provided for @reset_password_new_password_hint.
   ///
   /// In en, this message translates to:
-  /// **'Enter your new password'**
+  /// **'Enter new password'**
   String get reset_password_new_password_hint;
 
   /// No description provided for @reset_password_confirm_password_hint.
   ///
   /// In en, this message translates to:
-  /// **'Confirm your new password'**
+  /// **'Confirm new password'**
   String get reset_password_confirm_password_hint;
 
   /// No description provided for @reset_password_reset_button.
@@ -1798,7 +2026,7 @@ abstract class S {
   /// No description provided for @reset_password_back_to_login.
   ///
   /// In en, this message translates to:
-  /// **'Back to login'**
+  /// **'Back to Login'**
   String get reset_password_back_to_login;
 
   /// No description provided for @otp_verification_success.
@@ -1810,7 +2038,7 @@ abstract class S {
   /// No description provided for @otp_resend_success.
   ///
   /// In en, this message translates to:
-  /// **'OTP resent successfully!'**
+  /// **'Code resent successfully!'**
   String get otp_resend_success;
 
   /// No description provided for @otp_verify_now.
@@ -1834,7 +2062,7 @@ abstract class S {
   /// No description provided for @reset_password_subtitle.
   ///
   /// In en, this message translates to:
-  /// **'Enter a strong new password'**
+  /// **'Enter a new strong password'**
   String get reset_password_subtitle;
 
   /// No description provided for @reset_password_requirements_title.
@@ -1846,7 +2074,7 @@ abstract class S {
   /// No description provided for @reset_password_req_min_length.
   ///
   /// In en, this message translates to:
-  /// **'At least 6 characters long'**
+  /// **'At least 6 characters'**
   String get reset_password_req_min_length;
 
   /// No description provided for @reset_password_req_match.
@@ -1858,13 +2086,13 @@ abstract class S {
   /// No description provided for @otp_otp_sent_to.
   ///
   /// In en, this message translates to:
-  /// **'OTP sent to '**
+  /// **'Code sent to '**
   String get otp_otp_sent_to;
 
   /// No description provided for @otp_didnt_receive_code.
   ///
   /// In en, this message translates to:
-  /// **'Didn\'t receive code?'**
+  /// **'Didn\'t receive the code?'**
   String get otp_didnt_receive_code;
 
   /// No description provided for @otp_resend_code.
@@ -1894,205 +2122,13 @@ abstract class S {
   /// No description provided for @otp_retry_after.
   ///
   /// In en, this message translates to:
-  /// **'Retry after {seconds}s'**
+  /// **'Retry after {seconds} seconds'**
   String otp_retry_after(int seconds);
-
-  /// No description provided for @checkout_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Checkout'**
-  String get checkout_title;
-
-  /// No description provided for @checkout_shipping_address.
-  ///
-  /// In en, this message translates to:
-  /// **'Shipping Address'**
-  String get checkout_shipping_address;
-
-  /// No description provided for @checkout_contact_info.
-  ///
-  /// In en, this message translates to:
-  /// **'Contact Information'**
-  String get checkout_contact_info;
-
-  /// No description provided for @checkout_saved_addresses.
-  ///
-  /// In en, this message translates to:
-  /// **'Saved Addresses'**
-  String get checkout_saved_addresses;
-
-  /// No description provided for @checkout_customer_name.
-  ///
-  /// In en, this message translates to:
-  /// **'Customer Name'**
-  String get checkout_customer_name;
-
-  /// No description provided for @checkout_customer_name_hint.
-  ///
-  /// In en, this message translates to:
-  /// **'Enter customer name'**
-  String get checkout_customer_name_hint;
-
-  /// No description provided for @checkout_customer_phone.
-  ///
-  /// In en, this message translates to:
-  /// **'Phone Number'**
-  String get checkout_customer_phone;
-
-  /// No description provided for @checkout_customer_phone_hint.
-  ///
-  /// In en, this message translates to:
-  /// **'Enter phone number'**
-  String get checkout_customer_phone_hint;
-
-  /// No description provided for @checkout_customer_address.
-  ///
-  /// In en, this message translates to:
-  /// **'Address'**
-  String get checkout_customer_address;
-
-  /// No description provided for @checkout_governorate.
-  ///
-  /// In en, this message translates to:
-  /// **'Governorate'**
-  String get checkout_governorate;
-
-  /// No description provided for @checkout_region.
-  ///
-  /// In en, this message translates to:
-  /// **'Region'**
-  String get checkout_region;
-
-  /// No description provided for @checkout_center.
-  ///
-  /// In en, this message translates to:
-  /// **'City/Center'**
-  String get checkout_center;
-
-  /// No description provided for @checkout_coupon_code.
-  ///
-  /// In en, this message translates to:
-  /// **'Coupon Code'**
-  String get checkout_coupon_code;
-
-  /// No description provided for @checkout_order_summary.
-  ///
-  /// In en, this message translates to:
-  /// **'Order Summary'**
-  String get checkout_order_summary;
-
-  /// No description provided for @checkout_complete_order.
-  ///
-  /// In en, this message translates to:
-  /// **'Complete Order'**
-  String get checkout_complete_order;
-
-  /// No description provided for @checkout_subtotal.
-  ///
-  /// In en, this message translates to:
-  /// **'Subtotal'**
-  String get checkout_subtotal;
-
-  /// No description provided for @checkout_shipping.
-  ///
-  /// In en, this message translates to:
-  /// **'Shipping'**
-  String get checkout_shipping;
-
-  /// No description provided for @checkout_discount.
-  ///
-  /// In en, this message translates to:
-  /// **'Discount'**
-  String get checkout_discount;
-
-  /// No description provided for @checkout_total.
-  ///
-  /// In en, this message translates to:
-  /// **'Total Amount'**
-  String get checkout_total;
-
-  /// No description provided for @checkout_order_success.
-  ///
-  /// In en, this message translates to:
-  /// **'Order placed successfully!'**
-  String get checkout_order_success;
-
-  /// No description provided for @checkout_success_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Order Placed Successfully!'**
-  String get checkout_success_title;
-
-  /// No description provided for @checkout_success_msg.
-  ///
-  /// In en, this message translates to:
-  /// **'Your order has been received and is being processed.'**
-  String get checkout_success_msg;
-
-  /// No description provided for @checkout_order_id.
-  ///
-  /// In en, this message translates to:
-  /// **'Order ID'**
-  String get checkout_order_id;
-
-  /// No description provided for @checkout_go_home.
-  ///
-  /// In en, this message translates to:
-  /// **'Go Home'**
-  String get checkout_go_home;
-
-  /// No description provided for @checkout_view_orders.
-  ///
-  /// In en, this message translates to:
-  /// **'View My Orders'**
-  String get checkout_view_orders;
-
-  /// No description provided for @checkout_validation_name_required.
-  ///
-  /// In en, this message translates to:
-  /// **'Name is required'**
-  String get checkout_validation_name_required;
-
-  /// No description provided for @checkout_validation_phone_required.
-  ///
-  /// In en, this message translates to:
-  /// **'Phone number is required'**
-  String get checkout_validation_phone_required;
-
-  /// No description provided for @checkout_validation_address_required.
-  ///
-  /// In en, this message translates to:
-  /// **'Address is required'**
-  String get checkout_validation_address_required;
-
-  /// No description provided for @checkout_validation_governorate_required.
-  ///
-  /// In en, this message translates to:
-  /// **'Governorate is required'**
-  String get checkout_validation_governorate_required;
-
-  /// No description provided for @checkout_validation_center_required.
-  ///
-  /// In en, this message translates to:
-  /// **'City is required'**
-  String get checkout_validation_center_required;
-
-  /// No description provided for @checkout_apply_coupon.
-  ///
-  /// In en, this message translates to:
-  /// **'Apply'**
-  String get checkout_apply_coupon;
-
-  /// No description provided for @checkout_remove_coupon.
-  ///
-  /// In en, this message translates to:
-  /// **'Remove'**
-  String get checkout_remove_coupon;
 
   /// No description provided for @order_items_count.
   ///
   /// In en, this message translates to:
-  /// **'Items Count'**
+  /// **'Item Count'**
   String get order_items_count;
 
   /// No description provided for @order_date.
@@ -2254,31 +2290,31 @@ abstract class S {
   /// No description provided for @order_tracker_pending_desc.
   ///
   /// In en, this message translates to:
-  /// **'Your order is pending confirmation'**
+  /// **'Your order has been received and is awaiting review'**
   String get order_tracker_pending_desc;
 
   /// No description provided for @order_tracker_reschedule_desc.
   ///
   /// In en, this message translates to:
-  /// **'Your order is under reschedule review'**
+  /// **'The order is now being rescheduled'**
   String get order_tracker_reschedule_desc;
 
   /// No description provided for @order_tracker_accepted_desc.
   ///
   /// In en, this message translates to:
-  /// **'Your order has been accepted'**
+  /// **'Your order has been approved by the store'**
   String get order_tracker_accepted_desc;
 
   /// No description provided for @order_tracker_processing_desc.
   ///
   /// In en, this message translates to:
-  /// **'Your order is being processed and packed'**
+  /// **'Your order is being carefully prepared and packed'**
   String get order_tracker_processing_desc;
 
   /// No description provided for @order_tracker_shipped_desc.
   ///
   /// In en, this message translates to:
-  /// **'Your order is out for delivery'**
+  /// **'Your order is on its way to you'**
   String get order_tracker_shipped_desc;
 
   /// No description provided for @order_tracker_delivered_desc.
@@ -2314,7 +2350,7 @@ abstract class S {
   /// No description provided for @order_details_cancelled_msg.
   ///
   /// In en, this message translates to:
-  /// **'Your order was cancelled. Please contact support for more details.'**
+  /// **'Your order has been cancelled. Please contact support for more details.'**
   String get order_details_cancelled_msg;
 
   /// No description provided for @order_details_customer_name.
@@ -2356,13 +2392,13 @@ abstract class S {
   /// No description provided for @order_details_discount.
   ///
   /// In en, this message translates to:
-  /// **'Discount'**
+  /// **'Discount Value'**
   String get order_details_discount;
 
   /// No description provided for @order_details_total.
   ///
   /// In en, this message translates to:
-  /// **'Total Price'**
+  /// **'Grand Total'**
   String get order_details_total;
 
   /// No description provided for @order_details_title.
@@ -2380,7 +2416,7 @@ abstract class S {
   /// No description provided for @order_details_delivery_info.
   ///
   /// In en, this message translates to:
-  /// **'Delivery & Customer Info'**
+  /// **'Delivery & Customer Information'**
   String get order_details_delivery_info;
 
   /// No description provided for @order_details_ordered_products.
@@ -2404,13 +2440,13 @@ abstract class S {
   /// No description provided for @order_details_customer.
   ///
   /// In en, this message translates to:
-  /// **'Customer'**
+  /// **'Customer Name'**
   String get order_details_customer;
 
   /// No description provided for @order_details_order_no.
   ///
   /// In en, this message translates to:
-  /// **'Order No'**
+  /// **'Order Number'**
   String get order_details_order_no;
 
   /// No description provided for @order_details_payment_summary.
@@ -2479,6 +2515,12 @@ abstract class S {
   /// **'Save Changes'**
   String get order_update_save;
 
+  /// No description provided for @order_status_reschedule.
+  ///
+  /// In en, this message translates to:
+  /// **'Reschedule'**
+  String get order_status_reschedule;
+
   /// No description provided for @service_details_title.
   ///
   /// In en, this message translates to:
@@ -2488,13 +2530,13 @@ abstract class S {
   /// No description provided for @service_details_description.
   ///
   /// In en, this message translates to:
-  /// **'Description'**
+  /// **'Service Description'**
   String get service_details_description;
 
   /// No description provided for @service_details_provider.
   ///
   /// In en, this message translates to:
-  /// **'Provider'**
+  /// **'Service Provider'**
   String get service_details_provider;
 
   /// No description provided for @service_details_book_now.
@@ -2506,7 +2548,7 @@ abstract class S {
   /// No description provided for @service_details_no_available_days.
   ///
   /// In en, this message translates to:
-  /// **'No available slots at the moment'**
+  /// **'No available dates currently'**
   String get service_details_no_available_days;
 
   /// No description provided for @service_details_available_days.
@@ -2548,7 +2590,7 @@ abstract class S {
   /// No description provided for @service_booking_email.
   ///
   /// In en, this message translates to:
-  /// **'Email Address'**
+  /// **'Email'**
   String get service_booking_email;
 
   /// No description provided for @service_booking_problem.
@@ -2560,7 +2602,7 @@ abstract class S {
   /// No description provided for @service_booking_problem_hint.
   ///
   /// In en, this message translates to:
-  /// **'Explain your problem here...'**
+  /// **'Describe the problem you are facing here...'**
   String get service_booking_problem_hint;
 
   /// No description provided for @service_booking_address_info.
@@ -2596,13 +2638,13 @@ abstract class S {
   /// No description provided for @service_booking_success_msg.
   ///
   /// In en, this message translates to:
-  /// **'Your booking request has been received, the provider will contact you soon.'**
+  /// **'Your booking request has been received successfully, and the service provider will contact you soon.'**
   String get service_booking_success_msg;
 
   /// No description provided for @service_booking_id.
   ///
   /// In en, this message translates to:
-  /// **'Booking ID'**
+  /// **'Booking Number'**
   String get service_booking_id;
 
   /// No description provided for @service_booking_service.
@@ -2614,7 +2656,7 @@ abstract class S {
   /// No description provided for @service_booking_provider.
   ///
   /// In en, this message translates to:
-  /// **'Provider'**
+  /// **'Service Provider'**
   String get service_booking_provider;
 
   /// No description provided for @service_booking_day.
@@ -2632,13 +2674,13 @@ abstract class S {
   /// No description provided for @service_booking_go_home.
   ///
   /// In en, this message translates to:
-  /// **'Go Home'**
+  /// **'Go to Home'**
   String get service_booking_go_home;
 
   /// No description provided for @service_booking_view_orders.
   ///
   /// In en, this message translates to:
-  /// **'View My Bookings'**
+  /// **'View My Orders'**
   String get service_booking_view_orders;
 
   /// No description provided for @provider_details_title.
@@ -2668,13 +2710,13 @@ abstract class S {
   /// No description provided for @provider_details_price_from.
   ///
   /// In en, this message translates to:
-  /// **'Price Starts From'**
+  /// **'Price starts from'**
   String get provider_details_price_from;
 
   /// No description provided for @provider_details_services.
   ///
   /// In en, this message translates to:
-  /// **'Offered Services'**
+  /// **'Services Provided'**
   String get provider_details_services;
 
   /// No description provided for @provider_details_contact_info.
@@ -2698,7 +2740,7 @@ abstract class S {
   /// No description provided for @provider_details_email.
   ///
   /// In en, this message translates to:
-  /// **'Email Address'**
+  /// **'Email'**
   String get provider_details_email;
 
   /// No description provided for @provider_details_status.
@@ -2736,342 +2778,6 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Email'**
   String get provider_details_email_action;
-
-  /// No description provided for @brands.
-  ///
-  /// In en, this message translates to:
-  /// **'Brands'**
-  String get brands;
-
-  /// No description provided for @no_brands.
-  ///
-  /// In en, this message translates to:
-  /// **'No brands added yet'**
-  String get no_brands;
-
-  /// No description provided for @brand_products.
-  ///
-  /// In en, this message translates to:
-  /// **'Brand Products'**
-  String get brand_products;
-
-  /// No description provided for @no_brand_products.
-  ///
-  /// In en, this message translates to:
-  /// **'No products in this brand yet'**
-  String get no_brand_products;
-
-  /// No description provided for @offers.
-  ///
-  /// In en, this message translates to:
-  /// **'Offers'**
-  String get offers;
-
-  /// No description provided for @privacy_policy_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Privacy Policy'**
-  String get privacy_policy_title;
-
-  /// No description provided for @privacy_policy_last_updated.
-  ///
-  /// In en, this message translates to:
-  /// **'Last Updated'**
-  String get privacy_policy_last_updated;
-
-  /// No description provided for @privacy_policy_last_updated_date.
-  ///
-  /// In en, this message translates to:
-  /// **'December 30, 2024'**
-  String get privacy_policy_last_updated_date;
-
-  /// No description provided for @privacy_policy_introduction_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Introduction'**
-  String get privacy_policy_introduction_title;
-
-  /// No description provided for @privacy_policy_introduction_content.
-  ///
-  /// In en, this message translates to:
-  /// **'Wassaly (\'we\', \'our\', or \'us\') is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our mobile application and related services.'**
-  String get privacy_policy_introduction_content;
-
-  /// No description provided for @privacy_policy_data_collection_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Information We Collect'**
-  String get privacy_policy_data_collection_title;
-
-  /// No description provided for @privacy_policy_data_collection_content.
-  ///
-  /// In en, this message translates to:
-  /// **'We collect information you provide directly to us, such as when you create an account, update your profile, use our services, or contact us for support. This includes: name, email address, phone number, profile information, payment information, location data, and usage data.'**
-  String get privacy_policy_data_collection_content;
-
-  /// No description provided for @privacy_policy_data_usage_title.
-  ///
-  /// In en, this message translates to:
-  /// **'How We Use Your Information'**
-  String get privacy_policy_data_usage_title;
-
-  /// No description provided for @privacy_policy_data_usage_content.
-  ///
-  /// In en, this message translates to:
-  /// **'We use the information we collect to: provide, maintain, and improve our services; process transactions and send related information; send technical notices and support messages; communicate with you about products, services, and promotional offers; and monitor and analyze trends and usage.'**
-  String get privacy_policy_data_usage_content;
-
-  /// No description provided for @privacy_policy_data_sharing_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Information Sharing'**
-  String get privacy_policy_data_sharing_title;
-
-  /// No description provided for @privacy_policy_data_sharing_content.
-  ///
-  /// In en, this message translates to:
-  /// **'We do not sell, trade, or otherwise transfer your personal information to third parties without your consent, except as described in this policy. We may share information with: service providers who assist in operating our app, payment processors, and when required by law or to protect our rights.'**
-  String get privacy_policy_data_sharing_content;
-
-  /// No description provided for @privacy_policy_data_security_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Data Security'**
-  String get privacy_policy_data_security_title;
-
-  /// No description provided for @privacy_policy_data_security_content.
-  ///
-  /// In en, this message translates to:
-  /// **'We implement appropriate technical and organizational measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction. However, no method of transmission over the internet is 100% secure.'**
-  String get privacy_policy_data_security_content;
-
-  /// No description provided for @privacy_policy_user_rights_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Your Rights'**
-  String get privacy_policy_user_rights_title;
-
-  /// No description provided for @privacy_policy_user_rights_content.
-  ///
-  /// In en, this message translates to:
-  /// **'You have the right to: access and update your personal information, request deletion of your account and data, opt-out of marketing communications, and request a copy of your data. To exercise these rights, contact us using the information below.'**
-  String get privacy_policy_user_rights_content;
-
-  /// No description provided for @privacy_policy_third_party_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Third-Party Services'**
-  String get privacy_policy_third_party_title;
-
-  /// No description provided for @privacy_policy_third_party_content.
-  ///
-  /// In en, this message translates to:
-  /// **'Our app may contain links to third-party websites and services. We are not responsible for the privacy practices of these third parties. We encourage you to review their privacy policies.'**
-  String get privacy_policy_third_party_content;
-
-  /// No description provided for @privacy_policy_children_privacy_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Children\'s Privacy'**
-  String get privacy_policy_children_privacy_title;
-
-  /// No description provided for @privacy_policy_children_privacy_content.
-  ///
-  /// In en, this message translates to:
-  /// **'Our services are not intended for children under 13. We do not knowingly collect personal information from children under 13. If you believe we have collected such information, please contact us immediately.'**
-  String get privacy_policy_children_privacy_content;
-
-  /// No description provided for @privacy_policy_international_transfers_title.
-  ///
-  /// In en, this message translates to:
-  /// **'International Data Transfers'**
-  String get privacy_policy_international_transfers_title;
-
-  /// No description provided for @privacy_policy_international_transfers_content.
-  ///
-  /// In en, this message translates to:
-  /// **'Your information may be transferred to and processed in countries other than your own. We ensure appropriate safeguards are in place to protect your data in accordance with applicable data protection laws.'**
-  String get privacy_policy_international_transfers_content;
-
-  /// No description provided for @privacy_policy_changes_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Changes to This Policy'**
-  String get privacy_policy_changes_title;
-
-  /// No description provided for @privacy_policy_changes_content.
-  ///
-  /// In en, this message translates to:
-  /// **'We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new policy in the app and updating the \'Last Updated\' date. Your continued use of the app after such changes constitutes acceptance.'**
-  String get privacy_policy_changes_content;
-
-  /// No description provided for @privacy_policy_contact_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Contact Us'**
-  String get privacy_policy_contact_title;
-
-  /// No description provided for @privacy_policy_contact_content.
-  ///
-  /// In en, this message translates to:
-  /// **'If you have any questions about this Privacy Policy, please contact us at: privacy@wassaly.com or through our in-app support center.'**
-  String get privacy_policy_contact_content;
-
-  /// No description provided for @privacy_policy_footer_note.
-  ///
-  /// In en, this message translates to:
-  /// **'By using Wassaly, you acknowledge that you have read and understood this Privacy Policy.'**
-  String get privacy_policy_footer_note;
-
-  /// No description provided for @privacy_policy_google_privacy.
-  ///
-  /// In en, this message translates to:
-  /// **'Google Privacy Policy'**
-  String get privacy_policy_google_privacy;
-
-  /// No description provided for @privacy_policy_google_terms.
-  ///
-  /// In en, this message translates to:
-  /// **'Google Terms of Service'**
-  String get privacy_policy_google_terms;
-
-  /// No description provided for @privacy_policy_view_online.
-  ///
-  /// In en, this message translates to:
-  /// **'View Online'**
-  String get privacy_policy_view_online;
-
-  /// No description provided for @terms_of_service_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Terms of Service'**
-  String get terms_of_service_title;
-
-  /// No description provided for @terms_of_service_last_updated.
-  ///
-  /// In en, this message translates to:
-  /// **'Last Updated'**
-  String get terms_of_service_last_updated;
-
-  /// No description provided for @terms_of_service_last_updated_date.
-  ///
-  /// In en, this message translates to:
-  /// **'December 30, 2024'**
-  String get terms_of_service_last_updated_date;
-
-  /// No description provided for @terms_of_service_acceptance_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Acceptance of Terms'**
-  String get terms_of_service_acceptance_title;
-
-  /// No description provided for @terms_of_service_acceptance_content.
-  ///
-  /// In en, this message translates to:
-  /// **'By accessing or using the Wassaly mobile application, you agree to be bound by these Terms of Service. If you do not agree to all of these terms, do not use the application.'**
-  String get terms_of_service_acceptance_content;
-
-  /// No description provided for @terms_of_service_services_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Description of Services'**
-  String get terms_of_service_services_title;
-
-  /// No description provided for @terms_of_service_services_content.
-  ///
-  /// In en, this message translates to:
-  /// **'Wassaly provides a platform connecting customers with delivery services for various products. We reserve the right to modify or discontinue any service at any time.'**
-  String get terms_of_service_services_content;
-
-  /// No description provided for @terms_of_service_user_responsibilities_title.
-  ///
-  /// In en, this message translates to:
-  /// **'User Responsibilities'**
-  String get terms_of_service_user_responsibilities_title;
-
-  /// No description provided for @terms_of_service_user_responsibilities_content.
-  ///
-  /// In en, this message translates to:
-  /// **'You are responsible for maintaining the confidentiality of your account information and for all activities that occur under your account. You agree to provide accurate and complete information.'**
-  String get terms_of_service_user_responsibilities_content;
-
-  /// No description provided for @terms_of_service_prohibited_uses_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Prohibited Uses'**
-  String get terms_of_service_prohibited_uses_title;
-
-  /// No description provided for @terms_of_service_prohibited_uses_content.
-  ///
-  /// In en, this message translates to:
-  /// **'You may not use the application for any illegal purpose, to transmit any malicious code, or to interfere with the proper working of the application.'**
-  String get terms_of_service_prohibited_uses_content;
-
-  /// No description provided for @terms_of_service_intellectual_property_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Intellectual Property'**
-  String get terms_of_service_intellectual_property_title;
-
-  /// No description provided for @terms_of_service_intellectual_property_content.
-  ///
-  /// In en, this message translates to:
-  /// **'All content and software included in the application are the property of Wassaly or its suppliers and are protected by intellectual property laws.'**
-  String get terms_of_service_intellectual_property_content;
-
-  /// No description provided for @terms_of_service_termination_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Termination'**
-  String get terms_of_service_termination_title;
-
-  /// No description provided for @terms_of_service_termination_content.
-  ///
-  /// In en, this message translates to:
-  /// **'We may terminate or suspend your access to the application immediately, without prior notice or liability, for any reason, including breach of these Terms.'**
-  String get terms_of_service_termination_content;
-
-  /// No description provided for @terms_of_service_limitation_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Limitation of Liability'**
-  String get terms_of_service_limitation_title;
-
-  /// No description provided for @terms_of_service_limitation_content.
-  ///
-  /// In en, this message translates to:
-  /// **'Wassaly shall not be liable for any indirect, incidental, special, or consequential damages resulting from the use or inability to use the application.'**
-  String get terms_of_service_limitation_content;
-
-  /// No description provided for @terms_of_service_changes_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Changes to Terms'**
-  String get terms_of_service_changes_title;
-
-  /// No description provided for @terms_of_service_changes_content.
-  ///
-  /// In en, this message translates to:
-  /// **'We reserve the right to update or change our Terms of Service at any time. Your continued use of the service after we post any modifications will constitute your acknowledgment of the modifications.'**
-  String get terms_of_service_changes_content;
-
-  /// No description provided for @terms_of_service_contact_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Contact Information'**
-  String get terms_of_service_contact_title;
-
-  /// No description provided for @terms_of_service_contact_content.
-  ///
-  /// In en, this message translates to:
-  /// **'If you have any questions about these Terms, please contact us at: terms@wassaly.com'**
-  String get terms_of_service_contact_content;
-
-  /// No description provided for @terms_of_service_footer_note.
-  ///
-  /// In en, this message translates to:
-  /// **'Thank you for using Wassaly!'**
-  String get terms_of_service_footer_note;
 
   /// No description provided for @booking_details_title.
   ///
@@ -3130,7 +2836,7 @@ abstract class S {
   /// No description provided for @booking_update_title.
   ///
   /// In en, this message translates to:
-  /// **'Update Booking Info'**
+  /// **'Update Booking Details'**
   String get booking_update_title;
 
   /// No description provided for @booking_update_problem_label.
@@ -3142,7 +2848,7 @@ abstract class S {
   /// No description provided for @booking_update_phone_label.
   ///
   /// In en, this message translates to:
-  /// **'Customer Phone'**
+  /// **'Phone Number'**
   String get booking_update_phone_label;
 
   /// No description provided for @booking_update_save.
@@ -3160,7 +2866,7 @@ abstract class S {
   /// No description provided for @booking_details_info.
   ///
   /// In en, this message translates to:
-  /// **'Customer & Service Info'**
+  /// **'Customer & Service Information'**
   String get booking_details_info;
 
   /// No description provided for @booking_details_actions.
@@ -3172,19 +2878,19 @@ abstract class S {
   /// No description provided for @booking_reschedule_title.
   ///
   /// In en, this message translates to:
-  /// **'Reschedule Suggestion'**
+  /// **'Suggest New Date'**
   String get booking_reschedule_title;
 
   /// No description provided for @booking_reschedule_provider_suggested.
   ///
   /// In en, this message translates to:
-  /// **'The provider suggested a new schedule'**
+  /// **'The service provider suggested a new date'**
   String get booking_reschedule_provider_suggested;
 
   /// No description provided for @booking_reschedule_customer_suggested.
   ///
   /// In en, this message translates to:
-  /// **'You suggested a new schedule'**
+  /// **'You suggested a new date'**
   String get booking_reschedule_customer_suggested;
 
   /// No description provided for @booking_reschedule_suggested_day.
@@ -3208,37 +2914,37 @@ abstract class S {
   /// No description provided for @booking_reschedule_accept.
   ///
   /// In en, this message translates to:
-  /// **'Accept Schedule'**
+  /// **'Accept Date'**
   String get booking_reschedule_accept;
 
   /// No description provided for @booking_reschedule_propose.
   ///
   /// In en, this message translates to:
-  /// **'Propose Another'**
+  /// **'Suggest Another Date'**
   String get booking_reschedule_propose;
 
   /// No description provided for @booking_reschedule_accept_title.
   ///
   /// In en, this message translates to:
-  /// **'Accept Suggested Schedule'**
+  /// **'Accept Suggested Date'**
   String get booking_reschedule_accept_title;
 
   /// No description provided for @booking_reschedule_accept_confirm.
   ///
   /// In en, this message translates to:
-  /// **'Are you sure you want to accept the suggested schedule?'**
+  /// **'Are you sure you want to accept the suggested date?'**
   String get booking_reschedule_accept_confirm;
 
   /// No description provided for @booking_reschedule_accept_success.
   ///
   /// In en, this message translates to:
-  /// **'Schedule accepted successfully'**
+  /// **'Date accepted successfully'**
   String get booking_reschedule_accept_success;
 
   /// No description provided for @booking_reschedule_propose_title.
   ///
   /// In en, this message translates to:
-  /// **'Propose Alternative Schedule'**
+  /// **'Suggest Alternative Date'**
   String get booking_reschedule_propose_title;
 
   /// No description provided for @booking_reschedule_propose_day_label.
@@ -3256,25 +2962,25 @@ abstract class S {
   /// No description provided for @booking_reschedule_propose_note_label.
   ///
   /// In en, this message translates to:
-  /// **'Note to Provider'**
+  /// **'Note for Provider'**
   String get booking_reschedule_propose_note_label;
 
   /// No description provided for @booking_reschedule_propose_note_hint.
   ///
   /// In en, this message translates to:
-  /// **'Write your reason for proposing a different schedule...'**
+  /// **'Write the reason for suggesting another date...'**
   String get booking_reschedule_propose_note_hint;
 
   /// No description provided for @booking_reschedule_propose_submit.
   ///
   /// In en, this message translates to:
-  /// **'Send Proposal'**
+  /// **'Submit Suggestion'**
   String get booking_reschedule_propose_submit;
 
   /// No description provided for @booking_reschedule_propose_success.
   ///
   /// In en, this message translates to:
-  /// **'Schedule proposal sent successfully'**
+  /// **'Date suggestion sent successfully'**
   String get booking_reschedule_propose_success;
 
   /// No description provided for @booking_reschedule_select_day.
@@ -3307,11 +3013,35 @@ abstract class S {
   /// **'Please write a note'**
   String get booking_reschedule_note_required;
 
-  /// No description provided for @order_status_reschedule.
+  /// No description provided for @brands.
   ///
   /// In en, this message translates to:
-  /// **'Reschedule'**
-  String get order_status_reschedule;
+  /// **'Brands'**
+  String get brands;
+
+  /// No description provided for @no_brands.
+  ///
+  /// In en, this message translates to:
+  /// **'No brands added yet'**
+  String get no_brands;
+
+  /// No description provided for @brand_products.
+  ///
+  /// In en, this message translates to:
+  /// **'Brand Products'**
+  String get brand_products;
+
+  /// No description provided for @no_brand_products.
+  ///
+  /// In en, this message translates to:
+  /// **'No products in this brand yet'**
+  String get no_brand_products;
+
+  /// No description provided for @offers.
+  ///
+  /// In en, this message translates to:
+  /// **'Offers'**
+  String get offers;
 
   /// No description provided for @filter_title.
   ///
@@ -3322,7 +3052,7 @@ abstract class S {
   /// No description provided for @filter_apply.
   ///
   /// In en, this message translates to:
-  /// **'Apply Filters'**
+  /// **'Apply Filter'**
   String get filter_apply;
 
   /// No description provided for @filter_reset.
@@ -3400,7 +3130,7 @@ abstract class S {
   /// No description provided for @filter_no_products.
   ///
   /// In en, this message translates to:
-  /// **'No products match the selected filters.'**
+  /// **'No products match your filter options.'**
   String get filter_no_products;
 
   /// No description provided for @filter_active_filters.
@@ -3415,22 +3145,358 @@ abstract class S {
   /// **'{stars} stars & up'**
   String filter_rating_stars(Object stars);
 
-  /// No description provided for @app_exit_confirm.
+  /// No description provided for @time_ago_years.
   ///
   /// In en, this message translates to:
-  /// **'Please press back again to exit the app'**
-  String get app_exit_confirm;
+  /// **'{count, plural, =0{Just now} =1{One year ago} =2{Two years ago} few{{count} years ago} many{{count} year ago} other{{count} years ago}}'**
+  String time_ago_years(num count);
 
-  /// No description provided for @profile_help_center.
+  /// No description provided for @time_ago_months.
   ///
   /// In en, this message translates to:
-  /// **'Help Center'**
-  String get profile_help_center;
+  /// **'{count, plural, =0{Just now} =1{One month ago} =2{Two months ago} few{{count} months ago} many{{count} month ago} other{{count} months ago}}'**
+  String time_ago_months(num count);
+
+  /// No description provided for @time_ago_weeks.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Just now} =1{One week ago} =2{Two weeks ago} few{{count} weeks ago} many{{count} week ago} other{{count} weeks ago}}'**
+  String time_ago_weeks(num count);
+
+  /// No description provided for @time_ago_days.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Just now} =1{One day ago} =2{Two days ago} few{{count} days ago} many{{count} day ago} other{{count} days ago}}'**
+  String time_ago_days(num count);
+
+  /// No description provided for @time_ago_hours.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Just now} =1{One hour ago} =2{Two hours ago} few{{count} hours ago} many{{count} hour ago} other{{count} hours ago}}'**
+  String time_ago_hours(num count);
+
+  /// No description provided for @time_ago_minutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Just now} =1{One minute ago} =2{Two minutes ago} few{{count} minutes ago} many{{count} minute ago} other{{count} minutes ago}}'**
+  String time_ago_minutes(num count);
+
+  /// No description provided for @time_ago_just_now.
+  ///
+  /// In en, this message translates to:
+  /// **'Just now'**
+  String get time_ago_just_now;
+
+  /// No description provided for @privacy_policy_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Policy'**
+  String get privacy_policy_title;
+
+  /// No description provided for @privacy_policy_last_updated.
+  ///
+  /// In en, this message translates to:
+  /// **'Last Updated'**
+  String get privacy_policy_last_updated;
+
+  /// No description provided for @privacy_policy_last_updated_date.
+  ///
+  /// In en, this message translates to:
+  /// **'December 30, 2024'**
+  String get privacy_policy_last_updated_date;
+
+  /// No description provided for @privacy_policy_introduction_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Introduction'**
+  String get privacy_policy_introduction_title;
+
+  /// No description provided for @privacy_policy_introduction_content.
+  ///
+  /// In en, this message translates to:
+  /// **'Wassaly (\'we\', \'us\') is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and protect your information when you use our mobile application and related services.'**
+  String get privacy_policy_introduction_content;
+
+  /// No description provided for @privacy_policy_data_collection_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Information We Collect'**
+  String get privacy_policy_data_collection_title;
+
+  /// No description provided for @privacy_policy_data_collection_content.
+  ///
+  /// In en, this message translates to:
+  /// **'We collect information you provide directly to us, such as when you create an account, update your profile, use our services, or contact us for support. This includes: name, email address, phone number, profile information, payment information, location data, and usage data.'**
+  String get privacy_policy_data_collection_content;
+
+  /// No description provided for @privacy_policy_data_usage_title.
+  ///
+  /// In en, this message translates to:
+  /// **'How We Use Your Information'**
+  String get privacy_policy_data_usage_title;
+
+  /// No description provided for @privacy_policy_data_usage_content.
+  ///
+  /// In en, this message translates to:
+  /// **'We use the information we collect to: provide, maintain, and improve our services; process transactions and send related information; send technical notices and support messages; communicate with you about products, services, and promotions; and monitor and analyze trends and usage.'**
+  String get privacy_policy_data_usage_content;
+
+  /// No description provided for @privacy_policy_data_sharing_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Information Sharing'**
+  String get privacy_policy_data_sharing_title;
+
+  /// No description provided for @privacy_policy_data_sharing_content.
+  ///
+  /// In en, this message translates to:
+  /// **'We do not sell, trade, or transfer your personal information to third parties without your consent, except as described in this policy. We may share information with: service providers who help operate our app, payment processors, and when required by law or to protect our rights.'**
+  String get privacy_policy_data_sharing_content;
+
+  /// No description provided for @privacy_policy_data_security_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Data Security'**
+  String get privacy_policy_data_security_title;
+
+  /// No description provided for @privacy_policy_data_security_content.
+  ///
+  /// In en, this message translates to:
+  /// **'We implement appropriate technical and organizational measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction. However, no internet transmission method is 100% secure.'**
+  String get privacy_policy_data_security_content;
+
+  /// No description provided for @privacy_policy_user_rights_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Rights'**
+  String get privacy_policy_user_rights_title;
+
+  /// No description provided for @privacy_policy_user_rights_content.
+  ///
+  /// In en, this message translates to:
+  /// **'You have the right to: access and update your personal information, request deletion of your account and data, opt out of marketing communications, and request a copy of your data. To exercise these rights, contact us using the information below.'**
+  String get privacy_policy_user_rights_content;
+
+  /// No description provided for @privacy_policy_third_party_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Third-Party Services'**
+  String get privacy_policy_third_party_title;
+
+  /// No description provided for @privacy_policy_third_party_content.
+  ///
+  /// In en, this message translates to:
+  /// **'Our app may contain links to third-party websites and services. We are not responsible for the privacy practices of these third parties. We encourage you to review their privacy policies.'**
+  String get privacy_policy_third_party_content;
+
+  /// No description provided for @privacy_policy_children_privacy_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Children\'s Privacy'**
+  String get privacy_policy_children_privacy_title;
+
+  /// No description provided for @privacy_policy_children_privacy_content.
+  ///
+  /// In en, this message translates to:
+  /// **'Our services are not intended for children under 13 years of age. We do not knowingly collect personal information from children under 13. If you believe we have collected such information, please contact us immediately.'**
+  String get privacy_policy_children_privacy_content;
+
+  /// No description provided for @privacy_policy_international_transfers_title.
+  ///
+  /// In en, this message translates to:
+  /// **'International Data Transfers'**
+  String get privacy_policy_international_transfers_title;
+
+  /// No description provided for @privacy_policy_international_transfers_content.
+  ///
+  /// In en, this message translates to:
+  /// **'Your information may be transferred and processed in countries other than your own. We ensure appropriate safeguards are in place to protect your data in accordance with applicable data protection laws.'**
+  String get privacy_policy_international_transfers_content;
+
+  /// No description provided for @privacy_policy_changes_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Changes to This Policy'**
+  String get privacy_policy_changes_title;
+
+  /// No description provided for @privacy_policy_changes_content.
+  ///
+  /// In en, this message translates to:
+  /// **'We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new policy in the app and updating the \'Last Updated\' date. Your continued use of the app after these changes constitutes acceptance of them.'**
+  String get privacy_policy_changes_content;
+
+  /// No description provided for @privacy_policy_contact_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact Us'**
+  String get privacy_policy_contact_title;
+
+  /// No description provided for @privacy_policy_contact_content.
+  ///
+  /// In en, this message translates to:
+  /// **'If you have any questions about this Privacy Policy, please contact us at: privacy@wassaly.com or through the in-app support center.'**
+  String get privacy_policy_contact_content;
+
+  /// No description provided for @privacy_policy_footer_note.
+  ///
+  /// In en, this message translates to:
+  /// **'By using Wassaly, you acknowledge that you have read and understood this Privacy Policy.'**
+  String get privacy_policy_footer_note;
+
+  /// No description provided for @privacy_policy_google_privacy.
+  ///
+  /// In en, this message translates to:
+  /// **'Google Privacy Policy'**
+  String get privacy_policy_google_privacy;
+
+  /// No description provided for @privacy_policy_google_terms.
+  ///
+  /// In en, this message translates to:
+  /// **'Google Terms of Service'**
+  String get privacy_policy_google_terms;
+
+  /// No description provided for @privacy_policy_view_online.
+  ///
+  /// In en, this message translates to:
+  /// **'View Privacy Policy Online'**
+  String get privacy_policy_view_online;
+
+  /// No description provided for @terms_of_service_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Terms of Service'**
+  String get terms_of_service_title;
+
+  /// No description provided for @terms_of_service_last_updated.
+  ///
+  /// In en, this message translates to:
+  /// **'Last Updated'**
+  String get terms_of_service_last_updated;
+
+  /// No description provided for @terms_of_service_last_updated_date.
+  ///
+  /// In en, this message translates to:
+  /// **'December 30, 2024'**
+  String get terms_of_service_last_updated_date;
+
+  /// No description provided for @terms_of_service_acceptance_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Acceptance of Terms'**
+  String get terms_of_service_acceptance_title;
+
+  /// No description provided for @terms_of_service_acceptance_content.
+  ///
+  /// In en, this message translates to:
+  /// **'By accessing or using the Wassaly mobile app, you agree to be bound by these Terms of Service. If you do not agree to all of these terms, do not use the app.'**
+  String get terms_of_service_acceptance_content;
+
+  /// No description provided for @terms_of_service_services_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Description of Services'**
+  String get terms_of_service_services_title;
+
+  /// No description provided for @terms_of_service_services_content.
+  ///
+  /// In en, this message translates to:
+  /// **'Wassaly provides a platform that connects customers with delivery services for various products. We reserve the right to modify or discontinue any service at any time.'**
+  String get terms_of_service_services_content;
+
+  /// No description provided for @terms_of_service_user_responsibilities_title.
+  ///
+  /// In en, this message translates to:
+  /// **'User Responsibilities'**
+  String get terms_of_service_user_responsibilities_title;
+
+  /// No description provided for @terms_of_service_user_responsibilities_content.
+  ///
+  /// In en, this message translates to:
+  /// **'You are responsible for maintaining the confidentiality of your account information and for all activities that occur under your account. You agree to provide accurate and complete information.'**
+  String get terms_of_service_user_responsibilities_content;
+
+  /// No description provided for @terms_of_service_prohibited_uses_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Prohibited Uses'**
+  String get terms_of_service_prohibited_uses_title;
+
+  /// No description provided for @terms_of_service_prohibited_uses_content.
+  ///
+  /// In en, this message translates to:
+  /// **'You may not use the app for any unlawful purpose, transmit any harmful code, or interfere with the proper working of the app.'**
+  String get terms_of_service_prohibited_uses_content;
+
+  /// No description provided for @terms_of_service_intellectual_property_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Intellectual Property'**
+  String get terms_of_service_intellectual_property_title;
+
+  /// No description provided for @terms_of_service_intellectual_property_content.
+  ///
+  /// In en, this message translates to:
+  /// **'All content and software included in the app are owned by Wassaly or its suppliers and are protected by intellectual property laws.'**
+  String get terms_of_service_intellectual_property_content;
+
+  /// No description provided for @terms_of_service_termination_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Termination'**
+  String get terms_of_service_termination_title;
+
+  /// No description provided for @terms_of_service_termination_content.
+  ///
+  /// In en, this message translates to:
+  /// **'We may terminate or suspend your access to the app immediately, without prior notice or liability, for any reason, including breach of these terms.'**
+  String get terms_of_service_termination_content;
+
+  /// No description provided for @terms_of_service_limitation_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Limitation of Liability'**
+  String get terms_of_service_limitation_title;
+
+  /// No description provided for @terms_of_service_limitation_content.
+  ///
+  /// In en, this message translates to:
+  /// **'Wassaly shall not be liable for any indirect, incidental, special, or consequential damages arising out of or in connection with the use or inability to use the app.'**
+  String get terms_of_service_limitation_content;
+
+  /// No description provided for @terms_of_service_changes_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Changes to Terms'**
+  String get terms_of_service_changes_title;
+
+  /// No description provided for @terms_of_service_changes_content.
+  ///
+  /// In en, this message translates to:
+  /// **'We reserve the right to update or change our Terms of Service at any time. Your continued use of the service after any modifications constitutes acceptance of those modifications.'**
+  String get terms_of_service_changes_content;
+
+  /// No description provided for @terms_of_service_contact_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact Information'**
+  String get terms_of_service_contact_title;
+
+  /// No description provided for @terms_of_service_contact_content.
+  ///
+  /// In en, this message translates to:
+  /// **'If you have any questions about these terms, please contact us at: terms@wassaly.com'**
+  String get terms_of_service_contact_content;
+
+  /// No description provided for @terms_of_service_footer_note.
+  ///
+  /// In en, this message translates to:
+  /// **'Thank you for using Wassaly!'**
+  String get terms_of_service_footer_note;
 
   /// No description provided for @profile_help_center_description.
   ///
   /// In en, this message translates to:
-  /// **'Find answers to common questions or contact our support.'**
+  /// **'Find answers to common questions or contact customer support.'**
   String get profile_help_center_description;
 
   /// No description provided for @profile_help_search_hint.
@@ -3442,19 +3508,19 @@ abstract class S {
   /// No description provided for @profile_help_contact_support.
   ///
   /// In en, this message translates to:
-  /// **'Contact support'**
+  /// **'Contact Support'**
   String get profile_help_contact_support;
 
   /// No description provided for @profile_help_start_chat.
   ///
   /// In en, this message translates to:
-  /// **'Start chat'**
+  /// **'Start Chat'**
   String get profile_help_start_chat;
 
   /// No description provided for @profile_help_email_support.
   ///
   /// In en, this message translates to:
-  /// **'Email support'**
+  /// **'Support Email'**
   String get profile_help_email_support;
 
   /// No description provided for @profile_help_phone.
@@ -3466,25 +3532,25 @@ abstract class S {
   /// No description provided for @profile_help_hours.
   ///
   /// In en, this message translates to:
-  /// **'Mon–Fri 9:00–18:00'**
+  /// **'Monday–Friday 9:00–18:00'**
   String get profile_help_hours;
 
   /// No description provided for @profile_help_faqs.
   ///
   /// In en, this message translates to:
-  /// **'Frequently asked questions'**
+  /// **'FAQs'**
   String get profile_help_faqs;
 
   /// No description provided for @profile_help_faq_q1.
   ///
   /// In en, this message translates to:
-  /// **'How can I track my order?'**
+  /// **'How do I track my order?'**
   String get profile_help_faq_q1;
 
   /// No description provided for @profile_help_faq_a1.
   ///
   /// In en, this message translates to:
-  /// **'Open Orders from your profile and tap on the order to see its status and tracking information.'**
+  /// **'Open Orders from your profile and tap on the order to view its status and tracking information.'**
   String get profile_help_faq_a1;
 
   /// No description provided for @profile_help_faq_q2.
@@ -3496,37 +3562,37 @@ abstract class S {
   /// No description provided for @profile_help_faq_a2.
   ///
   /// In en, this message translates to:
-  /// **'Go to Saved Addresses in your profile, choose the address and edit or add a new one.'**
+  /// **'Go to Saved Addresses in your profile and select the address to edit or add a new one.'**
   String get profile_help_faq_a2;
 
   /// No description provided for @profile_help_faq_q3.
   ///
   /// In en, this message translates to:
-  /// **'How can I return or cancel an order?'**
+  /// **'How do I return or cancel an order?'**
   String get profile_help_faq_q3;
 
   /// No description provided for @profile_help_faq_a3.
   ///
   /// In en, this message translates to:
-  /// **'Open the order details and use the cancel/return action when available, or contact support for help.'**
+  /// **'Open the order details and use the cancel/return option when available, or contact support for assistance.'**
   String get profile_help_faq_a3;
 
   /// No description provided for @profile_help_links_privacy.
   ///
   /// In en, this message translates to:
-  /// **'Privacy policy'**
+  /// **'Privacy Policy'**
   String get profile_help_links_privacy;
 
   /// No description provided for @profile_help_links_terms.
   ///
   /// In en, this message translates to:
-  /// **'Terms of service'**
+  /// **'Terms of Service'**
   String get profile_help_links_terms;
 
   /// No description provided for @profile_help_links.
   ///
   /// In en, this message translates to:
-  /// **'Helpful Links'**
+  /// **'Important Links'**
   String get profile_help_links;
 
   /// No description provided for @profile_help_search_no_results.
@@ -3544,7 +3610,7 @@ abstract class S {
   /// No description provided for @profile_help_open_mail.
   ///
   /// In en, this message translates to:
-  /// **'Opening mail client...'**
+  /// **'Opening mail app...'**
   String get profile_help_open_mail;
 
   /// No description provided for @profile_help_phone_number.
@@ -3552,48 +3618,6 @@ abstract class S {
   /// In en, this message translates to:
   /// **'+1 800 123 4567'**
   String get profile_help_phone_number;
-
-  /// No description provided for @search_initial_title.
-  ///
-  /// In en, this message translates to:
-  /// **'What are you looking for today?'**
-  String get search_initial_title;
-
-  /// No description provided for @search_initial_subtitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Search for products, services, and special offers easily'**
-  String get search_initial_subtitle;
-
-  /// No description provided for @search_popular_searches.
-  ///
-  /// In en, this message translates to:
-  /// **'Popular Searches'**
-  String get search_popular_searches;
-
-  /// No description provided for @search_tag_offers.
-  ///
-  /// In en, this message translates to:
-  /// **'Offers'**
-  String get search_tag_offers;
-
-  /// No description provided for @search_tag_delivery.
-  ///
-  /// In en, this message translates to:
-  /// **'Delivery'**
-  String get search_tag_delivery;
-
-  /// No description provided for @search_tag_services.
-  ///
-  /// In en, this message translates to:
-  /// **'Services'**
-  String get search_tag_services;
-
-  /// No description provided for @search_tag_products.
-  ///
-  /// In en, this message translates to:
-  /// **'Products'**
-  String get search_tag_products;
 
   /// No description provided for @showcase_home_search_title.
   ///
@@ -3604,7 +3628,7 @@ abstract class S {
   /// No description provided for @showcase_home_search_desc.
   ///
   /// In en, this message translates to:
-  /// **'Search for products and services easily.'**
+  /// **'Easily search for the products and services you need.'**
   String get showcase_home_search_desc;
 
   /// No description provided for @showcase_home_filter_title.
@@ -3616,7 +3640,7 @@ abstract class S {
   /// No description provided for @showcase_home_filter_desc.
   ///
   /// In en, this message translates to:
-  /// **'Filter products and services by category, price, and brands.'**
+  /// **'Filter products and services by categories, prices, and brands.'**
   String get showcase_home_filter_desc;
 
   /// No description provided for @showcase_home_categories_title.
@@ -3628,19 +3652,19 @@ abstract class S {
   /// No description provided for @showcase_home_categories_desc.
   ///
   /// In en, this message translates to:
-  /// **'Browse products and services grouped by categories.'**
+  /// **'Browse products and services organized by categories.'**
   String get showcase_home_categories_desc;
 
   /// No description provided for @showcase_home_nav_title.
   ///
   /// In en, this message translates to:
-  /// **'Navigation'**
+  /// **'Navigation Bar'**
   String get showcase_home_nav_title;
 
   /// No description provided for @showcase_home_nav_desc.
   ///
   /// In en, this message translates to:
-  /// **'Switch between Home, Cart, Favorites, and Profile pages.'**
+  /// **'Easily navigate between Home, Cart, Favorites, and your Account.'**
   String get showcase_home_nav_desc;
 
   /// No description provided for @showcase_product_details_add_to_cart_title.
@@ -3652,19 +3676,19 @@ abstract class S {
   /// No description provided for @showcase_product_details_add_to_cart_desc.
   ///
   /// In en, this message translates to:
-  /// **'Select the desired quantity and add products to your cart.'**
+  /// **'Select the desired quantity and add products to your shopping cart.'**
   String get showcase_product_details_add_to_cart_desc;
 
   /// No description provided for @showcase_cart_swipe_title.
   ///
   /// In en, this message translates to:
-  /// **'Remove Item'**
+  /// **'Remove Product'**
   String get showcase_cart_swipe_title;
 
   /// No description provided for @showcase_cart_swipe_desc.
   ///
   /// In en, this message translates to:
-  /// **'Swipe left on any item to delete it from your cart.'**
+  /// **'Swipe the product left to remove it from the cart.'**
   String get showcase_cart_swipe_desc;
 
   /// No description provided for @showcase_cart_summary_title.
@@ -3676,43 +3700,31 @@ abstract class S {
   /// No description provided for @showcase_cart_summary_desc.
   ///
   /// In en, this message translates to:
-  /// **'Verify your subtotal, discounts, delivery fee and tap Checkout to proceed.'**
+  /// **'Check the subtotal, discounts, delivery fees and tap to complete the order.'**
   String get showcase_cart_summary_desc;
-
-  /// No description provided for @profile_restart_tour.
-  ///
-  /// In en, this message translates to:
-  /// **'Restart App Tour'**
-  String get profile_restart_tour;
-
-  /// No description provided for @profile_restart_tour_success.
-  ///
-  /// In en, this message translates to:
-  /// **'Tours reset! Open any main page to view the tour again.'**
-  String get profile_restart_tour_success;
 
   /// No description provided for @showcase_favorite_tabs_title.
   ///
   /// In en, this message translates to:
-  /// **'Favorites Selection'**
+  /// **'Favorites'**
   String get showcase_favorite_tabs_title;
 
   /// No description provided for @showcase_favorite_tabs_desc.
   ///
   /// In en, this message translates to:
-  /// **'Switch between your favorite products and service bookmarks.'**
+  /// **'Switch between your favorite products and services lists.'**
   String get showcase_favorite_tabs_desc;
 
   /// No description provided for @showcase_profile_stats_title.
   ///
   /// In en, this message translates to:
-  /// **'Activity Stats'**
+  /// **'Activity Statistics'**
   String get showcase_profile_stats_title;
 
   /// No description provided for @showcase_profile_stats_desc.
   ///
   /// In en, this message translates to:
-  /// **'Check your total orders and active service bookings.'**
+  /// **'Track the number of your product orders and active service bookings.'**
   String get showcase_profile_stats_desc;
 
   /// No description provided for @showcase_profile_settings_title.
@@ -3724,7 +3736,7 @@ abstract class S {
   /// No description provided for @showcase_profile_settings_desc.
   ///
   /// In en, this message translates to:
-  /// **'Manage your profile details, shipping addresses, and language preference.'**
+  /// **'Edit account details, saved addresses, and change language.'**
   String get showcase_profile_settings_desc;
 
   /// No description provided for @showcase_profile_support_title.
@@ -3736,86 +3748,68 @@ abstract class S {
   /// No description provided for @showcase_profile_support_desc.
   ///
   /// In en, this message translates to:
-  /// **'Access help docs, give feedback, or restart the app product tours.'**
+  /// **'Contact customer service, read FAQs, or restart the app tour.'**
   String get showcase_profile_support_desc;
 
   /// No description provided for @showcase_search_field_title.
   ///
   /// In en, this message translates to:
-  /// **'Search Field'**
+  /// **'Search Box'**
   String get showcase_search_field_title;
 
   /// No description provided for @showcase_search_field_desc.
   ///
   /// In en, this message translates to:
-  /// **'Type keywords here to look up products or services instantly.'**
+  /// **'Type your search keywords here to instantly search for products or services.'**
   String get showcase_search_field_desc;
 
   /// No description provided for @showcase_filter_fab_title.
   ///
   /// In en, this message translates to:
-  /// **'Advanced Filters'**
+  /// **'Advanced Filter'**
   String get showcase_filter_fab_title;
 
   /// No description provided for @showcase_filter_fab_desc.
   ///
   /// In en, this message translates to:
-  /// **'Click here to set categories, price ranges, and ratings filters.'**
+  /// **'Tap here to select categories, price range, and ratings to filter products.'**
   String get showcase_filter_fab_desc;
 
   /// No description provided for @showcase_checkout_form_title.
   ///
   /// In en, this message translates to:
-  /// **'Shipping Info'**
+  /// **'Shipping Details'**
   String get showcase_checkout_form_title;
 
   /// No description provided for @showcase_checkout_form_desc.
   ///
   /// In en, this message translates to:
-  /// **'Fill in your delivery address, phone, and governorate details.'**
+  /// **'Enter shipping address, phone number, and governorate for delivery.'**
   String get showcase_checkout_form_desc;
 
   /// No description provided for @showcase_checkout_summary_title.
   ///
   /// In en, this message translates to:
-  /// **'Submit Order'**
+  /// **'Confirm Order'**
   String get showcase_checkout_summary_title;
 
   /// No description provided for @showcase_checkout_summary_desc.
   ///
   /// In en, this message translates to:
-  /// **'Review order amounts and click here to place your order.'**
+  /// **'Review cost details and tap to confirm and submit your order.'**
   String get showcase_checkout_summary_desc;
 
   /// No description provided for @showcase_orders_tabs_title.
   ///
   /// In en, this message translates to:
-  /// **'Orders Tracker'**
+  /// **'Track Orders'**
   String get showcase_orders_tabs_title;
 
   /// No description provided for @showcase_orders_tabs_desc.
   ///
   /// In en, this message translates to:
-  /// **'Track your physical product orders or digital service bookings.'**
+  /// **'Track the status of your product orders or service bookings.'**
   String get showcase_orders_tabs_desc;
-
-  /// No description provided for @shared_next.
-  ///
-  /// In en, this message translates to:
-  /// **'Next'**
-  String get shared_next;
-
-  /// No description provided for @shared_skip.
-  ///
-  /// In en, this message translates to:
-  /// **'Skip'**
-  String get shared_skip;
-
-  /// No description provided for @shared_finish.
-  ///
-  /// In en, this message translates to:
-  /// **'Finish'**
-  String get shared_finish;
 
   /// No description provided for @showcase_all_categories_grid_title.
   ///
@@ -3826,7 +3820,7 @@ abstract class S {
   /// No description provided for @showcase_all_categories_grid_desc.
   ///
   /// In en, this message translates to:
-  /// **'Explore all our product and service categories in one place.'**
+  /// **'Browse all available product and service categories in one place.'**
   String get showcase_all_categories_grid_desc;
 
   /// No description provided for @showcase_category_subcategories_title.
@@ -3838,19 +3832,19 @@ abstract class S {
   /// No description provided for @showcase_category_subcategories_desc.
   ///
   /// In en, this message translates to:
-  /// **'Swipe horizontally to explore more specific subcategories.'**
+  /// **'Swipe horizontally to browse more specialized subcategories.'**
   String get showcase_category_subcategories_desc;
 
   /// No description provided for @showcase_subcategory_products_title.
   ///
   /// In en, this message translates to:
-  /// **'Products List'**
+  /// **'Product List'**
   String get showcase_subcategory_products_title;
 
   /// No description provided for @showcase_subcategory_products_desc.
   ///
   /// In en, this message translates to:
-  /// **'Browse products and filter them to find exactly what you need.'**
+  /// **'Browse and filter products to find exactly what you\'re looking for.'**
   String get showcase_subcategory_products_desc;
 
   /// No description provided for @showcase_brands_grid_title.
@@ -3862,7 +3856,7 @@ abstract class S {
   /// No description provided for @showcase_brands_grid_desc.
   ///
   /// In en, this message translates to:
-  /// **'Browse and shop from your favorite verified brands.'**
+  /// **'Browse and shop from trusted and favorite brands.'**
   String get showcase_brands_grid_desc;
 
   /// No description provided for @showcase_brand_products_title.
@@ -3874,19 +3868,19 @@ abstract class S {
   /// No description provided for @showcase_brand_products_desc.
   ///
   /// In en, this message translates to:
-  /// **'See all available products offered by this brand.'**
+  /// **'View all products and services listed under this brand.'**
   String get showcase_brand_products_desc;
 
   /// No description provided for @showcase_service_provider_card_title.
   ///
   /// In en, this message translates to:
-  /// **'Provider Info'**
+  /// **'Provider Details'**
   String get showcase_service_provider_card_title;
 
   /// No description provided for @showcase_service_provider_card_desc.
   ///
   /// In en, this message translates to:
-  /// **'Check verified details, contact details, and location of this service provider.'**
+  /// **'Check the verified provider details, contact methods, and location.'**
   String get showcase_service_provider_card_desc;
 
   /// No description provided for @showcase_service_reviews_btn_title.
@@ -3898,7 +3892,7 @@ abstract class S {
   /// No description provided for @showcase_service_reviews_btn_desc.
   ///
   /// In en, this message translates to:
-  /// **'Read what other customers say about this service and check its ratings.'**
+  /// **'Read reviews and feedback from other customers about this service.'**
   String get showcase_service_reviews_btn_desc;
 
   /// No description provided for @showcase_service_booking_address_title.
@@ -3922,7 +3916,7 @@ abstract class S {
   /// No description provided for @showcase_service_booking_confirm_desc.
   ///
   /// In en, this message translates to:
-  /// **'Tap here to submit your booking request to the service provider.'**
+  /// **'Tap here to send your booking request directly to the service provider.'**
   String get showcase_service_booking_confirm_desc;
 
   /// No description provided for @showcase_provider_services_list_title.
@@ -3934,7 +3928,7 @@ abstract class S {
   /// No description provided for @showcase_provider_services_list_desc.
   ///
   /// In en, this message translates to:
-  /// **'Check out all services offered by this provider and book directly.'**
+  /// **'Browse all available services from this provider and book what suits you.'**
   String get showcase_provider_services_list_desc;
 
   /// No description provided for @showcase_provider_contact_info_title.
@@ -3946,7 +3940,7 @@ abstract class S {
   /// No description provided for @showcase_provider_contact_info_desc.
   ///
   /// In en, this message translates to:
-  /// **'Get in touch with the provider via call, message or find their location.'**
+  /// **'Contact the service provider by phone, message, or find their location on the map.'**
   String get showcase_provider_contact_info_desc;
 
   /// No description provided for @showcase_addresses_list_title.
@@ -3958,7 +3952,7 @@ abstract class S {
   /// No description provided for @showcase_addresses_list_desc.
   ///
   /// In en, this message translates to:
-  /// **'Manage your shipping addresses or select a default delivery address.'**
+  /// **'Manage your shipping addresses or set a default address for delivery.'**
   String get showcase_addresses_list_desc;
 
   /// No description provided for @showcase_add_address_button_title.
@@ -3970,7 +3964,7 @@ abstract class S {
   /// No description provided for @showcase_add_address_button_desc.
   ///
   /// In en, this message translates to:
-  /// **'Click here to add a new delivery address.'**
+  /// **'Tap here to add a new delivery address to your account.'**
   String get showcase_add_address_button_desc;
 
   /// No description provided for @showcase_add_address_form_title.
@@ -3982,43 +3976,43 @@ abstract class S {
   /// No description provided for @showcase_add_address_form_desc.
   ///
   /// In en, this message translates to:
-  /// **'Fill in the address details, label it (Home/Work), and save it.'**
+  /// **'Enter address details, name it (Home/Work), then save it.'**
   String get showcase_add_address_form_desc;
 
   /// No description provided for @showcase_edit_profile_form_title.
   ///
   /// In en, this message translates to:
-  /// **'Edit Information'**
+  /// **'Edit Details'**
   String get showcase_edit_profile_form_title;
 
   /// No description provided for @showcase_edit_profile_form_desc.
   ///
   /// In en, this message translates to:
-  /// **'Update your name, email, phone number, and profile picture here.'**
+  /// **'Update your name, email, phone number, and profile picture from here.'**
   String get showcase_edit_profile_form_desc;
 
   /// No description provided for @showcase_help_center_faq_title.
   ///
   /// In en, this message translates to:
-  /// **'FAQs Section'**
+  /// **'FAQs'**
   String get showcase_help_center_faq_title;
 
   /// No description provided for @showcase_help_center_faq_desc.
   ///
   /// In en, this message translates to:
-  /// **'Find answers to frequently asked questions about orders and services.'**
+  /// **'Find quick answers to common questions about orders and services.'**
   String get showcase_help_center_faq_desc;
 
   /// No description provided for @showcase_help_center_contact_title.
   ///
   /// In en, this message translates to:
-  /// **'Contact Support'**
+  /// **'Technical Support'**
   String get showcase_help_center_contact_title;
 
   /// No description provided for @showcase_help_center_contact_desc.
   ///
   /// In en, this message translates to:
-  /// **'Reach out to our customer support team directly for any issues.'**
+  /// **'Contact the support team directly to resolve any issues you encounter.'**
   String get showcase_help_center_contact_desc;
 
   /// No description provided for @showcase_order_details_status_title.
@@ -4030,19 +4024,19 @@ abstract class S {
   /// No description provided for @showcase_order_details_status_desc.
   ///
   /// In en, this message translates to:
-  /// **'Track the status of your package from placement to delivery.'**
+  /// **'Track your shipment status step by step from preparation to delivery.'**
   String get showcase_order_details_status_desc;
 
   /// No description provided for @showcase_order_details_items_title.
   ///
   /// In en, this message translates to:
-  /// **'Order Details'**
+  /// **'Product Details'**
   String get showcase_order_details_items_title;
 
   /// No description provided for @showcase_order_details_items_desc.
   ///
   /// In en, this message translates to:
-  /// **'Check items, summary of costs, and delivery address.'**
+  /// **'Check ordered products, cost summary, and delivery address.'**
   String get showcase_order_details_items_desc;
 
   /// No description provided for @showcase_booking_details_status_title.
@@ -4054,7 +4048,7 @@ abstract class S {
   /// No description provided for @showcase_booking_details_status_desc.
   ///
   /// In en, this message translates to:
-  /// **'Check your service booking status (Pending, Accepted, Completed).'**
+  /// **'Review your service booking status (Pending, Accepted, Completed).'**
   String get showcase_booking_details_status_desc;
 
   /// No description provided for @showcase_booking_details_provider_title.
@@ -4066,19 +4060,19 @@ abstract class S {
   /// No description provided for @showcase_booking_details_provider_desc.
   ///
   /// In en, this message translates to:
-  /// **'See service provider details and contact them directly.'**
+  /// **'Review service provider information and contact them directly.'**
   String get showcase_booking_details_provider_desc;
 
   /// No description provided for @showcase_offers_promotions_title.
   ///
   /// In en, this message translates to:
-  /// **'Offers & Banners'**
+  /// **'Offers & Discounts'**
   String get showcase_offers_promotions_title;
 
   /// No description provided for @showcase_offers_promotions_desc.
   ///
   /// In en, this message translates to:
-  /// **'Discover active promotions, discount codes, and best deals.'**
+  /// **'Discover active promotions, discount codes, and best prices.'**
   String get showcase_offers_promotions_desc;
 
   /// No description provided for @showcase_notifications_list_title.
@@ -4090,8 +4084,14 @@ abstract class S {
   /// No description provided for @showcase_notifications_list_desc.
   ///
   /// In en, this message translates to:
-  /// **'Keep track of status updates, promotions, and alerts.'**
+  /// **'Stay up to date with all notifications, order updates, and exclusive offers.'**
   String get showcase_notifications_list_desc;
+
+  /// No description provided for @app_exit_confirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Press back again to exit the app'**
+  String get app_exit_confirm;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

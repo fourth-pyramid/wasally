@@ -45,13 +45,22 @@ class SAr extends S {
   String get shared_show_less => 'اظهر أقل';
 
   @override
-  String get common_currency => 'ج.م';
+  String get shared_next => 'التالي';
+
+  @override
+  String get shared_skip => 'تخطي';
+
+  @override
+  String get shared_finish => 'إنهاء';
 
   @override
   String get done => 'تم';
 
   @override
   String get retry => 'إعادة المحاولة';
+
+  @override
+  String get common_currency => 'ج.م';
 
   @override
   String get errors_something_went_wrong => 'حدث خطأ ما';
@@ -165,6 +174,28 @@ class SAr extends S {
 
   @override
   String get search_try_different_search => 'حاول البحث بكلمات مختلفة';
+
+  @override
+  String get search_initial_title => 'ما الذي تبحث عنه اليوم؟';
+
+  @override
+  String get search_initial_subtitle =>
+      'ابحث عن المنتجات، الخدمات، والعروض المميزة بسهولة';
+
+  @override
+  String get search_popular_searches => 'عمليات البحث الشائعة';
+
+  @override
+  String get search_tag_offers => 'عروض';
+
+  @override
+  String get search_tag_delivery => 'توصيل';
+
+  @override
+  String get search_tag_services => 'خدمات';
+
+  @override
+  String get search_tag_products => 'منتجات';
 
   @override
   String get category_category_title => 'الفئات';
@@ -349,6 +380,103 @@ class SAr extends S {
   String get cart_save => 'حفظ';
 
   @override
+  String get checkout_title => 'الدفع';
+
+  @override
+  String get checkout_shipping_address => 'عنوان الشحن';
+
+  @override
+  String get checkout_contact_info => 'معلومات الاتصال';
+
+  @override
+  String get checkout_saved_addresses => 'العناوين المحفوظة';
+
+  @override
+  String get checkout_customer_name => 'اسم العميل';
+
+  @override
+  String get checkout_customer_name_hint => 'أدخل اسم العميل';
+
+  @override
+  String get checkout_customer_phone => 'رقم الهاتف';
+
+  @override
+  String get checkout_customer_phone_hint => 'أدخل رقم الهاتف';
+
+  @override
+  String get checkout_customer_address => 'العنوان';
+
+  @override
+  String get checkout_governorate => 'المحافظة';
+
+  @override
+  String get checkout_region => 'المنطقة';
+
+  @override
+  String get checkout_center => 'المدينة/المركز';
+
+  @override
+  String get checkout_coupon_code => 'كوبون الخصم';
+
+  @override
+  String get checkout_order_summary => 'ملخص الطلب';
+
+  @override
+  String get checkout_complete_order => 'إتمام الطلب';
+
+  @override
+  String get checkout_subtotal => 'المجموع الفرعي';
+
+  @override
+  String get checkout_shipping => 'الشحن';
+
+  @override
+  String get checkout_discount => 'الخصم';
+
+  @override
+  String get checkout_total => 'المبلغ الإجمالي';
+
+  @override
+  String get checkout_order_success => 'تم تقديم الطلب بنجاح!';
+
+  @override
+  String get checkout_success_title => 'تم تقديم الطلب بنجاح!';
+
+  @override
+  String get checkout_success_msg =>
+      'تم استلام طلبك بنجاح وجاري العمل على تجهيزه.';
+
+  @override
+  String get checkout_order_id => 'رقم الطلب';
+
+  @override
+  String get checkout_go_home => 'العودة للرئيسية';
+
+  @override
+  String get checkout_view_orders => 'عرض طلباتي';
+
+  @override
+  String get checkout_validation_name_required => 'الاسم مطلوب';
+
+  @override
+  String get checkout_validation_phone_required => 'رقم الهاتف مطلوب';
+
+  @override
+  String get checkout_validation_address_required => 'العنوان مطلوب';
+
+  @override
+  String get checkout_validation_governorate_required => 'المحافظة مطلوبة';
+
+  @override
+  String get checkout_validation_center_required => 'المدينة مطلوبة';
+
+  @override
+  String get checkout_apply_coupon => 'تطبيق';
+
+  @override
+  String get checkout_remove_coupon => 'إزالة';
+
+  @override
   String get favorite_favorite_title => 'المفضلة';
 
   @override
@@ -399,33 +527,7 @@ class SAr extends S {
   String get profile_privacy_policy => 'سياسة الخصوصية';
 
   @override
-  String get notifications => 'الإشعارات';
-
-  @override
-  String get deleteAllNotifications => 'حذف جميع الإشعارات';
-
-  @override
-  String get deleteAllNotificationsConfirm =>
-      'هل أنت متأكد من حذف جميع الإشعارات؟ لا يمكن التراجع عن هذا الإجراء.';
-
-  @override
-  String get markAllAsRead => 'تحديد الكل كمقروء';
-
-  @override
-  String get notification_remove_title => 'حذف الإشعار';
-
-  @override
-  String get notification_remove_confirm => 'هل أنت متأكد من حذف هذا الإشعار؟';
-
-  @override
-  String get notification_no_notifications => 'لا توجد إشعارات بعد';
-
-  @override
-  String get notification_no_notifications_desc =>
-      'عندما تتلقى إشعارات، ستظهر هنا.';
-
-  @override
-  String get noMoreNotifications => 'لا توجد إشعارات أخرى';
+  String get profile_help_center => 'مركز المساعدة';
 
   @override
   String get profile_personal_info => 'المعلومات الشخصية';
@@ -465,99 +567,6 @@ class SAr extends S {
 
   @override
   String get profile_theme => 'المظهر';
-
-  @override
-  String time_ago_years(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 'منذ $count سنة',
-      many: 'منذ $count سنة',
-      few: 'منذ $count سنوات',
-      two: 'منذ سنتين',
-      one: 'منذ سنة',
-      zero: 'منذ لحظات',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String time_ago_months(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 'منذ $count شهر',
-      many: 'منذ $count شهر',
-      few: 'منذ $count أشهر',
-      two: 'منذ شهرين',
-      one: 'منذ شهر',
-      zero: 'منذ لحظات',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String time_ago_weeks(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 'منذ $count أسبوع',
-      many: 'منذ $count أسبوع',
-      few: 'منذ $count أسابيع',
-      two: 'منذ أسبوعين',
-      one: 'منذ أسبوع',
-      zero: 'منذ لحظات',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String time_ago_days(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 'منذ $count يوم',
-      many: 'منذ $count يوم',
-      few: 'منذ $count أيام',
-      two: 'منذ يومين',
-      one: 'منذ يوم',
-      zero: 'منذ لحظات',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String time_ago_hours(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 'منذ $count ساعة',
-      many: 'منذ $count ساعة',
-      few: 'منذ $count ساعات',
-      two: 'منذ ساعتين',
-      one: 'منذ ساعة',
-      zero: 'منذ لحظات',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String time_ago_minutes(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 'منذ $count دقيقة',
-      many: 'منذ $count دقيقة',
-      few: 'منذ $count دقائق',
-      two: 'منذ دقيقتين',
-      one: 'منذ دقيقة',
-      zero: 'منذ لحظات',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get time_ago_just_now => 'منذ لحظات';
 
   @override
   String get profile_dark => 'داكن';
@@ -747,6 +756,42 @@ class SAr extends S {
 
   @override
   String get profile_update_success => 'تم تحديث البيانات بنجاح';
+
+  @override
+  String get profile_restart_tour => 'إعادة جولة التطبيق';
+
+  @override
+  String get profile_restart_tour_success =>
+      'تمت إعادة جولة التطبيق بنجاح! افتح أي صفحة لمشاهدتها مجدداً.';
+
+  @override
+  String get notifications => 'الإشعارات';
+
+  @override
+  String get deleteAllNotifications => 'حذف جميع الإشعارات';
+
+  @override
+  String get deleteAllNotificationsConfirm =>
+      'هل أنت متأكد من حذف جميع الإشعارات؟ لا يمكن التراجع عن هذا الإجراء.';
+
+  @override
+  String get markAllAsRead => 'تحديد الكل كمقروء';
+
+  @override
+  String get notification_remove_title => 'حذف الإشعار';
+
+  @override
+  String get notification_remove_confirm => 'هل أنت متأكد من حذف هذا الإشعار؟';
+
+  @override
+  String get notification_no_notifications => 'لا توجد إشعارات بعد';
+
+  @override
+  String get notification_no_notifications_desc =>
+      'عندما تتلقى إشعارات، ستظهر هنا.';
+
+  @override
+  String get noMoreNotifications => 'لا توجد إشعارات أخرى';
 
   @override
   String get auth_log_in => 'تسجيل الدخول';
@@ -1019,103 +1064,6 @@ class SAr extends S {
   }
 
   @override
-  String get checkout_title => 'الدفع';
-
-  @override
-  String get checkout_shipping_address => 'عنوان الشحن';
-
-  @override
-  String get checkout_contact_info => 'معلومات الاتصال';
-
-  @override
-  String get checkout_saved_addresses => 'العناوين المحفوظة';
-
-  @override
-  String get checkout_customer_name => 'اسم العميل';
-
-  @override
-  String get checkout_customer_name_hint => 'أدخل اسم العميل';
-
-  @override
-  String get checkout_customer_phone => 'رقم الهاتف';
-
-  @override
-  String get checkout_customer_phone_hint => 'أدخل رقم الهاتف';
-
-  @override
-  String get checkout_customer_address => 'العنوان';
-
-  @override
-  String get checkout_governorate => 'المحافظة';
-
-  @override
-  String get checkout_region => 'المنطقة';
-
-  @override
-  String get checkout_center => 'المدينة/المركز';
-
-  @override
-  String get checkout_coupon_code => 'كوبون الخصم';
-
-  @override
-  String get checkout_order_summary => 'ملخص الطلب';
-
-  @override
-  String get checkout_complete_order => 'إتمام الطلب';
-
-  @override
-  String get checkout_subtotal => 'المجموع الفرعي';
-
-  @override
-  String get checkout_shipping => 'الشحن';
-
-  @override
-  String get checkout_discount => 'الخصم';
-
-  @override
-  String get checkout_total => 'المبلغ الإجمالي';
-
-  @override
-  String get checkout_order_success => 'تم تقديم الطلب بنجاح!';
-
-  @override
-  String get checkout_success_title => 'تم تقديم الطلب بنجاح!';
-
-  @override
-  String get checkout_success_msg =>
-      'تم استلام طلبك بنجاح وجاري العمل على تجهيزه.';
-
-  @override
-  String get checkout_order_id => 'رقم الطلب';
-
-  @override
-  String get checkout_go_home => 'العودة للرئيسية';
-
-  @override
-  String get checkout_view_orders => 'عرض طلباتي';
-
-  @override
-  String get checkout_validation_name_required => 'الاسم مطلوب';
-
-  @override
-  String get checkout_validation_phone_required => 'رقم الهاتف مطلوب';
-
-  @override
-  String get checkout_validation_address_required => 'العنوان مطلوب';
-
-  @override
-  String get checkout_validation_governorate_required => 'المحافظة مطلوبة';
-
-  @override
-  String get checkout_validation_center_required => 'المدينة مطلوبة';
-
-  @override
-  String get checkout_apply_coupon => 'تطبيق';
-
-  @override
-  String get checkout_remove_coupon => 'إزالة';
-
-  @override
   String get order_items_count => 'عدد العناصر';
 
   @override
@@ -1317,6 +1265,9 @@ class SAr extends S {
   String get order_update_save => 'حفظ التعديلات';
 
   @override
+  String get order_status_reschedule => 'إعادة جدولة';
+
+  @override
   String get service_details_title => 'تفاصيل الخدمة';
 
   @override
@@ -1447,6 +1398,130 @@ class SAr extends S {
   String get provider_details_email_action => 'بريد إلكتروني';
 
   @override
+  String get booking_details_title => 'تفاصيل الحجز';
+
+  @override
+  String get booking_delete_title => 'حذف الحجز';
+
+  @override
+  String get booking_delete_confirm_msg =>
+      'هل أنت متأكد من رغبتك في حذف هذا الحجز؟ لا يمكن التراجع عن هذا الإجراء.';
+
+  @override
+  String get booking_delete_success => 'تم حذف الحجز بنجاح';
+
+  @override
+  String get booking_details_action_success => 'تمت العملية بنجاح';
+
+  @override
+  String get booking_details_cancel_btn => 'إلغاء الحجز';
+
+  @override
+  String get booking_cancel_title => 'إلغاء الحجز';
+
+  @override
+  String get booking_cancel_confirm_msg =>
+      'هل أنت متأكد من رغبتك في إلغاء هذا الحجز؟';
+
+  @override
+  String get booking_details_update_btn => 'تعديل الحجز';
+
+  @override
+  String get booking_update_title => 'تعديل بيانات الحجز';
+
+  @override
+  String get booking_update_problem_label => 'وصف المشكلة';
+
+  @override
+  String get booking_update_phone_label => 'رقم الهاتف';
+
+  @override
+  String get booking_update_save => 'حفظ التعديلات';
+
+  @override
+  String get booking_details_status => 'حالة الحجز';
+
+  @override
+  String get booking_details_info => 'معلومات العميل والخدمة';
+
+  @override
+  String get booking_details_actions => 'الإجراءات';
+
+  @override
+  String get booking_reschedule_title => 'اقتراح موعد جديد';
+
+  @override
+  String get booking_reschedule_provider_suggested =>
+      'مقدم الخدمة اقترح موعداً جديداً';
+
+  @override
+  String get booking_reschedule_customer_suggested =>
+      'أنت اقترحت موعداً جديداً';
+
+  @override
+  String get booking_reschedule_suggested_day => 'اليوم المقترح';
+
+  @override
+  String get booking_reschedule_suggested_time => 'الوقت المقترح';
+
+  @override
+  String get booking_reschedule_note => 'ملاحظة';
+
+  @override
+  String get booking_reschedule_accept => 'قبول الموعد';
+
+  @override
+  String get booking_reschedule_propose => 'اقتراح موعد آخر';
+
+  @override
+  String get booking_reschedule_accept_title => 'قبول الموعد المقترح';
+
+  @override
+  String get booking_reschedule_accept_confirm =>
+      'هل أنت متأكد من قبول الموعد المقترح؟';
+
+  @override
+  String get booking_reschedule_accept_success => 'تم قبول الموعد بنجاح';
+
+  @override
+  String get booking_reschedule_propose_title => 'اقتراح موعد بديل';
+
+  @override
+  String get booking_reschedule_propose_day_label => 'اليوم المقترح';
+
+  @override
+  String get booking_reschedule_propose_time_label => 'الوقت المقترح';
+
+  @override
+  String get booking_reschedule_propose_note_label => 'ملاحظة للمزود';
+
+  @override
+  String get booking_reschedule_propose_note_hint =>
+      'اكتب سبب اقتراح موعد آخر...';
+
+  @override
+  String get booking_reschedule_propose_submit => 'إرسال الاقتراح';
+
+  @override
+  String get booking_reschedule_propose_success =>
+      'تم إرسال اقتراح الموعد بنجاح';
+
+  @override
+  String get booking_reschedule_select_day => 'اختر اليوم';
+
+  @override
+  String get booking_reschedule_select_time => 'اختر الوقت';
+
+  @override
+  String get booking_reschedule_day_required => 'يرجى اختيار اليوم';
+
+  @override
+  String get booking_reschedule_time_required => 'يرجى اختيار الوقت';
+
+  @override
+  String get booking_reschedule_note_required => 'يرجى كتابة ملاحظة';
+
+  @override
   String get brands => 'البراندات';
 
   @override
@@ -1460,6 +1535,153 @@ class SAr extends S {
 
   @override
   String get offers => 'العروض';
+
+  @override
+  String get filter_title => 'تصفية المنتجات';
+
+  @override
+  String get filter_apply => 'تطبيق الفلتر';
+
+  @override
+  String get filter_reset => 'إعادة ضبط';
+
+  @override
+  String get filter_category => 'الفئة';
+
+  @override
+  String get filter_price_range => 'نطاق السعر';
+
+  @override
+  String get filter_min_price => 'الحد الأدنى للسعر';
+
+  @override
+  String get filter_max_price => 'الحد الأقصى للسعر';
+
+  @override
+  String get filter_special_offers => 'العروض الخاصة فقط';
+
+  @override
+  String get filter_ratings => 'التقييمات';
+
+  @override
+  String get filter_sort_by => 'ترتيب حسب';
+
+  @override
+  String get filter_sort_price_asc => 'السعر: من الأقل للأعلى';
+
+  @override
+  String get filter_sort_price_desc => 'السعر: من الأعلى للأقل';
+
+  @override
+  String get filter_sort_rating_desc => 'الأعلى تقييماً';
+
+  @override
+  String get filter_sort_newest => 'الأحدث';
+
+  @override
+  String get filter_no_products =>
+      'لم يتم العثور على منتجات تطابق خيارات التصفية.';
+
+  @override
+  String get filter_active_filters => 'التصفيات النشطة';
+
+  @override
+  String filter_rating_stars(Object stars) {
+    return '$stars نجوم وأكثر';
+  }
+
+  @override
+  String time_ago_years(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'منذ $count سنة',
+      many: 'منذ $count سنة',
+      few: 'منذ $count سنوات',
+      two: 'منذ سنتين',
+      one: 'منذ سنة',
+      zero: 'منذ لحظات',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String time_ago_months(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'منذ $count شهر',
+      many: 'منذ $count شهر',
+      few: 'منذ $count أشهر',
+      two: 'منذ شهرين',
+      one: 'منذ شهر',
+      zero: 'منذ لحظات',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String time_ago_weeks(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'منذ $count أسبوع',
+      many: 'منذ $count أسبوع',
+      few: 'منذ $count أسابيع',
+      two: 'منذ أسبوعين',
+      one: 'منذ أسبوع',
+      zero: 'منذ لحظات',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String time_ago_days(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'منذ $count يوم',
+      many: 'منذ $count يوم',
+      few: 'منذ $count أيام',
+      two: 'منذ يومين',
+      one: 'منذ يوم',
+      zero: 'منذ لحظات',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String time_ago_hours(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'منذ $count ساعة',
+      many: 'منذ $count ساعة',
+      few: 'منذ $count ساعات',
+      two: 'منذ ساعتين',
+      one: 'منذ ساعة',
+      zero: 'منذ لحظات',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String time_ago_minutes(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'منذ $count دقيقة',
+      many: 'منذ $count دقيقة',
+      few: 'منذ $count دقائق',
+      two: 'منذ دقيقتين',
+      one: 'منذ دقيقة',
+      zero: 'منذ لحظات',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get time_ago_just_now => 'منذ لحظات';
 
   @override
   String get privacy_policy_title => 'سياسة الخصوصية';
@@ -1638,193 +1860,6 @@ class SAr extends S {
   String get terms_of_service_footer_note => 'شكراً لاستخدامك وصلي!';
 
   @override
-  String get booking_details_title => 'تفاصيل الحجز';
-
-  @override
-  String get booking_delete_title => 'حذف الحجز';
-
-  @override
-  String get booking_delete_confirm_msg =>
-      'هل أنت متأكد من رغبتك في حذف هذا الحجز؟ لا يمكن التراجع عن هذا الإجراء.';
-
-  @override
-  String get booking_delete_success => 'تم حذف الحجز بنجاح';
-
-  @override
-  String get booking_details_action_success => 'تمت العملية بنجاح';
-
-  @override
-  String get booking_details_cancel_btn => 'إلغاء الحجز';
-
-  @override
-  String get booking_cancel_title => 'إلغاء الحجز';
-
-  @override
-  String get booking_cancel_confirm_msg =>
-      'هل أنت متأكد من رغبتك في إلغاء هذا الحجز؟';
-
-  @override
-  String get booking_details_update_btn => 'تعديل الحجز';
-
-  @override
-  String get booking_update_title => 'تعديل بيانات الحجز';
-
-  @override
-  String get booking_update_problem_label => 'وصف المشكلة';
-
-  @override
-  String get booking_update_phone_label => 'رقم الهاتف';
-
-  @override
-  String get booking_update_save => 'حفظ التعديلات';
-
-  @override
-  String get booking_details_status => 'حالة الحجز';
-
-  @override
-  String get booking_details_info => 'معلومات العميل والخدمة';
-
-  @override
-  String get booking_details_actions => 'الإجراءات';
-
-  @override
-  String get booking_reschedule_title => 'اقتراح موعد جديد';
-
-  @override
-  String get booking_reschedule_provider_suggested =>
-      'مقدم الخدمة اقترح موعداً جديداً';
-
-  @override
-  String get booking_reschedule_customer_suggested =>
-      'أنت اقترحت موعداً جديداً';
-
-  @override
-  String get booking_reschedule_suggested_day => 'اليوم المقترح';
-
-  @override
-  String get booking_reschedule_suggested_time => 'الوقت المقترح';
-
-  @override
-  String get booking_reschedule_note => 'ملاحظة';
-
-  @override
-  String get booking_reschedule_accept => 'قبول الموعد';
-
-  @override
-  String get booking_reschedule_propose => 'اقتراح موعد آخر';
-
-  @override
-  String get booking_reschedule_accept_title => 'قبول الموعد المقترح';
-
-  @override
-  String get booking_reschedule_accept_confirm =>
-      'هل أنت متأكد من قبول الموعد المقترح؟';
-
-  @override
-  String get booking_reschedule_accept_success => 'تم قبول الموعد بنجاح';
-
-  @override
-  String get booking_reschedule_propose_title => 'اقتراح موعد بديل';
-
-  @override
-  String get booking_reschedule_propose_day_label => 'اليوم المقترح';
-
-  @override
-  String get booking_reschedule_propose_time_label => 'الوقت المقترح';
-
-  @override
-  String get booking_reschedule_propose_note_label => 'ملاحظة للمزود';
-
-  @override
-  String get booking_reschedule_propose_note_hint =>
-      'اكتب سبب اقتراح موعد آخر...';
-
-  @override
-  String get booking_reschedule_propose_submit => 'إرسال الاقتراح';
-
-  @override
-  String get booking_reschedule_propose_success =>
-      'تم إرسال اقتراح الموعد بنجاح';
-
-  @override
-  String get booking_reschedule_select_day => 'اختر اليوم';
-
-  @override
-  String get booking_reschedule_select_time => 'اختر الوقت';
-
-  @override
-  String get booking_reschedule_day_required => 'يرجى اختيار اليوم';
-
-  @override
-  String get booking_reschedule_time_required => 'يرجى اختيار الوقت';
-
-  @override
-  String get booking_reschedule_note_required => 'يرجى كتابة ملاحظة';
-
-  @override
-  String get order_status_reschedule => 'إعادة جدولة';
-
-  @override
-  String get filter_title => 'تصفية المنتجات';
-
-  @override
-  String get filter_apply => 'تطبيق الفلتر';
-
-  @override
-  String get filter_reset => 'إعادة ضبط';
-
-  @override
-  String get filter_category => 'الفئة';
-
-  @override
-  String get filter_price_range => 'نطاق السعر';
-
-  @override
-  String get filter_min_price => 'الحد الأدنى للسعر';
-
-  @override
-  String get filter_max_price => 'الحد الأقصى للسعر';
-
-  @override
-  String get filter_special_offers => 'العروض الخاصة فقط';
-
-  @override
-  String get filter_ratings => 'التقييمات';
-
-  @override
-  String get filter_sort_by => 'ترتيب حسب';
-
-  @override
-  String get filter_sort_price_asc => 'السعر: من الأقل للأعلى';
-
-  @override
-  String get filter_sort_price_desc => 'السعر: من الأعلى للأقل';
-
-  @override
-  String get filter_sort_rating_desc => 'الأعلى تقييماً';
-
-  @override
-  String get filter_sort_newest => 'الأحدث';
-
-  @override
-  String get filter_no_products =>
-      'لم يتم العثور على منتجات تطابق خيارات التصفية.';
-
-  @override
-  String get filter_active_filters => 'التصفيات النشطة';
-
-  @override
-  String filter_rating_stars(Object stars) {
-    return '$stars نجوم وأكثر';
-  }
-
-  @override
-  String get app_exit_confirm => 'برجاء الضغط مرة أخرى للخروج من التطبيق';
-
-  @override
-  String get profile_help_center => 'مركز المساعدة';
-
-  @override
   String get profile_help_center_description =>
       'ابحث عن إجابات للأسئلة الشائعة أو تواصل مع دعم العملاء.';
 
@@ -1892,28 +1927,6 @@ class SAr extends S {
   String get profile_help_phone_number => '+1 800 123 4567';
 
   @override
-  String get search_initial_title => 'ما الذي تبحث عنه اليوم؟';
-
-  @override
-  String get search_initial_subtitle =>
-      'ابحث عن المنتجات، الخدمات، والعروض المميزة بسهولة';
-
-  @override
-  String get search_popular_searches => 'عمليات البحث الشائعة';
-
-  @override
-  String get search_tag_offers => 'عروض';
-
-  @override
-  String get search_tag_delivery => 'توصيل';
-
-  @override
-  String get search_tag_services => 'خدمات';
-
-  @override
-  String get search_tag_products => 'منتجات';
-
-  @override
   String get showcase_home_search_title => 'البحث';
 
   @override
@@ -1960,13 +1973,6 @@ class SAr extends S {
   @override
   String get showcase_cart_summary_desc =>
       'تحقق من المجموع الفرعي، الخصومات، رسوم التوصيل واضغط على إتمام الطلب للمتابعة.';
-
-  @override
-  String get profile_restart_tour => 'إعادة جولة التطبيق';
-
-  @override
-  String get profile_restart_tour_success =>
-      'تمت إعادة جولة التطبيق بنجاح! افتح أي صفحة لمشاهدتها مجدداً.';
 
   @override
   String get showcase_favorite_tabs_title => 'المفضلة';
@@ -2030,15 +2036,6 @@ class SAr extends S {
   @override
   String get showcase_orders_tabs_desc =>
       'تابع حالة طلبات المنتجات أو حجوزات الخدمات الخاصة بك.';
-
-  @override
-  String get shared_next => 'التالي';
-
-  @override
-  String get shared_skip => 'تخطي';
-
-  @override
-  String get shared_finish => 'إنهاء';
 
   @override
   String get showcase_all_categories_grid_title => 'كل الأقسام';
@@ -2200,4 +2197,7 @@ class SAr extends S {
   @override
   String get showcase_notifications_list_desc =>
       'تابع جميع التنبيهات، تحديثات الطلبات والعروض الحصرية أولاً بأول.';
+
+  @override
+  String get app_exit_confirm => 'برجاء الضغط مرة أخرى للخروج من التطبيق';
 }
