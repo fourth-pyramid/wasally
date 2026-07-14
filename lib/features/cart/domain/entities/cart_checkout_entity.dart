@@ -1,4 +1,4 @@
-import 'package:equatable/equatable.dart';
+import 'package:wassaly/core/imports/packages_imports.dart';
 import 'package:wassaly/features/auth/domain/entities/user_entity.dart';
 import 'package:wassaly/features/profile/domain/entities/address_entity.dart';
 import 'package:wassaly/features/profile/domain/entities/governorate_entity.dart';

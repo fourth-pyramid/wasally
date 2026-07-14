@@ -1,4 +1,3 @@
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/core/services/hive_adapters.dart';
 import 'package:wassaly/features/cart/domain/entities/cart_item_entity.dart';

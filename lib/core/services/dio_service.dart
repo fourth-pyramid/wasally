@@ -1,6 +1,5 @@
-import 'package:dio/dio.dart';
-
 import 'package:wassaly/core/config/app_config.dart';
+import 'package:wassaly/core/imports/packages_imports.dart';
 import 'package:wassaly/core/utils/utils.dart';
 
 /// A robust networking service powered by Dio.

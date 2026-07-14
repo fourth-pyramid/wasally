@@ -32,7 +32,7 @@ void initDataSourceDependencies() {
       () => AuthRemoteDataSourceImpl(DioService.instance),
     )
     ..registerLazySingleton<AuthLocalDataSource>(
-      () => AuthLocalDataSourceImpl(SecureStorageService.instance),
+      () => const AuthLocalDataSourceImpl(FlutterSecureStorage()),
     )
     ..registerLazySingleton<FcmTokenRemoteDataSource>(
       () => FcmTokenRemoteDataSourceImpl(DioService.instance),

@@ -1,5 +1,5 @@
-import 'package:flutter_bloc/flutter_bloc.dart' as fb;
 import 'package:wassaly/core/imports/imports.dart';
+import 'package:wassaly/core/imports/packages_imports.dart' as fb;
 
 /// A mixin to protect Blocs from `StateError (Bad state: Cannot emit new states after calling close)`
 /// and automatically cancel pending HTTP requests associated with this Bloc.
@@ -66,9 +66,9 @@ mixin SafeCubitMixin<BlocState> on fb.Cubit<BlocState> {
   /// });
   /// ```
   Future<T> runSafeAsync<T>(Future<T> Function() computation) => runZoned(
-      computation,
-      zoneValues: {#blocCancelKey: _cubitCancelKey},
-    );
+        computation,
+        zoneValues: {#blocCancelKey: _cubitCancelKey},
+      );
 
   @override
   Future<void> close() {
@@ -84,8 +84,7 @@ mixin SafeCubitMixin<BlocState> on fb.Cubit<BlocState> {
 }
 
 /// A safe base Bloc class that prevents the StateError on emit.
-abstract class Bloc<Event, BlocState> extends fb.Bloc<Event, BlocState>
-    with SafeBlocMixin<Event, BlocState> {
+abstract class Bloc<Event, BlocState> extends fb.Bloc<Event, BlocState> with SafeBlocMixin<Event, BlocState> {
   Bloc(super.initialState);
 }
 
@@ -112,11 +111,12 @@ class _SafeEmitter<BlocState> implements Emitter<BlocState> {
     Stream<T> stream, {
     required BlocState Function(T data) onData,
     BlocState Function(Object error, StackTrace stackTrace)? onError,
-  }) => _delegate.forEach(
-      stream,
-      onData: onData,
-      onError: onError,
-    );
+  }) =>
+      _delegate.forEach(
+        stream,
+        onData: onData,
+        onError: onError,
+      );
 
   @override
   bool get isDone => _delegate.isDone || _bloc.isClosed;
@@ -126,9 +126,10 @@ class _SafeEmitter<BlocState> implements Emitter<BlocState> {
     Stream<T> stream, {
     required void Function(T data) onData,
     void Function(Object error, StackTrace stackTrace)? onError,
-  }) => _delegate.onEach(
-      stream,
-      onData: onData,
-      onError: onError,
-    );
+  }) =>
+      _delegate.onEach(
+        stream,
+        onData: onData,
+        onError: onError,
+      );
 }

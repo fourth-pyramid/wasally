@@ -1,105 +1,26 @@
-import 'package:app_version_update/data/models/app_version_result.dart';
 import 'package:wassaly/core/imports/imports.dart';
 
 /// A service to check for app updates and manage version information using
-/// the `app_version_update` package.
+/// the `upgrader` package.
 class VersionUpdateService {
   VersionUpdateService._();
   static final VersionUpdateService instance = VersionUpdateService._();
 
-  /// Check if a newer version of the app is available in the store.
-  FutureEither<AppVersionResult?> checkForUpdate({
-    String? appleId,
-    String? playStoreId,
-  }) async => runTask(() async => AppVersionUpdate.checkForUpdates(
-        appleId: appleId,
-        playStoreId: playStoreId,
-      ), requiresNetwork: true,);
+  // ponytail: Minimal wrapper for the upgrader package
+  final Upgrader upgrader = Upgrader.sharedInstance;
 
-  /// High-level method to check for updates and show the dialog automatically if available.
-  FutureEither<void> checkAndShowUpdate({
-    String? appleId,
-    String? playStoreId,
-    bool mandatory = false,
-  }) async => runTask(() async {
-      final result = await AppVersionUpdate.checkForUpdates(
-        appleId: appleId,
-        playStoreId: playStoreId,
-      );
+  /// Check if a newer version of the app is available and trigger update check.
+  Future<void> checkAndShowUpdate() async {
+    // ponytail: Wait for rootContext to be available
+    var context = rootContext;
+    while (context == null) {
+      await Future<void>.delayed(const Duration(milliseconds: 100));
+      context = rootContext;
+    }
 
-      if (result.canUpdate ?? false) {
-        final context = rootContext;
-        if (context == null) {
-          AppLogger.warning('Cannot show update dialog: rootContext is null');
-          return;
-        }
-
-        if (context.mounted) {
-          AppVersionUpdate.showAlertUpdate(
-            appVersionResult: result,
-            context: context,
-            mandatory: mandatory,
-          );
-        }
-      }
-    }, requiresNetwork: true,);
-
-  /// Display a platform-specific update dialog.
-  FutureEither<void> showUpdateAlert({
-    required AppVersionResult updateResult,
-    bool mandatory = false,
-    String? title,
-    String? content,
-    String? cancelText,
-    String? updateText,
-  }) async => runTask(() async {
-      final context = rootContext;
-      if (context == null) return;
-
-      AppVersionUpdate.showAlertUpdate(
-        appVersionResult: updateResult,
-        context: context,
-        mandatory: mandatory,
-        title: title ?? 'New version available',
-        content: content ?? 'Would you like to update your application?',
-        cancelButtonText: cancelText ?? 'UPDATE LATER',
-        updateButtonText: updateText ?? 'UPDATE',
-      );
-    });
-
-  /// Display a platform-specific update bottom sheet.
-  FutureEither<void> showUpdateBottomSheet({
-    required AppVersionResult updateResult,
-    bool mandatory = false,
-    String? title,
-    Widget? content,
-  }) async => runTask(() async {
-      final context = rootContext;
-      if (context == null) return;
-
-      AppVersionUpdate.showBottomSheetUpdate(
-        appVersionResult: updateResult,
-        context: context,
-        mandatory: mandatory,
-        title: title ?? 'New version available',
-        content: content,
-      );
-    });
-
-  /// Display a dedicated update page.
-  FutureEither<void> showUpdatePage({
-    required AppVersionResult updateResult,
-    bool mandatory = false,
-    Widget? page,
-  }) async => runTask(() async {
-      final context = rootContext;
-      if (context == null) return;
-
-      AppVersionUpdate.showPageUpdate(
-        appVersionResult: updateResult,
-        context: context,
-        mandatory: mandatory,
-        page: page,
-      );
-    });
+    if (context.mounted) {
+      await upgrader.initialize();
+      await upgrader.updateVersionInfo();
+    }
+  }
 }

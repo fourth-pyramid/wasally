@@ -1,4 +1,3 @@
-import 'package:intl/intl.dart';
 import 'package:wassaly/core/imports/imports.dart';
 
 class RescheduleDetailsEntity extends Equatable {

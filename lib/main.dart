@@ -1,4 +1,3 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:wassaly/app.dart';
 import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/core/services/fcm_background_handler.dart';
@@ -26,4 +25,6 @@ Future<void> main() async {
 
   initDependencies();
   runApp(const App());
+  // ponytail: check for updates at start of app
+  unawaited(VersionUpdateService.instance.checkAndShowUpdate());
 }

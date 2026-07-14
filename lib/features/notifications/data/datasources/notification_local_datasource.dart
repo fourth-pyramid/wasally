@@ -1,4 +1,3 @@
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/notifications/data/models/notification_model.dart';
 

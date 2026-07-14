@@ -1,5 +1,3 @@
-import 'package:showcase_tutorial/showcase_tutorial.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:wassaly/core/constants/showcase_keys.dart';
 import 'package:wassaly/core/imports/imports.dart';
 

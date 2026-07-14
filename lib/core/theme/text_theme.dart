@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:wassaly/core/imports/packages_imports.dart';
 
 const String _fontFamily = 'Cairo';
 

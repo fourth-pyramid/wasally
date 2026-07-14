@@ -1,4 +1,4 @@
-import 'package:dio/dio.dart';
+import 'package:wassaly/core/imports/packages_imports.dart';
 import 'package:wassaly/core/utils/failure.dart';
 
 class AppErrorHandler {

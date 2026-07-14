@@ -1,4 +1,4 @@
-import 'package:fpdart/fpdart.dart';
+import 'package:wassaly/core/imports/packages_imports.dart';
 import 'package:wassaly/core/utils/failure.dart';
 import 'package:wassaly/features/cart/data/datasources/cart_local_datasource.dart';
 import 'package:wassaly/features/cart/data/datasources/cart_remote_datasource.dart';

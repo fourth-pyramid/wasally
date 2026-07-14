@@ -1,4 +1,4 @@
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:wassaly/core/imports/packages_imports.dart';
 import 'package:wassaly/features/cart/domain/entities/cart_item_entity.dart';
 import 'package:wassaly/features/cart/domain/entities/offer_entity.dart'
     as cart_offer;

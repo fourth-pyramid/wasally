@@ -1,4 +1,3 @@
-import 'package:showcase_tutorial/showcase_tutorial.dart';
 import 'package:wassaly/core/constants/showcase_keys.dart';
 import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/auth/domain/entities/user_entity.dart';
@@ -10,13 +9,13 @@ class EditProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ShowCaseWidget(
-        showcaseId: 'edit_profile_v1',
+        showcaseId: 'edit_profile_v2',
         enableAutoScroll: true,
         disableBarrierInteraction: true,
         onShouldStartShowcase: (id) async => !StorageService.instance.hasSeenShowcase(id!),
         onFinish: () {
           unawaited(
-            StorageService.instance.setHasSeenShowcase('edit_profile_v1', value: true),
+            StorageService.instance.setHasSeenShowcase('edit_profile_v2', value: true),
           );
         },
         builder: Builder(
@@ -227,48 +226,53 @@ class _EditProfileViewState extends State<_EditProfileView> {
                   bottom: 16.h,
                 ),
                 sliver: SliverToBoxAdapter(
-                  child: AppShowcase(
-                    showcaseKey: AppShowcaseKeys.editProfileForm,
-                    title: context.l10n.showcase_edit_profile_form_title,
-                    description: context.l10n.showcase_edit_profile_form_desc,
-                    isLast: true,
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                        children: [
-                          ValueListenableBuilder<File?>(
-                            valueListenable: _avatarFileNotifier,
-                            builder: (context, avatarFile, child) => EditProfileAvatarPicker(
-                              avatarFile: avatarFile,
-                              onAvatarPicked: _onAvatarPicked,
-                            ),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        AppShowcase(
+                          showcaseKey: AppShowcaseKeys.editProfileForm,
+                          title: context.l10n.showcase_edit_profile_form_title,
+                          description: context.l10n.showcase_edit_profile_form_desc,
+                          isLast: true,
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              ValueListenableBuilder<File?>(
+                                valueListenable: _avatarFileNotifier,
+                                builder: (context, avatarFile, child) => EditProfileAvatarPicker(
+                                  avatarFile: avatarFile,
+                                  onAvatarPicked: _onAvatarPicked,
+                                ),
+                              ),
+                              8.verticalSpace,
+                              EditProfileNameField(controller: _nameController),
+                              8.verticalSpace,
+                              EditProfilePhoneField(controller: _phoneController),
+                            ],
                           ),
-                          8.verticalSpace,
-                          EditProfileNameField(controller: _nameController),
-                          8.verticalSpace,
-                          EditProfilePhoneField(controller: _phoneController),
-                          16.verticalSpace,
-                          EditProfilePasswordSection(
-                            currentPasswordController: _currentPasswordController,
-                            passwordController: _passwordController,
-                            passwordConfirmationController: _passwordConfirmationController,
+                        ),
+                        16.verticalSpace,
+                        EditProfilePasswordSection(
+                          currentPasswordController: _currentPasswordController,
+                          passwordController: _passwordController,
+                          passwordConfirmationController: _passwordConfirmationController,
+                        ),
+                        16.verticalSpace,
+                        EditProfileSaveButton(onPressed: _submit),
+                        8.verticalSpace,
+                        AppButton(
+                          label: context.l10n.profile_delete_account,
+                          onPressed: _showDeleteAccountBottomSheet,
+                          variant: ButtonVariant.danger,
+                          isFullWidth: true,
+                          prefixIcon: Icon(
+                            Icons.delete_forever,
+                            // ponytail: explicit color to match danger variant
+                            color: context.theme.colorScheme.onError,
                           ),
-                          16.verticalSpace,
-                          EditProfileSaveButton(onPressed: _submit),
-                          8.verticalSpace,
-                          AppButton(
-                            label: context.l10n.profile_delete_account,
-                            onPressed: _showDeleteAccountBottomSheet,
-                            variant: ButtonVariant.danger,
-                            isFullWidth: true,
-                            prefixIcon: Icon(
-                              Icons.delete_forever,
-                              // ponytail: explicit color to match danger variant
-                              color: context.theme.colorScheme.onError,
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ),

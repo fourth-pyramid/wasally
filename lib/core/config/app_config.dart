@@ -1,5 +1,3 @@
-import 'package:pretty_dio_logger/pretty_dio_logger.dart';
-
 import 'package:wassaly/core/imports/imports.dart';
 
 class AppConfig {
@@ -29,8 +27,7 @@ class AppConfig {
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          'Accept-Language':
-              StorageService.instance.getString('app_language') ?? 'ar',
+          'Accept-Language': StorageService.instance.getString('app_language') ?? 'ar',
         },
       ),
     );
@@ -45,25 +42,10 @@ class AppConfig {
     _addAuthInterceptor();
     _addLanguageInterceptor();
     _addStabilityInterceptor();
-
-    // Logger should be the last interceptor
-    _addLoggerInterceptor();
   }
 
   static void _addCancelTokenInterceptor() {
     dio.interceptors.add(sl<CancelTokenInterceptor>());
-  }
-
-  static void _addLoggerInterceptor() {
-    if (!kDebugMode) return;
-    dio.interceptors.add(
-      PrettyDioLogger(
-        requestHeader: true,
-        requestBody: true,
-        responseHeader: true,
-        maxWidth: 120,
-      ),
-    );
   }
 
   /// Measures latency on every Dio request
@@ -107,11 +89,7 @@ class AppConfig {
             return handler.next(options);
           }
 
-          if (_cachedToken == null) {
-            final tokenResult =
-                await SecureStorageService.instance.read('auth_token');
-            _cachedToken = tokenResult.fold((_) => null, (t) => t);
-          }
+          _cachedToken ??= await const FlutterSecureStorage().read(key: 'auth_token');
 
           if (_cachedToken != null && _cachedToken!.isNotEmpty) {
             options.headers['Authorization'] = 'Bearer $_cachedToken';
@@ -142,8 +120,7 @@ class AppConfig {
     dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) {
-          final language =
-              StorageService.instance.getString('app_language') ?? 'ar';
+          final language = StorageService.instance.getString('app_language') ?? 'ar';
           options.headers['Accept-Language'] = language;
           return handler.next(options);
         },

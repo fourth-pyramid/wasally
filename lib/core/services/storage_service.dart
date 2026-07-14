@@ -1,7 +1,6 @@
 import 'dart:async';
 
-import 'package:fpdart/fpdart.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:wassaly/core/imports/packages_imports.dart';
 import 'package:wassaly/core/utils/utils.dart';
 
 /// A wrapper around [SharedPreferences] for simple key-value persistence.

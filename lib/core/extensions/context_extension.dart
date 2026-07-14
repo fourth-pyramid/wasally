@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
+import 'package:wassaly/core/imports/packages_imports.dart';
 import 'package:wassaly/core/shared/enums/snack_bar_type.dart';
 import 'package:wassaly/core/theme/color_schemes.dart';
 import 'package:wassaly/l10n/app_localizations.dart';

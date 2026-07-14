@@ -1,4 +1,3 @@
-import 'package:showcase_tutorial/showcase_tutorial.dart';
 import 'package:wassaly/core/imports/imports.dart';
 
 // ponytail: Showcase.withWidget with full-width tooltip to prevent overflow

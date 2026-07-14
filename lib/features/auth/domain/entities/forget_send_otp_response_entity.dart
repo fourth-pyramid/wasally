@@ -1,4 +1,4 @@
-import 'package:equatable/equatable.dart';
+import 'package:wassaly/core/imports/packages_imports.dart';
 
 class ForgetSendOtpResponseEntity extends Equatable {
   final bool status;

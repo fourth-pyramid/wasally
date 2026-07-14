@@ -1,6 +1,5 @@
 export 'cancel_request_service.dart';
 export 'cancel_token_interceptor.dart';
-export 'copy_service.dart';
 export 'deep_link_service.dart';
 export 'dio_http_client.dart';
 export 'dio_service.dart';
@@ -9,7 +8,5 @@ export 'hive_service.dart';
 export 'home_navigation_service.dart';
 export 'internet_connection_service.dart';
 export 'media_service.dart';
-export 'permission_service.dart';
-export 'secure_storage_service.dart';
 export 'storage_service.dart';
 export 'version_update_service.dart';

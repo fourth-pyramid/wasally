@@ -1,7 +1,6 @@
 import 'dart:async';
 
-import 'package:app_links/app_links.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:wassaly/core/imports/packages_imports.dart';
 import 'package:wassaly/core/utils/utils.dart';
 
 /// Data class representing Google login callback from deep link

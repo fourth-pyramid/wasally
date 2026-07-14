@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/rendering.dart';
+import 'package:wassaly/core/imports/packages_imports.dart';
 import 'package:wassaly/core/services/notification_service.dart';
 
 @pragma('vm:entry-point')

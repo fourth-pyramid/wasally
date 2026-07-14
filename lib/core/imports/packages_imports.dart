@@ -1,25 +1,33 @@
-export 'package:app_version_update/app_version_update.dart';
-export 'package:awesome_notifications/awesome_notifications.dart'
-    hide NotificationModel;
+// ponytail: Centralized export file for all external packages to prevent direct imports in source files.
+export 'package:app_links/app_links.dart';
+export 'package:awesome_notifications/awesome_notifications.dart' hide NotificationModel;
 export 'package:cached_network_image/cached_network_image.dart';
-export 'package:cross_file/cross_file.dart';
+export 'package:carousel_slider/carousel_slider.dart';
+export 'package:device_info_plus/device_info_plus.dart';
 export 'package:dio/dio.dart';
+export 'package:dio/io.dart';
 export 'package:equatable/equatable.dart';
+export 'package:firebase_core/firebase_core.dart';
 export 'package:firebase_messaging/firebase_messaging.dart';
 export 'package:flutter_animate/flutter_animate.dart' hide ShimmerEffect;
-export 'package:flutter_bloc/flutter_bloc.dart' hide Bloc, Cubit;
+export 'package:flutter_bloc/flutter_bloc.dart';
 export 'package:flutter_dotenv/flutter_dotenv.dart';
 export 'package:flutter_screenutil/flutter_screenutil.dart';
 export 'package:flutter_secure_storage/flutter_secure_storage.dart';
 export 'package:flutter_svg/flutter_svg.dart';
 export 'package:fpdart/fpdart.dart' hide State;
+export 'package:get_it/get_it.dart';
 export 'package:go_router/go_router.dart';
+export 'package:hive_flutter/hive_flutter.dart';
 export 'package:image_picker_platform_interface/image_picker_platform_interface.dart';
 export 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
-export 'package:logger/logger.dart';
+// Additional packages used in the app
+export 'package:intl/intl.dart' hide TextDirection;
 export 'package:permission_handler/permission_handler.dart';
 export 'package:shared_preferences/shared_preferences.dart';
+export 'package:showcase_tutorial/showcase_tutorial.dart';
 export 'package:skeletonizer/skeletonizer.dart';
-export 'package:smooth_page_indicator/smooth_page_indicator.dart'
-    hide ScaleEffect, SlideEffect, SwapEffect;
+export 'package:smooth_page_indicator/smooth_page_indicator.dart' hide ScaleEffect, SlideEffect, SwapEffect;
 export 'package:system_asset_picker/system_asset_picker.dart';
+export 'package:upgrader/upgrader.dart';
+export 'package:url_launcher/url_launcher.dart';

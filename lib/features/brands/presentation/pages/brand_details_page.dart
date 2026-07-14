@@ -1,4 +1,3 @@
-import 'package:showcase_tutorial/showcase_tutorial.dart';
 import 'package:wassaly/core/constants/showcase_keys.dart';
 import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/brands/presentation/bloc/brands_bloc.dart';

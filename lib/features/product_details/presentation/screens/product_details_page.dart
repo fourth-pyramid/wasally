@@ -1,4 +1,3 @@
-import 'package:showcase_tutorial/showcase_tutorial.dart';
 import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/home/domain/entities/product_entity.dart';
 import 'package:wassaly/features/product_details/domain/entities/product_detail_entity.dart';

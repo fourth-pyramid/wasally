@@ -1,4 +1,4 @@
-import 'package:equatable/equatable.dart';
+import 'package:wassaly/core/imports/packages_imports.dart';
 import 'package:wassaly/core/shared/enums/app_status.dart';
 import 'package:wassaly/features/home/domain/entities/product_entity.dart';
 

@@ -1,4 +1,3 @@
-import 'package:url_launcher/url_launcher.dart';
 import 'package:wassaly/core/imports/imports.dart';
 
 class PrivacyPolicyPage extends StatelessWidget {

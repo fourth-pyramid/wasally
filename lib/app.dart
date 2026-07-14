@@ -1,4 +1,3 @@
-import 'package:intl/intl.dart';
 import 'package:wassaly/core/imports/imports.dart';
 
 class App extends StatelessWidget {
@@ -15,8 +14,9 @@ class App extends StatelessWidget {
       ),
     );
     return StateWrapper(
-      child: ScreenUtilWrapper(
-        builder: (context) => SettingsListenerWrapper(
+      child: ScreenUtilInit(
+        minTextAdapt: true,
+        builder: (context, _) => SettingsListenerWrapper(
           builder: _buildMaterialApp,
         ),
       ),

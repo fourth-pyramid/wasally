@@ -1,4 +1,4 @@
-import 'package:equatable/equatable.dart';
+import 'package:wassaly/core/imports/packages_imports.dart';
 
 abstract class BrandsEvent extends Equatable {
   const BrandsEvent();

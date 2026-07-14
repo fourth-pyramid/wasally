@@ -1,4 +1,4 @@
-import 'package:fpdart/fpdart.dart';
+import 'package:wassaly/core/imports/packages_imports.dart';
 import 'package:wassaly/core/utils/failure.dart';
 import 'package:wassaly/features/profile/domain/entities/address_entity.dart';
 import 'package:wassaly/features/profile/domain/usecases/get_addresses_usecase.dart';

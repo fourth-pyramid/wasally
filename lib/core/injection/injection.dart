@@ -1,4 +1,4 @@
-import 'package:get_it/get_it.dart';
+import 'package:wassaly/core/imports/packages_imports.dart';
 
 import 'package:wassaly/core/injection/parts/bloc_injection.dart';
 import 'package:wassaly/core/injection/parts/datasource_injection.dart';

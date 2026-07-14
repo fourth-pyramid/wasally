@@ -1,7 +1,6 @@
 import 'dart:io';
 
-import 'package:dio/dio.dart';
-import 'package:dio/io.dart';
+import 'package:wassaly/core/imports/packages_imports.dart';
 
 /// Configures Dio to bypass SSL certificate validation.
 /// WARNING: Only use for development testing!

@@ -1,4 +1,4 @@
-import 'package:fpdart/fpdart.dart';
+import 'package:wassaly/core/imports/packages_imports.dart';
 import 'package:wassaly/core/utils/failure.dart';
 
 typedef FutureEither<T> = Future<Either<Failure, T>>;

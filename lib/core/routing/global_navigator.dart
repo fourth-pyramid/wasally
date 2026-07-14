@@ -1,7 +1,6 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+
+// ponytail: Kept global keys/context accessors but removed the unused GlobalNavigator class.
 
 /// Global [NavigatorState] key used by the app's root [Navigator].
 ///
@@ -15,32 +14,3 @@ final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>();
 /// Returns `null` before the app is mounted. Check for `null` before
 /// using this in background services or repositories.
 BuildContext? get rootContext => rootNavigatorKey.currentContext;
-
-/// Global navigation methods that work without a local BuildContext.
-class GlobalNavigator {
-  static BuildContext? get _context => rootNavigatorKey.currentContext;
-
-  /// Navigate to a route (push).
-  static void push(String route, {Object? extra}) {
-    final context = _context;
-    if (context != null) {
-      unawaited(context.push(route, extra: extra));
-    }
-  }
-
-  /// Navigate and replace current route.
-  static void go(String route) {
-    final context = _context;
-    if (context != null) {
-      context.go(route);
-    }
-  }
-
-  /// Go back.
-  static void pop() {
-    final context = _context;
-    if (context != null && context.canPop()) {
-      context.pop();
-    }
-  }
-}

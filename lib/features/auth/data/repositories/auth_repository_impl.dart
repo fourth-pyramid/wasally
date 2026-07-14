@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:fpdart/fpdart.dart';
+import 'package:wassaly/core/imports/packages_imports.dart';
 import 'package:wassaly/core/services/deep_link_service.dart';
 import 'package:wassaly/core/utils/failure.dart';
 import 'package:wassaly/core/utils/typedefs.dart';

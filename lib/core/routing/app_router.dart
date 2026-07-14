@@ -1,4 +1,3 @@
-import 'package:showcase_tutorial/showcase_tutorial.dart';
 import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/app_reviews/presentation/bloc/app_reviews_bloc.dart';
 import 'package:wassaly/features/app_reviews/presentation/bloc/app_reviews_event.dart';

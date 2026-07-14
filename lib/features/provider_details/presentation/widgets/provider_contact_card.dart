@@ -1,4 +1,3 @@
-import 'package:url_launcher/url_launcher.dart';
 import 'package:wassaly/core/imports/imports.dart';
 import 'package:wassaly/features/provider_details/domain/entities/provider_detail_entity.dart';
 

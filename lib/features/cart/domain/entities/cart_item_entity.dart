@@ -1,4 +1,4 @@
-import 'package:equatable/equatable.dart';
+import 'package:wassaly/core/imports/packages_imports.dart';
 
 import 'package:wassaly/features/cart/domain/entities/offer_entity.dart';
 

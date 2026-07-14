@@ -1,4 +1,4 @@
-import 'package:fpdart/fpdart.dart';
+import 'package:wassaly/core/imports/packages_imports.dart';
 import 'package:wassaly/core/utils/failure.dart';
 import 'package:wassaly/core/utils/typedefs.dart';
 import 'package:wassaly/features/auth/data/datasources/fcm_token_remote_datasource.dart';
