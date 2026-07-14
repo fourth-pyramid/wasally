@@ -1,35 +1,32 @@
-# Global Rules for Flutter Clean Architecture (Wassaly Pattern)
+# Workspace Rules for Wassaly Clean Architecture
 
-Whenever you are working on my Flutter/Dart projects, you MUST strictly follow these guidelines:
+Whenever you are working on the Wassaly project, you MUST strictly follow these guidelines and leverage the corresponding local skills:
 
 ## 1. Clean Architecture & Structure
-All features must reside inside `lib/features/feature_name/` and follow the 3-Layer Clean Architecture structure:
-*   **domain/**: Pure business logic (framework-independent).
-    *   `entities/`: Plain data objects.
-    *   `repositories/`: Abstract repository contracts (interfaces).
-    *   `usecases/`: Single-responsibility classes implementing the business flows.
-*   **data/**: Concrete data fetching and parsing.
-    *   `datasources/`: REST API clients (remote) and DB storage wrappers (local).
-    *   `models/`: DTO models extending domain entities with JSON serialization.
-    *   `repositories/`: Concrete implementations of domain repository contracts.
-*   **presentation/**: The UI and state coordination.
-    *   `bloc/`: BLoC logic (`bloc.dart`, `event.dart`, `state.dart`).
-    *   `pages/`: High-level full screen page widgets.
-    *   `widgets/`: Smaller, reusable components.
+*   **Directory Layout**: All features must follow the 3-Layer Clean Architecture structure (`domain`, `data`, `presentation`).
+*   **Automation**: Use the `clean-flutter-generator` skill to scaffold feature directories and generate standard base code.
 
-## 2. Technology Stack & Packages
-*   **State Management:** Always use `flutter_bloc` for tracking event/state flows.
-*   **Navigation:** Use `go_router` for route definition and transition handling.
-*   **Networking:** Use `dio` with custom interceptors and error logging.
-*   **Local Storage:** Use `Hive` for data caching, `shared_preferences` for simple key-value settings, and `flutter_secure_storage` for credentials.
-*   **Functional Programming:** Use `fpdart`'s `Either` type (`Either<Failure, Success>`) for repository/usecase outputs to ensure functional error handling.
+## 2. State Management & Presentation
+*   **Pattern**: Use `flutter_bloc` for tracking event/state flows.
+*   **State Rules**: Every BLoC state must implement the 6 standard states: `Initial`, `Loading`, `Success`, `Failure/Error`, `Empty`, and `Refreshing`.
+*   **Optimization**: Always prefer `BlocSelector` over `BlocBuilder` to minimize widget rebuilds.
+*   **Guidance**: Refer to the `wassaly-bloc-helper` skill for implementing safe Bloc triggers, tests, and selector templates.
 
-## 3. UI/UX & Responsive Layouts
-*   **Responsive Dimensions:** Never hardcode absolute pixel sizes for width, height, padding, margins, borders, or text. Always use `flutter_screenutil` extensions (e.g. `16.w`, `24.h`, `14.sp`, `8.r`).
-*   **Localization:** Avoid raw hardcoded user-facing strings. Access localized content dynamically via `context.l10n`.
-*   **Themes:** Avoid raw color hex values in visual files. Utilize theme extensions or properties (e.g. `context.colors`, `context.textTheme`).
-*   **Load States:** Use `skeletonizer` for shimmer placeholders instead of simple loaders. Use `flutter_animate` for animations.
+## 3. Remote REST APIs & Data Handling
+*   **Client**: Use `dio` with custom interceptors and error logging.
+*   **DTO Models**: Remote models must extend domain entities and provide `fromJson`/`toJson` mappings.
+*   **Exceptions**: Network errors should throw local exceptions (e.g. `ServerException`), which are mapped to domain `Failure` instances.
+*   **Guidance**: Refer to the `wassaly-api-generator` skill when constructing remote data sources and serialization logic.
 
-## 4. File Naming & Conventions
-*   **File Names:** Use lowercase `snake_case` for all files (e.g. `get_user_usecase.dart`, `custom_text_field.dart`).
-*   **Cleanups:** Remove unused imports, run `flutter format`, and declare constructors with `const` wherever possible.
+## 4. UI/UX, Sizing, & Layouts
+*   **Responsiveness**: Always use `flutter_screenutil` extensions (e.g. `.w`, `.h`, `.sp`, `.r`) for margins, padding, fonts, and dimensions. Refer to the `wassaly-screenutil-audit` skill to scan and refactor hardcoded sizing.
+*   **Scrolling UI**: Use `CustomScrollView` with `SliverAppBar`, `SliverList`, and `SliverGrid` for high-level screen pages. Refer to the `wassaly-sliver-layout` skill to build premium scrolling templates.
+*   **Load Indicators**: Use `skeletonizer` for shimmer loading indicators and `flutter_animate` for page transitions.
+
+## 5. Multi-Language & Translation
+*   **Resource Access**: Access user-facing strings dynamically via `context.l10n`.
+*   **Parity**: Ensure key parity between English (`app_en.arb`) and Arabic (`app_ar.arb`) files and compile using `flutter gen-l10n`. Refer to the `wassaly-localization-helper` skill.
+
+## 6. Connectivity Tracking
+*   **Strategy**: Check connectivity status before executing network tasks to separate "no internet" states from "server down" states.
+*   **Execution**: Use `runTask` wrappers and listen to status recovery streams inside BLoCs. Refer to the `wassaly-network-tracker` skill.
