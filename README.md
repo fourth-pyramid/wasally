@@ -1,117 +1,158 @@
-# 🚀 Wassaly - Smart Planning & Goods Delivery App
+# 🚀 Wassaly - Smart E-Commerce & Service Booking Platform
 
 [![Flutter](https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
 [![Clean Architecture](https://img.shields.io/badge/Architecture-Clean-brightgreen?style=for-the-badge)](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
 [![BLoC](https://img.shields.io/badge/State--Management-BLoC-blue?style=for-the-badge)](https://bloclibrary.dev)
 
-**Wassaly** is a premium, high-performance mobile application built with Flutter, designed to provide a seamless experience for planning, discovery, and ordering goods or services. With a focus on responsiveness, modern UI/UX, and robust architecture, Wassaly delivers a state-of-the-art solution for modern users.
+Wassaly is a production-grade, highly scalable mobile application developed using Flutter. It is designed to act as a hybrid platform that seamlessly blends a fully-featured **E-Commerce storefront** with a robust **Professional Service Booking engine**. The app is engineered following strict Clean Architecture guidelines and state-of-the-art UI/UX standards, delivering a responsive, premium, and highly interactive user experience.
 
 ---
 
-## ✨ Key Features
+## 💡 System Overview & Core Concept
 
-The application is structured into modular features, ensuring scalability and maintainability:
-
--   **🔑 Advanced Auth System**: Secure multi-factor authentication, including OTP verification and profile management.
--   **🛍️ E-Commerce Excellence**: Comprehensive product catalog with detailed views, persistent shopping cart, and flexible filtering.
--   **📅 Service Booking**: Efficient scheduling and management of professional services.
--   **📦 Order Lifecycle**: Real-time order tracking, history, and status updates.
--   **🔍 Intelligent Search**: Global search functionality across products, brands, and categories.
--   **🔔 Smart Notifications**: Integrated push notifications using Firebase and Awesome Notifications.
--   **⭐ User Engagement**: Robust review system and favorites management (wishlist).
--   **👤 Profile & Customization**: Personalized user profiles, settings, and address management.
+Wassaly solves the fragmentation of on-demand consumer needs by unifying product shopping and service appointment booking into a single mobile client:
+* **The E-Commerce Engine:** Enables users to browse diverse catalogs, manage items in a persistent shopping cart, apply promotional offers, complete checkout procedures, and track the shipping lifecycle of their orders.
+* **The Service Booking Engine:** Connects users with professional service providers. It includes provider detail pages, interactive service catalogs, and scheduling systems to book and manage appointments.
+* **Unified Core Platform:** Shares a cohesive security framework, local storage cache, localization context (Arabic/English), and state management pattern across all modules.
 
 ---
 
-## 🛠️ Technology Stack
+## ✨ Features & Functional Modules
 
-Wassaly leverages the latest and greatest in the Flutter ecosystem:
+### 🔑 1. Authentication & Profile Management
+* **Secure OTP Flow:** Mobile number registration coupled with multi-factor OTP verification for secure login.
+* **Profile Customization:** Comprehensive profile updating, avatar management, and multi-address book control.
+* **Localization Settings:** Toggle between English and Arabic with automated layout switching (LTR / RTL) supported by the premium **Cairo** font.
 
--   **State Management**: `flutter_bloc` with a custom `SafeBloc` implementation for robust error handling.
--   **Navigation**: `go_router` for declarative and deep-linkable routing.
--   **Networking**: `dio` with custom interceptors and `pretty_dio_logger` for debugging.
--   **Dependency Injection**: `get_it` for efficient service location.
--   **Local Storage**: `shared_preferences`, `flutter_secure_storage`, and `hive` for high-performance data persistence.
--   **UI/UX**: 
-    -   `flutter_screenutil` for pixel-perfect responsiveness.
-    -   `skeletonizer` for beautiful shimmer loading states.
-    -   `flutter_animate` for smooth, modern animations.
-    -   `cairo` font support for premium typography.
--   **Functional Programming**: `fpdart` (`Either`) for predictable error handling.
--   **Backend Services**: Firebase Core & Messaging for real-time capabilities.
+### 🛍️ 2. Advanced E-Commerce Storefront
+* **Product Catalog & Brands:** Deep hierarchical categorization (categories, sub-categories) and brand filtering.
+* **Dynamic Search & Filtering:** Live search engine covering products, brands, and service terms with robust query filtering options.
+* **Persistent Cart & Checkout:** Add/remove items, manage quantities, calculate taxes, apply coupon discounts, compute shipping rates, and select delivered addresses.
+* **Order Tracking:** Track ongoing orders through status stages (Pending, Processing, In-Transit, Delivered) with detailed history logs.
 
----
+### 📅 3. On-Demand Service Booking
+* **Service Directories:** Explore categories of services (e.g., maintenance, beauty, consultations) and view top-rated local providers.
+* **Provider Profiling:** Read detailed provider descriptions, check their ratings, view offered service lists, and look through direct client reviews.
+* **Booking Scheduler:** Intuitive appointment selector allowing users to reserve precise dates and times for service execution.
 
-## 🏗️ Architecture: The 3-Layer Rule
+### ⭐ 4. Interactive Review & Rating System
+* **Bilateral Reviews:** Users can leave ratings and text feedback on both purchased physical products and completed services.
+* **Time-Restricted Editing:** Reviews feature a localized edit-window timer, ensuring comments remain up-to-date while protecting the integrity of provider ratings.
 
-Wassaly follows a strict **Clean Architecture** pattern to ensure independence of UI, business logic, and data sources.
+### 🔔 5. Notifications & Real-Time Syncing
+* **Push Notifications:** Firebase Cloud Messaging (FCM) integration for background and terminated-state system alerts.
+* **Local Notifications:** Awesome Notifications integration to handle instant scheduled reminders and rich interactive in-app banners.
 
-### 1. Presentation Layer
--   **BLoC**: Handles UI state and user interactions.
--   **Pages & Widgets**: Uses premium shared components (`AppButton`, `AppTextField`, `AppUnifiedCard`).
--   **Theme**: Centralized color scheme and typography.
-
-### 2. Domain Layer (Pure Dart)
--   **Entities**: Pure data models.
--   **Repositories (Interfaces)**: Defined contracts for data operations.
--   **Usecases**: Specific business logic units.
-
-### 3. Data Layer
--   **Models**: JSON parsing and data transformation.
--   **Datasources**: API calls (Dio) and local storage (Hive).
--   **Repositories (Implementations)**: Concrete implementation of domain contracts.
+### 🎨 6. Premium UI/UX & Micro-Interactions
+* **Responsive Layouts:** Implemented with `flutter_screenutil` for seamless visual scaling on phones, foldables, and tablets.
+* **Micro-Animations:** Interactive components powered by `flutter_animate` for smooth transitions, list-loading fades, and buttons.
+* **Skeleton Shimmers:** Powered by `skeletonizer` to transition skeleton placeholding placeholders to real data cleanly without jarring jumps.
+* **Showcase Tutorials:** Direct walkthrough guide (`showcase_tutorial`) helping first-time users understand how to navigate the application.
 
 ---
 
-## 📂 Directory Structure
+## 🛠️ Technology Stack & Libraries
 
-```bash
+* **State Management:** `flutter_bloc` with custom abstract classes (`SafeBloc`) ensuring safe error catching and uniform state emissions.
+* **Navigation:** `go_router` supporting deep linking, sub-routing, and programmatic navigation.
+* **Networking:** `dio` configured with custom interceptors for session authentication, token refresh, and `pretty_dio_logger` for debug tracing.
+* **Dependency Injection:** `get_it` for global service locator configuration, ensuring decoupled dependencies.
+* **Data Persistence:**
+  * `Hive` for high-performance offline caching of products and service lists.
+  * `shared_preferences` for basic settings and flags.
+  * `flutter_secure_storage` for storing OAuth tokens and private keys.
+* **Functional Programming:** `fpdart` utilized to apply `Either<Failure, Success>` patterns to repository interfaces, preventing uncaught runtime exceptions.
+
+---
+
+## 🏗️ Architecture Design (The 3-Layer Rule)
+
+Wassaly adheres strictly to **Clean Architecture** to separate domain business rules from external frameworks or UI widgets.
+
+```
 lib/features/feature_name/
 ├── data/
-│   ├── datasources/   # API & Local Data
-│   ├── models/        # DTOs
-│   └── repositories/  # Implementation
+│   ├── datasources/   # Remote REST APIs (Dio) & Local DB caches (Hive)
+│   ├── models/        # Data Transfer Objects (DTOs) and JSON serialization
+│   └── repositories/  # Implementation of domain repository interfaces
 ├── domain/
-│   ├── entities/      # Business Objects
-│   ├── repositories/  # Interfaces
-│   └── usecases/      # Actions
+│   ├── entities/      # Pure business objects (no frameworks or annotations)
+│   ├── repositories/  # Repository contracts (interfaces)
+│   └── usecases/      # Discrete, single-purpose business logic functions
 └── presentation/
-    ├── bloc/          # State & Logic
-    ├── pages/         # UI Screens
-    └── widgets/       # Components
+    ├── bloc/          # Bloc event-to-state transformers
+    ├── pages/         # High-level screen configurations
+    └── widgets/       # Low-level reusable UI components
+```
+
+---
+
+## 📂 Project Directory Structure
+
+```bash
+lib/
+├── core/
+│   ├── theme/         # App colors, styles, Cairo font settings, and themes
+│   ├── utils/         # Extension helpers, formatters, and utilities
+│   ├── network/       # Dio clients, error handlers, and network monitors
+│   └── di/            # Dependency injection setup (get_it)
+├── features/          # Modular feature directories (Auth, Cart, Booking, etc.)
+├── l10n/              # AR/EN localization arb templates
+├── main.dart          # App initializers and runner
+└── app.dart           # App MaterialApp widget and routing setup
 ```
 
 ---
 
 ## 🚀 Getting Started
 
-1.  **Clone the Repository**
-    ```bash
-    git clone https://github.com/MahmoudMagdy001/wassaly.git
-    ```
-2.  **Install Dependencies**
-    ```bash
-    flutter pub get
-    ```
-3.  **Environment Setup**
-    Ensure `.env` file is present in the root directory.
-4.  **Run the Project**
-    ```bash
-    flutter run
-    ```
+Follow these steps to run the project locally on your emulator or physical device.
+
+### 📋 Prerequisites
+* Flutter SDK (version `>=3.5.0 <4.0.0`)
+* Android Studio / Xcode configured with emulator/simulator
+
+### ⚙️ Step-by-Step Installation
+
+1. **Clone the Repository:**
+   ```bash
+   git clone https://github.com/MahmoudMagdy001/wassaly.git
+   ```
+
+2. **Install Dependencies:**
+   ```bash
+   flutter pub get
+   ```
+
+3. **Configure Environment Variables:**
+   Create a `.env` file in the root directory of the project:
+   ```env
+   API_BASE_URL=https://api.wassaly.example.com
+   # Add any other required integration credentials here
+   ```
+
+4. **Code Generation (if applicable):**
+   If build_runner is needed for local database models:
+   ```bash
+   flutter pub run build_runner build --delete-conflicting-outputs
+   ```
+
+5. **Run the Application:**
+   ```bash
+   flutter run
+   ```
 
 ---
 
-## � Development Guidelines
+## 💡 Development Guidelines
 
--   **Responsiveness**: Always use `.w`, `.h`, `.sp`, and `.r` from `flutter_screenutil`.
--   **Localisation**: Use `context.l10n` for all user-facing strings.
--   **Theming**: Access colors via `context.colors` and text via `context.textTheme`.
--   **Performance**: Consistent 60fps achieved through lazy loading, image caching, and isolated rebuilds.
+* **Responsiveness:** Always wrap dimensional sizes (width, height, font size, border radius) using `flutter_screenutil` syntax (e.g., `16.w`, `24.h`, `14.sp`, `8.r`).
+* **Localization:** Always read string resources from the localization context (e.g., `context.l10n.some_string_key`) to support English/Arabic dynamic switching.
+* **Theme Styling:** Avoid hardcoded hex colors inside widgets. Refer to `context.colors` and `context.textTheme` to adapt styling to dark and light modes.
 
 ---
 
 <p align="center">
-  Made with ❤️ for a better User Experience.
+  Crafted with ❤️ to deliver a premium user experience.
 </p>
